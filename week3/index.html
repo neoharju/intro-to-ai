@@ -506,7 +506,7 @@
 
         <p>
           The structure (the DAG) and the parameters in the CPTs are the
-          building blocks of a Bayesian network. Next we dicuss how they
+          building blocks of a Bayesian network. Next we discuss how they
           represent a joint distribution and how they can be used to
           perform inference about the domain.
         </p>
@@ -574,7 +574,7 @@
         <p>
           The probability of a good day with the car is<br><br>
           P(B) P(R|B) P(I|B) P(G) P(S|I,G) P(M|S)
-          = 0.9 &times; 0.9 &times; 0.95 &times; 0.95 &times; 0.99 &times 99
+          = 0.9 &times; 0.9 &times; 0.95 &times; 0.95 &times; 0.99 &times; 0.99
           &asymp; 0.716.<br><br>
           Pay close attention to the form of the terms, and make sure you could
           choose the right values from the above CPTs to do the above
@@ -588,7 +588,7 @@
           and the result is:
           <br><br>
           P(B) P(&not;R|B) P(I|B) P(G) P(S|I,G) P(M|S)
-          <!--= 0.9 &times; 0.1 &times; 0.95 &times; 0.95 &times; 0.99 &times 99-->
+          <!--= 0.9 &times; 0.1 &times; 0.95 &times; 0.95 &times; 0.99 &times; 0.99-->
           &asymp; 0.080.
           <br><br>
           Check that you get the same result by substituting the numbers from
@@ -666,7 +666,7 @@
           conditional probabilities, and substituting the appropriate values
           into the product from the CPTs. Take the first one:<br><br>
           P(&not;B, &not;R, I, G, S, &not;M)
-          = 0.1 &times; 1.0 &times; 0.0 &times; 0.95 &times; 0.0 &times; 1.0 = 0.0
+          = 0.1 &times; 1.0 &times; 0.0 &times; 0.95 &times; 0.99 &times; 0.01 = 0.0
           <br><br>
           which turns out to be equal to zero. Can you see why this makes sense?
           (Remember the meaning of &not;B and I. Can they happen at the same
@@ -759,7 +759,7 @@
               produced if <code>r</code> is between P(X=0) and P(X=0)+P(X=1). And
               generally, the value x is produced if
               <code>r</code> is between A = &Sigma;<sub>i=0,...,x-1</sub> P(X=i)
-              = P(X=0) + ... + P(X=i-1) and A + P(X=i).
+              = P(X=0) + ... + P(X=x-1) and A + P(X=x).
             </p>
 
 
@@ -779,12 +779,12 @@
         </p>
 
         <p>
-          Note that when choosing the value of Starts, we need to chosen the
+          Note that when choosing the value of Starts, we need to have chosen the
           values of both Ignition and Gas.
         </p>
 
         <p>
-          Pseudocode for a generating n random tuples from a Bayesian network
+          Pseudocode for generating n random tuples from a Bayesian network
           is as follows.
         </p>
 
@@ -804,7 +804,7 @@
           select variables in array <code>v</code>), and the corresponding
           CPTs. The selection operator <code>v[V.Pa]</code> extracts from the
           array the elements that define the values of the parents
-          of <code>V</code>. These are used on line 6 to choose the correct
+          of <code>V</code>. These are used on line 5 to choose the correct
           row from the CPT of <code>V</code>. Note that here it is important
           that the variables be processed in such an order that the parent
           values are added into the array before they are needed for
@@ -835,7 +835,7 @@
 
         <p>
           To approximate conditional probabilities, we simply write them as
-          ratios, P(A | B) = P(A, B) / (B), and apply the same estimator to
+          ratios, P(A | B) = P(A, B) / P(B), and apply the same estimator to
           both the numerator and the denominator.
         </p>
 
@@ -1046,7 +1046,7 @@
         </p>
         
         <p>
-          When Alan Turing worked on the first computers, he focused on decrypting messages encoded by the German military using the Enigma machine. Deciphering these messages required testing a vast number of possibilities—a task that humans struggled with, but machines could handle relatively quickly. However, not every challenging problem for humans can be efficiently solved with a programmed algorithm. Moreover, certain problems, known as <b>NP-hard problems</b>, cannot be solved within a reasonable timeframe, and no computer can perform miracles to overcome this limitation.
+          During the Second World War, Alan Turing worked on decrypting messages encoded by the German military using the Enigma machine. Deciphering these messages required testing a vast number of possibilities—a task that humans struggled with, but machines could handle relatively quickly. (The machines used against Enigma, the Bombes, were electromechanical devices, not computers. The first programmable electronic computer, Colossus, was used from 1944 against a different German cipher, Lorenz.) However, not every challenging problem for humans can be efficiently solved with a programmed algorithm. For <b>NP-hard problems</b>, no algorithm is known that solves every instance in polynomial time, and none exists unless P = NP, a famous open question. On their hardest instances, all known exact methods take exponential time, and no computer can perform miracles to overcome this limitation. Many practical instances can still be solved, exactly or approximately, with clever algorithms and heuristics.
         </p>
         
         <p>
@@ -1106,8 +1106,8 @@
             In multilabel classification, an object can belong to multiple classes simultaneously. For instance, assigning tags to a restaurant where multiple tags (e.g., "Italian," "Vegetarian") may apply at the same time.
           </li>
           <li>
-            <b>Ranking (<code>Y</code> is a finite, ordered set):</b>  
-            Ranking tasks involve ordering objects based on relevance or some comparative metric. A common example is search engine result ranking, where documents are sorted by relevance to a query. Importantly, the relevance score is meaningful only in the context of comparing two documents, rather than as an absolute value.
+            <b>Ranking:</b>
+            Ranking tasks involve ordering objects based on relevance or some comparative metric. The training labels are often relevance grades from a finite, ordered set (for example, <code>Y = {0, 1, 2, 3, 4}</code>), but the output is an ordering of the objects. A common example is search engine result ranking, where documents are sorted by relevance to a query. Importantly, the relevance score is meaningful only in the context of comparing two documents, rather than as an absolute value.
           </li>
         </ol>
         
@@ -1129,6 +1129,10 @@
         
         <p>
           A smaller subset of problems falls under <b>unsupervised learning</b>, where only the data is available, and the target labels are unknown or do not exist. In these cases, finding the "correct" answers is not necessarily the goal. A classic example is <b>clustering</b>, where objects are grouped based on shared but unknown (and ideally interpretable) properties. For example, clustering documents in a digital library by topic or grouping news articles into major storylines.
+        </p>
+
+        <p>
+          In <b>self-supervised learning</b>, the targets are created from the data itself, for example by hiding a word in a sentence and training the model to predict it. This is how the large language models and other foundation models of Week 5 are pretrained on huge amounts of unlabeled text. Finally, in <b>reinforcement learning</b>, an agent learns by trial and error from rewards instead of correct answers; we will return to it in Week 6.
         </p>
         
         <p>
@@ -1160,7 +1164,7 @@
         <h3>Additional Question</h3>
         
         <p>
-          Ranking is a task where the target is an ordered finite set (<code>Y = {1, ..., K}</code>). At first glance, ranking could be treated as either classification (with <code>K</code> classes) or regression. Why is this not the case?
+          In ranking, the training labels often come from an ordered finite set (<code>Y = {1, ..., K}</code>). At first glance, ranking could then be treated as either classification (with <code>K</code> classes) or regression. Why is this not the case?
         </p>
         
 
@@ -1227,7 +1231,7 @@
         
         <ul>
           <li>If <code>α</code> is too small, the descent may fail to reach the optimum.</li>
-          <li>If <code>α</code> is too large, the algorithm may "overshoot" the optimum and oscillate around it without ever converging.</li>
+          <li>If <code>α</code> is too large, the algorithm may "overshoot" the optimum and oscillate around it without ever converging, or even diverge, moving further away from the optimum at every step.</li>
         </ul>
         
         <p>
@@ -1235,7 +1239,7 @@
         </p>
         
         <p>
-          Now, for the training dataset, we need to determine the optimal decision boundary <code>y = w<sub>1</sub>x + w<sub>0</sub></code>. The parameters <code>w<sub>1</sub></code> and <code>w<sub>0</sub></code> are adjustable (trainable) parameters of the model, which the learning algorithm will infer from the dataset. However, there is a problem: the <b>accuracy</b> metric is not differentiable. To address this, we need to use a differentiable function <code>L(X, y, w)</code>, whose minimization approximately corresponds to optimizing the probability. Such a function is called a <b>loss function</b> or simply <b>loss</b>.
+          Now, for the training dataset, we need to determine the optimal decision boundary <code>y = w<sub>1</sub>x + w<sub>0</sub></code>. The parameters <code>w<sub>1</sub></code> and <code>w<sub>0</sub></code> are adjustable (trainable) parameters of the model, which the learning algorithm will infer from the dataset. However, there is a problem: the <b>accuracy</b> metric is not differentiable. To address this, we need to use a differentiable function <code>L(X, y, w)</code>, whose minimization approximately corresponds to optimizing the accuracy. Such a function is called a <b>loss function</b> or simply <b>loss</b>.
         </p>
 
         <h2 class="material-heading">
@@ -1247,7 +1251,7 @@
         </p>
         
         <p>
-          A key consideration is the model’s <b>generalization ability</b>, which reflects how well the model learns patterns that apply beyond the training dataset and delivers reliable predictions on new, unseen data. To safeguard against poor generalization, the dataset is typically split into two parts: the <b>training set</b> and the <b>test set</b>. The training set is used to train the model, while the metrics are evaluated on the test set.
+          A key consideration is the model’s <b>generalization ability</b>, which reflects how well the model learns patterns that apply beyond the training dataset and delivers reliable predictions on new, unseen data. To safeguard against poor generalization, the dataset is typically split into three parts: the <b>training set</b>, the <b>validation set</b> and the <b>test set</b>. The training set is used to train the models, the validation set to compare models and tune their settings (hyperparameters), and the test set only once at the end, to estimate how well the chosen model works on new data. If the test set is used to choose between models, its error is no longer an unbiased estimate: it underestimates the true error. When data is scarce, cross-validation on the training data can replace the separate validation set.
         </p>
         
         <p>
@@ -1310,7 +1314,7 @@
         
         <ul>
           <li>
-            <b>Classification:</b> <code>X → {0, 1, ..., K}</code>, where <code>0, ..., K</code> are class labels.
+            <b>Classification:</b> <code>X → {1, ..., K}</code>, where <code>1, ..., K</code> are class labels.
           </li>
           <li>
             <b>Regression:</b> <code>X → R</code>.
@@ -1448,7 +1452,7 @@
         </p>
         
         <p>
-          Logistic regression arises from the desire to view classification as a task of predicting probabilities. A good example is predicting clicks on the internet (e.g., in advertisements or search results). The presence of a click in a training log does not guarantee that, under the exact same conditions, a user will click on the object again. Instead, objects have an inherent "clickability," representing the true probability of a click for a given object. Each click in the training examples is considered a realization of this random variable, and we assume that, in the limit, the ratio of positive to negative examples at any point will converge to this probability.
+          Logistic regression arises from the desire to view classification as a task of predicting probabilities. A good example is predicting clicks on the internet (e.g., in advertisements or search results). The presence of a click in a training log does not guarantee that, under the exact same conditions, a user will click on the object again. Instead, objects have an inherent "clickability," representing the true probability of a click for a given object. Each click in the training examples is considered a realization of this random variable, and we assume that, in the limit, the proportion of positive examples among all examples at any point will converge to this probability.
         </p>
         
         <p>
@@ -1496,7 +1500,7 @@
         </p>
         
         <p>
-          An intuitive—but not always correct—approach is to use a threshold of <code>0.5</code>. A more accurate method is to select this threshold separately, specifically for the trained regression model, by minimizing the desired metric on a held-out test dataset. For example, you could adjust the threshold to ensure that the proportion of positive and negative classes aligns closely with real-world distributions.
+          An intuitive—but not always correct—approach is to use a threshold of <code>0.5</code>. A more accurate method is to select this threshold separately, specifically for the trained regression model, by optimizing the desired metric on a held-out validation dataset (not on the test set, which is kept for the final evaluation). For example, you could adjust the threshold to ensure that the proportion of positive and negative classes aligns closely with real-world distributions.
         </p>
         
         <p>
@@ -1512,7 +1516,7 @@
         </p>
         
         <p>
-          While linear models are rarely used in practice today, understanding their components and how they are constructed remains highly valuable and relevant.
+          Linear models are still widely used in practice, for example as baselines and wherever interpretability matters, and understanding their components and how they are constructed remains highly valuable and relevant.
         </p>
 
         <div class="exercise">
@@ -1578,7 +1582,7 @@
 				  <p>
 					This is a <b>course competition</b> on a platform called <a href="https://www.kaggle.com/" target="_blank" rel="noopener">Kaggle</a>.
 					Kaggle is a website where people train machine learning models on shared datasets and compete on a public leaderboard.
-					Large companies also publish their own prediction tasks there, and winning teams are paid real prize money — for example Zillow offered $1.2 million to improve its home-value model, and some other contests have gone as high as $1.5 million.
+					Large companies also publish their own prediction tasks there, and winning teams are paid real prize money — for example Zillow offered $1.2 million to improve its home-value model, and the Heritage Health Prize (2011–2013) offered a grand prize of $3 million.
 					It is also a good place to practise and develop your machine learning skills, even outside this course.
 				  </p>
 				  <p>
@@ -1674,11 +1678,11 @@
         </p>
         
         <p>
-          These characteristics can be particularly useful when dealing with complex datasets for which we cannot devise a global model. However, due to lazy learning, the algorithm becomes impractical for large datasets. Despite this limitation, these algorithms are simple to understand, quite accurate, and highly interpretable, making them a common baseline in many tasks.
+          These characteristics can be particularly useful when dealing with complex datasets for which we cannot devise a global model. However, due to lazy learning, a naive implementation that compares each new object with every stored object becomes slow for large datasets. In practice, indexes for approximate nearest neighbor search, such as HNSW graphs, make search over millions or even billions of objects fast. Despite this limitation, these algorithms are simple to understand, quite accurate, and highly interpretable, making them a common baseline in many tasks.
         </p>
         
         <p>
-          In this section, we will discuss one of the most well-known metric algorithms—the <b>k-nearest neighbors (KNN)</b> method. This approach is primarily engineering-focused due to its lack of a training phase and is rarely used in practice today. However, many techniques underlying the algorithm are applied in other methods.
+          In this section, we will discuss one of the most well-known metric algorithms—the <b>k-nearest neighbors (KNN)</b> method. This approach is primarily engineering-focused due to its lack of a training phase. As a classifier, KNN is mostly used as a simple baseline today, but nearest neighbor search itself is everywhere: in recommendation systems, in vector databases, and in retrieving documents for large language models (retrieval-augmented generation). Many techniques underlying the algorithm are also applied in other methods.
         </p>
         
         <p>
@@ -1897,7 +1901,7 @@
         </p>
         
         <p>
-          <code>B(x, j, t) = [x<sub>j</sub> ≤ t]</code>
+          <code>B(x, j, t) = [x<sub>j</sub> ≥ t]</code>
         </p>
         
         <p>
@@ -1911,7 +1915,7 @@
         <img src="../img/material/part4/DecisionTreeSurfaces.webp" width="70%" alt="Decision Boundaries Created by the Tree">
 
         <p>
-          Each predicate splits the current subset of the feature space into two parts. In the first step, the split based on <code>[X ≤ X<sub>1</sub>]</code> divides the entire plane into two corresponding regions. At the next level, the region where <code>X ≤ X<sub>1</sub></code> holds is further split into two parts based on the second feature <code>Y ≤ Y<sub>1</sub></code>, resulting in regions 1 and 2. The same process is repeated for the right branch of the tree, and so on, until the leaf nodes are reached, forming five regions in the feature space. Each object in the dataset is assigned to one of these five regions, determining its class based on the region it falls into.
+          Each predicate splits the current subset of the feature space into two parts. In the first step, the split based on <code>[x ≥ x<sub>1</sub>]</code> divides the entire plane into two corresponding regions. At the next level, the region where <code>x &lt; x<sub>1</sub></code> (the left branch, where the predicate is false) is further split into two parts based on the second feature, <code>[y ≥ y<sub>1</sub>]</code>, resulting in regions 1 and 2. The same process is repeated for the right branch of the tree, and so on, until the leaf nodes are reached, forming five regions in the feature space. Each object in the dataset is assigned to one of these five regions, determining its class based on the region it falls into.
         </p>
         
         <p>
@@ -2227,7 +2231,7 @@ Gain(S, A) = Entropy(S) - &sum;<sub>v</sub> (|S<sub>v</sub>| / |S|) &middot; Ent
             <ul>
               <li>As in standard bagging, a random subset <code>X<sub>i</sub></code> is drawn with replacement from the training dataset <code>X</code>, maintaining the same size as <code>X</code>.</li>
               <li>
-                During training, at each node of the tree, <code>n &lt; N</code> features are randomly selected (where <code>N</code> is the total number of features). The optimal split is then found among these features. This method, known as <b>random subspaces</b>, helps control the degree of correlation between base algorithms.
+                During training, at each node of the tree, <code>n &lt; N</code> features are randomly selected (where <code>N</code> is the total number of features). The optimal split is then found among these features. This per-node feature sampling, introduced in Breiman's random forest algorithm, helps reduce the correlation between the trees. (Ho's earlier <b>random subspace method</b> chose one random subset of features for each whole tree.)
               </li>
             </ul>
           </li>
@@ -2273,7 +2277,7 @@ Gain(S, A) = Entropy(S) - &sum;<sub>v</sub> (|S<sub>v</sub>| / |S|) &middot; Ent
         <h3>How Many Trees Should a Random Forest Contain?</h3>
         
         <p>
-          As shown earlier, increasing the number of base algorithms in the ensemble reduces variance but does not affect bias. However, because the number of features and training subsets available for tree construction is finite, it is not possible to reduce variance indefinitely. It is advisable to plot the error as a function of the number of trees and limit the forest size when the error stops decreasing significantly.
+          As shown earlier, increasing the number of base algorithms in the ensemble reduces variance but does not affect bias. However, the trees are trained on overlapping data and are therefore correlated, so variance cannot be reduced indefinitely: if each tree has variance <code>σ²</code> and the pairwise correlation between trees is <code>ρ</code>, the variance of the average of <code>B</code> trees is <code>ρσ² + (1 − ρ)σ²/B</code>, which approaches <code>ρσ²</code>, not zero, as <code>B</code> grows. Adding more trees does not cause overfitting; it only costs computation. It is advisable to plot the error as a function of the number of trees and limit the forest size when the error stops decreasing significantly.
         </p>
         
         <p>
@@ -2304,7 +2308,7 @@ Gain(S, A) = Entropy(S) - &sum;<sub>v</sub> (|S<sub>v</sub>| / |S|) &middot; Ent
         <h4>Choice of Base Algorithms</h4>
         
         <p>
-          Since the primary goal of boosting is to reduce bias, base algorithms are often chosen to have high bias and low variance. For example, if the base classifiers are decision trees, they should typically have a small depth—usually no more than 2–3 levels.
+          Since the primary goal of boosting is to reduce bias, base algorithms are often chosen to have high bias and low variance. For example, if the base classifiers are decision trees, they should typically be shallow: AdaBoost often uses stumps with a single split, and gradient boosting libraries default to a few levels, for example 3 in scikit-learn and 6 in XGBoost and CatBoost.
         </p>
         
         <p>
@@ -2353,7 +2357,7 @@ Gain(S, A) = Entropy(S) - &sum;<sub>v</sub> (|S<sub>v</sub>| / |S|) &middot; Ent
                 On each iteration, <code>(n−1)</code> folds are used to train the base algorithms, while the remaining fold is used for predictions (to compute meta-features).
               </li>
             </ul>
-            This approach ensures that the entire training set is utilized while preventing base algorithms from overfitting.
+            This approach ensures that the entire training set is utilized, and that each meta-feature is predicted by a model that did not see the object during training. Otherwise the meta-model would learn from overfitted predictions and trust the most overfitted base algorithms too much.
           </li>
           <li>
             The meta-model is trained on the computed meta-features. Depending on the task, the meta-model may also take features from the original dataset as input.
@@ -2374,7 +2378,7 @@ Gain(S, A) = Entropy(S) - &sum;<sub>v</sub> (|S<sub>v</sub>| / |S|) &middot; Ent
         </p>
         
         <p>
-          From the perspective of bias and variance, stacking does not have a direct interpretation, as it does not explicitly minimize either component of the error. A well-performing stacking model simply reduces the overall error, which consequently decreases its components as well.
+          From the perspective of bias and variance, stacking does not have a direct interpretation, as it does not explicitly minimize either component of the error. A well-performing stacking model simply reduces the overall error; this does not mean that both bias and variance decrease, since one of them can grow while their sum falls.
         </p>
         
         <h2 class="material-heading">
@@ -2520,6 +2524,21 @@ Gain(S, A) = Entropy(S) - &sum;<sub>v</sub> (|S<sub>v</sub>| / |S|) &middot; Ent
           To obtain a classifier that outputs a single class value, instead of
           the full posterior probability, we can pick the <b>maximum a
             posteriori</b> class value, i.e., the most probable class.
+        </p>
+
+        <p>
+          Two practical details. First, if pixel j is never white in the
+          training images of class i, the estimate <code>model.cpt[i,j]</code>
+          is zero, and a single white pixel at that position makes the
+          posterior of class i zero however well the rest of the image
+          matches. If that happens for every class, Z = 0 and line 11 divides
+          by zero. The usual remedy is <b>Laplace (add-one) smoothing</b>,
+          <code>model.cpt[i,j] = (#{X<sub>j</sub>=1, class=i} + 1) / (#{class=i} + 2)</code>,
+          which never gives exactly 0 or 1 (in the spam filter of Week 2, we
+          used a small lower bound for the same purpose). Second, a product of
+          784 probabilities can underflow to zero in floating point, so
+          implementations add up the logarithms of the probabilities instead
+          and compute the posterior from these sums.
         </p>
         
         <h1 class="material-heading">
