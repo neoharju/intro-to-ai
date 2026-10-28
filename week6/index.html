@@ -370,12 +370,13 @@
 
 							<p>
 								Once we have PEAS, we can also classify the <i>environment</i> itself along six
-								standard dimensions:
+								of the standard dimensions (we leave out the seventh one, known vs. unknown,
+								from the overview above):
 							</p>
 
 							<div class="hint">
 								<div class="hint__header">
-									<i class="fa fa-info-circle hint__icon"></i>The Six Dimensions of a Task Environment
+									<i class="fa fa-info-circle hint__icon"></i>Six Dimensions of a Task Environment
 								</div>
 
 								<div class="hint__body">
@@ -393,8 +394,10 @@
 							<p>
 								For the vacuum cleaner above: partially observable (can't see dirt in the next
 								room), stochastic (bumps and slips happen), sequential (where it already cleaned
-								matters), dynamic (people walk through and make new mess), discrete (a finite
-								grid of rooms and a finite action set), and single-agent (usually).
+								matters), dynamic (people walk through and make new mess), continuous (the robot
+								drives around the floor on wheels; only a simplified model, such as the
+								two-square vacuum world of Russell and Norvig, is discrete), and single-agent
+								(usually).
 							</p>
 
 							<p>
@@ -513,13 +516,13 @@ for episode in tqdm(range(n_episodes)):
 
 							<p>
 								We've talked about agentic frameworks conceptually — now let's build one you can
-								actually run. <code>smolagents</code> is a lightweight, purpose-built-for-
-								teaching agent library from Hugging Face. Getting a first agent running is
-								genuinely four lines:
+								actually run. <code>smolagents</code> is a lightweight agent library from
+								Hugging Face (it describes itself as "a barebones library for agents").
+								Getting a first agent running is genuinely four lines:
 							<pre>
 from smolagents import CodeAgent, InferenceClientModel
 
-agent = CodeAgent(tools=[], model=InferenceClientModel(), add_base_tools=True)
+agent = CodeAgent(tools=[], model=InferenceClientModel())
 agent.run("Could you give me the 118th number in the Fibonacci sequence?")
 </pre>
 							</p>
@@ -528,6 +531,17 @@ agent.run("Could you give me the 118th number in the Fibonacci sequence?")
 								<i>Setup note: this needs a free Hugging Face account and an access token
 								(hf.co/settings/tokens) — no payment required, a free account includes enough
 								inference credit for this exercise.</i>
+							</p>
+
+							<p>
+								<i>Safety note: a <code>CodeAgent</code> writes Python code and runs it on your
+								own computer. smolagents restricts what that code can import, but its local
+								executor is not a security sandbox. Don't give the agent web tools (for example
+								with <code>add_base_tools=True</code>, which adds web search and webpage
+								visiting) unless it runs in a container or with
+								<code>executor_type="docker"</code>: text on a web page can instruct the model
+								to write harmful code. Keep your token in the <code>HF_TOKEN</code> environment
+								variable rather than in your code.</i>
 							</p>
 
 							<ol>
@@ -649,10 +663,11 @@ agent.run("What is 24 degrees Celsius in Fahrenheit?")
 					course in the previous editions, using LEGO Mindstorms
 					robots, but the robots we have in stock are becoming
 					technically so outdated that programming them is a real
-					pain in the butt. The latest LEGO models also don't seem
-					to support sensible Python or even Java coding. (Let us
-					know if you know
-					better.) <a href="https://www.raspberrypi.org/">Raspberry
+					pain in the butt. Recent LEGO hubs, such as those in the
+					SPIKE Prime and MINDSTORMS Robot Inventor sets, can however
+					be programmed in Python, for example with the open-source
+					<a href="https://pybricks.com/">Pybricks</a> firmware.
+					<a href="https://www.raspberrypi.org/">Raspberry
 						PI</a> looks like a promising alternative. In case you'll
 					have a chance to try any of these and build and program
 					robots, you'll hopefully understand what we're trying to
@@ -761,7 +776,7 @@ agent.run("What is 24 degrees Celsius in Fahrenheit?")
 							<ol>
 								<li> AI-generated art is currently a hot topic
 									with systems like DALL-E, Imagen, and Stable
-									Diffusion being used to create amazign
+									Diffusion being used to create amazing
 									artwork. Who (or what) should be entitled to
 									intellectual property rights in these cases?
 								<li> The real-world impact of AI is growing all
@@ -820,7 +835,7 @@ agent.run("What is 24 degrees Celsius in Fahrenheit?")
 							<p>
 								<i>Hint 2:</i> In case you don't have an opponent
 								available in real life, there's nothing wrong with
-								trying social media like Twitter... Just remember
+								trying social media like X (formerly Twitter)... Just remember
 								the first hint.
 							</p>
 						</div>
@@ -846,7 +861,7 @@ agent.run("What is 24 degrees Celsius in Fahrenheit?")
 						<div class="exercise__body">
 
 							<p>
-								Consider the case of a pharmaceutical company “Rite Aid”. Where “Rite Aid deployed
+								Consider the case of the US drugstore chain “Rite Aid”, where “Rite Aid deployed
 								artificial intelligence-based facial recognition technology in order to identify
 								customers who may have been engaged in shoplifting or other problematic behavior. The
 								complaint, however, charges that the company failed to take reasonable measures to
@@ -859,7 +874,7 @@ agent.run("What is 24 degrees Celsius in Fahrenheit?")
 								ordered them to leave, called the police to confront or remove consumers, and publicly
 								accused them; sometimes in front of friends or family, of shoplifting or other
 								wrongdoing, according to the complaint. In addition, the FTC says Rite Aid's actions
-								disproportionately impacted people of color.” (FTC US, 2024)
+								disproportionately impacted people of color.” (FTC US, 2023)
 							</p>
 							<p>
 								The Guardian: "As part of its contract with two private, unnamed vendors, Rite Aid
