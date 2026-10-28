@@ -212,14 +212,18 @@
         <p>
           If you want an objective and diplomatic view on the matter, don't
           ask me. I'll just repeat a counter-argument made by a proponent of
-          fuzzy logic when he tried to get around a rigorous formal proof
-          showing that any method of inference where degrees of plausibility
-          are represented as real numbers, other than probability theory, is
-          inconsistent: the <a href="http://sipi.usc.edu/~kosko/Fuzziness_Vs_Probability.pdf">response of the fuzzy
+          fuzzy logic when he tried to get around a rigorous formal proof,
+          known as Cox's theorem, showing that any method of inference where
+          degrees of plausibility are represented as real numbers, and which
+          satisfies a few further requirements (among them, agreement with
+          ordinary two-valued logic), is equivalent to probability theory:
+          the <a href="http://sipi.usc.edu/~kosko/Fuzziness_Vs_Probability.pdf">response of the fuzzy
             logic proponent</a> was that
           since the proof is based on <i>ordinary (two-valued) logic, it
             doesn't apply to fuzzy logic.</i> Now that is a counter-argument
-          that is hard to refute!
+          that is hard to refute! (To be fair, fuzzy logic was designed to
+          model vagueness, that is, degrees of truth, rather than degrees of
+          belief about statements that are either true or false.)
         </p>
 
         <h2 class="material-heading">
@@ -238,7 +242,7 @@
           concepts from your favorite source. Two great examples are:
         <ul>
           <li>Ian Goodfellow, Yoshua Bengio & Aaron Courville: <a href="http://www.deeplearningbook.org/">Deep
-              Learning</a> (Section 3)
+              Learning</a> (Chapter 3)
           <li>Larry Wasserman: <a
               href="https://www.stat.cmu.edu/~brian/valerie/617-2022/0%20-%20books/2004%20-%20wasserman%20-%20all%20of%20statistics.pdf">All of Statistics</a> (Part I, Probability is great)
         </ul>
@@ -608,7 +612,7 @@ R =  ------------------------------------ = ---------------------------
         <p>
           which is abbreviated without a great risk of confusion -- but please
           note that unlike <code>million</code> and <code>conferences</code>,
-          which are hyphenated ('like this') to indicate that they are words that occur
+          which are quoted ('like this') to indicate that they are words that occur
           in the message, the term <code>spam</code> indicates
           the <i>class</i> of the message, not the word "spam" -- as
         </p>
@@ -624,7 +628,9 @@ R =  ------------------------------------ = ---------------------------
                                             P('million', 'conferences')
 </pre>
         <p>
-          The numerator on the right side is the likelihood term and its meaning
+          The numerator on the right side is the product of the prior
+          probability <code>P(spam)</code> and the likelihood
+          term <code>P('million', 'conferences' | spam)</code>, whose meaning
           is the probability that the first two words are <code>million</code>
           and <code>conferences</code> given that the message is spam. The
           denominator on the right side -- it's the annoying one -- is the
@@ -663,7 +669,7 @@ R =  ------------------------------------ = ---------------------------
 
         <p>
           The term <code>P('million', 'conferences' | ham)</code> is treated in the exact
-          same manner as the term corresponding term for spam (see above), and the
+          same manner as the corresponding term for spam (see above), and the
           numbers required to calculate its value are available since we have
           estimated them from the training data.
         </p>
