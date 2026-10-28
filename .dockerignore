@@ -1,0 +1,15 @@
+# Allowlist: the build context holds only the published site and the asset sources.
+# Built assets (javascripts/, stylesheets/, fonts/vendor/) are rebuilt inside the image.
+*
+!index.html
+!LICENSE
+!week*/
+!img/
+!files/
+!fonts/mooc/
+!package.json
+!package-lock.json
+!.npmrc
+!scripts/
+!src/
+!docker/

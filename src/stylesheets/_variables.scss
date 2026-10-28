@@ -1,0 +1,64 @@
+@use "sass:color";
+
+// Theme colours and metrics. The site was designed on Bootstrap 4.0.0-alpha.5; the values
+// below keep that look on Bootstrap 5.
+$brand-primary: #528afc;
+$brand-mooc: #FFAB0E;
+$brand-success: #57b181;
+$brand-danger: #d9534f;
+
+$gray-dark: #373a3c;
+$gray-light: #818a91;
+$gray-lighter: #eceeef;
+$gray-lightest: #f7f7f9;
+
+$spacer-x: 1rem;
+$spacer-y: 1rem;
+
+// Bootstrap 5 overrides
+$primary: $brand-primary;
+$success: $brand-success;
+$warning: $brand-mooc;
+$danger: $brand-danger;
+
+$enable-rfs: false;
+$enable-smooth-scroll: false; // fights the animated scrolling in utils.js
+$enable-dark-mode: false;
+
+$body-color: $gray-dark;
+$font-family-base: "Roboto", sans-serif;
+$headings-line-height: 1.1;
+$small-font-size: 80%;
+$code-font-size: 90%;
+$code-color: #bd4147;
+
+$link-color: $brand-primary;
+$link-decoration: none;
+$link-hover-color: color.adjust($brand-primary, $lightness: -15%);
+$link-hover-decoration: underline;
+
+$border-radius: .25rem;
+$border-radius-sm: .2rem;
+$border-radius-lg: .3rem;
+
+$grid-gutter-width: 30px;
+$container-max-widths: (
+  sm: 540px,
+  md: 860px,
+  lg: 861px,
+  xl: 862px,
+  xxl: 863px
+);
+
+$btn-padding-y: .5rem;
+$btn-padding-x: 1rem;
+$btn-line-height: 1.25;
+
+$table-cell-padding-y: .75rem;
+$table-cell-padding-x: .75rem;
+$table-border-color: $gray-lighter;
+
+$navbar-padding-x: 1rem;
+$navbar-light-color: rgba(0, 0, 0, .5);
+$navbar-light-hover-color: rgba(0, 0, 0, .7);
+$navbar-light-active-color: rgba(0, 0, 0, .9);

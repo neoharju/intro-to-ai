@@ -1,0 +1,34 @@
+# Local preview of the course site at http://localhost:4567
+#
+#   docker compose up --build    build the image and serve the site
+#   docker compose watch         same, and rebuild whenever a file changes
+name: intro-to-ai
+
+services:
+  site:
+    build:
+      context: .
+      target: site
+    image: intro-to-ai-site:local
+    ports:
+      # Loopback only: the preview is not exposed to the local network.
+      - "127.0.0.1:4567:8080"
+    read_only: true
+    tmpfs:
+      - /tmp:size=16m,mode=1777
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    deploy:
+      resources:
+        limits:
+          cpus: "0.50"
+          memory: 64M
+          pids: 64
+    develop:
+      watch:
+        - action: rebuild
+          path: .
+          ignore:
+            - node_modules/

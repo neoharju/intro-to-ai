@@ -1,0 +1,24 @@
+// Vendor stylesheets: plain CSS imports, resolved from node_modules and bundled by esbuild,
+// which also copies the referenced fonts to /fonts/vendor.
+@import "@fontsource/roboto/400.css";
+@import "@fortawesome/fontawesome-free/css/fontawesome.css";
+@import "@fortawesome/fontawesome-free/css/solid.css";
+@import "@fortawesome/fontawesome-free/css/regular.css";
+@import "highlight.js/styles/xcode.css";
+@import "cookieconsent/build/cookieconsent.min.css";
+
+@import "variables";
+@import "bootstrap/scss/bootstrap";
+@import "compat";
+@import "mixins";
+@import "mooc-icon";
+@import "theme";
+
+@import "footer";
+@import "exercise";
+@import "solution";
+@import "hint";
+@import "navbar";
+@import "table-of-contents";
+
+@import "sample-output";

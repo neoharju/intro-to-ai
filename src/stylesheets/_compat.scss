@@ -1,0 +1,43 @@
+// Bootstrap 4.0.0-alpha.5 defaults that Bootstrap 5 changed and the course pages rely on.
+
+ol, ul {
+  padding-left: 2.5rem;
+}
+
+code {
+  padding: .2rem .4rem;
+  background-color: $gray-lightest;
+  border-radius: $border-radius;
+}
+
+pre code {
+  padding: 0;
+  font-size: inherit;
+  color: inherit;
+  background-color: transparent;
+  border-radius: 0;
+}
+
+.text-muted {
+  color: $gray-light !important;
+}
+
+.table > :not(caption) > * > * {
+  border-top-width: $border-width;
+  border-bottom-width: 0;
+}
+
+// Alpha's secondary button was white with a grey border; Bootstrap 5's is solid grey.
+.btn-secondary {
+  @include button-variant(
+    $background: #fff,
+    $border: #ccc,
+    $color: $gray-dark,
+    $hover-background: #e6e6e6,
+    $hover-border: #adadad,
+    $hover-color: $gray-dark,
+    $active-background: #e6e6e6,
+    $active-border: #adadad,
+    $active-color: $gray-dark
+  );
+}

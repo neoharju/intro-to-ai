@@ -1,0 +1,13 @@
+# GitHub Pages publishes this branch with Jekyll. Keep the build tooling out of the published site.
+# (Jekyll 3 replaces its default exclude list with this one, so node_modules is listed explicitly.)
+exclude:
+  - README.md
+  - SOURCES.md
+  - Dockerfile
+  - compose.yaml
+  - docker
+  - package.json
+  - package-lock.json
+  - node_modules
+  - scripts
+  - src
