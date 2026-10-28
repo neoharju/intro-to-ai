@@ -337,12 +337,13 @@
 				High-level summary.
 
 
-				Here we provide you with a high-level summary of the AI Act, however is important to consult the act
-				directly online for example using the <a href="https://artificialintelligenceact.eu/ai-act-explorer/">EU
-					AI ACT Explorer</a>
+				Here we provide you with a high-level summary of the AI Act, adapted from the Future of Life Institute's
+				<a href="https://artificialintelligenceact.eu/high-level-summary/">High-level summary of the AI Act</a>.
+				However, it is important to consult the act directly online, for example using the
+				<a href="https://artificialintelligenceact.eu/ai-act-explorer/">EU AI ACT Explorer</a>.
 
-				To explore the full text of the AI Act yourself, use our AI Act Explorer. Alternatively, if you want to
-				know which parts of the text are most relevant to you, use our Compliance Checker.
+				To explore the full text of the AI Act yourself, use FLI's AI Act Explorer. Alternatively, if you want to
+				know which parts of the text are most relevant to you, use FLI's Compliance Checker.
 
 
 				<u>
@@ -462,7 +463,8 @@
 									III</a>.</li>
 						</ul>
 					</li>
-					<li>AI systems are always considered high-risk if it profiles individuals, i.e., automated
+					<li>AI systems under the Annex III use cases are always considered high-risk if they profile
+						individuals (the exceptions above do not apply), i.e., automated
 						processing of personal data to assess various aspects of a person’s life, such as work
 						performance, economic situation, health, preferences, interests, reliability, behaviour,
 						location or movement.</li>
@@ -566,7 +568,7 @@
 <h2 class="material-heading"> The Moral Machine: an experiment on Accountability
 				</h2>
 <p> The Moral Machine is an MIT-led online platform that presents people with stylized “trolley-problem-like” dilemmas framed as autonomous-vehicle crashes (e.g., swerve vs stay; passengers vs pedestrians) and records their choices.
-Here you find the article published in Nature in Oct 2028 with  <a href="https://www.nature.com/articles/s41586-018-0637-6">the Moral Machine Experiment</a>
+Here you find the article published in Nature in Oct 2018 with  <a href="https://www.nature.com/articles/s41586-018-0637-6">the Moral Machine Experiment</a>
  The associated flagship publication, Awad et al., Nature (2018), “The Moral Machine experiment,” reports collecting about 39.61 million decisions from participants across 233 countries/territories (in multiple languages) and analyzes (a) aggregate global preferences, (b) variation by demographics, and (c) cross-country patterns/clusters.
 
 Disclaimers/critique: these results are primarily descriptive—they capture what survey participants say they would choose under simplified prompts, not what is ethically justified or legally acceptable. The scenarios also heavily abstract away real-world driving (uncertainty, feasibility, duty of care, and the dominant safety-engineering goal of reducing risk overall), and the participation is self-selected and uneven across populations, which weakens “this is what a country believes” interpretations.
@@ -588,9 +590,12 @@ Disclaimers/critique: these results are primarily descriptive—they capture wha
 					<p><strong>AI “hallucinations”, or convincing but inaccurate outputs</strong></p>
 				</u>
 				<p>When large language models, or textual generative AI, create incorrect yet convincing outputs, it is
-					called a hallucination. This is unintentional and can happen if a correct answer is not found in the
-					training data. Beyond perpetuating inaccurate information, this can interfere with the model’s
-					ability to learn new skills and even lead to a loss of skills.
+					called a hallucination. This is unintentional, and it can happen even when the correct answer is in the
+					training data: models are trained to produce plausible text, and training and evaluation methods that
+					reward a confident guess over admitting uncertainty encourage them to guess. Beyond perpetuating
+					inaccurate information, hallucinations mislead users who rely on the output without checking it. (A
+					different problem is <i>model collapse</i>: models trained on large amounts of AI-generated data can
+					gradually lose information about the original data and perform worse.)
 				</p>
 
 				<u>
@@ -612,10 +617,18 @@ Disclaimers/critique: these results are primarily descriptive—they capture wha
 					<li>potential copyright, patent, and trademark infringement of AI creations,</li>
 					<li>and ownership of AI-generated works.</li>
 					<li>Whether commercial entities can legally train ML models on copyrighted material is contested in
-						Europe and the US. Several lawsuits were filed in the US against companies that allegedly
-						trained their models on copyrighted data without authorisation to make and later store copies of
-						the resulting images. These decisions will set legal precedents and impact the generative AI
-						industry, from start-ups to multinational tech companies.</li>
+						Europe and the US. Several lawsuits have been filed in the US against companies that allegedly
+						trained their models on copyrighted works without authorisation. The first rulings came in 2025:
+						in <i>Thomson Reuters v. Ross Intelligence</i>, a court rejected the fair-use defence for training
+						a competing legal research tool on copied Westlaw headnotes, while in <i>Bartz v. Anthropic</i>
+						and <i>Kadrey v. Meta</i>, courts ruled that training language models on books was fair use, on
+						narrow grounds (in <i>Bartz</i>, not for pirated copies kept in a central library; in
+						<i>Kadrey</i>, because the authors had not shown harm to the market for their books). Many cases
+						are still pending, and their outcomes will shape the generative AI industry, from start-ups to
+						multinational tech companies. In the EU, text and data mining of lawfully accessible works is
+						allowed unless the rightholder has reserved the right, for example in machine-readable form
+						(Article 4 of the Copyright Directive (EU) 2019/790), and the AI Act requires providers of
+						general-purpose AI models to respect such reservations.</li>
 				</ul>
 
 				<u>
