@@ -431,7 +431,7 @@
 
               <p><b>Task 2: Adjusting Activation Functions and Learning Rate</b></p>
               <ul>
-                <li>Change the activation function from "ReLU" to "tanh" and observe how it affects the network's
+                <li>Switch the activation function between "Tanh" (the Playground's default) and "ReLU" and observe how it affects the network's
                   ability to learn.</li>
                 <li>Now, adjust the learning rate slider and observe how different learning rates (e.g., 0.01, 0.1, 3)
                   impact the training speed and model accuracy.</li>
@@ -475,12 +475,20 @@
         </p>
         
         <p>
-                Run this on the MNIST digit data (load MNIST via
-                <code>sklearn.datasets.fetch_openml("mnist_784")</code>, or reuse
+                Run this on the MNIST digit data. The code loads MNIST via
+                <code>sklearn.datasets.fetch_openml("mnist_784")</code>; you can also reuse
                 <code>mnist-x.data</code>/<code>mnist-y.data</code> from
-                <a href="../files/tests/Perceptron.zip">Perceptron.zip</a>):
+                <a href="../files/tests/Perceptron.zip">Perceptron.zip</a> (6,000 images
+                whose pixels are already 0 or 1, so skip the division by 255), as long as
+                you split them into training and test sets:
               <pre>
+from sklearn.datasets import fetch_openml
 from sklearn.neural_network import MLPClassifier
+
+X, y = fetch_openml("mnist_784", version=1, return_X_y=True, as_frame=False)
+X = X / 255.0                   # scale the pixel values from 0..255 to 0..1
+X_train, X_test = X[:60000], X[60000:]
+y_train, y_test = y[:60000], y[60000:]
 
 clf = MLPClassifier(
     hidden_layer_sizes=(40,),   # one hidden layer, 40 neurons
@@ -510,11 +518,17 @@ print("Test accuracy:", clf.score(X_test, y_test))
                 </div>
                 <div class="hint__body">
                   <p>
-                    Every one of the ~8 iterations does exactly what you've seen in lecture:
-                    a forward pass through the network, a loss computation, and a weight update
-                    via gradient descent. <code>MLPClassifier</code> doesn't do anything
-                    conceptually different from the perceptron you studied earlier — it's just
-                    stacked into multiple layers and trained automatically.
+                    With <code>solver="sgd"</code>, each of the 8 iterations (<code>max_iter</code>)
+                    is an <b>epoch</b>, one pass over the whole training set. The data is processed
+                    in mini-batches of 200 images (the default <code>batch_size</code>), and for
+                    each mini-batch the network does exactly what you've seen in lecture: a forward
+                    pass, a loss computation, a backward pass and a weight update via gradient
+                    descent. With 60,000 training images, that is 300 weight updates per epoch.
+                    What makes this more than the perceptron you studied earlier is the training
+                    rule: <code>MLPClassifier</code> minimizes a differentiable loss (cross-entropy)
+                    and uses backpropagation to work out how every weight, including those of the
+                    hidden layer, should change. The perceptron learning rule can only train a
+                    single layer of weights.
                   </p>
                 </div>
               </div>
@@ -555,8 +569,8 @@ model = tf.keras.models.Sequential([
         </p>
         
         <ol>
-                <li> Train and evaluate the model with <code>activation='relu'</code> (the
-                  default), <code>'tanh'</code>, and <code>'sigmoid'</code> — three separate
+                <li> Train and evaluate the model with <code>activation='relu'</code> (as in
+                  the quickstart), <code>'tanh'</code>, and <code>'sigmoid'</code> — three separate
                   runs, everything else identical.
                 <li> Record the final test accuracy and how many epochs it took to visibly
                   "settle" (stop improving much epoch to epoch) for each.
