@@ -835,8 +835,10 @@
           To people outside the room, the answers may appear fluent and appropriate. Searle argues that formal symbol
           manipulation&mdash;<b>syntax</b>&mdash;is not by itself sufficient for meaning or <b>semantics</b>. The argument
           targets the claim that running the right program is sufficient for understanding; it does not show that AI
-          systems cannot be useful or behave intelligently. Replies include the systems reply, robot reply and brain-
-          simulator reply, each locating understanding in a larger system than the person following the rulebook.
+          systems cannot be useful or behave intelligently. Replies include the systems reply (the whole system of
+          person, rulebook and room understands, even if the person does not), the robot reply (the symbols get their
+          meaning once the program is connected to the world through sensors and motors) and the brain-simulator reply
+          (a program that simulates the neuron firings of a native Chinese speaker would understand).
         </p>
 
         <h2 class="material-heading">Dreyfus: intelligence is more than rule-following</h2>
@@ -1051,7 +1053,8 @@
           <li>Turing (1950), <a href="https://doi.org/10.1093/mind/LIX.236.433"><i>Computing Machinery and Intelligence</i></a>.</li>
           <li>Searle (1980), <a href="https://doi.org/10.1017/S0140525X00005756"><i>Minds, Brains, and Programs</i></a>.</li>
           <li>Dreyfus (1972/1992), <i>What Computers Can't Do</i> / <i>What Computers Still Can't Do</i>.</li>
-          <li>Dreyfus and Dreyfus (1980), <a href="https://apps.dtic.mil/sti/citations/ADA084551"><i>A Five-Stage Model of Skill Acquisition</i></a>.</li>
+          <li>Dreyfus and Dreyfus (1980), <a href="https://apps.dtic.mil/sti/citations/ADA084551"><i>A Five-Stage Model of the Mental Activities Involved in Directed Skill Acquisition</i></a> — the first version of the model, with the stages novice, competence, proficiency, expertise and mastery.</li>
+          <li>Dreyfus and Dreyfus (1986), <i>Mind over Machine: The Power of Human Intuition and Expertise in the Era of the Computer</i> — the five stages used in the table above.</li>
           <li>Newell and Simon (1976), <a href="https://doi.org/10.1145/360018.360022"><i>Computer Science as Empirical Inquiry: Symbols and Search</i></a>.</li>
           <li>Suchman (1987), <a href="https://doi.org/10.1017/CBO9780511620727"><i>Plans and Situated Actions</i></a>.</li>
           <li>Vera and Simon (1993), <a href="https://doi.org/10.1207/s15516709cog1701_2"><i>Situated Action: A Symbolic Interpretation</i></a>.</li>
@@ -1100,7 +1103,7 @@
                 <li> Generally speaking, what impression does the article give
                   about modern AI research? Reflect on the history and philosophy of
                   AI discussed above.
-                <li> What studies would be needed to undertand the article in detail?
+                <li> What studies would be needed to understand the article in detail?
                 <li> Bonus question: Considering the article you chose, how relevant
                   is the ''Terminator'' scenario where AI becomes self-conscious and
                   turns against the humankind?
@@ -1184,7 +1187,7 @@
 
         <p>
           Being able to solve AI problems by search requires that we first
-          formula the problem in a certain way.
+          formulate the problem in a certain way.
         </p>
 
         <div class="hint">
@@ -1219,7 +1222,7 @@
           (for some strange reason) a wolf, a goat, and cabbage. The farmer is
           transporting them across a river in a small boat that can only carry
           one piece of cargo at a time. However, the farmer can't leave the
-          wolf alone with the goat, because when unattended, the wolf east the
+          wolf alone with the goat, because when unattended, the wolf eats the
           goat. Likewise, the goat can't be left alone with the cabbage for the
           same reason.
         </p>
@@ -1272,7 +1275,7 @@
         </p>
 
         <p>
-          The point in all this is that while possibly rather dull and tedius,
+          The point in all this is that while possibly rather dull and tedious,
           constructing the state transition diagram is a routine operation.
           Since the search procedure is also fully
           automatic, we can solve the problem without having to use our own
@@ -1292,7 +1295,7 @@
 
         <p>
           To set the scene for discussing more advanced search algorithms,
-          such as A*, we begin by defining a generic templace for search
+          such as A*, we begin by defining a generic template for search
           algorithms.
         </p>
 
@@ -1357,17 +1360,20 @@
 
             <p>
               You need not worry about the difference too much. Here we simply wanted
-              to use the same template for all search methods. The behavior is
-              always the same: for example, the recursive version of DFS actually
-              uses a stack to store the state of the search and pops the next
-              state from the stack just like our non-recursive version above.
+              to use the same template for all search methods. Both versions are
+              depth-first: the recursive version of DFS also uses a stack (the call
+              stack) to store the state of the search. The order in which the nodes
+              are visited can differ, though: our version pushes all the neighbors
+              of a node at once and then pops the one that was pushed last, while
+              the recursive version visits the neighbors in the order in which they
+              are listed. In the exercises, follow the template above.
             </p>
 
           </div>
         </div>
 
         <p>
-          It is quite straighforward to see that BFS will always return the
+          It is quite straightforward to see that BFS will always return the
           path with the fewest transitions to a goal node: if node A is nearer
           to the starting node than node B, the search is expanded to node A
           earlier than to B. You can think of the BFS search as
@@ -1378,8 +1384,8 @@
 
         <p>
           DFS doesn't guarantee that the shortest path be found, but in some
-          cases it doesn't matter. Can you think of a reason by
-          DFS is a better choice in that problem that BFS?
+          cases it doesn't matter. Can you think of a reason why
+          DFS would be a better choice than BFS in such a case?
         </p>
 
         <p>
@@ -1625,12 +1631,16 @@ state:  ---    |     |          state:  |     |    ---
         </p>
 
         <p>
-          The generic search algorithm template above still applies, except
-          for one important detail: In informed search, we'll skip the check
-          that the node hasn't been visited before (so we can drop lines 3, 8, and
-          9 in the pseudocode above). This guarantees that if a better path to a node
-          that has already been visited is found at a later stage, we make sure to
-          check whether it leads to a better path to the goal.</p>
+          The generic search algorithm template above still applies. Note that
+          the same node can now be added to the node list several times, once
+          for each path that reaches it, each time with the cost of that path.
+          When the list is ordered by the cost of the path and no transition has
+          a negative cost, the first time a node is taken from the list (line 6),
+          it has been reached by a cheapest path. The visited check on lines 8
+          and 9 therefore safely skips the later, more expensive copies of the
+          node. Don't drop the check: without it, the same nodes can be expanded
+          again and again, and if the network has cycles and the goal cannot be
+          reached, the search never terminates.</p>
 
         <p>So except for the above modification, we'll be still using the same
           search algorithm template. Recall that BFS and DFS were obtained
@@ -1638,7 +1648,7 @@ state:  ---    |     |          state:  |     |    ---
           stored, respectively. In best-first
           search, the data structure that holds the nodes is
           a <b>priority queue</b>. When adding nodes to the priority queue on
-          line 14, they are given a cost or a value that is then used to order
+          line 12, they are given a cost or a value that is then used to order
           the nodes in the queue. (Depending on the application and whether
           the aim is to minimize or maximize the value, the queue can be a
           min-priority queue or a max-priority queue.)
@@ -1701,6 +1711,24 @@ state:  ---    |     |          state:  |     |    ---
         the <a href="http://qiao.github.io/PathFinding.js/visual/">PathFinding
           applet</a>, you will immediately see that it wipes the floor with
         other, uninformed search methods.
+        </p>
+
+        <p>
+          A* is guaranteed to find a cheapest path only if the heuristic
+          is <b>admissible</b>, which means that it never overestimates the
+          remaining cost to the goal. If it overestimates, A* can return a path
+          that is not the cheapest. Since our template skips nodes that have
+          already been visited, the heuristic should also
+          be <b>consistent</b>: for every node <code>n</code> and each of its
+          neighbors <code>m</code>, <code>h(n) &le; c(n, m) + h(m)</code>,
+          where <code>c(n, m)</code> is the cost of the transition
+          from <code>n</code> to <code>m</code>. Then the first time a node is
+          taken from the priority queue, it has been reached by a cheapest path,
+          just like in Dijkstra's algorithm. (A consistent heuristic whose value
+          at the goal is 0 is always admissible.) The straight-line distance
+          satisfies both conditions, because no route can be shorter than the
+          straight line between its end points. With <code>h(node) = 0</code>
+          for all nodes, A* is the same as Dijkstra's algorithm.
         </p>
 
 
@@ -1943,7 +1971,7 @@ state:  ---    |     |          state:  |     |    ---
           at any <b>Min node</b>, i.e., node where it is Min's turn, the
           optimal choices are given by those children whose value is minimal,
           and conversely, at any <b>Max node</b>, where it is Max's turn, the
-          optimal choices are given the the children whose value is maximal.
+          optimal choices are given by the children whose value is maximal.
         </p>
 
         <h2 class="material-heading">
@@ -1954,7 +1982,8 @@ state:  ---    |     |          state:  |     |    ---
         <p>
           We can exploit the above concept of the value of the game to obtain
           an algorithm with optimal game play in, theoretically speaking, any
-          deterministic, two-person, perfect-information game. Given a state
+          deterministic, two-person, zero-sum, perfect-information game (zero-sum
+          means that one player's gain is the other player's loss). Given a state
           of the game, the algorithm simply computes the values of the
           children of the given state and chooses the one that has the maximum
           value if it is Max's turn, and the one that has the minimum value if
@@ -2035,7 +2064,7 @@ state:  ---    |     |          state:  |     |    ---
 
             <p>
               As stated above, the Minimax algorithm can be used to implement
-              optimal game play in any deterministic, two-player,
+              optimal game play in any deterministic, two-player, zero-sum,
               perfect-information game. Such games include tic-tac-toe, connect
               four, chess, Go, etc. (Rock-paper-scissors is not in this class of
               games since it involves information hidden from the other player;
@@ -2054,7 +2083,7 @@ state:  ---    |     |          state:  |     |    ---
               -- probably not your favorite pencil-and-paper homework exercise... A
               look-ahead of three moves requires visiting 42875 nodes; four moves
               1500625; and ten moves 2758547353515625 (that's about
-              2.7 quadrillion) nodes.
+              2.8 quadrillion) nodes.
             </p>
 
             <p>
@@ -2075,7 +2104,7 @@ state:  ---    |     |          state:  |     |    ---
 
 
         <h2 class="material-heading">
-          Depth-limited minimax and heuristic evalution criteria
+          Depth-limited minimax and heuristic evaluation criteria
 
         </h2>
 
@@ -2180,23 +2209,28 @@ state:  ---    |     |          state:  |     |    ---
         </p>
 
         <p>
-          The interpretation <code>alpha</code> and <code>beta</code> is that
-          they provide the interval of possible values of the game at the node
-          that is being processed:
-          <code>alpha</code> &le; value &le; <code>beta</code>. This interval
-          is updated during the algorithm, and if at some point, the interval
-          shrinks so that <code>alpha = beta</code>, we know the value and
-          can return it to the parent node without processing any more
-          child nodes. It can also happen that <code>alpha > beta</code>,
-          which implies that the current node will never be visited in
-          optimal game play, and its processing can likewise be aborted.
+          The interpretation of <code>alpha</code> and <code>beta</code> is
+          the following. Based on the moves explored so far on the path from
+          the root to the node that is being processed, <code>alpha</code> is
+          the highest value that Max can already guarantee,
+          and <code>beta</code> is the lowest value that Min can already
+          guarantee. Only values strictly between <code>alpha</code>
+          and <code>beta</code> can still change the choice made at the root.
+          The interval shrinks during the algorithm, and as soon
+          as <code>alpha &ge; beta</code>, one of the players can do at least
+          as well by avoiding the current node, so exploring it further cannot
+          change the outcome, and its processing can be aborted. The value
+          returned in that case is not necessarily the exact value of the
+          node, only a bound on it (a lower bound at a Max node and an upper
+          bound at a Min node), but that is all the parent node needs.
         </p>
 
         <p>
           When starting the recursion at the root node, we use the minimum and
           maximum value of the game as the <code>alpha</code>
           and <code>beta</code> values respectively. For tic-tac-toe and
-          chess, for instance, where the outcome is plain win/loss, this
+          chess, for instance, where the outcome is a win, a draw or a loss
+          (values 1, 0 and -1), this
           is <code>alpha = -1</code> and <code>beta = 1</code>. If the range
           of possible values is not specified in advance, we initialize
           as <code>alpha = -&infin;</code> and <code>beta = &infin;</code>.
@@ -2288,7 +2322,7 @@ state:  ---    |     |          state:  |     |    ---
         <p>
           Notice that while the left-to-right order of the children of each
           node, i.e., the order in which the children are processed in the
-          loop on lines 4--6, is arbitrary, it can have significant impact
+          loop on lines 3--6, is arbitrary, it can have significant impact
           on which branches are pruned.
         </p>
 
