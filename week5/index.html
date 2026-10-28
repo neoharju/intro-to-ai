@@ -312,8 +312,8 @@
 	</p>
 	
 	<p>
-	  where <b>C</b> is a normalization constant. In the original paper, the normalization constant was chosen as 
-	  the square root of the key and value dimension <b>√d<sub>k</sub></b>.
+	  where <b>C</b> is a normalization constant. In the original paper, the normalization constant was chosen as
+	  <b>1/√d<sub>k</sub></b>, where <b>d<sub>k</sub></b> is the dimension of the queries and keys.
 	</p>
 	
 	<p>
@@ -328,6 +328,15 @@
 	<p>
 	  where <b>Q, K, V</b> are matrices of queries, keys, and values, respectively, with <b>q<sub>i</sub>, k<sub>i</sub>, v<sub>i</sub></b> 
 	  stored as row vectors, and softmax is applied row-wise.
+	</p>
+
+	<p>
+	  Nothing in this formula depends on the order of the tokens: if the input tokens are shuffled, the
+	  outputs are shuffled in the same way. On its own, self-attention therefore ignores word order.
+	  Transformers fix this by adding <b>positional information</b> to the token representations. The
+	  original paper added fixed sinusoidal <b>positional encodings</b> to the input embeddings, BERT and GPT
+	  learn an embedding for each position, and many recent models rotate the queries and keys according to
+	  their positions (rotary position embeddings, RoPE).
 	</p>
 
 	<h2 class="material-heading">Attention Layer in the Decoder</h2>
@@ -348,9 +357,9 @@
 	</p>
 	
 	<p>
-	  To prevent this issue, an <b>autoregressive mask</b> is applied to attention during training, 
-	  manually setting weights for future tokens to <code>-∞</code> before the softmax operation, 
-	  ensuring their probabilities become zero after softmax. As shown in the image below, this 
+	  To prevent this issue, an <b>autoregressive mask</b> is applied to attention in the decoder, both during
+	  training and when a prompt is processed during generation. It sets the attention scores for future
+	  tokens to <code>-∞</code> before the softmax operation, ensuring their weights become zero after softmax. As shown in the image below, this
 	  mask has a lower triangular shape.
 	</p>
 	
@@ -456,8 +465,10 @@
 	</p>
 	
 	<p>
-	  where <span class="math">\Phi</span> is the cumulative distribution function 
-	  of the standard normal distribution.
+	  where <span class="math">\Phi</span> is the cumulative distribution function
+	  of the standard normal distribution. Many recent large language models, such as Llama, instead use
+	  a gated variant called <a href="https://arxiv.org/abs/2002.05202" target="_blank">SwiGLU</a>, which
+	  multiplies the activated output elementwise by a second linear projection of the input.
 	</p>
 	
 	<img src="../img/material/part5/gelu.svg" alt="GELU" width="60%">
@@ -472,8 +483,10 @@
 	<p>
 	  However, this approach can be quite unstable when training deep models with 
 	  a large number of layers. Instead, an alternative approach, 
-	  <strong>PreLN</strong> (shown on the right in the image below), 
-	  applies normalization to the <em>input</em> of the residual connection.
+	  <strong>PreLN</strong> (shown on the right in the image below),
+	  applies normalization to the <em>input</em> of each sub-layer (attention or FFN) inside the residual
+	  branch, <span class="math">x + F(LN(x))</span>, so that the residual connection itself skips the
+	  normalization.
 	</p>
 	
 	<img src="../img/material/part5/transformer_layer_norm.svg" alt="PostLN vs. PreLN Layer Normalization" width="60%">
@@ -505,8 +518,9 @@
 	
 	<p>
 	  The trained model can be used for <strong>text generation</strong> and tasks 
-	  that rely on it. Even <strong>ChatGPT</strong>, which is fine-tuned with 
-	  special instruction-based training, differs only slightly from the base GPT model.
+	  that rely on it. Even <strong>ChatGPT</strong> has the same architecture as the base GPT model.
+	  What differs is the additional training: fine-tuning on instructions and example dialogues, and
+	  reinforcement learning from human feedback (RLHF), which change the model's behaviour substantially.
 	</p>
 	
 	<img src="../img/material/part5/gpt_architecture.svg" alt="GPT Model Architecture" width="60%">
@@ -577,8 +591,9 @@
 	<p>
 	  Another crucial factor is the choice of <strong>optimizer</strong> and <strong>learning rate schedule</strong>. 
 	  Training a Transformer with standard <strong>SGD</strong> is highly unlikely to succeed. 
-	  In the original Transformer paper, the <strong>Adam</strong> optimizer was used, and to this day, 
-	  it remains the standard choice.
+	  In the original Transformer paper, the <strong>Adam</strong> optimizer was used, and to this day,
+	  Adam, usually in its <strong>AdamW</strong> variant with decoupled weight decay, remains the standard
+	  choice.
 	</p>
 	
 	<p>
@@ -629,9 +644,10 @@
 	
 	<p>
 	  The authors demonstrated that the same approach used for text generation can be applied to 
-	  predicting actions in a dynamic environment. As shown in the image below, the model 
-	  sequentially receives standard triplets of encoded states, current actions, and rewards, 
-	  and at each step, it outputs the next action.
+	  predicting actions in a dynamic environment. As shown in the image below, the model
+	  sequentially receives triplets of encoded returns-to-go (the total reward still to be collected
+	  from that step on), states and actions, and at each step, it outputs the next action. At test
+	  time, the first return-to-go is set to the return we want the agent to achieve.
 	</p>
 	
 	<img src="../img/material/part5/decision_transformer.svg" alt="Decision Transformer in RL" width="70%">
@@ -663,7 +679,7 @@
               <pre>
 from transformers import pipeline
 
-classifier = pipeline("sentiment-analysis")
+classifier = pipeline("sentiment-analysis", model="distilbert/distilbert-base-uncased-finetuned-sst-2-english")
 classifier("I've been waiting for a HuggingFace course my whole life.")
 </pre>
               </p>
@@ -675,14 +691,17 @@ classifier("I've been waiting for a HuggingFace course my whole life.")
                   model's confidence score reflects the ambiguity.
                 <li> <b>Fill-mask</b> — a Transformer guessing a missing word:
                 <pre>
-unmasker = pipeline("fill-mask")
-unmasker("This course will teach you all about [MASK] models.", top_k=3)
+unmasker = pipeline("fill-mask", model="distilbert/distilroberta-base")
+unmasker("This course will teach you all about &lt;mask&gt; models.", top_k=3)
 </pre>
-                  Try it on 2 sentences of your own with different missing words.
+                  Try it on 2 sentences of your own with different missing words. The mask
+                  token depends on the model: this one uses <code>&lt;mask&gt;</code>, while
+                  BERT models use <code>[MASK]</code> (<code>unmasker.tokenizer.mask_token</code>
+                  tells you which).
                 <li> <b>Text generation</b> — the model continues your prompt:
                 <pre>
-generator = pipeline("text-generation")
-generator("In this course, we will teach you how to", max_length=30, num_return_sequences=2)
+generator = pipeline("text-generation", model="openai-community/gpt2")
+generator("In this course, we will teach you how to", max_new_tokens=20, do_sample=True, num_return_sequences=2)
 </pre>
                   Try 2 different prompts and compare how coherent/relevant the continuations are.
               </ol>
@@ -701,9 +720,11 @@ generator("In this course, we will teach you how to", max_length=30, num_return_
                 <div class="hint__body">
                   <p>
                     The first time you call each <code>pipeline(...)</code>, it downloads the
-                    model (roughly 250MB for sentiment-analysis/fill-mask/text-generation with
-                    their default models). That's a one-time cost per model — subsequent calls
-                    are fast.
+                    model (roughly 270–550 MB for the three models named above). That's a
+                    one-time cost per model — subsequent calls are fast. Always name the model:
+                    without one, the pipeline picks a default that can change between library
+                    versions; in recent versions, <code>pipeline("text-generation")</code>
+                    downloads a 3-billion-parameter model of about 6 GB.
                   </p>
                 </div>
               </div>
@@ -1311,15 +1332,17 @@ git checkout 3adf61e1</code></pre>
 	
 	<ul>
 	  <li>
-	    <strong>Stable Diffusion</strong> – Open-source model. 
+	    <strong>Stable Diffusion</strong> – Openly available model weights, released under the CreativeML
+	    Open RAIL-M licence, which forbids some uses (so not open source in the OSI sense).
 	    <a href="https://github.com/CompVis/stable-diffusion" target="_blank">GitHub</a>
 	  </li>
 	  <li>
-	    <strong>DALLE 2</strong> – Available via a paid API. 
+	    <strong>DALLE 2</strong> – Was available via OpenAI's paid API until OpenAI retired its DALL·E
+	    models in May 2026; OpenAI's GPT Image models replaced them.
 	    <a href="https://openai.com/index/dall-e-2/" target="_blank">More Info</a>
 	  </li>
 	  <li>
-	    <strong>Midjourney</strong> – Available via Discord. 
+	    <strong>Midjourney</strong> – Available via its website and Discord.
 	    <a href="https://www.midjourney.com/home" target="_blank">Official Site</a>
 	  </li>
 	  <li>
