@@ -1,0 +1,50 @@
+// Formulas typeset by math.js (KaTeX). A displayed formula scrolls sideways when it is wider than the
+// text column, instead of overflowing it on a phone.
+div.math, p.math {
+  margin: 1.1rem 0 1.35rem;
+  text-align: center;
+
+  // The scrolling box is KaTeX's own display element, so that the card of a key equation keeps its
+  // border while the formula scrolls inside it (math.js adds the fade classes).
+  .katex-display {
+    margin: 0;
+    padding: .2rem 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    $fade: 2.5rem;
+
+    &.fade-right {
+      -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - #{$fade}), transparent);
+      mask-image: linear-gradient(90deg, #000 calc(100% - #{$fade}), transparent);
+    }
+
+    &.fade-left {
+      -webkit-mask-image: linear-gradient(270deg, #000 calc(100% - #{$fade}), transparent);
+      mask-image: linear-gradient(270deg, #000 calc(100% - #{$fade}), transparent);
+    }
+
+    &.fade-left.fade-right {
+      -webkit-mask-image: linear-gradient(90deg, transparent, #000 $fade, #000 calc(100% - #{$fade}), transparent);
+      mask-image: linear-gradient(90deg, transparent, #000 $fade, #000 calc(100% - #{$fade}), transparent);
+    }
+  }
+}
+
+// A key equation of the section, set off on a card.
+div.math--key {
+  padding: 1rem 1.25rem;
+  background-color: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+}
+
+// KaTeX's default 1.21em makes formulas look larger than the surrounding Inter text.
+.katex {
+  font-size: 1.1em;
+}
+
+// Inside figure captions and hints the text is smaller, and so are the formulas.
+.viz__caption .katex, .vz-note .katex {
+  font-size: 1.05em;
+}

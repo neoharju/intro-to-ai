@@ -1,0 +1,77 @@
+// Bonus material at the end of a week: optional reading outside the course requirements, set apart on
+// a card with its own badge, so that nobody mistakes it for exam material.
+.bonus {
+  margin: 4rem 0 0;
+  padding: 1.5rem 1.5rem 1.25rem;
+  background: linear-gradient(180deg, var(--violet-soft), transparent 16rem), var(--surface);
+  border: 1px solid var(--violet-line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+
+  &__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+    margin: 0 0 .25rem;
+    padding: .2rem .7rem;
+    font-size: .6875rem;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--violet);
+    background-color: var(--surface);
+    border: 1px solid var(--violet-line);
+    border-radius: 999px;
+
+    &::before {
+      content: "\2726";
+    }
+  }
+
+  > h1.material-heading {
+    margin-top: .5rem;
+    padding-top: 0;
+    font-size: 1.75rem;
+    border-top: 0;
+
+    > small {
+      color: var(--violet) !important;
+    }
+  }
+
+  &__note {
+    padding: .75rem 1rem;
+    font-size: .9375rem;
+    color: var(--text);
+    background-color: var(--surface);
+    border: 1px dashed var(--violet-line);
+    border-radius: var(--radius-sm);
+  }
+
+  // Answers that stay hidden until the reader has tried.
+  details {
+    margin: 1rem 0;
+    padding: .75rem 1rem;
+    background-color: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+
+    > summary {
+      font-weight: 650;
+      color: var(--ink);
+      cursor: pointer;
+    }
+
+    &[open] > summary {
+      margin-bottom: .6rem;
+    }
+
+    > :last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  @include media-breakpoint-down(md) {
+    padding: 1.25rem 1rem 1rem;
+  }
+}

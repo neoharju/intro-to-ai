@@ -208,16 +208,19 @@
         <p>
           Since this section is not finished yet, feel free to refresh these
           concepts from your favorite source. Two great examples are:
+        </p>
         <ul>
           <li>Ian Goodfellow, Yoshua Bengio & Aaron Courville: <a href="https://www.deeplearningbook.org/">Deep
               Learning</a> (Chapter 3)
           <li>Larry Wasserman: <a
               href="https://www.stat.cmu.edu/~brian/valerie/617-2022/0%20-%20books/2004%20-%20wasserman%20-%20all%20of%20statistics.pdf">All of Statistics</a> (Part I, Probability is great)
         </ul>
-        The Bayes rule (aka Bayes theorem) is the single most important tool
-        from probability calculus, and we'll be using it again and again for
-        building AI applications, here is some more material about it
-        in particular:
+        <p>
+          The Bayes rule (aka Bayes theorem) is the single most important tool
+          from probability calculus, and we'll be using it again and again for
+          building AI applications. Here is some more material about it
+          in particular:
+        </p>
         <ul>
           <li><a href="https://en.wikipedia.org/wiki/Bayes%27_theorem#Drug_testing">Wikipedia: Bayes theorem (Section
               <i>Drug testing</i>)</a>
@@ -227,7 +230,6 @@
               href="https://betterexplained.com/articles/understanding-bayes-theorem-with-ratios/">Understanding Bayes
               Theorem with Ratios</a>
         </ul>
-        </p>
 
 
 
@@ -248,22 +250,20 @@
                 The lecturer has two dice in his office (true story). One of them is
                 an ordinary die and will yield any result from one to six with equal
                 probability. However, the other die is loaded (true story, again).
-                It will yield a six with probability 1/2 and any other outcome with
-                probability 1/10. He will roll the ordinary die first, and then
+                It will yield a six with probability <span class="math">\tfrac{1}{2}</span> and any other outcome with
+                probability <span class="math">\tfrac{1}{10}</span>. He will roll the ordinary die first, and then
                 the loaded one. Calculate the following probabilities. Recall
-                that <i>P(A|B)</i> means the conditional probability of <i>A</i>
-                given <i>B</i>.
+                that <span class="math">P(A \mid B)</span> means the conditional probability of <span class="math">A</span>
+                given <span class="math">B</span>.
               </p>
 
-              <p>
               <ol>
-                <li> P("both outcomes are 6")
-                <li> P("neither outcome is 6")
-                <li> P("the sum of the outcomes equals 9")
-                <li> P("the sum of the outcomes equals 9" | "at least one outcome is 6")
-                <li> P("at least one outcome is 6" | "the sum of the outcomes equals 9")
+                <li> <span class="math">P(\text{both outcomes are 6})</span>
+                <li> <span class="math">P(\text{neither outcome is 6})</span>
+                <li> <span class="math">P(\text{the sum of the outcomes equals 9})</span>
+                <li> <span class="math">P(\text{the sum of the outcomes equals 9} \mid \text{at least one outcome is 6})</span>
+                <li> <span class="math">P(\text{at least one outcome is 6} \mid \text{the sum of the outcomes equals 9})</span>
               </ol>
-              </p>
 
               <p>
                 <i>Hint:</i> We know that probability calculus can be confusing, but
@@ -297,16 +297,15 @@
                 Let's use the same dice as in the previous exercise.
               </p>
 
-              <p>
               <ol>
                 <li> What is the distribution of the sum of the outcomes when
                   rolling the ordinary die twice?
                 <li> What is the distribution of the sum of the outcomes when
                   rolling the loaded die twice?
                 <li> Assume that either die (ordinary or loaded) is selected
-                  at random with probability 1/2 each. The selected die is
-                  rolled twice. Calculate the probability<br><br>
-                  <i>P("the die is loaded" | "the sum of the outcomes is 10")</i><br><br>
+                  at random with probability <span class="math">\tfrac{1}{2}</span> each. The selected die is
+                  rolled twice. Calculate the probability
+                  <span class="math">P(\text{the die is loaded} \mid \text{the sum of the outcomes is 10}).</span>
                   Calculate the probability that the die is ordinary as well to
                   make sure that the sum of the two probabilities equals one.
                 <li> Again, either die is selected with equal probability.
@@ -316,9 +315,8 @@
                   posterior probabilities of each die after <i>k</i>
                   rolls. If the posterior probability of the loaded die is over
                   99%, then the ratio of the posterior probabilities is over
-                  0.99/0.01 = 99.
+                  <span class="math">0.99 / 0.01 = 99</span>.
               </ol>
-              </p>
 
               <p>
                 If you have trouble with these exercises, you may wish to study
@@ -356,16 +354,20 @@
           can be made and that are dependent on the unknown state, we
           can use the Bayes rule as follows
         </p>
-        <img src="../img/drawings/posterior_prior_likelihood-279c07c5.png" width=83%
-          alt="P(state | observation) = P(state) P(observation | state) / P(observation)">
+        <div class="math math--key">
+          \underbrace{P(\text{state} \mid \text{observation})}_{\textsf{posterior probability}}
+          \;=\;
+          \frac{\overbrace{P(\text{state})}^{\textsf{prior probability}} \;\; \overbrace{P(\text{observation} \mid \text{state})}^{\textsf{likelihood}}}
+                {\underbrace{P(\text{observation})}_{\textsf{the (annoying) denominator}}}
+        </div>
         <p>
           The left side of the equation is called the <strong>posterior
             probability</strong> (probability after the observation).
-          The first factor on the right is called the <strong>prior
+          The first factor in the numerator is called the <strong>prior
             probability</strong> (probability prior to the observation),
-          the middle factor is called the <strong>likelihood</strong>
+          the second factor is called the <strong>likelihood</strong>
           (how likely the observation is when the state is given), and
-          the last term on the right has many names, of which
+          the denominator has many names, of which
           <strong>the annoying denominator</strong> may be the most
           fitting. (Evidence and marginal likelihood are more
           common.)
@@ -399,33 +401,34 @@
               instead of the probabilities themselves. For example, consider
               the following ratio
             </p>
-            <pre>
-     R = P(State=1 | obs) / P(State=2 | obs)
-</pre>
+            <div class="math">
+              R = \frac{P(\text{State} = 1 \mid \text{obs})}{P(\text{State} = 2 \mid \text{obs})}
+            </div>
             <p>
-              where <code>obs</code> is an abbreviation for observation.
+              where obs is an abbreviation for observation.
               Applying Bayes rule to both the numerator and the denominator
-              in the ratio, we'll notice that the denominator <code>P(obs)</code>
+              in the ratio, we'll notice that the denominator <span class="math">P(\text{obs})</span>
               cancels:
             </p>
-            <pre>
-     P(State=1) P(obs | State=1) / P(obs)   P(State=1) P(obs | State=1)
-R =  ------------------------------------ = ---------------------------
-     P(State=2) P(obs | State=2) / P(obs)   P(State=2) P(obs | State=2)
-</pre>
+            <div class="math">
+              R = \frac{P(\text{State} = 1)\, P(\text{obs} \mid \text{State} = 1) \,/\, \cancel{P(\text{obs})}}
+                       {P(\text{State} = 2)\, P(\text{obs} \mid \text{State} = 2) \,/\, \cancel{P(\text{obs})}}
+                = \frac{P(\text{State} = 1)\, P(\text{obs} \mid \text{State} = 1)}{P(\text{State} = 2)\, P(\text{obs} \mid \text{State} = 2)}
+            </div>
             <p>
               In case the two states (1 and 2) are the only possibilities, we
-              have <code>P(State=2|obs) = 1-P(State=1|obs)</code> (because one of
+              have <span class="math">P(\text{State} = 2 \mid \text{obs}) = 1 - P(\text{State} = 1 \mid \text{obs})</span> (because one of
               the events must happen and both cannot occur at the same time).
-              In this case, after calculating the above ratio, <code>R</code>,
+              In this case, after calculating the above ratio, <span class="math">R</span>,
               it can be mapped back into the posterior probability of state 1 by
             </p>
-            <pre>
-  P(State=1 | obs) = R / (1+R)
-</pre>
+            <div class="math">
+              P(\text{State} = 1 \mid \text{obs}) = \frac{R}{1 + R}
+            </div>
             <p>
-              You can check that this is true by assigning and using the
-              fact <code>P(State=2|obs) = 1-P(State=1|obs)</code>.
+              You can check that this is true by substituting the
+              fact <span class="math">P(\text{State} = 2 \mid \text{obs}) = 1 - P(\text{State} = 1 \mid \text{obs})</span>
+              into the definition of <span class="math">R</span>.
             </p>
 
 
@@ -488,7 +491,7 @@ R =  ------------------------------------ = ---------------------------
           To define the naive Bayes model, we need to specify the distribution
           of each variable. For the class variable, this is the distribution
           of spam vs ham messages, which we can for simplicity assume to be
-          1:1, i.e., <code>P(spam) = P(ham) = 0.5</code>.
+          1:1, i.e., <span class="math">P(\text{spam}) = P(\text{ham}) = 0.5</span>.
         </p>
 
         <p>
@@ -519,16 +522,18 @@ R =  ------------------------------------ = ---------------------------
           Assume that we have calculated the number of occurrences of the
           following words in the two classes of messages:
         </p>
-        <pre>
-        word    spam     ham
- ----------- ------- -------
- million         156      98
- dollars          29     119
- adclick          51       0
- conferences       0      12
- ----------- ------- -------
-       total   95791  306438
-</pre>
+        <table class="table">
+          <thead>
+            <tr><th scope="col">word</th><th scope="col" class="num">spam</th><th scope="col" class="num">ham</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>million</code></td><td class="num">156</td><td class="num">98</td></tr>
+            <tr><td><code>dollars</code></td><td class="num">29</td><td class="num">119</td></tr>
+            <tr><td><code>adclick</code></td><td class="num">51</td><td class="num">0</td></tr>
+            <tr><td><code>conferences</code></td><td class="num">0</td><td class="num">12</td></tr>
+            <tr><th scope="row">total</th><td class="num"><b>95791</b></td><td class="num"><b>306438</b></td></tr>
+          </tbody>
+        </table>
 
         <div class="hint">
           <div class="hint__header">
@@ -554,8 +559,8 @@ R =  ------------------------------------ = ---------------------------
 
         <p>
           We can now estimate that the probability that a word in a spam
-          message is <code>million</code>, for example, is about 156/95791
-          &asymp; 0.0016285. In other words, on the average, roughly every
+          message is <code>million</code>, for example, is about
+          <span class="math">156 / 95791 \approx 0.0016285</span>. In other words, on the average, roughly every
           614th word in a spam message is <code>million</code>. Likewise, we
           get the estimate 0.0003198 for the probability that a word in a ham
           message is <code>million</code>. Both of these probability estimates
@@ -574,18 +579,18 @@ R =  ------------------------------------ = ---------------------------
         <p>
           After the parameters of the model have been estimated, the
           classifier is ready for use! When we are given a new message, we
-          will compute the posterior probability <code>P(spam |
-  message)</code>, where <code>message</code> is a place-holder for
-          the words in the message, for example, <code>P(spam | 'million',
-  'conferences')</code> (which would be a really short message).
+          will compute the posterior probability <span class="math">P(\text{spam} \mid \text{message})</span>,
+          where message is a place-holder for
+          the words in the message, for example, <span class="math">P(\text{spam} \mid \text{‘million’}, \text{‘conferences’})</span>
+          (which would be a really short message).
         </p>
 
         <p>
           Let's compute the posterior probability
         </p>
-        <pre>
-     P(spam | Word1 = 'million', Word2 = 'conferences')
-</pre>
+        <div class="math">
+          P(\text{spam} \mid \text{Word}_1 = \text{‘million’}, \text{Word}_2 = \text{‘conferences’})
+        </div>
         <p>
           which is abbreviated without a great risk of confusion -- but please
           note that unlike <code>million</code> and <code>conferences</code>,
@@ -593,21 +598,19 @@ R =  ------------------------------------ = ---------------------------
           in the message, the term <code>spam</code> indicates
           the <i>class</i> of the message, not the word "spam" -- as
         </p>
-        <pre>
-     P(spam | 'million', 'conferences')
-</pre>
+        <div class="math">
+          P(\text{spam} \mid \text{‘million’}, \text{‘conferences’})
+        </div>
         <p>
           By Bayes rule, we have
         </p>
-        <pre>
-                                      P(spam) P('million', 'conferences' | spam)
- P(spam | 'million', 'conferences') = ------------------------------------------
-                                            P('million', 'conferences')
-</pre>
+        <div class="math">
+          P(\text{spam} \mid \text{‘million’}, \text{‘conferences’}) = \frac{P(\text{spam})\, P(\text{‘million’}, \text{‘conferences’} \mid \text{spam})}{P(\text{‘million’}, \text{‘conferences’})}
+        </div>
         <p>
           The numerator on the right side is the product of the prior
-          probability <code>P(spam)</code> and the likelihood
-          term <code>P('million', 'conferences' | spam)</code>, whose meaning
+          probability <span class="math">P(\text{spam})</span> and the likelihood
+          term <span class="math">P(\text{‘million’}, \text{‘conferences’} \mid \text{spam})</span>, whose meaning
           is the probability that the first two words are <code>million</code>
           and <code>conferences</code> given that the message is spam. The
           denominator on the right side -- it's the annoying one -- is the
@@ -620,9 +623,9 @@ R =  ------------------------------------ = ---------------------------
           assumption, i.e., the naive Bayes assumption, implies that the
           likelihood can be "factorized" as follows
         </p>
-        <pre>
-  P('million', 'conferences' | spam) = P('million' | spam) P('conferences' | spam)
-</pre>
+        <div class="math">
+          P(\text{‘million’}, \text{‘conferences’} \mid \text{spam}) = P(\text{‘million’} \mid \text{spam})\, P(\text{‘conferences’} \mid \text{spam})
+        </div>
         <p>
           This is very useful since these are the kind of probabilities we
           have estimated from the data. The same factorization rule can be
@@ -634,18 +637,17 @@ R =  ------------------------------------ = ---------------------------
           and avoid calculating the denominator (at least explicitly). To achieve
           this, we consider the ratio of posteriors:
         </p>
-        <pre>
- P(spam | 'million', 'conferences')   P(spam) P('million', 'conferences' | spam) / Z
- ---------------------------------- = ----------------------------------------------
-  P(ham | 'million', 'conferences')    P(ham) P('million', 'conferences' | ham) / Z
-</pre>
+        <div class="math">
+          \frac{P(\text{spam} \mid \text{‘million’}, \text{‘conferences’})}{P(\text{ham} \mid \text{‘million’}, \text{‘conferences’})}
+          = \frac{P(\text{spam})\, P(\text{‘million’}, \text{‘conferences’} \mid \text{spam}) \,/\, \cancel{Z}}{P(\text{ham})\, P(\text{‘million’}, \text{‘conferences’} \mid \text{ham}) \,/\, \cancel{Z}}
+        </div>
         <p>
-          where Z, defined as <code>Z = P('million', 'conferences')</code>,
+          where <span class="math">Z = P(\text{‘million’}, \text{‘conferences’})</span>
           is the annoying denominator which cancels out just as promised in the hint.
         </p>
 
         <p>
-          The term <code>P('million', 'conferences' | ham)</code> is treated in the exact
+          The term <span class="math">P(\text{‘million’}, \text{‘conferences’} \mid \text{ham})</span> is treated in the exact
           same manner as the corresponding term for spam (see above), and the
           numbers required to calculate its value are available since we have
           estimated them from the training data.
@@ -677,24 +679,24 @@ R =  ------------------------------------ = ---------------------------
                   Estimate the remaining word probabilities for both classes.
                 <li>
                   Use the obtained estimates to calculate the probability
-                  <code>P(Word &ne; 'million')</code>, i.e., the probability that
+                  <span class="math">P(\text{Word} \neq \text{‘million’})</span>, i.e., the probability that
                   a single word in a message is <i>not</i> <code>million</code> when
                   the class of the message is unknown. <i>Hint:</i> You should recall
                   the rule for calculating the <b>marginal probability</b>
                   (see, for example, the references given under
                   Probability Fundamentals above).
                 <li>
-                  Calculate <code>P(spam | 'million')</code>, i.e., the probability
+                  Calculate <span class="math">P(\text{spam} \mid \text{‘million’})</span>, i.e., the probability
                   that the message is spam given that its first word (or in fact,
                   any particular word) is <code>million</code>.
                 <li>
-                  Calculate <code>P(spam | 'million', 'dollars', 'adclick', 'conferences')</code>,
+                  Calculate <span class="math">P(\text{spam} \mid \text{‘million’}, \text{‘dollars’}, \text{‘adclick’}, \text{‘conferences’})</span>,
                   i.e., the probability that the message is spam when its first four
                   words are as stated.
               </ol>
               <p>
-                Use the prior probability <code>P(spam) = 0.5</code>. Also, if there is zero instances of a word in the
-                table, use the lower bound 0.000001.
+                Use the prior probability <span class="math">P(\text{spam}) = 0.5</span>. Also, if there are zero instances of a word in the
+                table, use the lower bound <span class="math">0.000001 = 10^{-6}</span>.
               </p>
               <p>
                 <i>Additional hints:</i> In item 3, remember Bayes. In item 4, remember
@@ -726,50 +728,41 @@ R =  ------------------------------------ = ---------------------------
           reshuffling of the terms. Consider still our example two-word message,
           and the following formula for the ratio of the posterior probabilities
         </p>
-        <pre>
-     P(spam | 'million', 'conferences')
- R = ----------------------------------
-      P(ham | 'million', 'conferences')
-
-     P(spam) P('million' | spam) P('conferences' | spam)
-   = ---------------------------------------------------
-       P(ham) P('million' | ham) P('conferences' | ham)
-</pre>
+        <div class="math">
+          \begin{aligned}
+          R &= \frac{P(\text{spam} \mid \text{‘million’}, \text{‘conferences’})}{P(\text{ham} \mid \text{‘million’}, \text{‘conferences’})} \\[6pt]
+            &= \frac{P(\text{spam})\, P(\text{‘million’} \mid \text{spam})\, P(\text{‘conferences’} \mid \text{spam})}{P(\text{ham})\, P(\text{‘million’} \mid \text{ham})\, P(\text{‘conferences’} \mid \text{ham})}
+          \end{aligned}
+        </div>
         <p>
-          Since the ratio of products is equal to the product of ratios -- i.e.,
-          for example, (ABC)/(DEF) = (A/D)(B/E)(C/F) -- we can group the above terms as
+          Since the ratio of products is equal to the product of ratios &ndash; i.e.,
+          for example, <span class="math">\frac{ABC}{DEF} = \frac{A}{D} \cdot \frac{B}{E} \cdot \frac{C}{F}</span> &ndash;
+          we can group the above terms as
         </p>
-        <pre>
-     P(spam)  P('million' | spam)  P('conferences' | spam)
- R = -------  -------------------  -----------------------
-     P(ham)   P('million' | ham)   P('conferences' | ham)
-</pre>
+        <div class="math">
+          R = \frac{P(\text{spam})}{P(\text{ham})} \cdot \frac{P(\text{‘million’} \mid \text{spam})}{P(\text{‘million’} \mid \text{ham})} \cdot \frac{P(\text{‘conferences’} \mid \text{spam})}{P(\text{‘conferences’} \mid \text{ham})}
+        </div>
         <p>
           More generally, the formula is
         </p>
-        <pre>
-       P(spam)  N  P(word_i | spam)
-   R = -------  &Pi;  ----------------
-       P(ham)  i=1 P(word_i | ham)
-</pre>
+        <div class="math math--key">
+          R = \frac{P(\text{spam})}{P(\text{ham})} \prod_{i=1}^{N} \frac{P(\text{word}_i \mid \text{spam})}{P(\text{word}_i \mid \text{ham})}
+        </div>
         <p>
-          where N is the number of words in the message, and <code>word_i</code> is the
-          i'th word in the message.
+          where <span class="math">N</span> is the number of words in the message, and <span class="math">\text{word}_i</span> is the
+          <span class="math">i</span>th word in the message.
         </p>
 
         <p>
           Intuitively, the above formula encodes the rule that any word whose
           probability is higher in spam messages than in ham messages will
           increase the ratio R, and vice versa. For example, in our two-word
-          message, for <i>i</i>=1, we have <code>word_i =
-  'million'</code>, and the ratio of the word probabilities is
-          given by
+          message, for <span class="math">i = 1</span>, we have <span class="math">\text{word}_1 = \text{‘million’}</span>,
+          and the ratio of the word probabilities is given by
         </p>
-        <pre>
-    P(word_1 | spam)   P('million' | spam)   0.0016285
-    ---------------- = ------------------- &asymp; --------- &asymp; 5.1
-    P(word_1 | ham)    P('million' | ham)    0.0003198
-</pre>
+        <div class="math">
+          \frac{P(\text{word}_1 \mid \text{spam})}{P(\text{word}_1 \mid \text{ham})} = \frac{P(\text{‘million’} \mid \text{spam})}{P(\text{‘million’} \mid \text{ham})} \approx \frac{0.0016285}{0.0003198} \approx 5.1
+        </div>
         <p>
           Thus, each occurrence of the word <code>'million'</code> in the message
           leads to roughly a five-fold increase in the posterior probability ratio.
@@ -781,7 +774,7 @@ R =  ------------------------------------ = ---------------------------
           calculated from training data.
         </p>
 
-        <pre class="sh_java code-highlight"><code>    spamicity(words, estimates):
+        <pre class="sh_pseudo code-highlight"><code>    spamicity(words, estimates):
 1:     R = estimates.prior_spam / estimates.prior_ham
 2:     for each w in words:
 3:        R = R * estimates.spam_prob(w) / estimates.ham_prob(w)
@@ -791,9 +784,9 @@ R =  ------------------------------------ = ---------------------------
         <p>
           Here <code>estimates</code> is an object that stores the estimated
           probabilities: <code>estimates.prior_spam</code> is the probability that
-          a message is spam, P(spam), <code>estimates.prior_ham</code> the same
+          a message is spam, <span class="math">P(\text{spam})</span>, <code>estimates.prior_ham</code> the same
           for ham; <code>estimates.spam_prob(w)</code> is the probability
-          <code>P(Word = w | spam)</code>, and <code>estimates.ham_prob(w)</code>
+          <span class="math">P(\text{Word} = w \mid \text{spam})</span>, and <code>estimates.ham_prob(w)</code>
           the same for ham.
         </p>
 
@@ -814,22 +807,20 @@ R =  ------------------------------------ = ---------------------------
             <p>
               In order to reduce the risk of under- and overflows in the floating
               point arithmetics, it is a good idea to carry out the computations
-              in log-scale. That is, instead of computing the ratio, R, you
-              should compute its logarithm, log(R). (Store the log-ratio in a variable
+              in log-scale. That is, instead of computing the ratio, <span class="math">R</span>, you
+              should compute its logarithm, <span class="math">\log R</span>. (Store the log-ratio in a variable
               like <code>logR</code>.)
             </p>
 
             <p>
               The important thing to recall about logarithms is that they convert
-              multiplication into addition: log(AB) = log(A) + log(B); and similarly,
-              division becomes subtraction: log(A/B) = log(A) &ndash; log(B). Using these,
+              multiplication into addition, <span class="math">\log(AB) = \log A + \log B</span>, and similarly,
+              division becomes subtraction, <span class="math">\log(A/B) = \log A - \log B</span>. Using these,
               we can write the log-ratio as
             </p>
-            <pre>
-                                       N
-   logR = log(P(spam)) - log(P(ham)) + &Sigma; [log(P(word_i | spam)) - log(P(word_i | ham))]
-                                      i=1
-</pre>
+            <div class="math">
+              \log R = \log P(\text{spam}) - \log P(\text{ham}) + \sum_{i=1}^{N} \bigl[\log P(\text{word}_i \mid \text{spam}) - \log P(\text{word}_i \mid \text{ham})\bigr]
+            </div>
             <p>
               The base of the logarithm (natural, 2, 10, ...) is not
               consequential. The important thing is to map the end result back to
@@ -844,10 +835,12 @@ R =  ------------------------------------ = ---------------------------
 
         <figure class="viz" data-viz="underflow">
           <figcaption class="viz__caption">
-            The words of this made-up message have probabilities between about 10<sup>&minus;5</sup> and
-            10<sup>&minus;2</sup> under each class. Multiplied directly in 64-bit floating point (Python's
-            <code>float</code>), the products leave the range of representable numbers after about a hundred
-            words, while the sum of logarithms stays accurate. The values are computed in your browser.
+            The words of this made-up message have probabilities between about <span class="math">10^{-5}</span> and
+            <span class="math">10^{-2}</span> under each class. Multiplied directly in 64-bit floating point (Python's
+            <code>float</code>), the products become subnormal (losing digits) after 86 words and are exactly 0
+            after 91 and 96 words, while the sum of logarithms stays accurate. The chart uses base-10 logarithms
+            so that its axis reads as powers of ten; the read-outs use the natural logarithm, like
+            <code>math.log</code> in Python. The values are computed in your browser.
           </figcaption>
         </figure>
 
@@ -875,7 +868,6 @@ R =  ------------------------------------ = ---------------------------
                 the package.)
               </p>
 
-              <p>
               <ol>
                 <li>
                   Download the template and take a look at the word count files in
@@ -886,29 +878,31 @@ R =  ------------------------------------ = ---------------------------
                   removed, as have words that occur only once. The files are
                   sorted so that the most common words in the respective class
                   come first:
-                  <pre>
-
-	top 10 spam words: top 10 ham words:
-        ------------------ -----------------
-         624 free          1776 list
-         465 email         1263 lists
-         414 money         1204 use
-         410 please        1007 exmh
-         410 mail           987 like
-         383 list           952 some
-         360 click          919 wrote
-         358 content        909 linux
-         339 business       895 listinfo
-         306 information    893 rpm
-      </pre>
+                  <table class="table">
+                    <thead>
+                      <tr><th scope="col" class="num">count</th><th scope="col">top 10 spam words</th><th scope="col" class="num">count</th><th scope="col">top 10 ham words</th></tr>
+                    </thead>
+                    <tbody>
+                      <tr><td class="num">624</td><td><code>free</code></td><td class="num">1776</td><td><code>list</code></td></tr>
+                      <tr><td class="num">465</td><td><code>email</code></td><td class="num">1263</td><td><code>lists</code></td></tr>
+                      <tr><td class="num">414</td><td><code>money</code></td><td class="num">1204</td><td><code>use</code></td></tr>
+                      <tr><td class="num">410</td><td><code>please</code></td><td class="num">1007</td><td><code>exmh</code></td></tr>
+                      <tr><td class="num">410</td><td><code>mail</code></td><td class="num">987</td><td><code>like</code></td></tr>
+                      <tr><td class="num">383</td><td><code>list</code></td><td class="num">952</td><td><code>some</code></td></tr>
+                      <tr><td class="num">360</td><td><code>click</code></td><td class="num">919</td><td><code>wrote</code></td></tr>
+                      <tr><td class="num">358</td><td><code>content</code></td><td class="num">909</td><td><code>linux</code></td></tr>
+                      <tr><td class="num">339</td><td><code>business</code></td><td class="num">895</td><td><code>listinfo</code></td></tr>
+                      <tr><td class="num">306</td><td><code>information</code></td><td class="num">893</td><td><code>rpm</code></td></tr>
+                    </tbody>
+                  </table>
                   The total number of unique words in the spam messages is 6245, and the
                   total word count is 75268. The ham messages have 16207 unique words and
                   the total word count is 290673.
-                <lI>
-                  Estimate the conditional probabilities <code>P(Word=s | spam)</code>
-                  and <code>P(Word=s | ham)</code> for all words <code>s</code> that occur
-                  in the files. For example, you should get the estimate <code>P('free' | spam)</code>
-                  &asymp; 0.00829.
+                <li>
+                  Estimate the conditional probabilities <span class="math">P(\text{Word} = s \mid \text{spam})</span>
+                  and <span class="math">P(\text{Word} = s \mid \text{ham})</span> for all words <span class="math">s</span> that occur
+                  in the files. For example, you should get the estimate
+                  <span class="math">P(\text{‘free’} \mid \text{spam}) = 624 / 75268 \approx 0.00829</span>.
                 <li>
                   Now implement a filter that reads a new message and calculates the probability
                   that it is spam using the naive Bayes model, following the instructions
@@ -919,7 +913,6 @@ R =  ------------------------------------ = ---------------------------
                   <code>hamesim.txt</code> (which should be classified as ham).
                   You can also try your spam filter on your own email messages.
               </ol>
-              </p>
 
               <p>
                 <i>Hint:</i> In item 3, you may encounter words that you haven't
@@ -929,8 +922,8 @@ R =  ------------------------------------ = ---------------------------
 
               <p>
                 From the <code>SpamHam</code> folder, run the local tests with:
-                <pre class="sh_bash code-highlight"><code>python3 -m testrunner</code></pre>
               </p>
+              <pre class="sh_bash code-highlight"><code>python3 -m testrunner</code></pre>
 
 
             </div>
@@ -942,6 +935,7 @@ R =  ------------------------------------ = ---------------------------
         <p>
           Here is some additional material on naive Bayes spam filtering that you
           may like to take a look at:
+        </p>
         <ul>
           <li>Dr Dobbs Journal: <a href="https://www.drdobbs.com/architecture-and-design/naive-bayesian-text-classification/184406064">Naive Bayesian text
               classification</a>
@@ -949,7 +943,153 @@ R =  ------------------------------------ = ---------------------------
               href="http://robotics.stanford.edu/users/sahami/papers-dir/spam.pdf">"A Bayesian approach to filtering
               junk e-mail"</a>. AAAI'98 Workshop on Learning for Text Categorization.
         </ul>
-        </p>
+
+        <section class="bonus" aria-label="Bonus material">
+          <p class="bonus__badge">Bonus &middot; outside the course</p>
+          <h1 class="material-heading">Bonus: Bayes beyond the basics</h1>
+          <p class="bonus__note">
+            This section is optional extra material for the curious. It is <b>not part of the course
+            requirements</b>: you do not need it for the exercises or the exam.
+          </p>
+
+          <h2 class="material-heading">Smoothing done properly</h2>
+
+          <p>
+            The lower bound of <span class="math">10^{-6}</span> used in the exercises works, but it is a patch.
+            The standard remedy for zero counts is <b>additive smoothing</b>: pretend that every word of the
+            vocabulary <span class="math">V</span> was seen <span class="math">\alpha</span> extra times in each
+            class,
+          </p>
+
+          <div class="math">
+            \hat P(w \mid c) = \frac{n_{w,c} + \alpha}{N_c + \alpha\,|V|},
+          </div>
+
+          <p>
+            where <span class="math">n_{w,c}</span> is the number of times word <span class="math">w</span>
+            occurs in class <span class="math">c</span> and <span class="math">N_c</span> is the total number of
+            words in that class. With <span class="math">\alpha = 1</span> this is <b>Laplace smoothing</b>. It is
+            Bayes rule once more: the estimate is the posterior mean of the word probabilities under a uniform
+            (Dirichlet) prior. A word that never occurs in ham, such as <code>adclick</code>, now gets a small
+            probability instead of zero; with a vocabulary of 50,000 words it is
+            <span class="math">1 / (306438 + 50000) \approx 2.8 \times 10^{-6}</span>.
+          </p>
+
+          <pre class="sh_python code-highlight"><code>def word_probability(word, counts, total, vocabulary_size, alpha=1.0):
+    """Additively smoothed estimate of P(word | class)."""
+    return (counts.get(word, 0) + alpha) / (total + alpha * vocabulary_size)</code></pre>
+
+          <h2 class="material-heading">From log-odds back to a probability, safely</h2>
+
+          <p>
+            The spam filter computes <span class="math">\log R</span>, the logarithm of the posterior odds.
+            Since <span class="math">R / (1 + R) = 1 / (1 + e^{-\log R})</span>, the probability is the logistic
+            (sigmoid) function of the log-odds, the same function that you will meet in logistic regression in
+            Week 3. Written naively it can still fail: Python's <code>math.exp</code> raises
+            <code>OverflowError</code> above about 709, so <code>1 / (1 + math.exp(-log_r))</code> crashes for
+            <code>log_r = -1000</code>. Evaluate it on the side where the exponential is small:
+          </p>
+
+          <pre class="sh_python code-highlight"><code>import math
+
+def spam_probability(log_r):
+    """P(spam | message) from log R, the log of the posterior odds, without overflow."""
+    if log_r &gt;= 0:
+        return 1.0 / (1.0 + math.exp(-log_r))
+    odds = math.exp(log_r)          # at most 1, so it cannot overflow
+    return odds / (1.0 + odds)</code></pre>
+
+          <p>
+            With more than two classes, such as the ten digits of the naive Bayes classifier in Week 3, the same
+            idea is called the <b>log-sum-exp trick</b>: subtract the largest log score before exponentiating.
+            The scores <span class="math">-1000, -1002, -1010</span> all underflow to 0 with
+            <code>math.exp</code>, so normalising them directly divides 0 by 0; shifted by the maximum they give
+            the probabilities 0.881, 0.119 and 0.00004. The softmax in the attention layers of Week 5 is computed
+            in exactly this way.
+          </p>
+
+          <pre class="sh_python code-highlight"><code>def posterior_from_logs(log_scores):
+    """Class probabilities from log scores (log prior + sum of log likelihoods)."""
+    top = max(log_scores)
+    weights = [math.exp(score - top) for score in log_scores]   # largest: exp(0) = 1
+    total = sum(weights)
+    return [weight / total for weight in weights]</code></pre>
+
+          <h2 class="material-heading">Why "naive" Bayes works better than its assumption</h2>
+
+          <p>
+            Words are obviously not independent given the class: "click" and "here" travel together. Yet naive
+            Bayes classifies well. Domingos and Pazzani (1997) showed why: a classifier only needs the
+            <i>largest</i> posterior to be in the right place, and naive Bayes is optimal under zero-one loss in a
+            far larger set of situations than the ones where its independence assumption holds. The price is in
+            the probabilities. Correlated words are counted as independent evidence, so the posteriors pile up
+            near 0 and 1; the underflow figure above reports
+            <span class="math">P(\text{spam} \mid \text{message}) = 1 - 1.97 \times 10^{-14}</span> after only 60
+            words, which no honest model of email should claim. Use the ranking, not the number, or calibrate the
+            probabilities on held-out data.
+          </p>
+
+          <h2 class="material-heading">Two puzzles for your intuition</h2>
+
+          <p>
+            <b>The rare disease.</b> One person in a thousand has a disease. A test detects it 99% of the time, and
+            gives a false positive for 5% of healthy people. You test positive. How likely is it that you have the
+            disease? Guess first, then calculate, and check with the interactive figure above (set
+            P(condition) to 0.1%).
+          </p>
+
+          <details>
+            <summary>Show the answer</summary>
+            <div class="math">
+              P(\text{disease} \mid +) = \frac{0.001 \times 0.99}{0.001 \times 0.99 + 0.999 \times 0.05}
+              = \frac{0.00099}{0.05094} \approx 0.019
+            </div>
+            <p>
+              About 2%. In natural frequencies: of 100,000 people, 100 are ill and 99 of them test positive,
+              but so do 4,995 of the 99,900 healthy people. Only 99 of the 5,094 positives are ill. The prior
+              matters.
+            </p>
+          </details>
+
+          <p>
+            <b>Monty Hall.</b> A car is behind one of three doors and goats are behind the others. You pick door 1.
+            The host, who knows where the car is, always opens a door that you did not pick and that hides a goat,
+            choosing at random when he can choose. He opens door 3. Should you switch to door 2?
+          </p>
+
+          <details>
+            <summary>Show the answer</summary>
+            <p>
+              Yes. The prior is <span class="math">\tfrac13</span> for each door. The likelihood of the host opening
+              door 3 is <span class="math">\tfrac12</span> if the car is behind door 1, 1 if it is behind door 2
+              (he can open neither door 2 nor your door 1), and 0 if it is behind door 3. Bayes rule gives
+            </p>
+            <div class="math">
+              P(\text{car behind 2} \mid \text{door 3 opened})
+              = \frac{\tfrac13 \cdot 1}{\tfrac13 \cdot \tfrac12 + \tfrac13 \cdot 1 + \tfrac13 \cdot 0}
+              = \frac{1/3}{1/2} = \frac23 .
+            </div>
+            <p>
+              Switching wins two times out of three. Note the annoying denominator: the probability that the host
+              opens door 3 at all, which is <span class="math">\tfrac12</span>.
+            </p>
+          </details>
+
+          <h2 class="material-heading">Further reading and watching</h2>
+
+          <ul>
+            <li>3Blue1Brown, <a href="https://www.3blue1brown.com/lessons/bayes-theorem/" target="_blank" rel="noopener"><i>Bayes' theorem</i></a>
+              (2019): a short, visual derivation with the prior, the likelihood and the posterior as areas.</li>
+            <li>Paul Graham (2002), <a href="https://www.paulgraham.com/spam.html" target="_blank" rel="noopener"><i>A Plan for Spam</i></a>:
+              the essay that made Bayesian filtering the standard way to fight spam.</li>
+            <li>Allen B. Downey, <a href="https://allendowney.github.io/ThinkBayes2/" target="_blank" rel="noopener"><i>Think Bayes</i></a>,
+              2nd edition: Bayesian statistics with Python instead of calculus, free to read online.</li>
+            <li>Domingos and Pazzani (1997), <a href="https://doi.org/10.1023/A:1007413511361" target="_blank" rel="noopener"><i>On the
+              Optimality of the Simple Bayesian Classifier under Zero-One Loss</i></a>, Machine Learning 29, 103&ndash;130.</li>
+            <li>E. T. Jaynes (2003), <a href="https://doi.org/10.1017/CBO9780511790423" target="_blank" rel="noopener"><i>Probability Theory:
+              The Logic of Science</i></a>: Cox's theorem from the start of this week, at book length.</li>
+          </ul>
+        </section>
 
         <nav class="page-nav" aria-label="Previous and next page">
           <a class="page-nav__link page-nav__link--prev" href="../week1/" rel="prev">
@@ -1002,6 +1142,7 @@ R =  ------------------------------------ = ---------------------------
 
 
 
+  <script src="../javascripts/math.js"></script>
   <script src="../javascripts/main.js"></script>
   <script src="../javascripts/week2.js"></script>
 

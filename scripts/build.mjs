@@ -1,10 +1,10 @@
-// Builds javascripts/main.js, the interactive figures of each week (javascripts/week1.js, ...),
-// stylesheets/main.css and fonts/vendor/* from src/.
+// Builds javascripts/main.js, the interactive figures of each week (javascripts/week1.js, ...), the
+// formula typesetting (javascripts/math.js), stylesheets/main.css and fonts/vendor/* from src/.
 // The outputs are committed: GitHub Pages serves this branch as-is, without a build step.
 //
 //   npm run build          one-off build
 //   npm run build -- --watch
-import { rm } from 'node:fs/promises';
+import { readFile, rm } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import * as esbuild from 'esbuild';
@@ -36,11 +36,29 @@ const sassPlugin = {
   },
 };
 
+// KaTeX lists every font as woff2, woff and ttf. Every browser the site supports reads woff2, so the
+// fallbacks are dropped and only the woff2 files are copied to fonts/vendor.
+const katexFontsPlugin = {
+  name: 'katex-fonts',
+  setup(build) {
+    build.onLoad({ filter: /[\\/]katex[\\/]dist[\\/]katex\.css$/ }, async args => {
+      const css = await readFile(args.path, 'utf8');
+
+      return {
+        contents: css.replace(/,\s*url\([^)]+\.woff\) format\("woff"\),\s*url\([^)]+\.ttf\) format\("truetype"\)/g, ''),
+        loader: 'css',
+        resolveDir: path.dirname(args.path),
+      };
+    });
+  },
+};
+
 const options = {
   absWorkingDir: root,
   entryPoints: {
     'javascripts/main': 'src/javascripts/main.js',
     ...Object.fromEntries([1, 2, 3, 4, 5, 6, 7].map(week => [`javascripts/week${week}`, `src/javascripts/weeks/week${week}.js`])),
+    'javascripts/math': 'src/javascripts/math.js',
     'stylesheets/main': 'src/stylesheets/main.scss',
   },
   outdir: '.',
@@ -53,7 +71,7 @@ const options = {
   assetNames: 'fonts/vendor/[name]-[hash]',
   // The MOOC logo font is a static file that is already in /fonts/mooc.
   external: ['../fonts/mooc/*'],
-  plugins: [sassPlugin],
+  plugins: [sassPlugin, katexFontsPlugin],
   logLevel: 'info',
 };
 

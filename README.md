@@ -25,8 +25,8 @@ copy is for non-commercial use only.
 Compared with the original `gh-pages` branch (commit `b9dedeb`):
 
 - **Front-end dependencies:** jQuery, Bootstrap, highlight.js and Font Awesome are upgraded and, like the
-  Inter font, served from this repository instead of third-party CDNs. The shared JavaScript and CSS are
-  built from `src/`.
+  Inter font and KaTeX (for the formulas), served from this repository instead of third-party CDNs. The shared
+  JavaScript and CSS are built from `src/`.
 - **Docker preview:** a `Dockerfile` and `compose.yaml` to preview the site locally.
 - **Corrections in weeks 1–7:** factual errors and broken code examples are corrected.
 - **Removed:** the original course's Google Analytics tracking, cookie banner and disabled login form,
@@ -46,6 +46,13 @@ docker compose up --build
 ```
 
 The site is served at <http://localhost:4567>.
+
+## Formulas and pseudocode
+
+Formulas are written in TeX in the pages, inline in `<span class="math">…</span>` and displayed on a line of
+their own in `<div class="math">…</div>` (add `math--key` to set a key equation on a card). Pages with formulas
+load `javascripts/math.js`, which typesets them with KaTeX. Pseudocode listings use
+`<pre class="sh_pseudo"><code>…</code></pre>`, highlighted by the grammar in `src/javascripts/pseudocode.js`.
 
 ## Rebuild the assets
 

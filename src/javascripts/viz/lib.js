@@ -481,12 +481,13 @@ export function createLoop(figure, tick) {
 
 // --- Line chart -------------------------------------------------------------------------------
 
-// A line chart on a canvas with solid hairline gridlines, an optional horizontal reference line and a
-// crosshair read-out that follows the pointer or the arrow keys.
+// A line chart on a canvas with solid hairline gridlines, an optional horizontal reference line,
+// optional shaded horizontal bands and a crosshair read-out that follows the pointer or the arrow keys.
 // series: [{ name, color }]; setData(xs, ys[]) where ys[k][i] belongs to series k at xs[i].
+// bands: [{ from, to, label, color }], ranges of y to shade.
 export function lineChart(parent, {
   series, height = 180, xLabel = '', yMin, yMax, yFormat = v => fmt(v, 2), xFormat = v => String(v),
-  reference, label, integer = false,
+  reference, bands = [], label, integer = false,
 }) {
   const stage = el('div', { class: 'vz-stage vz-chart', style: 'position:relative' });
   const tip = el('div', { class: 'vz-tip', 'aria-hidden': 'true' });
@@ -599,6 +600,27 @@ export function lineChart(parent, {
       ctx.textAlign = 'center';
       ctx.fillText(xLabel, (pad.left + width - pad.right) / 2, H - pad.bottom + 6);
     }
+
+    bands.forEach(band => {
+      const top = sy(clamp(Math.max(band.from, band.to), lo, hi));
+      const bottom = sy(clamp(Math.min(band.from, band.to), lo, hi));
+
+      if (bottom - top < 1) {
+        return;
+      }
+
+      ctx.fillStyle = band.color || COLORS.yellow;
+      ctx.globalAlpha = 0.16;
+      ctx.fillRect(pad.left, top, width - pad.left - pad.right, bottom - top);
+      ctx.globalAlpha = 1;
+
+      if (band.label) {
+        ctx.fillStyle = COLORS.muted;
+        ctx.textAlign = 'right';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(band.label, width - pad.right - 4, (top + bottom) / 2);
+      }
+    });
 
     if (reference && Number.isFinite(reference.value) && reference.value >= lo && reference.value <= hi) {
       const y = Math.round(sy(reference.value)) + 0.5;

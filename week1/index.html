@@ -1710,17 +1710,21 @@
           is not taken into account. A balanced search that takes both the
           incurred cost as well as the estimated remaining cost into account
           is obtained by ordering the (min-)priority queue by
-        <pre>
-           f(node, cost) = cost + h(node),
-  </pre>
-        where <code>cost</code> is the value associated with the node when
-        it is added to the priority queue, and <code>h(node)</code> is the
-        heuristic value, i.e., an estimate of the remaining cost
-        from <code>node</code> to the goal. This is the <b>A* search</b>.
-        If you try it on
-        the <a href="https://qiao.github.io/PathFinding.js/visual/">PathFinding
-          applet</a>, you will immediately see that it wipes the floor with
-        other, uninformed search methods.
+        </p>
+
+        <div class="math math--key">
+          f(\text{node}, \text{cost}) = \text{cost} + h(\text{node}),
+        </div>
+
+        <p>
+          where <code>cost</code> is the value associated with the node when
+          it is added to the priority queue, and <code>h(node)</code> is the
+          heuristic value, i.e., an estimate of the remaining cost
+          from <code>node</code> to the goal. This is the <b>A* search</b>.
+          If you try it on
+          the <a href="https://qiao.github.io/PathFinding.js/visual/">PathFinding
+            applet</a>, you will immediately see that it wipes the floor with
+          other, uninformed search methods.
         </p>
 
         <p>
@@ -1729,15 +1733,15 @@
           remaining cost to the goal. If it overestimates, A* can return a path
           that is not the cheapest. Since our template skips nodes that have
           already been visited, the heuristic should also
-          be <b>consistent</b>: for every node <code>n</code> and each of its
-          neighbors <code>m</code>, <code>h(n) &le; c(n, m) + h(m)</code>,
-          where <code>c(n, m)</code> is the cost of the transition
-          from <code>n</code> to <code>m</code>. Then the first time a node is
+          be <b>consistent</b>: for every node <span class="math">n</span> and each of its
+          neighbors <span class="math">m</span>, <span class="math">h(n) \le c(n, m) + h(m)</span>,
+          where <span class="math">c(n, m)</span> is the cost of the transition
+          from <span class="math">n</span> to <span class="math">m</span>. Then the first time a node is
           taken from the priority queue, it has been reached by a cheapest path,
           just like in Dijkstra's algorithm. (A consistent heuristic whose value
           at the goal is 0 is always admissible.) The straight-line distance
           satisfies both conditions, because no route can be shorter than the
-          straight line between its end points. With <code>h(node) = 0</code>
+          straight line between its end points. With <span class="math">h(\text{node}) = 0</span>
           for all nodes, A* is the same as Dijkstra's algorithm.
         </p>
 
@@ -2110,11 +2114,11 @@
               example, in chess the average branching factor, i.e., the average
               number of children (available moves) per node is about 35. That
               means that to explore all the possible scenarios up to only two
-              moves ahead, we need to visit approximately 35 x 35 = 1225 nodes
-              -- probably not your favorite pencil-and-paper homework exercise... A
-              look-ahead of three moves requires visiting 42875 nodes; four moves
-              1500625; and ten moves 2758547353515625 (that's about
-              2.8 quadrillion) nodes.
+              moves ahead, we need to visit approximately <span class="math">35 \times 35 = 1225</span> nodes
+              &ndash; probably not your favorite pencil-and-paper homework exercise... A
+              look-ahead of three moves requires visiting <span class="math">35^3 = 42\,875</span> nodes; four moves
+              <span class="math">35^4 = 1\,500\,625</span>; and ten moves <span class="math">35^{10} = 2\,758\,547\,353\,515\,625</span>
+              (that's about 2.8 quadrillion) nodes.
             </p>
 
             <p>
@@ -2526,6 +2530,7 @@
 
 
 
+  <script src="../javascripts/math.js"></script>
   <script src="../javascripts/main.js"></script>
   <script src="../javascripts/week1.js"></script>
 

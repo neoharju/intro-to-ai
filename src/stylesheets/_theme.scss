@@ -59,6 +59,17 @@ body {
     border-radius: var(--radius-sm);
   }
 
+  // A picture is inline by default, so a narrower one (width="65%") sat at the left edge of the text.
+  // Pictures now stand on a line of their own, centred, unless the page floats them with align.
+  img:not([align]) {
+    display: block;
+    margin-inline: auto;
+  }
+
+  > img:not([align]) {
+    margin-block: 1.5rem;
+  }
+
   // Inline diagrams in the pages set their own fonts; use the page font instead.
   svg [font-family] {
     font-family: $font-family-base;
@@ -163,6 +174,12 @@ h3.material-heading {
   ul {
     padding-left: 1.1rem;
     margin-bottom: 0;
+  }
+
+  // Columns of numbers line up on the right.
+  .num {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
   }
 }
 
