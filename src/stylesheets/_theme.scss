@@ -133,6 +133,11 @@ h3.material-heading {
   background: transparent !important;
 }
 
+// Line numbers of pseudocode listings (see pseudocode.js): a quiet gutter that the text refers to.
+.hljs-line-number {
+  color: var(--faint);
+}
+
 // Tables (wrapped in .table-wrap by ui.js, so wide tables scroll on small screens).
 .table {
   margin-bottom: 0;

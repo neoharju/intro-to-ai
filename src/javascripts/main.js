@@ -5,6 +5,7 @@ import hljs from 'highlight.js/lib/core';
 import bash from 'highlight.js/lib/languages/bash';
 import java from 'highlight.js/lib/languages/java';
 import python from 'highlight.js/lib/languages/python';
+import pseudocode from './pseudocode';
 
 import Exercises from './exercises';
 import Solutions from './solutions';
@@ -19,6 +20,7 @@ window.$ = window.jQuery = $;
 hljs.registerLanguage('bash', bash);
 hljs.registerLanguage('java', java);
 hljs.registerLanguage('python', python);
+hljs.registerLanguage('pseudo', pseudocode);
 
 function highlightCode() {
   document.querySelectorAll('pre code').forEach(block => {
@@ -29,7 +31,7 @@ function highlightCode() {
       return;
     }
 
-    // Blocks are tagged with SHJS-style classes (sh_java, sh_bash, ...) on the <pre>.
+    // Blocks are tagged with SHJS-style classes (sh_python, sh_bash, sh_pseudo, ...) on the <pre>.
     const hint = block.parentNode.className.match(/\bsh_(\w+)/);
 
     if (hint && hljs.getLanguage(hint[1])) {

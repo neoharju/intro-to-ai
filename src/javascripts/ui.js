@@ -53,6 +53,18 @@ function mountScrollAids() {
   });
 }
 
+// The text of a code block without the line numbers of pseudocode listings (replaced by spaces, so
+// that the indentation of the lines stays aligned).
+function codeText(code) {
+  const copy = code.cloneNode(true);
+
+  copy.querySelectorAll('.hljs-line-number').forEach(number => {
+    number.replaceWith(' '.repeat(number.textContent.length));
+  });
+
+  return copy.textContent;
+}
+
 // A copy button on code blocks. The Clipboard API needs a secure context (https or localhost).
 function mountCopyButtons() {
   if (!navigator.clipboard || !window.isSecureContext) {
@@ -74,7 +86,7 @@ function mountCopyButtons() {
     button.textContent = 'Copy';
     button.setAttribute('aria-label', 'Copy code to clipboard');
     button.addEventListener('click', () => {
-      navigator.clipboard.writeText(code.innerText).then(
+      navigator.clipboard.writeText(codeText(code)).then(
         () => {
           button.textContent = 'Copied';
           button.classList.add('is-done');

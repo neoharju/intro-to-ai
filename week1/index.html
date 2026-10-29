@@ -1165,7 +1165,7 @@
           <div class="hint__body">
 
             <p>
-              The key concepts are the set of allowed <b>states</b>, called the </b>search space</b>,
+              The key concepts are the set of allowed <b>states</b>, called the <b>search space</b>,
               and <b>transitions</b> between them. Sometimes different transitions have
               different <b>costs</b> associated with them: think, for example, a tram
               or air travel network where the distances between two stops or
@@ -1200,39 +1200,70 @@
         </p>
 
         <p>
-          We can represent each state by indicating which side the farmer (f),
-          the wolf (w), the goat (g), and the cabbage (c) are, so that for example:
-        <pre>
-      c|fwg           
-</pre>
-        means that the farmer is on the right bank of the river with the
-        wolf and the goat, whereas the cabbage is on the left bank. Let's say
-        that in the beginning the farmer is on the left bank with all the items
-        that they are about to transport, and that the goal is to get everyone
-        on the right bank:
-        <pre>
-     initial:      fwgc|
-     goal:         |fwgc
-</pre>
+          We can represent each state by indicating on which bank of the river the farmer (f), the wolf (w),
+          the goat (g) and the cabbage (c) are. The vertical bar stands for the river: the letters to its left
+          are on the left bank and the letters to its right are on the right bank. For example, the state
         </p>
 
+        <figure class="diagram">
+          <svg class="wgc" viewBox="0 0 292 170" role="img" aria-label="The state c|fwg: left bank cabbage; right bank farmer, wolf, goat. The vertical bar in the notation is the river.">
+            <text class="wgc-zone" x="68" y="18">left bank</text>
+            <text class="wgc-zone" x="146" y="18">river</text>
+            <text class="wgc-zone" x="224" y="18">right bank</text>
+            <g class="wgc-state" transform="translate(20 30) scale(1.5)"><rect class="wgc-bank" x="0" y="0" width="168" height="64" rx="12"/><rect class="wgc-river" x="64" y="0" width="40" height="64"/><path class="wgc-wave" d="M70 22 q4 -4 7 0 t7 0 t7 0 t7 0"/><path class="wgc-wave" d="M70 42 q4 -4 7 0 t7 0 t7 0 t7 0"/><path class="wgc-boat" d="M78 50 h22 l-4 7 h-14 z"/><rect class="wgc-frame" x="0.5" y="0.5" width="167" height="63" rx="11.5"/><g class="wgc-token wgc-token--c"><circle cx="46" cy="44" r="11"/><text x="46" y="44.5">c</text></g><g class="wgc-token wgc-token--f"><circle cx="122" cy="20" r="11"/><text x="122" y="20.5">f</text></g><g class="wgc-token wgc-token--w"><circle cx="150" cy="20" r="11"/><text x="150" y="20.5">w</text></g><g class="wgc-token wgc-token--g"><circle cx="122" cy="44" r="11"/><text x="122" y="44.5">g</text></g></g>
+            <text class="wgc-notation wgc-notation--big" x="146" y="160"><tspan class="wgc-ink--c">c</tspan><tspan class="wgc-bar">|</tspan><tspan class="wgc-ink--f">f</tspan><tspan class="wgc-ink--w">w</tspan><tspan class="wgc-ink--g">g</tspan></text>
+          </svg>
+          <ul class="wgc-legend" aria-hidden="true"><li><span class="wgc-chip wgc-chip--f">f</span>farmer</li><li><span class="wgc-chip wgc-chip--w">w</span>wolf</li><li><span class="wgc-chip wgc-chip--g">g</span>goat</li><li><span class="wgc-chip wgc-chip--c">c</span>cabbage</li></ul>
+        </figure>
+
         <p>
-          The state transition diagram would then contain, for example, the
-          following states and edges
-        <pre>
-                                      c|fwg --- ...
-                                        /
-                                       /
-             fwgc|  ---  wc|fg  ---  fwc|g
-	                               \
-				        \
-                                      w|fgc --- ...
-				  
-</pre>
-        where the first move from the initial state on the left must be to transport the goat to the right bank. From
-        the state "wc|fg", where the farmer is with the goat on the right bank, we can either return back to the initial
-        state (each of the transitions is two-way), or leave the goat on the right bank and have the farmer go to the
-        left bank with an empty boat.
+          means that the farmer is on the right bank of the river with the wolf and the goat, whereas the
+          cabbage is on the left bank. (The boat is always on the farmer's side, so the notation does not need
+          to mention it.) Let's say that in the beginning the farmer is on the left bank with all the items that
+          they are about to transport, and that the goal is to get everyone on the right bank:
+        </p>
+
+        <figure class="diagram">
+          <svg class="wgc" viewBox="0 0 496 124" role="img" aria-label="Initial state fwgc|: left bank farmer, wolf, goat, cabbage; right bank nobody. Goal state |fwgc: left bank nobody; right bank farmer, wolf, goat, cabbage.">
+            <text class="wgc-zone wgc-zone--strong" x="104" y="16">initial state</text>
+            <text class="wgc-zone wgc-zone--strong" x="392.0" y="16">goal state</text>
+            <g class="wgc-state" transform="translate(20 26)"><rect class="wgc-bank" x="0" y="0" width="168" height="64" rx="12"/><rect class="wgc-river" x="64" y="0" width="40" height="64"/><path class="wgc-wave" d="M70 22 q4 -4 7 0 t7 0 t7 0 t7 0"/><path class="wgc-wave" d="M70 42 q4 -4 7 0 t7 0 t7 0 t7 0"/><path class="wgc-boat" d="M68 50 h22 l-4 7 h-14 z"/><rect class="wgc-frame" x="0.5" y="0.5" width="167" height="63" rx="11.5"/><g class="wgc-token wgc-token--f"><circle cx="18" cy="20" r="11"/><text x="18" y="20.5">f</text></g><g class="wgc-token wgc-token--w"><circle cx="46" cy="20" r="11"/><text x="46" y="20.5">w</text></g><g class="wgc-token wgc-token--g"><circle cx="18" cy="44" r="11"/><text x="18" y="44.5">g</text></g><g class="wgc-token wgc-token--c"><circle cx="46" cy="44" r="11"/><text x="46" y="44.5">c</text></g><text class="wgc-notation" x="84" y="84"><tspan class="wgc-ink--f">f</tspan><tspan class="wgc-ink--w">w</tspan><tspan class="wgc-ink--g">g</tspan><tspan class="wgc-ink--c">c</tspan><tspan class="wgc-bar">|</tspan></text></g>
+            <g class="wgc-state" transform="translate(308 26)"><rect class="wgc-bank" x="0" y="0" width="168" height="64" rx="12"/><rect class="wgc-river" x="64" y="0" width="40" height="64"/><path class="wgc-wave" d="M70 22 q4 -4 7 0 t7 0 t7 0 t7 0"/><path class="wgc-wave" d="M70 42 q4 -4 7 0 t7 0 t7 0 t7 0"/><path class="wgc-boat" d="M78 50 h22 l-4 7 h-14 z"/><rect class="wgc-frame" x="0.5" y="0.5" width="167" height="63" rx="11.5"/><g class="wgc-token wgc-token--f"><circle cx="122" cy="20" r="11"/><text x="122" y="20.5">f</text></g><g class="wgc-token wgc-token--w"><circle cx="150" cy="20" r="11"/><text x="150" y="20.5">w</text></g><g class="wgc-token wgc-token--g"><circle cx="122" cy="44" r="11"/><text x="122" y="44.5">g</text></g><g class="wgc-token wgc-token--c"><circle cx="150" cy="44" r="11"/><text x="150" y="44.5">c</text></g><text class="wgc-notation" x="84" y="84"><tspan class="wgc-bar">|</tspan><tspan class="wgc-ink--f">f</tspan><tspan class="wgc-ink--w">w</tspan><tspan class="wgc-ink--g">g</tspan><tspan class="wgc-ink--c">c</tspan></text></g>
+            <path class="wgc-arrow" d="M204 58.0 H290"/>
+            <path class="wgc-arrowhead" d="M292 58.0 l-9 -5 v10 z"/><text class="wgc-edge-label" x="248.0" y="48.0">?</text>
+          </svg>
+        </figure>
+
+        <p>
+          The state transition diagram would then contain, for example, the following states and edges:
+        </p>
+
+        <figure class="diagram diagram--wide">
+          <svg class="wgc" viewBox="0 0 911.04 276.48" role="img" aria-label="Part of the state transition diagram: fwgc| is connected to wc|fg (the farmer takes the goat across), wc|fg to fwc|g (the farmer returns alone), and fwc|g to both c|fwg (the farmer takes the wolf across) and w|fgc (the farmer takes the cabbage across); the diagram continues from those two states.">
+            <line class="wgc-edge" x1="155.76" y1="130.24" x2="231.76" y2="130.24"/><text class="wgc-edge-label wgc-ink--g" x="193.76" y="119.24">goat</text>
+            <line class="wgc-edge" x1="389.52" y1="130.24" x2="465.52" y2="130.24"/><text class="wgc-edge-label" x="427.52" y="119.24">alone</text>
+            <line class="wgc-edge" x1="623.28" y1="122.24" x2="699.28" y2="44.24"/><text class="wgc-edge-label wgc-ink--w" x="641.512" y="63.9789">wolf</text>
+            <line class="wgc-edge" x1="623.28" y1="138.24" x2="699.28" y2="216.24"/><text class="wgc-edge-label wgc-ink--c" x="634.207" y="203.619">cabbage</text>
+            <line class="wgc-edge wgc-edge--more" x1="857.04" y1="44.24" x2="891.04" y2="44.24"/><text class="wgc-more" x="897.04" y="45.24">…</text>
+            <line class="wgc-edge wgc-edge--more" x1="857.04" y1="216.24" x2="891.04" y2="216.24"/><text class="wgc-more" x="897.04" y="217.24">…</text>
+            <g class="wgc-state is-start" transform="translate(8 104) scale(0.82)"><rect class="wgc-bank" x="0" y="0" width="168" height="64" rx="12"/><rect class="wgc-river" x="64" y="0" width="40" height="64"/><path class="wgc-wave" d="M70 22 q4 -4 7 0 t7 0 t7 0 t7 0"/><path class="wgc-wave" d="M70 42 q4 -4 7 0 t7 0 t7 0 t7 0"/><path class="wgc-boat" d="M68 50 h22 l-4 7 h-14 z"/><rect class="wgc-frame" x="0.5" y="0.5" width="167" height="63" rx="11.5"/><g class="wgc-token wgc-token--f"><circle cx="18" cy="20" r="11"/><text x="18" y="20.5">f</text></g><g class="wgc-token wgc-token--w"><circle cx="46" cy="20" r="11"/><text x="46" y="20.5">w</text></g><g class="wgc-token wgc-token--g"><circle cx="18" cy="44" r="11"/><text x="18" y="44.5">g</text></g><g class="wgc-token wgc-token--c"><circle cx="46" cy="44" r="11"/><text x="46" y="44.5">c</text></g><text class="wgc-notation" x="84" y="86"><tspan class="wgc-ink--f">f</tspan><tspan class="wgc-ink--w">w</tspan><tspan class="wgc-ink--g">g</tspan><tspan class="wgc-ink--c">c</tspan><tspan class="wgc-bar">|</tspan></text></g>
+            <g class="wgc-state" transform="translate(241.76 104) scale(0.82)"><rect class="wgc-bank" x="0" y="0" width="168" height="64" rx="12"/><rect class="wgc-river" x="64" y="0" width="40" height="64"/><path class="wgc-wave" d="M70 22 q4 -4 7 0 t7 0 t7 0 t7 0"/><path class="wgc-wave" d="M70 42 q4 -4 7 0 t7 0 t7 0 t7 0"/><path class="wgc-boat" d="M78 50 h22 l-4 7 h-14 z"/><rect class="wgc-frame" x="0.5" y="0.5" width="167" height="63" rx="11.5"/><g class="wgc-token wgc-token--w"><circle cx="46" cy="20" r="11"/><text x="46" y="20.5">w</text></g><g class="wgc-token wgc-token--c"><circle cx="46" cy="44" r="11"/><text x="46" y="44.5">c</text></g><g class="wgc-token wgc-token--f"><circle cx="122" cy="20" r="11"/><text x="122" y="20.5">f</text></g><g class="wgc-token wgc-token--g"><circle cx="122" cy="44" r="11"/><text x="122" y="44.5">g</text></g><text class="wgc-notation" x="84" y="86"><tspan class="wgc-ink--w">w</tspan><tspan class="wgc-ink--c">c</tspan><tspan class="wgc-bar">|</tspan><tspan class="wgc-ink--f">f</tspan><tspan class="wgc-ink--g">g</tspan></text></g>
+            <g class="wgc-state" transform="translate(475.52 104) scale(0.82)"><rect class="wgc-bank" x="0" y="0" width="168" height="64" rx="12"/><rect class="wgc-river" x="64" y="0" width="40" height="64"/><path class="wgc-wave" d="M70 22 q4 -4 7 0 t7 0 t7 0 t7 0"/><path class="wgc-wave" d="M70 42 q4 -4 7 0 t7 0 t7 0 t7 0"/><path class="wgc-boat" d="M68 50 h22 l-4 7 h-14 z"/><rect class="wgc-frame" x="0.5" y="0.5" width="167" height="63" rx="11.5"/><g class="wgc-token wgc-token--f"><circle cx="18" cy="20" r="11"/><text x="18" y="20.5">f</text></g><g class="wgc-token wgc-token--w"><circle cx="46" cy="20" r="11"/><text x="46" y="20.5">w</text></g><g class="wgc-token wgc-token--c"><circle cx="46" cy="44" r="11"/><text x="46" y="44.5">c</text></g><g class="wgc-token wgc-token--g"><circle cx="122" cy="44" r="11"/><text x="122" y="44.5">g</text></g><text class="wgc-notation" x="84" y="86"><tspan class="wgc-ink--f">f</tspan><tspan class="wgc-ink--w">w</tspan><tspan class="wgc-ink--c">c</tspan><tspan class="wgc-bar">|</tspan><tspan class="wgc-ink--g">g</tspan></text></g>
+            <g class="wgc-state" transform="translate(709.28 18) scale(0.82)"><rect class="wgc-bank" x="0" y="0" width="168" height="64" rx="12"/><rect class="wgc-river" x="64" y="0" width="40" height="64"/><path class="wgc-wave" d="M70 22 q4 -4 7 0 t7 0 t7 0 t7 0"/><path class="wgc-wave" d="M70 42 q4 -4 7 0 t7 0 t7 0 t7 0"/><path class="wgc-boat" d="M78 50 h22 l-4 7 h-14 z"/><rect class="wgc-frame" x="0.5" y="0.5" width="167" height="63" rx="11.5"/><g class="wgc-token wgc-token--c"><circle cx="46" cy="44" r="11"/><text x="46" y="44.5">c</text></g><g class="wgc-token wgc-token--f"><circle cx="122" cy="20" r="11"/><text x="122" y="20.5">f</text></g><g class="wgc-token wgc-token--w"><circle cx="150" cy="20" r="11"/><text x="150" y="20.5">w</text></g><g class="wgc-token wgc-token--g"><circle cx="122" cy="44" r="11"/><text x="122" y="44.5">g</text></g><text class="wgc-notation" x="84" y="86"><tspan class="wgc-ink--c">c</tspan><tspan class="wgc-bar">|</tspan><tspan class="wgc-ink--f">f</tspan><tspan class="wgc-ink--w">w</tspan><tspan class="wgc-ink--g">g</tspan></text></g>
+            <g class="wgc-state" transform="translate(709.28 190) scale(0.82)"><rect class="wgc-bank" x="0" y="0" width="168" height="64" rx="12"/><rect class="wgc-river" x="64" y="0" width="40" height="64"/><path class="wgc-wave" d="M70 22 q4 -4 7 0 t7 0 t7 0 t7 0"/><path class="wgc-wave" d="M70 42 q4 -4 7 0 t7 0 t7 0 t7 0"/><path class="wgc-boat" d="M78 50 h22 l-4 7 h-14 z"/><rect class="wgc-frame" x="0.5" y="0.5" width="167" height="63" rx="11.5"/><g class="wgc-token wgc-token--w"><circle cx="46" cy="20" r="11"/><text x="46" y="20.5">w</text></g><g class="wgc-token wgc-token--f"><circle cx="122" cy="20" r="11"/><text x="122" y="20.5">f</text></g><g class="wgc-token wgc-token--g"><circle cx="122" cy="44" r="11"/><text x="122" y="44.5">g</text></g><g class="wgc-token wgc-token--c"><circle cx="150" cy="44" r="11"/><text x="150" y="44.5">c</text></g><text class="wgc-notation" x="84" y="86"><tspan class="wgc-ink--w">w</tspan><tspan class="wgc-bar">|</tspan><tspan class="wgc-ink--f">f</tspan><tspan class="wgc-ink--g">g</tspan><tspan class="wgc-ink--c">c</tspan></text></g>
+          </svg>
+          <figcaption class="diagram__caption">
+            Each edge is labelled with what the farmer takes across. Every move can be undone, so the edges
+            can be followed in both directions.
+          </figcaption>
+        </figure>
+
+        <p>
+          The first move from the initial state on the left must be to transport the goat to the right bank: any
+          other move leaves the wolf alone with the goat, or the goat alone with the cabbage. From the state
+          wc|fg, where the farmer is with the goat on the right bank, we can either return back to the initial
+          state (each of the transitions is two-way), or leave the goat on the right bank and have the farmer go
+          to the left bank with an empty boat.
         </p>
 
         <p>
@@ -1255,6 +1286,16 @@
           can't handle all the possible options.
         </p>
 
+        <figure class="viz" data-viz="river">
+          <figcaption class="viz__caption">
+            Try the puzzle yourself first: choose who rides with the farmer, and every new state you reach is
+            added to the diagram below the river. A move that would leave the wolf with the goat, or the goat
+            with the cabbage, is refused, because such a state is not part of the search space. Then press
+            <b>Solve with BFS</b> to watch the breadth-first search of the next section visit the states in order
+            (the numbers) with its queue, <code>node_list</code>, and follow the path it finds.
+          </figcaption>
+        </figure>
+
         <h2 class="material-heading">
           Breadth-First and Depth-First Search
 
@@ -1266,7 +1307,7 @@
           algorithms.
         </p>
 
-        <pre class="sh_java code-highlight"><code>1:  search(start_node):
+        <pre class="sh_pseudo code-highlight"><code>1:  search(start_node):
 2:     node_list = list()                # empty list (queue/stack/...)
 3:     visited = set()                   # empty set
 4:     add start_node to node_list
@@ -1429,14 +1470,16 @@
                 You can only move one disc at a time, and it is not allowed to
                 put a larger disc on top of a smaller disc.</p>
 
-              <p>This pretty picture shows the initial state and the goal state:
-              <pre>
-initial  -     |     |          goal    |     |     -
-state:  ---    |     |          state:  |     |    ---
-       -----   |     |                  |     |   -----
-      =====================         ====================
-</pre>
-              </p>
+              <p>This picture shows the initial state and the goal state:</p>
+
+              <figure class="diagram">
+                <svg class="hanoi" viewBox="0 0 560 150" role="img" aria-label="Towers of Hanoi with three discs. In the initial state all discs are on the left peg, largest at the bottom. In the goal state they are all on the right peg in the same order.">
+                  <text class="hanoi-title" x="130.0" y="16">initial state</text>
+                  <rect class="hanoi-base" x="6" y="120" width="248" height="8" rx="4"/><rect class="hanoi-peg" x="44.333333333333336" y="40" width="6" height="80" rx="3"/><text class="hanoi-label" x="47.333333333333336" y="144">1</text><rect class="hanoi-peg" x="127.0" y="40" width="6" height="80" rx="3"/><text class="hanoi-label" x="130.0" y="144">2</text><rect class="hanoi-peg" x="209.66666666666666" y="40" width="6" height="80" rx="3"/><text class="hanoi-label" x="212.66666666666666" y="144">3</text><rect class="hanoi-disc hanoi-disc--large" x="12.333333333333336" y="104" width="70" height="14" rx="7"/><rect class="hanoi-disc hanoi-disc--medium" x="21.333333333333336" y="88" width="52" height="14" rx="7"/><rect class="hanoi-disc hanoi-disc--small" x="30.333333333333336" y="72" width="34" height="14" rx="7"/>
+                  <text class="hanoi-title" x="430.0" y="16">goal state</text>
+                  <rect class="hanoi-base" x="306" y="120" width="248" height="8" rx="4"/><rect class="hanoi-peg" x="344.3333333333333" y="40" width="6" height="80" rx="3"/><text class="hanoi-label" x="347.3333333333333" y="144">1</text><rect class="hanoi-peg" x="427.0" y="40" width="6" height="80" rx="3"/><text class="hanoi-label" x="430.0" y="144">2</text><rect class="hanoi-peg" x="509.66666666666663" y="40" width="6" height="80" rx="3"/><text class="hanoi-label" x="512.6666666666666" y="144">3</text><rect class="hanoi-disc hanoi-disc--large" x="477.66666666666663" y="104" width="70" height="14" rx="7"/><rect class="hanoi-disc hanoi-disc--medium" x="486.66666666666663" y="88" width="52" height="14" rx="7"/><rect class="hanoi-disc hanoi-disc--small" x="495.66666666666663" y="72" width="34" height="14" rx="7"/>
+                </svg>
+              </figure>
 
               <p>
               <ol>
@@ -1825,17 +1868,22 @@ state:  ---    |     |          state:  |     |    ---
           One day they were playing tic-tac-toe. Maxine, or Max as her
           friends call her, was playing with X. Minnie, or Min as her
           friends call her, had the Os. The situation was
-        <pre>
-       O| |O
-       -+-+-
-       X| |
-       -+-+-
-       X|O|
-</pre>
-        Max was looking at the board and contemplating her next move, as it
-        was her turn, when she suddenly buried her face in her hands in
-        despair, looking quite like Garry Kasparov playing Deep Blue in
-        1997.
+        </p>
+
+        <figure class="ttt-figure">
+          <div class="ttt" role="img" aria-label="Tic-tac-toe position. Top row: O, empty, O. Middle row: X, empty, empty. Bottom row: X, O, empty.">
+            <span class="ttt__o"></span><span></span><span class="ttt__o"></span>
+            <span class="ttt__x"></span><span></span><span></span>
+            <span class="ttt__x"></span><span class="ttt__o"></span><span></span>
+          </div>
+          <figcaption>Max (X) to move</figcaption>
+        </figure>
+
+        <p>
+          Max was looking at the board and contemplating her next move, as it
+          was her turn, when she suddenly buried her face in her hands in
+          despair, looking quite like Garry Kasparov playing Deep Blue in
+          1997.
         </p>
 
         <p>
@@ -1975,7 +2023,7 @@ state:  ---    |     |          state:  |     |    ---
             Minimax</a>).
         </p>
 
-        <pre class="sh_java code-highlight"><code>    max_value(node):
+        <pre class="sh_pseudo code-highlight"><code>    max_value(node):
 1:     if end_state(node): return value(node)
 2:     v = -Inf
 3:     for each child in node.children():
@@ -1983,7 +2031,7 @@ state:  ---    |     |          state:  |     |    ---
 5:     return v
 </code></pre>
 
-        <pre class="sh_java code-highlight"><code>    min_value(node):
+        <pre class="sh_pseudo code-highlight"><code>    min_value(node):
 1:     if end_state(node): return value(node)
 2:     v = +Inf
 3:     for each child in node.children():
@@ -2009,16 +2057,21 @@ state:  ---    |     |          state:  |     |    ---
                 of this section. To narrow down the space of possible end-games
                 to consider, we can observe that Max must clearly place an X on
                 the top row to avoid imminent defeat:
-              <pre>
-       O|X|O
-       -+-+-
-       X| |
-       -+-+-
-       X|O|
-  </pre>
-              Now it's Min's turn to play an O. Evaluate the value of this state
-              of the game as well as the other states in the game tree where the
-              above position is the root, using the Minimax algorithm.
+              </p>
+
+              <figure class="ttt-figure">
+                <div class="ttt" role="img" aria-label="Tic-tac-toe position. Top row: O, X, O. Middle row: X, empty, empty. Bottom row: X, O, empty.">
+                  <span class="ttt__o"></span><span class="ttt__x is-last"></span><span class="ttt__o"></span>
+                  <span class="ttt__x"></span><span></span><span></span>
+                  <span class="ttt__x"></span><span class="ttt__o"></span><span></span>
+                </div>
+                <figcaption>Min (O) to move; the X that Max just played is highlighted</figcaption>
+              </figure>
+
+              <p>
+                Now it's Min's turn to play an O. Evaluate the value of this state
+                of the game as well as the other states in the game tree where the
+                above position is the root, using the Minimax algorithm.
               </p>
 
 
@@ -2157,7 +2210,7 @@ state:  ---    |     |          state:  |     |    ---
           exercises with care.
         </p>
 
-        <pre class="sh_java code-highlight"><code>    max_value(node, alpha, beta):
+        <pre class="sh_pseudo code-highlight"><code>    max_value(node, alpha, beta):
 1:     if end_state(node): return value(node)
 2:     v = -Inf
 3:     for each child in node.children():
@@ -2167,7 +2220,7 @@ state:  ---    |     |          state:  |     |    ---
 7:     return v
 </code></pre>
 
-        <pre class="sh_java code-highlight"><code>    min_value(node, alpha, beta):
+        <pre class="sh_pseudo code-highlight"><code>    min_value(node, alpha, beta):
 1:     if end_state(node): return value(node)
 2:     v = +Inf
 3:     for each child in node.children():
@@ -2279,19 +2332,24 @@ state:  ---    |     |          state:  |     |    ---
 
               <p>
                 Maxine wants to try again -- best out of three! Minnie agrees and
-                after a while, they arrive at the following position
-              <pre>
-       O|X|O
-       -+-+-
-       X| |X
-       -+-+-
-        |O|
-  </pre>
-              It's again Min's turn to play an O. Evaluate the value of this state
-              of the game as well as the other states in the game tree where the
-              above position is the root, using alpha-beta pruning. Start the
-              recursion by calling <code>min-value(root, -1, 1)</code> where
-              <code>root</code> is the above board position.
+                after a while, they arrive at the following position:
+              </p>
+
+              <figure class="ttt-figure">
+                <div class="ttt" role="img" aria-label="Tic-tac-toe position. Top row: O, X, O. Middle row: X, empty, X. Bottom row: empty, O, empty.">
+                  <span class="ttt__o"></span><span class="ttt__x"></span><span class="ttt__o"></span>
+                  <span class="ttt__x"></span><span></span><span class="ttt__x"></span>
+                  <span></span><span class="ttt__o"></span><span></span>
+                </div>
+                <figcaption>Min (O) to move</figcaption>
+              </figure>
+
+              <p>
+                It's again Min's turn to play an O. Evaluate the value of this state
+                of the game as well as the other states in the game tree where the
+                above position is the root, using alpha-beta pruning. Start the
+                recursion by calling <code>min_value(root, -1, 1)</code> where
+                <code>root</code> is the above board position.
               </p>
 
               <p>

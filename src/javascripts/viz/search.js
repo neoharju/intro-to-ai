@@ -78,9 +78,11 @@ export default function mountSearch(figure) {
   let layout = { cell: 20, ox: 0, oy: 0 };
 
   // --- controls ---
+  // A new algorithm starts from an empty grid: it only runs when asked to (Run, Step or Compare all).
   const algorithmControl = segmented(ALGORITHMS, algorithm, value => {
     algorithm = value;
-    restart(search && search.result);
+    restart(false);
+    status.textContent = `${NAMES[algorithm]}: press Run or Step to start the search.`;
   }, 'Search algorithm');
 
   const stage = el('div', { class: 'vz-stage vz-stage--draw' });
@@ -166,14 +168,14 @@ export default function mountSearch(figure) {
 
   const clearButton = button('Clear map', () => {
     grid.cells.fill(FREE);
-    restart(search && search.result);
+    restart(false);
   });
 
   const defaultButton = button('Default map', () => {
     grid.cells = defaultCells();
     start = START;
     goal = GOAL;
-    restart(search && search.result);
+    restart(false);
   });
 
   const compareButton = button('Compare all', () => {
@@ -217,8 +219,8 @@ export default function mountSearch(figure) {
 
   // --- state changes ---
 
-  // Starts over. When the previous run had finished, the new one is computed at once, so editing the
-  // map shows its effect immediately.
+  // Starts over. Drawing on the map after a finished run passes instant = true: the same algorithm is
+  // run again at once, so that the effect of the edit shows immediately. Everything else starts blank.
   function restart(instant) {
     loop.stop();
     budget = 0;

@@ -1,0 +1,308 @@
+// Static teaching diagrams written into the pages: the river-crossing states and the Towers of Hanoi
+// (inline SVG drawn with the classes below) and tic-tac-toe boards (plain HTML). Every colour is a
+// custom property, so the diagrams follow the page theme.
+:root {
+  --wgc-bank: #eef7ee;
+  --wgc-river: #dbeafe;
+  --wgc-wave: #93c5fd;
+  --wgc-boat: #92400e;
+  --wgc-f: #b45309;
+  --wgc-w: #475569;
+  --wgc-g: #6d28d9;
+  --wgc-c: #15803d;
+  --wgc-letter: #fff;
+  --ttt-line: #94a3b8;
+  --ttt-x: #{$brand-link};
+  --ttt-o: #ea580c;
+  --hanoi-small: #d97706;
+  --hanoi-medium: #0d9488;
+  --hanoi-large: #{$brand-link};
+}
+
+.diagram {
+  margin: 1.5rem 0 1.75rem;
+  text-align: center;
+
+  > svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
+  }
+
+  &__caption {
+    max-width: 36rem;
+    margin: .75rem auto 0;
+    font-size: .875rem;
+    line-height: 1.5;
+    color: var(--muted);
+    text-wrap: balance;
+  }
+
+  // A wide diagram scrolls sideways on a phone instead of shrinking its labels.
+  &--wide {
+    overflow-x: auto;
+
+    > svg {
+      min-width: 40rem;
+    }
+  }
+}
+
+// --- Wolf, goat and cabbage -------------------------------------------------------------------
+
+.wgc {
+  text {
+    font-family: var(--font-mono);
+    text-anchor: middle;
+    dominant-baseline: middle;
+  }
+
+  .wgc-bank { fill: var(--wgc-bank); }
+  .wgc-river { fill: var(--wgc-river); }
+  .wgc-wave { fill: none; stroke: var(--wgc-wave); stroke-width: 1.5; stroke-linecap: round; }
+  .wgc-boat { fill: var(--wgc-boat); }
+  .wgc-frame { fill: none; stroke: var(--line-strong); }
+  .is-start .wgc-frame { stroke: var(--primary); stroke-width: 2; }
+
+  .wgc-token text {
+    font-size: 12px;
+    font-weight: 700;
+    fill: var(--wgc-letter);
+  }
+
+  @each $item in f, w, g, c {
+    .wgc-token--#{$item} circle { fill: var(--wgc-#{$item}); }
+    .wgc-ink--#{$item} { fill: var(--wgc-#{$item}); }
+  }
+
+  .wgc-notation {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: .06em;
+  }
+
+  .wgc-notation--big {
+    font-size: 26px;
+  }
+
+  .wgc-bar { fill: var(--wgc-wave); font-weight: 400; }
+
+  .wgc-zone {
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .04em;
+    fill: var(--muted);
+  }
+
+  .wgc-zone--strong {
+    font-size: 13px;
+    fill: var(--ink);
+  }
+
+  .wgc-edge { stroke: var(--faint); stroke-width: 2; stroke-linecap: round; }
+  .wgc-edge--more { stroke-dasharray: 2 6; }
+  .wgc-arrow { stroke: var(--faint); stroke-width: 2; }
+  .wgc-arrowhead { fill: var(--faint); }
+  .wgc-more { font-size: 18px; fill: var(--faint); text-anchor: start; }
+
+  .wgc-edge-label {
+    font-family: inherit;
+    font-size: 12.5px;
+    font-weight: 600;
+    fill: var(--muted);
+  }
+
+  // An edge labelled with an item is written in the item's colour.
+  @each $item in f, w, g, c {
+    .wgc-edge-label.wgc-ink--#{$item} { fill: var(--wgc-#{$item}); }
+  }
+}
+
+// The interactive puzzle (viz/river.js): the scene, the diagram growing below it and the queue.
+.wgc-scene {
+  .wgc-scene__token text {
+    font-size: 16px;
+  }
+
+  .wgc-scene__token .wgc-scene__name {
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    fill: var(--muted);
+  }
+
+  &.is-animated .wgc-scene__token, &.is-animated .wgc-scene__boat {
+    transition: transform .7s var(--ease);
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
+  }
+}
+
+.wgc-graph {
+  min-width: 34rem;
+
+  .wgc-edge.is-travelled {
+    stroke: var(--primary);
+    stroke-width: 3;
+  }
+
+  .wgc-node rect {
+    fill: var(--surface);
+    stroke: var(--line-strong);
+    stroke-width: 1.5;
+  }
+
+  .wgc-node.is-goal rect { stroke: var(--green); }
+  .wgc-node.is-solution rect { stroke: var(--primary); }
+
+  .wgc-node.is-current rect {
+    fill: var(--primary-soft);
+    stroke: var(--primary);
+    stroke-width: 3;
+  }
+
+  .wgc-notation {
+    font-size: 13px;
+  }
+
+  .wgc-node__order { fill: var(--amber); }
+
+  .wgc-node__order-text {
+    font-family: inherit;
+    font-size: 10px;
+    font-weight: 700;
+    fill: #fff;
+  }
+}
+
+// The notation in running text, e.g. in the queue below the diagram.
+.wgc-code {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  white-space: nowrap;
+
+  @each $item in f, w, g, c {
+    .wgc-ink--#{$item} { color: var(--wgc-#{$item}); }
+  }
+
+  .wgc-bar { color: var(--wgc-wave); font-weight: 400; }
+}
+
+// The four letters and what they stand for.
+.wgc-legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: .35rem 1.1rem;
+  margin: .6rem 0 0;
+  padding: 0 !important;
+  font-size: .875rem;
+  color: var(--text);
+  list-style: none;
+
+  li {
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+  }
+}
+
+.wgc-chip {
+  display: inline-grid;
+  place-items: center;
+  width: 1.35rem;
+  height: 1.35rem;
+  font-family: var(--font-mono);
+  font-size: .75rem;
+  font-weight: 700;
+  color: var(--wgc-letter);
+  border-radius: 50%;
+
+  @each $item in f, w, g, c {
+    &--#{$item} { background-color: var(--wgc-#{$item}); }
+  }
+}
+
+// --- Tic-tac-toe boards -----------------------------------------------------------------------
+
+.ttt-figure {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 1.25rem 0 1.5rem;
+
+  figcaption {
+    margin-top: .6rem;
+    font-size: .875rem;
+    color: var(--muted);
+  }
+}
+
+.ttt {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  width: 8.25rem;
+  aspect-ratio: 1;
+
+  > span {
+    position: relative;
+    display: block;
+    border-color: var(--ttt-line);
+    border-style: solid;
+    border-width: 0;
+
+    // Inner lines only, like a board drawn on paper.
+    &:nth-child(3n + 1), &:nth-child(3n + 2) { border-right-width: 3px; }
+    &:nth-child(-n + 6) { border-bottom-width: 3px; }
+  }
+
+  // The move just played.
+  .is-last {
+    background-color: var(--primary-soft);
+  }
+
+  .ttt__x::before, .ttt__x::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 62%;
+    height: 11%;
+    background-color: var(--ttt-x);
+    border-radius: 99px;
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+
+  .ttt__x::after {
+    transform: translate(-50%, -50%) rotate(-45deg);
+  }
+
+  .ttt__o::before {
+    content: "";
+    position: absolute;
+    inset: 20%;
+    border: .3rem solid var(--ttt-o);
+    border-radius: 50%;
+  }
+}
+
+// --- Towers of Hanoi --------------------------------------------------------------------------
+
+.hanoi {
+  text {
+    text-anchor: middle;
+    dominant-baseline: middle;
+  }
+
+  .hanoi-title { font-size: 13px; font-weight: 650; fill: var(--ink); }
+  .hanoi-label { font-size: 11px; font-weight: 600; fill: var(--faint); }
+  .hanoi-base { fill: var(--line-strong); }
+  .hanoi-peg { fill: var(--faint); }
+  .hanoi-disc--small { fill: var(--hanoi-small); }
+  .hanoi-disc--medium { fill: var(--hanoi-medium); }
+  .hanoi-disc--large { fill: var(--hanoi-large); }
+}
