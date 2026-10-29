@@ -29,6 +29,25 @@
   position: relative;
   padding-left: 6rem !important;
 
+  // Wide screens: centre the week links. Three columns (empty | links | buttons): the two outer columns
+  // share the free space equally, so the links sit in the middle of the bar. On narrower screens the
+  // first column (under the absolutely positioned logo) keeps 5rem and the buttons keep their full
+  // width, so nothing overlaps or wraps; the links then sit slightly off centre.
+  @include media-breakpoint-up(lg) {
+    display: grid;
+    grid-template-columns: minmax(5rem, 1fr) auto minmax(max-content, 1fr);
+    padding-left: 1rem !important;
+
+    .navbar-nav {
+      grid-column: 2;
+    }
+
+    .navbar__buttons {
+      grid-column: 3;
+      justify-self: end;
+    }
+  }
+
   .nav-item {
     position: relative;
     margin: 0rem !important;
