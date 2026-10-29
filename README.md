@@ -24,13 +24,17 @@ copy is for non-commercial use only.
 
 Compared with the original `gh-pages` branch (commit `b9dedeb`):
 
-- **Front-end dependencies:** jQuery, Bootstrap, highlight.js, Font Awesome and the Roboto font are upgraded
-  and served from this repository instead of third-party CDNs. The shared JavaScript and CSS are built from
-  `src/`.
+- **Front-end dependencies:** jQuery, Bootstrap, highlight.js and Font Awesome are upgraded and, like the
+  Inter font, served from this repository instead of third-party CDNs. The shared JavaScript and CSS are
+  built from `src/`.
 - **Docker preview:** a `Dockerfile` and `compose.yaml` to preview the site locally.
 - **Corrections in weeks 1–7:** factual errors and broken code examples are corrected.
 - **Removed:** the original course's Google Analytics tracking, cookie banner and disabled login form,
   unused images, and the icon and font files the pages never load.
+- **Design:** a new look (Inter font, a sticky top bar, a header for each week, cards for hints and
+  exercises, a table of contents that highlights the current section) and interactive figures in every
+  week, from search algorithms and alpha-beta pruning to attention and Q-learning. The figures run the
+  algorithms described in the text, in the browser; their code is in `src/javascripts/viz/`.
 
 ## Preview locally
 

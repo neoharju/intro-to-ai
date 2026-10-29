@@ -74,10 +74,15 @@
     </div>
 
 <div class="content-wrapper">
+      <header class="page-hero">
+        <div class="container">
+          <p class="page-hero__eyebrow"><b>Week 5</b>of 7</p>
+          <h1 class="page-hero__title">Modern Architectures and Foundation-Model Applications</h1>
+          <ul class="page-hero__meta" aria-label="About this page"></ul>
+        </div>
+      </header>
+
       <div class="container material" id="material">
-        <h1>
-          Modern Architectures and Foundation-Model Applications
-        </h1>
 
         <div class="hint">
           <div class="hint__header">
@@ -302,6 +307,16 @@
 	  their positions (rotary position embeddings, RoPE).
 	</p>
 
+	<figure class="viz" data-viz="posenc">
+	  <figcaption class="viz__caption">
+	    The fixed encodings of the original Transformer, here with <code>d_model</code> = 64:
+	    <code>PE(pos, 2i) = sin(pos / 10000<sup>2i/d</sup>)</code> and
+	    <code>PE(pos, 2i+1) = cos(pos / 10000<sup>2i/d</sup>)</code>. The wavelengths grow geometrically from
+	    2&pi; in the first dimensions to about 10000&middot;2&pi; in the last, so every position gets its own pattern,
+	    which is added to the token embedding. Point at a cell, or click a column to plot that dimension.
+	  </figcaption>
+	</figure>
+
 	<h2 class="material-heading">Attention Layer in the Decoder</h2>
 	
 	<p>
@@ -328,6 +343,16 @@
 	
 	<img src="../img/material/part5/attention_mask.svg" alt="Autoregressive Attention Mask" width="50%">
 	
+	<figure class="viz" data-viz="attention">
+	  <figcaption class="viz__caption">
+	    The same word gets the same query, key and value vectors in both sentences, so it starts from the same
+	    static embedding; the attention weights <code>softmax(QK<sup>T</sup> / &radic;d<sub>k</sub>)</code> and
+	    therefore the output depend on the other words. With the causal mask, scores for later tokens are set to
+	    &minus;&infin; before the softmax, so the weight matrix becomes lower triangular. The vectors are small
+	    toy examples chosen by hand to show the mechanism, not taken from a trained model.
+	  </figcaption>
+	</figure>
+
 	<h2 class="material-heading">Multi-Head Attention</h2>
 	
 	<p>
@@ -844,6 +869,15 @@ for result in generator(
           instead of the changing default branch. We use the smallest GPT-2
           checkpoint and short runs so a laptop CPU is enough.
         </p>
+
+        <figure class="viz" data-viz="sampling">
+          <figcaption class="viz__caption">
+            How nanoGPT picks the next token: it divides the model's scores (logits) by the
+            <code>temperature</code>, keeps only the <code>top_k</code> largest, turns them into probabilities with
+            softmax, and draws one token at random. Low temperatures concentrate the probability on the most likely
+            tokens; high temperatures spread it out. The scores here are made up for illustration.
+          </figcaption>
+        </figure>
 
         <!-- Exercise 5.3 -->
         <div class="exercise">
@@ -1664,6 +1698,7 @@ git checkout 3adf61e1</code></pre>
 
 
   <script src="../javascripts/main.js"></script>
+  <script src="../javascripts/week5.js"></script>
 
 
 </body>

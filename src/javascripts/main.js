@@ -10,6 +10,8 @@ import Exercises from './exercises';
 import Solutions from './solutions';
 import TableOfContents from './table-of-contents';
 import Navigation from './navigation';
+import mountUi from './ui';
+import mountHero from './hero';
 
 // The page modules use the jQuery globals, as they did when jQuery came from a CDN.
 window.$ = window.jQuery = $;
@@ -45,4 +47,6 @@ $(() => {
   (new Navigation()).mount();
 
   highlightCode();
+  mountUi();
+  mountHero();
 });

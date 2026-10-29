@@ -1,60 +1,81 @@
 .exercise {
-  @include floating;
+  margin: 1.25rem 0;
+  background-color: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: inset 3px 0 0 $brand-mooc, var(--shadow-sm);
+  transition: border-color .2s, box-shadow .2s;
 
-  border-left: 4px solid $brand-mooc;
-  border-radius: $border-radius;
-  margin-bottom: $spacer-y;
-  padding: $spacer-y $spacer-x 0rem $spacer-x;
-
-  &__arrow {
-    transition: 0.5s;
-    transform: rotate3d(1, 0, 0, 0deg);
-    position: absolute;
-    right: $spacer-y;
-    top: 0.25rem;
+  &:hover {
+    border-color: var(--line-strong);
+    box-shadow: inset 3px 0 0 $brand-mooc, var(--shadow);
   }
 
   &__icon {
-    color: $brand-mooc;
-    margin-right: $spacer-x;
+    flex: none;
+    color: #f59e0b;
   }
 
-  &__header {
-    font-size: 1.5rem;
-    border-bottom: 1px solid $gray-lightest;
-    padding-bottom: $spacer-y;
+  &__arrow {
+    flex: none;
+    margin-left: auto;
+    color: var(--faint);
+    transition: transform .3s var(--ease), color .2s;
   }
 
   &__heading {
-    font-size: 1.5rem;
-    display: inline-block;
-    margin: 0rem;
+    flex: 1;
+    margin: 0;
+    font-size: 1.125rem;
+    font-weight: 650;
+    line-height: 1.35;
+    letter-spacing: -.005em;
+
+    // "Exercise 1.2:" (from exercises.js) above the name.
+    > small {
+      display: block;
+      margin-bottom: .1rem;
+      font-size: .75rem;
+      font-weight: 650;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--orange) !important;
+    }
+
+    .points-pill {
+      margin-left: .35rem;
+      vertical-align: .1em;
+    }
   }
 
   &__toggle {
+    display: flex;
+    align-items: center;
+    gap: .85rem;
+    padding: .9rem 1.1rem .9rem 1.3rem;
     color: inherit !important;
-    display: block;
     text-decoration: none !important;
-    position: relative;
-    padding-right: 1.5rem + $spacer-y;
+    border-radius: var(--radius);
 
-    &[aria-expanded="true"] {
-      .exercise__arrow {
-        transition: 0.5s;
-        transform: rotate3d(1, 0, 0, 180deg);
-      }
+    &:hover .exercise__arrow {
+      color: var(--ink);
+    }
+
+    &[aria-expanded="true"] .exercise__arrow {
+      transform: rotate(180deg);
     }
   }
 
   &__body {
-    padding: $spacer-y 0rem;
+    padding: 1rem 1.25rem 1.25rem 1.3rem;
+    border-top: 1px solid var(--line);
 
     p:last-child {
-      margin-bottom: 0rem;
+      margin-bottom: 0;
     }
 
     h2 {
-      font-size: 1.25rem;
+      font-size: 1.125rem;
     }
   }
 }

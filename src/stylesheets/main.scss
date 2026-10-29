@@ -1,8 +1,10 @@
-// Vendor stylesheet: a plain CSS import, resolved from node_modules and bundled by esbuild.
+// Vendor stylesheets: plain CSS imports, resolved from node_modules and bundled by esbuild (with the
+// font files they reference).
 @import "highlight.js/styles/xcode.css";
+@import "@fontsource-variable/inter/index.css";
+@import "@fontsource-variable/inter/wght-italic.css";
 
-// Roboto (WOFF2 only) and the icons the pages use.
-@import "fonts";
+// The icons the pages use.
 @import "icons";
 
 // Bootstrap, limited to the parts the pages use.
@@ -28,10 +30,11 @@ $utilities: map-get-multiple($utilities, ("display", "margin-start", "background
 @import "bootstrap/scss/navbar";
 @import "bootstrap/scss/utilities/api";
 
+@import "tokens";
 @import "compat";
-@import "mixins";
 @import "mooc-icon";
 @import "theme";
+@import "hero";
 
 @import "footer";
 @import "exercise";
@@ -39,3 +42,5 @@ $utilities: map-get-multiple($utilities, ("display", "margin-start", "background
 @import "hint";
 @import "navbar";
 @import "table-of-contents";
+@import "ui";
+@import "viz";

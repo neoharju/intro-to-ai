@@ -74,11 +74,15 @@
 		</div>
 
 		<div class="content-wrapper">
-			<div class="container material" id="material">
+			<header class="page-hero">
+				<div class="container">
+					<p class="page-hero__eyebrow"><b>Week 6</b>of 7</p>
+					<h1 class="page-hero__title">Agents</h1>
+					<ul class="page-hero__meta" aria-label="About this page"></ul>
+				</div>
+			</header>
 
-				<h1>
-					Agents
-				</h1>
+			<div class="container material" id="material">
 
         <div class="hint">
           <div class="hint__header">
@@ -240,6 +244,16 @@
                 <p>Suppose the agent is one step from the goal. Moving right gives reward 10 and ends the episode. The present estimate is Q(state, right) = 2, and the learning rate is 0.5. Because the episode ends, there is no future value to add. The target is therefore 10, the prediction error is 10 − 2 = 8, and the updated estimate is 2 + 0.5 × 8 = 6. The estimate moves halfway toward the newly observed outcome.</p>
                 <p>Now consider an earlier state. Moving right gives immediate reward 0 and reaches the state whose best estimated action has value 6. With discount factor 0.9, the target is 0 + 0.9 × 6 = 5.4. If the old estimate was 1 and the learning rate remains 0.5, the new estimate becomes 1 + 0.5 × (5.4 − 1) = 3.2. In this way, information about the goal propagates backward one transition at a time. Repeated experience gradually distinguishes actions that merely look promising from actions that reliably lead to long-term reward.</p>
                 <table class="table"><tr><th>Quantity</th><th>Meaning</th><th>Worked value</th></tr><tr><td>Q(s,a)</td><td>Current expected return for the chosen action</td><td>1.0</td></tr><tr><td>r</td><td>Reward observed after acting</td><td>0</td></tr><tr><td>γ max Q(s′,a′)</td><td>Discounted value available next</td><td>0.9 × 6 = 5.4</td></tr><tr><td>Target</td><td>Immediate reward plus estimated future value</td><td>5.4</td></tr><tr><td>TD error</td><td>Target minus current estimate</td><td>4.4</td></tr><tr><td>Updated Q</td><td>Old value plus learning rate times error</td><td>1 + 0.5 × 4.4 = 3.2</td></tr></table>
+                <figure class="viz" data-viz="qlearning">
+                  <figcaption class="viz__caption">
+                    The agent starts at the bottom left. Reaching the goal gives +10 and falling into the pit &minus;10;
+                    both end the episode, and every other move gives 0. Each move updates one Q-value with the rule
+                    above, starting from the worked example's learning rate 0.5 and discount 0.9. The agent picks a
+                    random action with probability &epsilon; and otherwise the best known one, so watch how the
+                    information about the goal spreads backwards, one transition at a time.
+                  </figcaption>
+                </figure>
+
                 <h3 class="material-heading">How the main RL families differ</h3>
                 <table class="table"><tr><th>Approach</th><th>What is learned?</th><th>Strength</th><th>Typical difficulty</th></tr><tr><td>Value-based</td><td>Value of states or state–action pairs</td><td>Clear action comparison; effective for discrete actions</td><td>Awkward for large continuous action spaces</td></tr><tr><td>Policy gradient</td><td>Policy parameters directly</td><td>Handles stochastic and continuous policies</td><td>Gradient estimates can have high variance</td></tr><tr><td>Actor–critic</td><td>Policy plus a value estimator</td><td>Critic can make policy learning more efficient</td><td>Two coupled learners can become unstable</td></tr><tr><td>Model-based</td><td>Environment dynamics and/or reward model</td><td>Can plan and reuse experience efficiently</td><td>Planning may exploit model errors</td></tr></table>
                 <p>The distinction between <b>on-policy</b> and <b>off-policy</b> learning is also important. An on-policy method evaluates and improves the policy that currently generates behaviour. An off-policy method can learn about one target policy from experience produced by another behaviour policy. Q-learning is off-policy: exploratory behaviour may take a random action, while the update uses the estimated value of the best next action. This permits experience replay and learning from logged data, but the difference between the data-generating policy and the learned policy can also create instability.</p>
@@ -262,6 +276,15 @@
                 <p>In a <b>cooperative</b> task, agents share a team reward, but assigning credit remains difficult: which agent’s action caused success? In a <b>competitive</b> task, improvement by one agent changes the challenge faced by others. Mixed settings contain both, as in traffic: drivers share an interest in avoiding collisions but compete for space and time. Centralized training may use information about all agents, while decentralized execution gives each agent only local observations.</p>
                 <p>Communication is an action with costs and consequences. Agents must decide what to communicate, to whom, and when. A message may reduce uncertainty, coordinate complementary roles, or create common knowledge; it may also consume bandwidth or reveal strategy. In teams of LLM agents, assigning “researcher,” “critic,” and “writer” roles can improve coverage, but it can also produce duplicated work or amplify the same misconception when all agents rely on similar models and sources.</p>
                 <p><b>Emergence</b> means that system-level patterns arise from local interactions without being explicitly programmed as a global plan. Flocking can emerge from simple separation, alignment, and cohesion rules. Congestion can emerge even when every driver tries to minimize travel time. Emergence is not automatically intelligent or beneficial. Multi-agent evaluation therefore needs counterfactual tests, varied group composition, communication failures, and measurement of collective rather than merely individual outcomes.</p>
+
+                <figure class="viz" data-viz="boids">
+                  <figcaption class="viz__caption">
+                    Craig Reynolds' boids (1987): every boid sees only its neighbours within the view radius and combines
+                    three rules, separation, alignment and cohesion. Nothing tells the group to form a flock. Set a rule
+                    to 0 to see what it contributes. Polarization is the length of the average heading vector: 1 when
+                    all boids fly the same way, close to 0 when their directions are random.
+                  </figcaption>
+                </figure>
 
                 <h2 class="material-heading">Robots: agents with bodies</h2>
                 <p>A robot closes the agent loop in the physical world. Sensors translate light, force, sound, distance, or joint position into measurements. Actuators produce motion. Perception estimates relevant state; planning selects a route or sequence of actions; control turns that plan into motor commands. All stages are uncertain. A wheel slips, a camera is occluded, an object moves, or the environment differs from training.</p>
@@ -917,6 +940,7 @@ agent.run("What is 24 degrees Celsius in Fahrenheit?")
 
 
 	<script src="../javascripts/main.js"></script>
+	<script src="../javascripts/week6.js"></script>
 
 
 </body>

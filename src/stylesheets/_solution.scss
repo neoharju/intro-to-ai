@@ -1,60 +1,66 @@
+// Same card as .exercise, with a violet accent.
 .solution {
-  @include floating;
-
-  border-left: 4px solid #553982;
-  border-radius: $border-radius;
-  margin-bottom: $spacer-y;
-  padding: $spacer-y $spacer-x 0rem $spacer-x;
-
-  &__arrow {
-    transition: 0.5s;
-    transform: rotate3d(1, 0, 0, 0deg);
-    position: absolute;
-    right: $spacer-y;
-    top: 0.25rem;
-  }
+  margin: 1.25rem 0;
+  background-color: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: inset 3px 0 0 #6d28d9, var(--shadow-sm);
 
   &__icon {
-    color: #553982;
-    margin-right: $spacer-x;
+    flex: none;
+    color: #6d28d9;
   }
 
-  &__header {
-    font-size: 1.5rem;
-    border-bottom: 1px solid $gray-lightest;
-    padding-bottom: $spacer-y;
+  &__arrow {
+    flex: none;
+    margin-left: auto;
+    color: var(--faint);
+    transition: transform .3s var(--ease);
   }
 
   &__heading {
-    font-size: 1.5rem;
-    display: inline-block;
-    margin: 0rem;
+    flex: 1;
+    margin: 0;
+    font-size: 1.125rem;
+    font-weight: 650;
+    line-height: 1.35;
+
+    > small {
+      display: block;
+      margin-bottom: .1rem;
+      font-size: .75rem;
+      font-weight: 650;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: #6d28d9 !important;
+    }
   }
 
   &__toggle {
+    display: flex;
+    align-items: center;
+    gap: .85rem;
+    padding: .9rem 1.1rem .9rem 1.3rem;
     color: inherit !important;
-    display: block;
     text-decoration: none !important;
-    position: relative;
-    padding-right: 1.5rem + $spacer-y;
 
     &[aria-expanded="true"] {
-      .exercise__arrow {
-        transition: 0.5s;
-        transform: rotate3d(1, 0, 0, 180deg);
+      .exercise__arrow, .solution__arrow {
+        transform: rotate(180deg);
       }
     }
   }
 
   &__body {
-    padding: $spacer-y 0rem;
+    padding: 1rem 1.25rem 1.25rem 1.3rem;
+    border-top: 1px solid var(--line);
 
     p:last-child {
-      margin-bottom: 0rem;
+      margin-bottom: 0;
     }
 
     h2 {
-      font-size: 1.25rem;
+      font-size: 1.125rem;
     }
   }
 }

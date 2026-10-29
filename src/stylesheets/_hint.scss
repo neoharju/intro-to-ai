@@ -1,45 +1,43 @@
 .hint {
-  @include floating;
-
-  border-left: 4px solid $brand-primary;
-  border-radius: $border-radius;
-  padding: $spacer-y $spacer-x;
-  margin-bottom: $spacer-y;
+  margin: 1.5rem 0;
+  padding: 1rem 1.25rem 1.1rem;
+  background-color: #f8faff;
+  border: 1px solid #dbe5fd;
+  border-radius: var(--radius);
 
   &__icon {
-    color: $brand-primary;
-    margin-right: $spacer-x;
+    flex: none;
+    color: var(--primary);
   }
 
   &__header {
-    border-bottom: 1px solid $gray-lighter;
-    padding-bottom: $spacer-y;
-    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+    font-size: 1.0625rem;
+    font-weight: 650;
+    line-height: 1.35;
+    color: var(--ink);
   }
 
   &__body {
-    padding-top: $spacer-y;
+    padding-top: .6rem;
 
     h2 {
-      font-size: 1.25rem;
+      font-size: 1.125rem;
     }
 
-    p:last-child {
-      margin-bottom: 0px;
+    p:last-child, ul:last-child, ol:last-child {
+      margin-bottom: 0;
     }
   }
 }
 
 .hint--deadline {
-  border-left-color: #f0950e;
-  background-color: #fff8ec;
+  background-color: var(--amber-soft);
+  border-color: var(--amber-line);
 
   .hint__icon {
-    color: #f0950e;
-  }
-
-  .hint__header {
-    border-bottom-color: #fbe3c2;
-    font-weight: 700;
+    color: var(--amber);
   }
 }

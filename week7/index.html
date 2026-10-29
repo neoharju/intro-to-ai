@@ -74,10 +74,15 @@
     </div>
 
     <div class="content-wrapper">
+      <header class="page-hero">
+        <div class="container">
+          <p class="page-hero__eyebrow"><b>Week 7</b>of 7</p>
+          <h1 class="page-hero__title">Ethics and Trustworthy AI</h1>
+          <ul class="page-hero__meta" aria-label="About this page"></ul>
+        </div>
+      </header>
+
       <div class="container material" id="material">
-        <h1>
-          Ethics and Trustworthy AI
-        </h1>
 
         <div class="hint">
           <div class="hint__header">
@@ -323,6 +328,13 @@
 						changing with generative AI).</li>
 				</ul>
 
+				<figure class="viz" data-viz="ai-act">
+					<figcaption class="viz__caption">
+						A simplified overview of the summary on this page, not legal advice: how a real system is classified
+						depends on its intended purpose and on the exceptions in the Act, so check the text of the Act itself.
+					</figcaption>
+				</figure>
+
 				<p><u>The Majority of Obligations Fall on Providers (Developers) of High-Risk AI Systems</p></u>
 				<ul>
 					<li>Those that intend to place on the market or put into service high-risk AI systems in the EU,
@@ -561,6 +573,17 @@ Disclaimers/critique: these results are primarily descriptive—they capture wha
 					gradually lose information about the original data and perform worse.)
 				</p>
 
+				<figure class="viz" data-viz="collapse">
+					<figcaption class="viz__caption">
+						A toy version of model collapse. The &ldquo;model&rdquo; is a probability distribution over 20
+						categories; each generation is fitted to samples drawn from the previous generation's model. A rare
+						category that gets no samples is gone for good, so the tails of the original distribution disappear
+						first, as Shumailov et al. describe in
+						<a href="https://doi.org/10.1038/s41586-024-07566-y" target="_blank" rel="noopener">Nature 631 (2024)</a>.
+						Larger samples slow the loss down but do not stop it.
+					</figcaption>
+				</figure>
+
 				<u>
 					<p><strong>Fake and misleading content</strong></p>
 				</u>
@@ -671,6 +694,7 @@ Disclaimers/critique: these results are primarily descriptive—they capture wha
 
 
   <script src="../javascripts/main.js"></script>
+  <script src="../javascripts/week7.js"></script>
 
 
 </body>

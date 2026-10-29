@@ -185,10 +185,15 @@
     </div>
 
     <div class="content-wrapper">
+      <header class="page-hero">
+        <div class="container">
+          <p class="page-hero__eyebrow"><b>Week 1</b>of 7</p>
+          <h1 class="page-hero__title">Philosophy, problem solving as search, games</h1>
+          <ul class="page-hero__meta" aria-label="About this page"></ul>
+        </div>
+      </header>
+
       <div class="container material" id="material">
-        <h1>
-          Philosophy, problem solving as search, games
-        </h1>
 
         <div class="hint">
           <div class="hint__header">
@@ -1693,6 +1698,17 @@ state:  ---    |     |          state:  |     |    ---
           for all nodes, A* is the same as Dijkstra's algorithm.
         </p>
 
+        <figure class="viz" data-viz="search">
+          <figcaption class="viz__caption">
+            Each step takes the next node from <code>node_list</code> as in the template above: a queue (BFS),
+            a stack (DFS), or a priority queue ordered by the path cost (Dijkstra), by the heuristic
+            <code>h</code> (greedy best-first) or by <code>cost + h</code> (A*). Here <code>h</code> is the
+            Manhattan distance to the goal; it never overestimates because every move costs at least 1.
+            Neighbours are added in the order up, right, down, left. Drag S and G, draw walls or mud, and press
+            <b>Compare all</b> to see how many nodes each method visits and what its path costs.
+          </figcaption>
+        </figure>
+
 
         <!-- TOC: TravelPlanner v2.0 (AStar) removed (was Ex 1.5)
         <div class="exercise">
@@ -2222,6 +2238,16 @@ state:  ---    |     |          state:  |     |    ---
           Min node. Actually you should reach such a situation twice.
         </p>
 
+        <figure class="viz" data-viz="alphabeta">
+          <figcaption class="viz__caption">
+            The steps follow the <code>max_value</code> and <code>min_value</code> pseudocode above, starting with
+            <code>alpha = -&infin;</code> and <code>beta = +&infin;</code> at the root. A value marked &ge; or &le;
+            is only a bound: the node returned early, or its value comes from a child that did. Grey leaf values
+            have not been looked at yet. With <b>Best child first</b>, every node examines its best child first,
+            and more of the tree is pruned.
+          </figcaption>
+        </figure>
+
 		<!-- Material is not available anymore
         <p>
           Another good example (except for the choice of colors) can be found
@@ -2426,6 +2452,7 @@ state:  ---    |     |          state:  |     |    ---
 
 
   <script src="../javascripts/main.js"></script>
+  <script src="../javascripts/week1.js"></script>
 
 
 </body>

@@ -2,9 +2,25 @@ html {
   font-size: 16px;
 }
 
-header > h1 {
-  border-bottom: 1px solid $gray-lighter;
-  padding-bottom: $spacer-y;
+body {
+  background-color: var(--surface);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background-color: #dbeafe;
+}
+
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+// Anchor targets stop below the sticky navigation bar.
+[id] {
+  scroll-margin-top: calc(var(--nav-h) + 1rem);
 }
 
 .main-wrapper {
@@ -14,49 +30,252 @@ header > h1 {
 
   .content-wrapper {
     flex: 1;
-    padding-bottom: $spacer-y * 3;
-  }
-}
-
-.material-heading {
-  margin: $spacer-y * 1.5 0rem;
-}
-
-.hljs {
-  border-radius: $border-radius;
-  padding: $spacer-y $spacer-x !important;
-  background-color: $gray-lightest !important;
-}
-
-.exercise-list {
-  @include floating;
-
-  border-radius: $border-radius;
-  padding: $spacer-y $spacer-x;
-  margin-bottom: $spacer-y;
-  border-left: 4px solid $brand-mooc;
-
-  &__header {
-    font-size: 1.5rem;
-    border-bottom: 1px solid $gray-lighter;
-    padding-bottom: $spacer-y;
-  }
-
-  &__content {
-    padding-top: $spacer-y;
-  }
-
-  &__link {
-    padding: $spacer-y $spacer-x;
-    display: block;
-    border-radius: $border-radius;
-
-    &:hover {
-      background-color: $gray-lightest;
-    }
+    padding-bottom: $spacer-y * 4;
   }
 }
 
 .material {
-  padding-top: $spacer-y * 3 !important;
+  padding-top: $spacer-y * 2.5 !important;
+
+  // The page title on pages without a hero header.
+  > h1:first-child {
+    font-size: 2.25rem;
+    font-weight: 750;
+    letter-spacing: -.02em;
+    margin-bottom: 1.5rem;
+  }
+
+  p, li {
+    text-wrap: pretty;
+  }
+
+  b, strong {
+    font-weight: 650;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius-sm);
+  }
+
+  // Inline diagrams in the pages set their own fonts; use the page font instead.
+  svg [font-family] {
+    font-family: $font-family-base;
+  }
+
+  hr {
+    margin: 2.5rem 0;
+    color: var(--line-strong);
+    opacity: 1;
+  }
+
+  pre {
+    margin: 1rem 0 1.25rem;
+    padding: .9rem 1.1rem;
+    font-size: .8125rem;
+    line-height: 1.6;
+    color: var(--ink);
+    background-color: var(--surface-2);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+  }
+}
+
+// Section headings; the numbers in front come from table-of-contents.js.
+.material-heading {
+  position: relative;
+  margin: 2.25rem 0 1rem;
+  text-wrap: balance;
+
+  > small {
+    margin-right: .15em;
+    font-size: 1em;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    color: var(--muted) !important;
+  }
+}
+
+h1.material-heading {
+  margin-top: 4rem;
+  padding-top: 2rem;
+  font-size: 2rem;
+  font-weight: 750;
+  letter-spacing: -.02em;
+  border-top: 1px solid var(--line);
+
+  > small {
+    color: var(--primary) !important;
+  }
+}
+
+.material > h1.material-heading:first-child,
+.material > img:first-child + h1.material-heading {
+  margin-top: 1.5rem;
+  padding-top: 0;
+  border-top: 0;
+}
+
+h2.material-heading {
+  margin-top: 2.75rem;
+  letter-spacing: -.01em;
+}
+
+h3.material-heading {
+  margin-top: 2rem;
+}
+
+// Code blocks: the block itself is styled above, so the highlighted <code> inside stays transparent.
+.hljs {
+  padding: 0 !important;
+  color: var(--ink);
+  background: transparent !important;
+}
+
+// Tables (wrapped in .table-wrap by ui.js, so wide tables scroll on small screens).
+.table {
+  margin-bottom: 0;
+  font-size: .9375rem;
+
+  > :not(caption) > * > * {
+    padding: .7rem .9rem;
+    border-color: var(--line);
+  }
+
+  th {
+    font-size: .8125rem;
+    font-weight: 650;
+    letter-spacing: .02em;
+    color: var(--muted);
+    background-color: var(--surface-2);
+  }
+
+  tr:first-child > * {
+    border-top-width: 0;
+  }
+
+  ul {
+    padding-left: 1.1rem;
+    margin-bottom: 0;
+  }
+}
+
+.table-wrap {
+  margin: 1.25rem 0 1.75rem;
+  overflow-x: auto;
+  background-color: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+}
+
+// A note box (week 3).
+.note {
+  margin: 1.25rem 0;
+  padding: .9rem 1.1rem;
+  background-color: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+
+  p:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.exercise-list {
+  margin: 1.5rem 0;
+  padding: 1.1rem 1.25rem 1.25rem;
+  background-color: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+
+  &__header {
+    padding-bottom: .8rem;
+    font-size: .75rem;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  &__content {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+    gap: .6rem;
+  }
+
+  &__link {
+    display: flex;
+    align-items: flex-start;
+    gap: .65rem;
+    height: 100%;
+    padding: .7rem .8rem;
+    font-size: .9375rem;
+    font-weight: 550;
+    line-height: 1.35;
+    color: var(--text);
+    background-color: var(--surface-2);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    transition: background-color .15s, border-color .15s, box-shadow .15s, transform .15s var(--ease);
+
+    &:hover, &:focus-visible {
+      color: var(--ink);
+      text-decoration: none;
+      background-color: var(--surface);
+      border-color: var(--primary-line);
+      box-shadow: var(--shadow);
+      transform: translateY(-1px);
+    }
+  }
+
+  &__number {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    font-size: .8125rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    color: var(--orange);
+    background-color: var(--orange-soft);
+    border-radius: .5rem;
+  }
+
+  &__name {
+    flex: 1;
+    padding-top: .15rem;
+  }
+}
+
+// Points of an exercise ("1p", "up to 5p"), taken from its heading by exercises.js.
+.points-pill {
+  display: inline-block;
+  flex: none;
+  margin-top: .1rem;
+  padding: .1rem .45rem;
+  font-size: .75rem;
+  font-weight: 650;
+  line-height: 1.4;
+  white-space: nowrap;
+  color: var(--amber);
+  background-color: var(--amber-soft);
+  border: 1px solid var(--amber-line);
+  border-radius: 999px;
+}
+
+@include media-breakpoint-down(md) {
+  .material > h1:first-child {
+    font-size: 1.875rem;
+  }
+
+  h1.material-heading {
+    font-size: 1.625rem;
+  }
+
+  h2.material-heading {
+    font-size: 1.375rem;
+  }
 }

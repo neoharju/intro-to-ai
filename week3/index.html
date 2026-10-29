@@ -73,10 +73,15 @@
     </div>
 
     <div class="content-wrapper">
+      <header class="page-hero">
+        <div class="container">
+          <p class="page-hero__eyebrow"><b>Week 3</b>of 7</p>
+          <h1 class="page-hero__title">Bayesian Networks and Classical Machine Learning</h1>
+          <ul class="page-hero__meta" aria-label="About this page"></ul>
+        </div>
+      </header>
+
       <div class="container material" id="material">
-        <h1>
-          Bayesian Networks and Classical Machine Learning
-        </h1>
 
         <div class="hint">
           <div class="hint__header">
@@ -816,6 +821,15 @@
           approximation converges to the exact value.
         </p>
 
+        <figure class="viz" data-viz="bn-car">
+          <figcaption class="viz__caption">
+            Tuples are drawn as in <code>generate_tuples</code> above, from the CPTs of the car network. For a
+            conditional probability, only the tuples that match the evidence count in the denominator, as in the
+            estimator above. The exact value is the brute-force sum over all 64 elementary events. Each run is
+            different: that is the nature of Monte Carlo approximation.
+          </figcaption>
+        </figure>
+
         <div class="exercise">
           <div class="exercise__header">
             <a data-bs-toggle="collapse" class="exercise__toggle">
@@ -1473,6 +1487,17 @@
           It is worth noting that this method is called <b>logistic regression</b>, not logistic classification, because it predicts real numbers—logits—rather than discrete classes.
         </p>
 
+        <figure class="viz" data-viz="logreg">
+          <figcaption class="viz__caption">
+            Two numeric features, classes 0 and 1. The model is <code>p = &sigma;(&lang;w, x&rang; + w<sub>0</sub>)</code>,
+            trained by gradient descent on the mean log-loss (cross-entropy). The shading shows <code>p</code>; the line
+            is where <code>p</code> equals the threshold <code>t</code>, that is, where the logit
+            <code>&lang;w, x&rang; + w<sub>0</sub></code> equals <code>log(t / (1 &minus; t))</code>. Moving the threshold
+            does not change the model, only which predictions count as class 1. Here accuracy is measured on the
+            points shown; in practice the threshold is chosen on a validation set.
+          </figcaption>
+        </figure>
+
         <h2 class="material-heading">
           Summary
         </h2>
@@ -1737,6 +1762,16 @@
         <h2 class="material-heading">
           Interactive Example
         </h2>
+
+        <figure class="viz" data-viz="knn">
+          <figcaption class="viz__caption">
+            Drag the query point <code>u</code> (or select the plot and use the arrow keys). Its <code>k</code> nearest
+            training points are joined to it, and the outline marks the distance of the <code>k</code>-th neighbour, a
+            circle for Euclidean and a diamond for Manhattan distance. The prediction is the majority class, formula
+            (2) above; a tie goes to the class of the nearest of the tied neighbours. With <code>k = 1</code> the
+            regions follow every single point, which is the overfitting described above.
+          </figcaption>
+        </figure>
         
         <p>
           You can explore an interactive example of how the KNN algorithm works by visiting the link below:
@@ -1998,6 +2033,15 @@ Gain(S, Color) = 0.811 - (2/4)&middot;0 - (2/4)&middot;1 = 0.311
           <code>[x<sub>j</sub> ≤ t]</code>; only the definition of the two
           subsets <code>S<sub>v</sub></code> changes.
         </p>
+
+        <figure class="viz" data-viz="infogain">
+          <figcaption class="viz__caption">
+            Drag the threshold <code>t</code> (or use the arrow keys). The violet curve is the gain of every possible
+            threshold; it only changes when <code>t</code> passes a point. On the entropy curve, the weighted entropy
+            after the split lies on the straight line between the two children, so the gain (the violet segment) is
+            the gap between that line and the curve. Because the curve bends downwards, the gain is never negative.
+          </figcaption>
+        </figure>
 
         <p>
           In the exercise you will apply this to a small categorical data set
@@ -2557,6 +2601,7 @@ Gain(S, A) = Entropy(S) - &sum;<sub>v</sub> (|S<sub>v</sub>| / |S|) &middot; Ent
 
 
   <script src="../javascripts/main.js"></script>
+  <script src="../javascripts/week3.js"></script>
 
 
 </body>

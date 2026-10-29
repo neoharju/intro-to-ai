@@ -1,22 +1,23 @@
 @use "sass:color";
 
-// Theme colours and metrics. The site was designed on Bootstrap 4.0.0-alpha.5; the values
-// below keep that look on Bootstrap 5.
+// Theme colours and metrics for Bootstrap. The design tokens used by the site's own components are
+// CSS custom properties in _tokens.scss.
 $brand-primary: #528afc;
+$brand-link: #2563eb; // darker than the brand blue so that links in body text meet WCAG AA contrast
 $brand-mooc: #FFAB0E;
 $brand-success: #57b181;
 $brand-danger: #d9534f;
 
-$gray-dark: #373a3c;
-$gray-light: #818a91;
-$gray-lighter: #eceeef;
-$gray-lightest: #f7f7f9;
+$gray-dark: #1e293b;
+$gray-light: #64748b;
+$gray-lighter: #e2e8f0;
+$gray-lightest: #f8fafc;
 
 $spacer-x: 1rem;
 $spacer-y: 1rem;
 
 // Bootstrap 5 overrides
-$primary: $brand-primary;
+$primary: $brand-link;
 $success: $brand-success;
 $warning: $brand-mooc;
 $danger: $brand-danger;
@@ -26,20 +27,30 @@ $enable-smooth-scroll: false; // fights the animated scrolling in utils.js
 $enable-dark-mode: false;
 
 $body-color: $gray-dark;
-$font-family-base: "Roboto", sans-serif;
-$headings-line-height: 1.1;
+$font-family-base: "Inter Variable", "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial,
+  "Noto Sans", sans-serif;
+$font-family-monospace: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+$font-size-base: 1.0625rem;
+$line-height-base: 1.65;
+$headings-color: #0f172a;
+$headings-font-weight: 650;
+$headings-line-height: 1.25;
+$h1-font-size: 2.125rem;
+$h2-font-size: 1.625rem;
+$h3-font-size: 1.3125rem;
+$h4-font-size: 1.125rem;
 $small-font-size: 80%;
 $code-font-size: 90%;
-$code-color: #bd4147;
+$code-color: #0f172a;
 
-$link-color: $brand-primary;
+$link-color: $brand-link;
 $link-decoration: none;
-$link-hover-color: color.adjust($brand-primary, $lightness: -15%);
+$link-hover-color: color.adjust($brand-link, $lightness: -10%);
 $link-hover-decoration: underline;
 
-$border-radius: .25rem;
-$border-radius-sm: .2rem;
-$border-radius-lg: .3rem;
+$border-radius: .5rem;
+$border-radius-sm: .375rem;
+$border-radius-lg: .875rem;
 
 $grid-gutter-width: 30px;
 $container-max-widths: (
@@ -50,15 +61,16 @@ $container-max-widths: (
   xxl: 863px
 );
 
-$btn-padding-y: .5rem;
-$btn-padding-x: 1rem;
+$btn-padding-y: .45rem;
+$btn-padding-x: .9rem;
 $btn-line-height: 1.25;
+$btn-font-weight: 550;
 
 $table-cell-padding-y: .75rem;
 $table-cell-padding-x: .75rem;
 $table-border-color: $gray-lighter;
 
 $navbar-padding-x: 1rem;
-$navbar-light-color: rgba(0, 0, 0, .5);
-$navbar-light-hover-color: rgba(0, 0, 0, .7);
-$navbar-light-active-color: rgba(0, 0, 0, .9);
+$navbar-light-color: #64748b;
+$navbar-light-hover-color: #0f172a;
+$navbar-light-active-color: #0f172a;

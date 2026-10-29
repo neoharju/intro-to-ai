@@ -1,4 +1,5 @@
-// Builds javascripts/main.js, stylesheets/main.css and fonts/vendor/* from src/.
+// Builds javascripts/main.js, the interactive figures of each week (javascripts/week1.js, ...),
+// stylesheets/main.css and fonts/vendor/* from src/.
 // The outputs are committed: GitHub Pages serves this branch as-is, without a build step.
 //
 //   npm run build          one-off build
@@ -39,6 +40,7 @@ const options = {
   absWorkingDir: root,
   entryPoints: {
     'javascripts/main': 'src/javascripts/main.js',
+    ...Object.fromEntries([1, 2, 3, 4, 5, 6, 7].map(week => [`javascripts/week${week}`, `src/javascripts/weeks/week${week}.js`])),
     'stylesheets/main': 'src/stylesheets/main.scss',
   },
   outdir: '.',

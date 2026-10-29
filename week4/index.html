@@ -74,10 +74,15 @@
     </div>
 
     <div class="content-wrapper">
+      <header class="page-hero">
+        <div class="container">
+          <p class="page-hero__eyebrow"><b>Week 4</b>of 7</p>
+          <h1 class="page-hero__title">Neural Networks</h1>
+          <ul class="page-hero__meta" aria-label="About this page"></ul>
+        </div>
+      </header>
+
       <div class="container material" id="material">
-        <h1>
-          Neural Networks
-        </h1>
 
         <div class="hint">
           <div class="hint__header">
@@ -187,6 +192,15 @@
         <p>The perceptron learning rule converges when the classes are linearly separable. It cannot solve XOR: no single straight line can place the two blue points on one side and the two orange points on the other. This is a representational limitation, not a failure to train long enough.</p>
         <svg viewBox="0 0 520 340" role="img" aria-label="The XOR pattern cannot be separated by one straight line" style="width:70%;max-width:520px"><g font-family="Roboto, sans-serif" font-size="20"><line x1="90" y1="280" x2="450" y2="280" stroke="#555"/><line x1="90" y1="280" x2="90" y2="40" stroke="#555"/><circle cx="160" cy="220" r="18" fill="#2878a5"/><circle cx="380" cy="90" r="18" fill="#2878a5"/><circle cx="160" cy="90" r="18" fill="#e28b32"/><circle cx="380" cy="220" r="18" fill="#e28b32"/><text x="270" y="322" text-anchor="middle">XOR requires more than one boundary</text></g></svg>
 
+        <figure class="viz" data-viz="perceptron">
+          <figcaption class="viz__caption">
+            The perceptron predicts +1 when <code>w&middot;x + b &gt; 0</code> and &minus;1 otherwise. It visits the
+            examples in a fixed order, and after each mistake updates <code>w &larr; w + y&middot;x</code> and
+            <code>b &larr; b + y</code>. On linearly separable data it stops making mistakes after a finite number
+            of updates; on XOR it never does.
+          </figcaption>
+        </figure>
+
         <h2 class="material-heading">Multilayer perceptrons</h2>
 
         <p>
@@ -218,6 +232,15 @@
 
         <svg viewBox="0 0 960 310" role="img" aria-label="Comparison of step, sigmoid, tanh, and ReLU activation functions" style="width:100%;max-width:960px"><g font-family="Roboto, sans-serif" text-anchor="middle"><g transform="translate(20,20)"><path d="M25 135 H200 M112 15 V245" stroke="#aaa"/><path d="M25 205 H112 V65 H200" stroke="#2878a5" stroke-width="5" fill="none"/><text x="112" y="275" font-size="20">step</text></g><g transform="translate(250,20)"><path d="M25 135 H200 M112 15 V245" stroke="#aaa"/><path d="M25 215 C70 215 85 190 112 135 C139 80 155 55 200 55" stroke="#7b3fa1" stroke-width="5" fill="none"/><text x="112" y="275" font-size="20">sigmoid</text></g><g transform="translate(480,20)"><path d="M25 135 H200 M112 15 V245" stroke="#aaa"/><path d="M25 220 C75 220 85 185 112 135 C139 85 150 50 200 50" stroke="#c58a00" stroke-width="5" fill="none"/><text x="112" y="275" font-size="20">tanh</text></g><g transform="translate(710,20)"><path d="M25 205 H200 M112 15 V245" stroke="#aaa"/><path d="M25 205 H112 L200 55" stroke="#2f8a50" stroke-width="5" fill="none"/><text x="112" y="275" font-size="20">ReLU</text></g></g></svg>
 
+        <figure class="viz" data-viz="activations">
+          <figcaption class="viz__caption">
+            Backpropagation multiplies by the derivative of the activation function. The step function's derivative
+            is zero everywhere except at 0, where it is undefined, so it gives no gradient to learn from. The
+            sigmoid's derivative is at most 0.25, tanh's at most 1, and ReLU's is 0 for negative inputs and 1 for
+            positive ones.
+          </figcaption>
+        </figure>
+
         <h1 class="material-heading">Learning representations</h1>
 
         <h2 class="material-heading">Training a neural network</h2>
@@ -237,6 +260,15 @@
           whether a network generalizes to new examples. Excessive model capacity or training can lead to overfitting.
           Regularization, suitable model size, and early stopping can reduce this problem.
         </p>
+
+        <figure class="viz" data-viz="mlp">
+          <figcaption class="viz__caption">
+            A network with one hidden layer, trained in your browser. With a single hidden unit it can draw only one
+            boundary, so it cannot fit XOR; with two or more it can. Try the other data sets and activation functions,
+            and turn on the lines where each hidden unit changes sign to see how the hidden layer builds the
+            boundary. The shading is the predicted probability of class 1.
+          </figcaption>
+        </figure>
 
         <h2 class="material-heading">Embeddings</h2>
 
@@ -630,6 +662,7 @@ model.most_similar("glass")
 
 
   <script src="../javascripts/main.js"></script>
+  <script src="../javascripts/week4.js"></script>
 
 
 </body>

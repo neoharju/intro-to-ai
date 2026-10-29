@@ -1,9 +1,14 @@
 .footer {
-  background-color: $gray-lightest;
-  padding: 0rem $spacer-x * 3;
-  line-height: $spacer-y * 6;
-  color: $gray-light;
+  padding: 2rem 1.5rem 2.5rem;
+  font-size: .875rem;
+  color: var(--muted);
   text-align: center;
+  background-color: var(--surface-2);
+  border-top: 1px solid var(--line);
+
+  a {
+    font-weight: 550;
+  }
 
   &__github-link {
     vertical-align: middle;

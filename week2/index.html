@@ -74,10 +74,15 @@
     </div>
 
     <div class="content-wrapper">
+      <header class="page-hero">
+        <div class="container">
+          <p class="page-hero__eyebrow"><b>Week 2</b>of 7</p>
+          <h1 class="page-hero__title">Probabilistic inference</h1>
+          <ul class="page-hero__meta" aria-label="About this page"></ul>
+        </div>
+      </header>
+
       <div class="container material" id="material">
-        <h1>
-          Probabilistic inference
-        </h1>
 
         <div class="hint">
           <div class="hint__header">
@@ -365,6 +370,15 @@
           fitting. (Evidence and marginal likelihood are more
           common.)
         </p>
+
+        <figure class="viz" data-viz="bayes">
+          <figcaption class="viz__caption">
+            The state is whether a person has a condition, and the observation is a positive test. The prior
+            is the share of people with the condition, the likelihoods are the probabilities of a positive test
+            with and without it, and the posterior is the share of people with the condition among those who
+            test positive. With a rare condition, most positive tests can be false even when the test is good.
+          </figcaption>
+        </figure>
 
         <div class="hint">
           <div class="hint__header">
@@ -828,6 +842,15 @@ R =  ------------------------------------ = ---------------------------
           </div>
         </div>
 
+        <figure class="viz" data-viz="underflow">
+          <figcaption class="viz__caption">
+            The words of this made-up message have probabilities between about 10<sup>&minus;5</sup> and
+            10<sup>&minus;2</sup> under each class. Multiplied directly in 64-bit floating point (Python's
+            <code>float</code>), the products leave the range of representable numbers after about a hundred
+            words, while the sum of logarithms stays accurate. The values are computed in your browser.
+          </figcaption>
+        </figure>
+
         <div class="exercise">
           <div class="exercise__header">
             <a data-bs-toggle="collapse" class="exercise__toggle">
@@ -964,6 +987,7 @@ R =  ------------------------------------ = ---------------------------
 
 
   <script src="../javascripts/main.js"></script>
+  <script src="../javascripts/week2.js"></script>
 
 
 </body>

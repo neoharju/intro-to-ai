@@ -4,7 +4,8 @@ Third-party software and fonts
 javascripts/main.js, stylesheets/main.css and the fonts in fonts/vendor/ are built from the npm
 packages below (exact versions in package-lock.json). The Font Awesome icons are copied as SVG
 into src/stylesheets/_icons.scss. Their licenses allow redistribution, on the condition that
-these copyright and license notices are kept with the copies.
+these copyright and license notices are kept with the copies. The interactive figures
+(javascripts/week1.js to week7.js) contain only this site's own code.
 
 The course material itself is licensed separately under CC BY-NC-SA 4.0 (see LICENSE).
 
@@ -20,8 +21,8 @@ highlight.js                   11.12.0   BSD-3-Clause
                                          used in javascripts/main.js, stylesheets/main.css
 @fortawesome/fontawesome-free  7.3.1     CC BY 4.0 (icons)
                                          used in stylesheets/main.css (11 icons as inline SVG)
-@fontsource/roboto             5.3.0     SIL OFL 1.1
-                                         used in stylesheets/main.css, fonts/vendor/roboto-*
+@fontsource-variable/inter     5.3.0     SIL OFL 1.1
+                                         used in stylesheets/main.css, fonts/vendor/inter-*
 
 ================================================================================
 jquery 4.0.0  (MIT)
@@ -356,10 +357,10 @@ Awesome, nor vice versa. **Please do not use brand logos for any purpose except
 to represent the company, product, or service to which they refer.**
 
 ================================================================================
-@fontsource/roboto 5.3.0  (SIL OFL 1.1)
+@fontsource-variable/inter 5.3.0  (SIL OFL 1.1)
 ================================================================================
 
-Copyright 2011 The Roboto Project Authors (https://github.com/googlefonts/roboto-classic) Roboto-Italic[wdth,wght].ttf: Copyright 2011 The Roboto Project Authors (https://github.com/googlefonts/roboto-classic)
+Copyright 2016 The Inter Project Authors (https://github.com/rsms/inter) Inter-Italic[opsz,wght].ttf: Copyright 2016 The Inter Project Authors (https://github.com/rsms/inter)
 
 This Font Software is licensed under the SIL Open Font License, Version 1.1.
 This license is copied below, and is also available with a FAQ at:
