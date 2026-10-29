@@ -1,0 +1,151 @@
+// Previous and next page, at the end of every page. Each link is a card: a direction label, the week
+// and its title, and a round arrow that turns solid and moves in its direction on hover.
+.page-nav {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 4rem 0 0;
+  padding-top: 2rem;
+  border-top: 1px solid var(--line);
+
+  &__link {
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    min-height: 5.75rem;
+    padding: 1.1rem 1.25rem;
+    overflow: hidden;
+    color: var(--text);
+    text-decoration: none !important;
+    background-color: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    transition: border-color .2s, box-shadow .2s, transform .2s var(--ease);
+
+    // A soft wash of the accent colour that fades in from the arrow's side.
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background: linear-gradient(90deg, var(--primary-soft), transparent 70%);
+      opacity: 0;
+      transition: opacity .2s;
+    }
+
+    &:hover, &:focus-visible {
+      color: var(--text);
+      border-color: var(--primary-line);
+      box-shadow: var(--shadow);
+      transform: translateY(-2px);
+
+      &::before {
+        opacity: 1;
+      }
+
+      .page-nav__arrow {
+        color: #fff;
+        background-color: var(--primary);
+        border-color: var(--primary);
+      }
+    }
+
+    &--next {
+      grid-column: 2;
+      justify-content: flex-end;
+      text-align: right;
+
+      &::before {
+        background: linear-gradient(270deg, var(--primary-soft), transparent 70%);
+      }
+
+      &:hover .page-nav__arrow, &:focus-visible .page-nav__arrow {
+        transform: translateX(3px);
+      }
+    }
+
+    &--prev:hover .page-nav__arrow, &--prev:focus-visible .page-nav__arrow {
+      transform: translateX(-3px);
+    }
+  }
+
+  &__arrow {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    color: var(--muted);
+    background-color: var(--surface-2);
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    transition: color .2s, background-color .2s, border-color .2s, transform .2s var(--ease);
+
+    // A chevron drawn with two borders.
+    &::before {
+      content: "";
+      width: .55rem;
+      height: .55rem;
+      border-top: 2px solid currentColor;
+      border-right: 2px solid currentColor;
+    }
+
+    .page-nav__link--prev &::before {
+      transform: translateX(2px) rotate(-135deg);
+    }
+
+    .page-nav__link--next &::before {
+      transform: translateX(-2px) rotate(45deg);
+    }
+  }
+
+  &__text {
+    min-width: 0;
+  }
+
+  &__label {
+    display: block;
+    font-size: .75rem;
+    font-weight: 650;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  &__title {
+    display: block;
+    margin-top: .2rem;
+    font-size: 1.0625rem;
+    font-weight: 650;
+    line-height: 1.3;
+    color: var(--ink);
+    text-wrap: balance;
+  }
+
+  @include media-breakpoint-down(md) {
+    grid-template-columns: minmax(0, 1fr);
+
+    &__link--next {
+      grid-column: 1;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &__link, &__arrow {
+      transition: none;
+    }
+
+    &__link:hover, &__link:focus-visible, &__link:hover .page-nav__arrow, &__link:focus-visible .page-nav__arrow {
+      transform: none;
+    }
+  }
+}
+
+@media print {
+  .page-nav {
+    display: none;
+  }
+}
