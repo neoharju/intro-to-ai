@@ -5,7 +5,6 @@ import hljs from 'highlight.js/lib/core';
 import bash from 'highlight.js/lib/languages/bash';
 import java from 'highlight.js/lib/languages/java';
 import python from 'highlight.js/lib/languages/python';
-import 'cookieconsent';
 
 import Exercises from './exercises';
 import Solutions from './solutions';
@@ -46,6 +45,4 @@ $(() => {
   (new Navigation()).mount();
 
   highlightCode();
-
-  window.cookieconsent.initialise({ palette: { popup: { background: '#000' }, button: { background: '#f1d600' } } });
 });

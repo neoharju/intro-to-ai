@@ -29,6 +29,8 @@ Compared with the original `gh-pages` branch (commit `b9dedeb`):
   `src/`.
 - **Docker preview:** a `Dockerfile` and `compose.yaml` to preview the site locally.
 - **Corrections in weeks 1–7:** factual errors and broken code examples are corrected.
+- **Removed:** the original course's Google Analytics tracking, cookie banner and disabled login form,
+  unused images, and the icon and font files the pages never load.
 
 ## Preview locally
 

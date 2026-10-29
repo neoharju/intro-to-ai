@@ -8,74 +8,47 @@
 
   <link href="../stylesheets/main.css" rel="stylesheet" />
 
-  <script>
-    (function (i, s, o, g, r, a, m) {
-      i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
-        (i[r].q = i[r].q || []).push(arguments)
-      }, i[r].l = 1 * new Date(); a = s.createElement(o),
-        m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
-    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
-    ga('create', 'UA-47575342-7', 'auto');
-    ga('set', 'anonymizeIp', true);
-    ga('send', 'pageview');
-  </script>
-
 </head>
 
 <body>
   <div class="main-wrapper">
     <div class="header-wrapper">
-      <div class="browser-support-warning" id="browser-support-warning" style="display: none;">
-        Kaikki tämän materiaalin osat eivät välttämättä tuo nykyistä selaintasi. Voisitko harkita vaihtamista <a
-          href="https://www.google.com/chrome/browser/desktop/" target="_blank" rel="noopener">Chrome</a> tai <a
-          href="https://www.mozilla.org/en-US/firefox/new/" target="_blank" rel="noopener">Firefox</a> selaimeen?
-        <span class="browser-support-warning__close">Selvä!</span>
-      </div>
-
 
       <nav class="navbar navbar-expand navbar-light bg-white">
-        <a class="navbar-brand" href="http://mooc.fi" alt="MOOC" target="_blank" rel="noopener">
+        <a class="navbar-brand" href="https://www.mooc.fi/" alt="MOOC" target="_blank" rel="noopener">
           <span class="icon-mooc"></span>
         </a>
 
         <ul class="nav navbar-nav d-none d-lg-flex">
           <li class="nav-item ">
-            <a href="../" class="nav-link"
-              onclick="ga('send', 'event', 'navigation_topic_link', 'click', '#&lt;Middleman::Sitemap::Resource path=index.html&gt;')">Introduction</a>
+            <a href="../" class="nav-link">Introduction</a>
           </li>
           <li class="nav-item ">
-            <a href="../week1/" class="nav-link"
-              onclick="ga('send', 'event', 'navigation_topic_link', 'click', '#&lt;Middleman::Sitemap::Resource path=week1.html&gt;')">Week
+            <a href="../week1/" class="nav-link">Week
               1</a>
           </li>
           <li class="nav-item ">
-            <a href="../week2/" class="nav-link"
-              onclick="ga('send', 'event', 'navigation_topic_link', 'click', '#&lt;Middleman::Sitemap::Resource path=week2.html&gt;')">Week
+            <a href="../week2/" class="nav-link">Week
               2</a>
           </li>
           <li class="nav-item ">
-            <a href="../week3/" class="nav-link"
-              onclick="ga('send', 'event', 'navigation_topic_link', 'click', '#&lt;Middleman::Sitemap::Resource path=week3.html&gt;')">Week
+            <a href="../week3/" class="nav-link">Week
               3</a>
           </li>
           <li class="nav-item ">
-            <a href="../week4/" class="nav-link"
-              onclick="ga('send', 'event', 'navigation_topic_link', 'click', '#&lt;Middleman::Sitemap::Resource path=week4.html&gt;')">Week
+            <a href="../week4/" class="nav-link">Week
               4</a>
           </li>
           <li class="nav-item active">
-            <a href="./" class="nav-link"
-              onclick="ga('send', 'event', 'navigation_topic_link', 'click', '#&lt;Middleman::Sitemap::Resource path=week5.html&gt;')">Week
+            <a href="./" class="nav-link">Week
               5</a>
           </li>
           <li class="nav-item ">
-            <a href="../week6/" class="nav-link"
-              onclick="ga('send', 'event', 'navigation_topic_link', 'click', '#&lt;Middleman::Sitemap::Resource path=week6.html&gt;')">Week
+            <a href="../week6/" class="nav-link">Week
               6</a>
           </li>
           <li class="nav-item ">
-            <a href="../week7/" class="nav-link"
-              onclick="ga('send', 'event', 'navigation_topic_link', 'click', '#&lt;Middleman::Sitemap::Resource path=week7.html&gt;')">Week
+            <a href="../week7/" class="nav-link">Week
               7</a>
           </li>
         </ul>
@@ -95,9 +68,6 @@
             <i class="fa fa-ellipsis-h d-lg-none"></i>
           </button>
 
-          <!-- TMC login disabled. Original button:
-          <button class="btn btn-primary" id="tmc-login-toggle">Log in</button>
-          -->
         </div>
       </nav>
 
@@ -237,7 +207,7 @@
 	
 	<p>
 	  Below is the architecture of the transformer model, as presented in the original 
-	  <a href="https://arxiv.org/pdf/1706.03762" target="_blank">paper</a>:
+	  <a href="https://arxiv.org/pdf/1706.03762" target="_blank" rel="noopener">paper</a>:
 	</p>
 	
 	<img src="../img/material/part5/transformer_architecture_image.svg" alt="Transformer Architecture" width="90%">
@@ -407,7 +377,7 @@
 	<p>
 	  For example, the graphs below compare the runtime and memory consumption of 
 	  a standard transformer with the mechanism introduced in 
-	  <a href="https://arxiv.org/abs/2004.05150" target="_blank">Longformer</a>:
+	  <a href="https://arxiv.org/abs/2004.05150" target="_blank" rel="noopener">Longformer</a>:
 	</p>
 	
 	<img src="../img/material/part5/longformer_comparison.webp" alt="Longformer vs Standard Transformer Efficiency" width="60%">
@@ -449,7 +419,7 @@
 	<p>
 	  The activation function <span class="math">act</span> in the FFN has varied over time. 
 	  Initially, ReLU was widely used, but the community later adopted 
-	  <a href="https://arxiv.org/abs/1606.08415v4" target="_blank">GELU</a> 
+	  <a href="https://arxiv.org/abs/1606.08415v4" target="_blank" rel="noopener">GELU</a>
 	  (Gaussian Error Linear Unit), which follows the formula:
 	</p>
 	
@@ -460,7 +430,7 @@
 	<p>
 	  where <span class="math">\Phi</span> is the cumulative distribution function
 	  of the standard normal distribution. Many recent large language models, such as Llama, instead use
-	  a gated variant called <a href="https://arxiv.org/abs/2002.05202" target="_blank">SwiGLU</a>, which
+	  a gated variant called <a href="https://arxiv.org/abs/2002.05202" target="_blank" rel="noopener">SwiGLU</a>, which
 	  multiplies the activated output elementwise by a second linear projection of the input.
 	</p>
 	
@@ -468,7 +438,7 @@
 
 	<p>
 	  Let's say a few words about <strong>layer normalization</strong>: as demonstrated in 
-	  several research <a href="https://aclanthology.org/2020.emnlp-main.463/" target="_blank">papers</a>, its placement within the residual connection is crucial.
+	  several research <a href="https://aclanthology.org/2020.emnlp-main.463/" target="_blank" rel="noopener">papers</a>, its placement within the residual connection is crucial.
 	  The standard transformer architecture employs the <strong>PostLN</strong> formulation, 
 	  where normalization is applied <em>after</em> the residual connection.
 	</p>
@@ -497,7 +467,7 @@
 	
 	<p>
 	  Chronologically, <a href="https://openai.com/research/language-unsupervised" 
-	  target="_blank"><strong>GPT</strong></a> (Generative Pretrained Transformer) 
+	  target="_blank" rel="noopener"><strong>GPT</strong></a> (Generative Pretrained Transformer)
 	  was introduced first. It is a standard language model implemented as a stack 
 	  of Transformer <strong>decoder</strong> layers.
 	</p>
@@ -568,12 +538,12 @@
 	  One critical factor is the <strong>batch size</strong>. Almost all modern Transformer models are trained on 
 	  extremely large batches, sometimes reaching <strong>millions of tokens</strong> in the largest language models. 
 	  Since no modern GPU can handle such large batches in a single step, techniques like 
-	  <a href="https://sebastianraschka.com/blog/2023/llm-grad-accumulation.html#what-is-gradient-accumulation" target="_blank">
+	  <a href="https://sebastianraschka.com/blog/2023/llm-grad-accumulation.html#what-is-gradient-accumulation" target="_blank" rel="noopener">
 	  gradient accumulation</a> are commonly used to accumulate gradients over micro-batches before performing an update.
 	</p>
 	
 	<p>
-	  Recent research also suggests <a href="https://openreview.net/forum?id=B1Yy1BxCZ" target="_blank">
+	  Recent research also suggests <a href="https://openreview.net/forum?id=B1Yy1BxCZ" target="_blank" rel="noopener">
 	  increasing the batch size dynamically</a> during training. The idea is that during early training stages, 
 	  making more frequent gradient descent steps is crucial, while in later stages, it is more important 
 	  to have an accurate gradient estimation.
@@ -591,7 +561,7 @@
 	
 	<p>
 	  However, for large batch sizes, Adam sometimes struggles, leading researchers to use alternatives 
-	  such as <a href="https://arxiv.org/abs/1904.00962" target="_blank">LAMB</a>, which normalizes weight updates 
+	  such as <a href="https://arxiv.org/abs/1904.00962" target="_blank" rel="noopener">LAMB</a>, which normalizes weight updates
 	  for each layer to stabilize training.
 	</p>
 
@@ -604,7 +574,7 @@
 	</p>
 	
 	<p>
-	  For example, the <a href="https://arxiv.org/abs/2010.11929" target="_blank">ViT (Vision Transformer)</a> 
+	  For example, the <a href="https://arxiv.org/abs/2010.11929" target="_blank" rel="noopener">ViT (Vision Transformer)</a>
 	  architecture once broke classification accuracy records on image datasets by leveraging the 
 	  self-attention mechanism for images divided into multiple <strong>patches</strong>—square-shaped segments.
 	</p>
@@ -631,7 +601,7 @@
 	
 	<p>
 	  Transformers are also applied in <strong>reinforcement learning</strong>. A notable example is the 
-	  <a href="https://arxiv.org/abs/2106.01345" target="_blank">Decision Transformer</a> paper, 
+	  <a href="https://arxiv.org/abs/2106.01345" target="_blank" rel="noopener">Decision Transformer</a> paper,
 	  which proposes using autoregressive modeling with this architecture to construct an agent.
 	</p>
 	
@@ -1017,7 +987,7 @@ git checkout 3adf61e1</code></pre>
         <p>
           A task-specific model is trained for one defined input-output problem. A <b>foundation model</b> is pretrained
           on broad data at sufficient scale to support many downstream tasks. The term was developed systematically in
-          the <a href="https://arxiv.org/abs/2108.07258" target="_blank">Stanford report on foundation models</a>.
+          the <a href="https://arxiv.org/abs/2108.07258" target="_blank" rel="noopener">Stanford report on foundation models</a>.
           The same base model can be adapted for
           classification, retrieval, generation, question answering or interaction. This reuse changes the unit of
           AI development: practitioners increasingly select, prompt, adapt and evaluate pretrained models rather than
@@ -1106,8 +1076,8 @@ git checkout 3adf61e1</code></pre>
 	    Examples of such models include:
 	    <ul>
 	      <li>Autoregressive models (e.g., 
-	        <a href="https://arxiv.org/pdf/1701.05517" target="_blank">PixelCNN++</a>, 
-	        <a href="https://arxiv.org/pdf/1906.02634" target="_blank">Video Transformer</a>)</li>
+	        <a href="https://arxiv.org/pdf/1701.05517" target="_blank" rel="noopener">PixelCNN++</a>,
+	        <a href="https://arxiv.org/pdf/1906.02634" target="_blank" rel="noopener">Video Transformer</a>)</li>
 	      <li>Diffusion models</li>
 	      <li>Models based on normalizing flows</li>
 	      <li>Variational autoencoders</li>
@@ -1288,7 +1258,7 @@ git checkout 3adf61e1</code></pre>
 	<p>
 	  For instance, a generative model that applies <strong>style transfer</strong>—transferring 
 	  the style of one image onto another—can be used to train more robust classification models. 
-	  In <a href="https://www.nature.com/articles/s41598-019-52737-x" target="_blank">
+	  In <a href="https://www.nature.com/articles/s41598-019-52737-x" target="_blank" rel="noopener">
 	  a study by Sandfort et al.</a>, generative neural networks were used for data augmentation 
 	  to improve the quality of segmentation in CT scans.
 	</p>
@@ -1327,20 +1297,20 @@ git checkout 3adf61e1</code></pre>
 	  <li>
 	    <strong>Stable Diffusion</strong> – Openly available model weights, released under the CreativeML
 	    Open RAIL-M licence, which forbids some uses (so not open source in the OSI sense).
-	    <a href="https://github.com/CompVis/stable-diffusion" target="_blank">GitHub</a>
+	    <a href="https://github.com/CompVis/stable-diffusion" target="_blank" rel="noopener">GitHub</a>
 	  </li>
 	  <li>
 	    <strong>DALLE 2</strong> – Was available via OpenAI's paid API until OpenAI retired its DALL·E
 	    models in May 2026; OpenAI's GPT Image models replaced them.
-	    <a href="https://openai.com/index/dall-e-2/" target="_blank">More Info</a>
+	    <a href="https://openai.com/index/dall-e-2/" target="_blank" rel="noopener">More Info</a>
 	  </li>
 	  <li>
 	    <strong>Midjourney</strong> – Available via its website and Discord.
-	    <a href="https://www.midjourney.com/home" target="_blank">Official Site</a>
+	    <a href="https://www.midjourney.com/home" target="_blank" rel="noopener">Official Site</a>
 	  </li>
 	  <li>
 	    <strong>Imagen</strong> – A text-to-image model by Google AI. 
-	    <a href="https://imagen.research.google/" target="_blank">More Info</a>
+	    <a href="https://imagen.research.google/" target="_blank" rel="noopener">More Info</a>
 	  </li>
 	</ul>
 	
@@ -1348,8 +1318,8 @@ git checkout 3adf61e1</code></pre>
 
 	<p>
 	  There are now dedicated databases for AI-generated images:
-	  <a href="https://lexica.art/" target="_blank">Lexica</a> and 
-	  <a href="https://openart.ai/" target="_blank">Openart</a>.
+	  <a href="https://lexica.art/" target="_blank" rel="noopener">Lexica</a> and
+	  <a href="https://openart.ai/" target="_blank" rel="noopener">Openart</a>.
 	</p>
 	
 	<p>
@@ -1359,25 +1329,25 @@ git checkout 3adf61e1</code></pre>
 	<ul>
 	  <li>
 	    <strong>Illustrations for books</strong> – 
-	    <a href="https://www.reddit.com/r/midjourney/comments/x4kk0r/i_created_a_graphic_novel_using_mj_and_now_its_on/" target="_blank">
+	    <a href="https://www.reddit.com/r/midjourney/comments/x4kk0r/i_created_a_graphic_novel_using_mj_and_now_its_on/" target="_blank" rel="noopener">
 	      Example on Reddit
 	    </a>
 	  </li>
 	  <li>
 	    <strong>Logo creation</strong> – 
-	    <a href="https://kubamartin.com/posts/how-i-used-dalle2-to-generate-the-logo-for-octosql/" target="_blank">
+	    <a href="https://kubamartin.com/posts/how-i-used-dalle2-to-generate-the-logo-for-octosql/" target="_blank" rel="noopener">
 	      Case study using DALL·E 2
 	    </a>
 	  </li>
 	  <li>
 	    <strong>Interior design</strong> – 
-	    <a href="https://interiorai.com/" target="_blank">
+	    <a href="https://interiorai.com/" target="_blank" rel="noopener">
 	      AI-generated room designs
 	    </a>
 	  </li>
 	  <li>
 	    <strong>Tattoo generation</strong> – 
-	    <a href="https://www.tattoosai.com/" target="_blank">
+	    <a href="https://www.tattoosai.com/" target="_blank" rel="noopener">
 	      AI-powered tattoo designs
 	    </a>
 	  </li>
@@ -1397,15 +1367,15 @@ git checkout 3adf61e1</code></pre>
 	<ul>
 	  <li>
 	    <strong>Neural Love</strong> – 
-	    <a href="https://neural.love/" target="_blank">AI-enhanced image editing</a>
+	    <a href="https://neural.love/" target="_blank" rel="noopener">AI-enhanced image editing</a>
 	  </li>
 	  <li>
 	    <strong>Photoroom</strong> – 
-	    <a href="https://www.photoroom.com/" target="_blank">Background remover and AI editor</a>
+	    <a href="https://www.photoroom.com/" target="_blank" rel="noopener">Background remover and AI editor</a>
 	  </li>
 	  <li>
 	    <strong>ZMO</strong> – 
-	    <a href="https://www.zmo.ai/" target="_blank">AI image generation and enhancement</a>
+	    <a href="https://www.zmo.ai/" target="_blank" rel="noopener">AI image generation and enhancement</a>
 	  </li>
 	</ul>
 	
@@ -1545,7 +1515,7 @@ git checkout 3adf61e1</code></pre>
                 generating images, we will use one that has unlimited use for learning purposes.</p>
 
               <p><b>Open the Stable Diffusion 2.1 Demo from hugging face:</b><br>
-                Go to <a href="https://huggingface.co/spaces/stabilityai/stable-diffusion" target="_blank">Stable
+                Go to <a href="https://huggingface.co/spaces/stabilityai/stable-diffusion" target="_blank" rel="noopener">Stable
                   Diffusion 2.1 Demo</a> in your web
                 browser.</p>
 
@@ -1675,59 +1645,6 @@ git checkout 3adf61e1</code></pre>
     </div>
   </div>
 
-  <!-- TMC login disabled. Original modal selector:
-  <div class="modal fade" id="tmc-login-modal" tabindex="-1" role="dialog">
-  -->
-  <div class="modal fade" id="tmc-login-modal-disabled" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <form id="tmc-login-form">
-          <div class="modal-header">
-            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span
-                aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title">Log in with your Test My Code Account</h4>
-          </div>
-          <div class="modal-body">
-            <div class="alert alert-info">
-              Don't have an account yet? <a href="https://tmc.mooc.fi/user/new" class="alert-link" target="_blank"
-                rel="noopener">Create one!</a>
-            </div>
-
-            <div class="alert alert-danger" id="tmc-login-error" style="display: none;"></div>
-
-            <div class="form-group">
-              <label>Username</label>
-              <input type="text" id="tmc-login-username" class="form-control" placeholder="Username" />
-            </div>
-
-            <div class="form-group">
-              <label>Password</label>
-              <input type="password" id="tmc-login-password" class="form-control" placeholder="Password" />
-            </div>
-
-            <div class="form-group">
-              <label>Course</label>
-
-              <div class="form-check">
-                <label class="form-check-label">
-                  <input type="radio" class="form-check-input" name="tmcLoginCourse" value="intro-to-ai" checked>
-                  Introduction to Artificial Intelligence (intro-to-ai)
-                </label>
-              </div>
-
-              <small class="form-text text-muted">
-                Course selection may affect the contents of the material.
-              </small>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <a class="btn btn-secondary" data-bs-dismiss="modal">Close</a>
-            <button type="submit" class="btn btn-primary">Log in</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
 
 
   <div class="table-of-contents-layer" id="table-of-contents-layer">
@@ -1744,7 +1661,6 @@ git checkout 3adf61e1</code></pre>
   </div>
 
 
-  <!-- <script src="https://quiznator.mooc.fi/javascripts/plugin-loader.min.js"></script> -->
 
 
   <script src="../javascripts/main.js"></script>

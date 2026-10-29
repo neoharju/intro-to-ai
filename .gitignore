@@ -1,4 +1,6 @@
 planning/
 node_modules/
-.~
-.un~
+*.~
+*.un~
+*.patch
+

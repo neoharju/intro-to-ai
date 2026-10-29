@@ -8,75 +8,47 @@
 
 	<link href="../stylesheets/main.css" rel="stylesheet" />
 
-	<script>
-		(function (i, s, o, g, r, a, m) {
-			i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
-				(i[r].q = i[r].q || []).push(arguments)
-			}, i[r].l = 1 * new Date(); a = s.createElement(o),
-				m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
-		})(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
-		ga('create', 'UA-47575342-7', 'auto');
-		ga('set', 'anonymizeIp', true);
-		ga('send', 'pageview');
-	</script>
-
 </head>
 
 <body>
 	<div class="main-wrapper">
 		<div class="header-wrapper">
-			<div class="browser-support-warning" id="browser-support-warning" style="display: none;">
-				Kaikki tämän materiaalin osat eivät välttämättä tuo nykyistä selaintasi. Voisitko harkita vaihtamista <a
-					href="https://www.google.com/chrome/browser/desktop/" target="_blank" rel="noopener">Chrome</a> tai
-				<a href="https://www.mozilla.org/en-US/firefox/new/" target="_blank" rel="noopener">Firefox</a>
-				selaimeen?
-				<span class="browser-support-warning__close">Selvä!</span>
-			</div>
-
 
 			<nav class="navbar navbar-expand navbar-light bg-white">
-				<a class="navbar-brand" href="http://mooc.fi" alt="MOOC" target="_blank" rel="noopener">
+				<a class="navbar-brand" href="https://www.mooc.fi/" alt="MOOC" target="_blank" rel="noopener">
 					<span class="icon-mooc"></span>
 				</a>
 
 				<ul class="nav navbar-nav d-none d-lg-flex">
 					<li class="nav-item ">
-						<a href="../" class="nav-link"
-							onclick="ga('send', 'event', 'navigation_topic_link', 'click', '#&lt;Middleman::Sitemap::Resource path=index.html&gt;')">Introduction</a>
+						<a href="../" class="nav-link">Introduction</a>
 					</li>
 					<li class="nav-item ">
-						<a href="../week1/" class="nav-link"
-							onclick="ga('send', 'event', 'navigation_topic_link', 'click', '#&lt;Middleman::Sitemap::Resource path=week1.html&gt;')">Week
+						<a href="../week1/" class="nav-link">Week
 							1</a>
 					</li>
 					<li class="nav-item ">
-						<a href="../week2/" class="nav-link"
-							onclick="ga('send', 'event', 'navigation_topic_link', 'click', '#&lt;Middleman::Sitemap::Resource path=week2.html&gt;')">Week
+						<a href="../week2/" class="nav-link">Week
 							2</a>
 					</li>
 					<li class="nav-item ">
-						<a href="../week3/" class="nav-link"
-							onclick="ga('send', 'event', 'navigation_topic_link', 'click', '#&lt;Middleman::Sitemap::Resource path=week3.html&gt;')">Week
+						<a href="../week3/" class="nav-link">Week
 							3</a>
 					</li>
 					<li class="nav-item ">
-						<a href="../week4/" class="nav-link"
-							onclick="ga('send', 'event', 'navigation_topic_link', 'click', '#&lt;Middleman::Sitemap::Resource path=week4.html&gt;')">Week
+						<a href="../week4/" class="nav-link">Week
 							4</a>
 					</li>
 					<li class="nav-item ">
-						<a href="../week5/" class="nav-link"
-							onclick="ga('send', 'event', 'navigation_topic_link', 'click', '#&lt;Middleman::Sitemap::Resource path=week5.html&gt;')">Week
+						<a href="../week5/" class="nav-link">Week
 							5</a>
 					</li>
 					<li class="nav-item active">
-						<a href="./" class="nav-link"
-							onclick="ga('send', 'event', 'navigation_topic_link', 'click', '#&lt;Middleman::Sitemap::Resource path=week6.html&gt;')">Week
+						<a href="./" class="nav-link">Week
 							6</a>
 					</li>
 					<li class="nav-item ">
-						<a href="../week7/" class="nav-link"
-							onclick="ga('send', 'event', 'navigation_topic_link', 'click', '#&lt;Middleman::Sitemap::Resource path=week7.html&gt;')">Week
+						<a href="../week7/" class="nav-link">Week
 							7</a>
 					</li>
 				</ul>
@@ -96,9 +68,6 @@
 						<i class="fa fa-ellipsis-h d-lg-none"></i>
 					</button>
 
-					<!-- TMC login disabled. Original button:
-					<button class="btn btn-primary" id="tmc-login-toggle">Log in</button>
-					-->
 				</div>
 			</nav>
 
@@ -929,61 +898,6 @@ agent.run("What is 24 degrees Celsius in Fahrenheit?")
 
 	</div>
 
-	<!-- TMC login disabled. Original modal selector:
-	<div class="modal fade" id="tmc-login-modal" tabindex="-1" role="dialog">
-	-->
-	<div class="modal fade" id="tmc-login-modal-disabled" tabindex="-1" role="dialog">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<form id="tmc-login-form">
-					<div class="modal-header">
-						<button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span
-								aria-hidden="true">&times;</span></button>
-						<h4 class="modal-title">Log in with your Test My Code Account</h4>
-					</div>
-					<div class="modal-body">
-						<div class="alert alert-info">
-							Don't have an account yet? <a href="https://tmc.mooc.fi/user/new" class="alert-link"
-								target="_blank" rel="noopener">Create one!</a>
-						</div>
-
-						<div class="alert alert-danger" id="tmc-login-error" style="display: none;"></div>
-
-						<div class="form-group">
-							<label>Username</label>
-							<input type="text" id="tmc-login-username" class="form-control" placeholder="Username" />
-						</div>
-
-						<div class="form-group">
-							<label>Password</label>
-							<input type="password" id="tmc-login-password" class="form-control"
-								placeholder="Password" />
-						</div>
-
-						<div class="form-group">
-							<label>Course</label>
-
-							<div class="form-check">
-								<label class="form-check-label">
-									<input type="radio" class="form-check-input" name="tmcLoginCourse"
-										value="intro-to-ai" checked>
-									Introduction to Artificial Intelligence (intro-to-ai)
-								</label>
-							</div>
-
-							<small class="form-text text-muted">
-								Course selection may affect the contents of the material.
-							</small>
-						</div>
-					</div>
-					<div class="modal-footer">
-						<a class="btn btn-secondary" data-bs-dismiss="modal">Close</a>
-						<button type="submit" class="btn btn-primary">Log in</button>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
 
 
 	<div class="table-of-contents-layer" id="table-of-contents-layer">
@@ -1000,7 +914,6 @@ agent.run("What is 24 degrees Celsius in Fahrenheit?")
 	</div>
 
 
-	<!-- <script src="https://quiznator.mooc.fi/javascripts/plugin-loader.min.js"></script> -->
 
 
 	<script src="../javascripts/main.js"></script>

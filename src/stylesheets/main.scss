@@ -1,14 +1,33 @@
-// Vendor stylesheets: plain CSS imports, resolved from node_modules and bundled by esbuild,
-// which also copies the referenced fonts to /fonts/vendor.
-@import "@fontsource/roboto/400.css";
-@import "@fortawesome/fontawesome-free/css/fontawesome.css";
-@import "@fortawesome/fontawesome-free/css/solid.css";
-@import "@fortawesome/fontawesome-free/css/regular.css";
+// Vendor stylesheet: a plain CSS import, resolved from node_modules and bundled by esbuild.
 @import "highlight.js/styles/xcode.css";
-@import "cookieconsent/build/cookieconsent.min.css";
 
+// Roboto (WOFF2 only) and the icons the pages use.
+@import "fonts";
+@import "icons";
+
+// Bootstrap, limited to the parts the pages use.
+@import "bootstrap/scss/functions";
 @import "variables";
-@import "bootstrap/scss/bootstrap";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/variables-dark";
+@import "bootstrap/scss/maps";
+@import "bootstrap/scss/mixins";
+@import "bootstrap/scss/utilities";
+$utilities: map-get-multiple($utilities, ("display", "margin-start", "background-color"));
+@import "bootstrap/scss/root";
+@import "bootstrap/scss/reboot";
+@import "bootstrap/scss/type";
+@import "bootstrap/scss/images";
+@import "bootstrap/scss/containers";
+@import "bootstrap/scss/grid";
+@import "bootstrap/scss/tables";
+@import "bootstrap/scss/buttons";
+@import "bootstrap/scss/transitions";
+@import "bootstrap/scss/dropdown";
+@import "bootstrap/scss/nav";
+@import "bootstrap/scss/navbar";
+@import "bootstrap/scss/utilities/api";
+
 @import "compat";
 @import "mixins";
 @import "mooc-icon";
@@ -20,5 +39,3 @@
 @import "hint";
 @import "navbar";
 @import "table-of-contents";
-
-@import "sample-output";
