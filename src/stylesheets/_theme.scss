@@ -171,6 +171,15 @@ h3.material-heading {
     border-top-width: 0;
   }
 
+  // Row headers: a label column on the left (the Annex III table of Week 7).
+  th[scope="row"] {
+    width: 30%;
+    font-size: inherit;
+    letter-spacing: 0;
+    color: var(--ink);
+    vertical-align: top;
+  }
+
   ul {
     padding-left: 1.1rem;
     margin-bottom: 0;
