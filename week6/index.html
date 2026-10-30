@@ -223,7 +223,7 @@
                 </svg>
                 <h3 class="material-heading">Memory, planning, and tools in LLM agents</h3>
                 <p>An LLM has a finite context window, not a durable autobiographical memory. Agent systems therefore distinguish several forms of memory. <b>Working memory</b> holds the current goal, intermediate results, and recent observations. <b>Episodic memory</b> stores previous trajectories or task outcomes. <b>Semantic memory</b> retrieves facts and documents, often through embeddings. <b>Procedural memory</b> is represented by instructions, tools, code, or learned policies. More memory is not automatically better: irrelevant retrieval can distract the model, stale information can conflict with the present environment, and stored material may contain sensitive data.</p>
-                <p>Planning can also take several forms. A model may produce a complete plan before acting, alternate one reasoning step with one tool call, generate several candidate plans and compare them, or use a separate evaluator to decide whether progress is adequate. Long plans can become obsolete after the first unexpected observation, while purely reactive action may lose the global goal. Effective systems often combine a coarse plan with frequent replanning.</p>
+                <p>Planning can also take several forms. A model may produce a complete plan before acting, alternate one reasoning step with one tool call (the ReAct pattern of Yao et al., 2023), generate several candidate plans and compare them, or use a separate evaluator to decide whether progress is adequate. Long plans can become obsolete after the first unexpected observation, while purely reactive action may lose the global goal. Effective systems often combine a coarse plan with frequent replanning.</p>
                 <p>A tool converts a generated symbol into an external action. Its interface should therefore specify required arguments, valid types, possible errors, side effects, and permissions. Reading a calendar and deleting an event must not receive the same authority. A robust execution layer validates arguments, asks for confirmation when consequences are difficult to reverse, records what happened, and returns structured observations. The model may be fluent, but the tool layer determines what the system can actually change.</p>
                 <h3 class="material-heading">Why agentic loops fail</h3>
                 <p>Agent failures are often failures of the loop rather than failures of language generation alone. The model may select the wrong tool, use a correct tool with incorrect arguments, misread a result, repeat an action indefinitely, stop before verifying success, or continue after the goal has been achieved. Retrieved documents or web pages can also contain instructions that conflict with the user’s goal—a form of prompt injection. Because the observation is text, the model may not distinguish trusted system instructions from untrusted content unless the architecture makes that distinction explicit.</p>
@@ -344,7 +344,7 @@
                 <p>An agent faces an <b>exploration–exploitation dilemma</b>: use the action currently believed best, or try alternatives that may teach it something. An <span class="math">\varepsilon</span>-greedy policy usually chooses the best-known action but sometimes explores randomly. Too little exploration locks in early mistakes; too much prevents consistent performance. In real systems, random exploration may be unsafe, so learning may begin in simulation, from logged data, or under explicit safety constraints.</p>
                 <p>Reward is not the same as the true goal. If a cleaning robot earns points for detecting dirt, it might avoid finishing the job so that dirt remains detectable. This illustrates <b>reward hacking</b>: the agent finds a high-scoring behaviour that violates the designer’s intent. Good design combines reward shaping with constraints, evaluation on varied situations, monitoring for distribution shift, and the ability to interrupt or correct behaviour.</p>
                 <h3 class="material-heading">From human feedback to language-model behaviour</h3>
-                <p>Reinforcement learning also appears in the development of language models. After pretraining, people may compare alternative responses. A reward model learns to predict these preferences, and the language model is then optimized to produce responses receiving higher predicted reward. This family of methods is commonly called <b>reinforcement learning from human feedback</b> (RLHF). Related approaches optimize directly from preference pairs or use AI-generated feedback.</p>
+                <p>Reinforcement learning also appears in the development of language models. After pretraining, people may compare alternative responses. A reward model learns to predict these preferences, and the language model is then optimized to produce responses receiving higher predicted reward. This family of methods is commonly called <b>reinforcement learning from human feedback</b> (RLHF). Related approaches optimize directly from preference pairs (direct preference optimization, DPO) or use AI-generated feedback (reinforcement learning from AI feedback, RLAIF).</p>
                 <p>The connection to an embodied RL agent is real but should not be overstated. During ordinary conversation, a deployed language model usually does not update its parameters after every user response. Much of the reinforcement learning occurred during training. A tool-using agent, however, does execute a sequential policy at deployment time: it observes results, changes its next action, and may store information in external memory. Training-time alignment and deployment-time agency are therefore different layers of the system.</p>
                 <p>Human preferences are also an imperfect proxy. Annotators may disagree, reward models can be confidently wrong outside their training distribution, and optimizing an average preference may suppress legitimate minority needs. These issues motivate diverse evaluation, uncertainty estimates, red-team testing, and limits on actions—not merely a larger reward model. Week 7 examines the broader ethical and governance questions; here the engineering lesson is that feedback must be interpreted in relation to the task and the people affected.</p>
 
@@ -402,7 +402,7 @@
                 <p>Planning operates at multiple levels. A task planner may decide to collect a parcel before going to the recipient. A motion planner finds a collision-free trajectory through configuration space. A local planner reacts to nearby obstacles. A controller continuously converts a desired trajectory into motor commands and corrects deviations. These layers run at different timescales: strategic plans may update every few seconds, while balance control may update hundreds of times per second.</p>
                 <p>Classical search remains important here. A* can plan paths on a map; sampling-based methods such as rapidly exploring random trees handle high-dimensional robot configurations; model-predictive control repeatedly optimizes a short future horizon and replans after new measurements. Learned components can improve perception, predict dynamics, or propose actions, but geometric constraints and feedback control continue to provide valuable structure.</p>
                 <h3 class="material-heading">Simulation, transfer, and shared autonomy</h3>
-                <p>Physical interaction is slow, costly, and sometimes dangerous, so robots often learn or are tested in simulation. Unfortunately, a policy may exploit details of the simulator that do not hold in reality. <b>Domain randomization</b> varies textures, lighting, friction, mass, delays, and sensor noise during training so that no single simulated world is sufficient. <b>System identification</b> instead tries to make the simulator match the physical system. Real-world fine-tuning and conservative validation remain necessary.</p>
+                <p>Physical interaction is slow, costly, and sometimes dangerous, so robots often learn or are tested in simulation. Unfortunately, a policy may exploit details of the simulator that do not hold in reality. <b>Domain randomization</b> varies textures, lighting, friction, mass, delays, and sensor noise during training, so that the policy cannot rely on the details of any one simulated world: if it works across many variations, the real world may look like one more variation. <b>System identification</b> instead tries to make the simulator match the physical system. Real-world fine-tuning and conservative validation remain necessary.</p>
                 <p>Full autonomy is not always the most useful objective. In <b>shared autonomy</b>, a person supplies intent while the robot assists with execution. A wheelchair may infer the intended doorway while preserving the user’s authority; a surgical training system may guide movement without replacing the learner’s action. Assistance that is too weak provides little benefit, but assistance that is too strong can hide errors and prevent skill development. The design question is therefore not simply “human or robot?” but how initiative, information, and control should be distributed over time.</p>
                 <p>Robots also make stakes tangible. An LLM’s incorrect sentence can be checked before use; a robot’s incorrect movement can cause immediate harm. Safe deployment relies on redundant sensing, conservative operating envelopes, collision avoidance, emergency stops, testing, and clear allocation of responsibility. Human oversight must be actionable: a nominal supervisor who cannot understand or interrupt the system is not meaningful oversight.</p>
 
@@ -694,12 +694,12 @@ agent.run("What is 24 degrees Celsius in Fahrenheit?")</code></pre>
 				<p>
 					Perhaps just to point out a few things that we think are
 					important about robotics: First of all, we already have
-					plenty or robots in everyday use. Our favourite example
+					plenty of robots in everyday use. Our favourite example
 					is the dishwashing machine, of which the first models
 					were invented in around 1850. The dishwashing machine is
 					a robot in the sense that it has sensors that help it
 					sense its real-world environment (the water temperature and its
-					flow, the amount and dirtyness of the dishes, etc.) and
+					flow, the amount and dirtiness of the dishes, etc.) and
 					actuators that enable it to affect its environment (heating
 					the water, releasing the detergent, sploshing the water, etc.).
 					With this definition, even a radiator thermostat is a robot,
@@ -724,7 +724,7 @@ agent.run("What is 24 degrees Celsius in Fahrenheit?")</code></pre>
 
 				<p>
 					The latter issue implies that developing robust robotics
-					solutions often requires operating on a whole another
+					solutions often requires operating on a whole other
 					level, often on a "lower level" in some sense, than
 					developing other kinds of AI applications that only have
 					to deal with simulated environments or static data, not
@@ -742,7 +742,7 @@ agent.run("What is 24 degrees Celsius in Fahrenheit?")</code></pre>
 					be programmed in Python, for example with the open-source
 					<a href="https://pybricks.com/">Pybricks</a> firmware.
 					<a href="https://www.raspberrypi.org/">Raspberry
-						PI</a> looks like a promising alternative. In case you'll
+						Pi</a> looks like a promising alternative. In case you'll
 					have a chance to try any of these and build and program
 					robots, you'll hopefully understand what we're trying to
 					say here!
@@ -994,6 +994,255 @@ agent.run("What is 24 degrees Celsius in Fahrenheit?")</code></pre>
 						</div>
 					</div>
 				</div>
+
+				<section class="bonus" aria-label="Bonus material">
+					<p class="bonus__badge">Bonus &middot; outside the course</p>
+					<h1 class="material-heading">Bonus: multi-agent systems and an agent lab at home</h1>
+					<p class="bonus__note">
+						This section is optional extra material for the curious, outside the course: it is <b>not part of
+						the course requirements</b>, and you do not need it for the exercises or the exam. It builds on the
+						agent loop of this page and on the Ollama exercise of Week 5. Everything here runs on your own
+						computer and at your own risk, so read the security checklist before you give an agent any tools.
+					</p>
+
+					<h2 class="material-heading">From one agent to many</h2>
+
+					<p>
+						A multi-agent LLM system is a set of model calls with different roles, instructions or tools that pass
+						work to each other. Anthropic's guide <i>Building effective agents</i> (2024) describes the common
+						patterns, from fixed workflows to open-ended agents:
+					</p>
+
+					<ul>
+						<li><b>Prompt chaining</b>: a fixed sequence of calls, with checks in code between them (outline,
+							check the outline, write).</li>
+						<li><b>Routing</b>: a first call classifies the request and sends it to a specialized prompt, or to a
+							smaller or larger model.</li>
+						<li><b>Parallelization</b>: independent parts at the same time, or several attempts at the same task
+							followed by a vote.</li>
+						<li><b>Orchestrator&ndash;workers</b>: one model splits the task at run time, hands the parts to
+							workers and combines their results.</li>
+						<li><b>Evaluator&ndash;optimizer</b>: one model writes, another critiques against clear criteria, and
+							the loop repeats until the critic approves (the second listing below).</li>
+					</ul>
+
+					<p>
+						In <b>multi-agent debate</b> (Du et al., ICML 2024), several copies of a model answer the same
+						question, read each other's answers and revise them over a few rounds; on the authors' benchmarks
+						this improved both reasoning and factual accuracy over a single model.
+					</p>
+
+					<p>
+						More agents also mean more calls, more cost and more ways to fail. Cemri et al. (2025) annotated
+						execution traces of popular multi-agent frameworks and found 14 failure modes in three groups:
+						flaws in the system design (agents ignore their role or the task), misalignment between agents
+						(they withhold information, ignore each other's input or drift off the task), and weak
+						verification (they stop too early or check nothing). And as the text above warns, agents that run
+						on the same model share its blind spots. A sound rule is to start with one agent and good tools,
+						and to add agents only when a measurement shows that they help.
+					</p>
+
+					<p>
+						Two open protocols connect the pieces. The <b>Model Context Protocol</b> (MCP, Anthropic, 2024)
+						standardizes how an application offers tools and data to a model: an MCP server exposes, say, a
+						calendar or a database, and any agent that speaks MCP can use it. <b>Agent2Agent</b> (A2A, Google,
+						2025) lets agents built by different vendors delegate tasks to each other. Both are now open
+						projects under the Linux Foundation.
+					</p>
+
+					<h2 class="material-heading">Running language models at home</h2>
+
+					<p>
+						The memory that a model's weights need is roughly the number of parameters times the bits per
+						weight, divided by eight: an 8-billion-parameter model needs about 16&nbsp;GB at 16 bits, but only
+						about 5&nbsp;GB at the 4-bit quantization that Ollama uses by default. Long conversations add the
+						KV cache of Week 5's bonus, 128&nbsp;KiB per token for a model shaped like Llama&nbsp;3&nbsp;8B, so
+						1&nbsp;GiB for 8192 tokens. If everything fits in a GPU's memory, or in the unified memory of an
+						Apple-silicon Mac, the model answers quickly; otherwise it runs on the CPU, more slowly.
+					</p>
+
+					<p>
+						The Ollama server that you installed in Week 5 also offers an API at
+						<code>http://localhost:11434</code>, with an OpenAI-compatible endpoint under <code>/v1</code>;
+						llama.cpp's <code>llama-server</code> and LM Studio offer the same kind of endpoint. Code written
+						against this interface does not care whether the model runs on your laptop or in the cloud. For
+						agents, choose a model trained for tool calling (Ollama's model library marks them with the tag
+						<i>tools</i>), for example <code>ollama pull qwen3:8b</code> (about 5&nbsp;GB). Small models of 1 to
+						4 billion parameters can call simple tools but make more mistakes in multi-step tasks. A tip for
+						the exercise above: Hugging Face's free tier includes only a small monthly inference credit
+						(US$&nbsp;0.10 at the time of writing), but smolagents can also use a local model through an
+						OpenAI-compatible server.
+					</p>
+
+					<h2 class="material-heading">An agent loop you can read</h2>
+
+					<p>
+						Frameworks hide the loop of this page's tool-agent diagram. Here it is in full: the model proposes
+						tool calls, and the code validates and executes them. This agent can read the Markdown notes in
+						one folder and nothing else. Install the client with <code>pip install openai</code>, pull a model,
+						put a few <code>.md</code> files into a folder called <code>notes</code>, and run the script.
+					</p>
+
+					<pre class="sh_python code-highlight"><code>import json
+from pathlib import Path
+from openai import OpenAI
+
+# Ollama's OpenAI-compatible endpoint; the API key is required but ignored.
+client = OpenAI(base_url='http://localhost:11434/v1', api_key='ollama')
+MODEL = 'qwen3:8b'                          # any model with tool support
+NOTES = Path('notes').resolve()             # the only folder the agent can read
+
+def list_notes():
+    return '\n'.join(sorted(p.name for p in NOTES.glob('*.md')))
+
+def read_note(name):
+    path = (NOTES / name).resolve()
+    # Least privilege: only .md files directly in NOTES, so no '../' tricks.
+    if path.parent != NOTES or path.suffix != '.md' or not path.is_file():
+        return 'error: no such note; call list_notes'
+    return path.read_text(encoding='utf-8')[:4000]  # keep the context small
+
+TOOLS = {'list_notes': list_notes, 'read_note': read_note}
+SCHEMAS = [
+    {'type': 'function', 'function': {
+        'name': 'list_notes', 'description': 'List my note files.',
+        'parameters': {'type': 'object', 'properties': {}}}},
+    {'type': 'function', 'function': {
+        'name': 'read_note', 'description': 'Read one note file.',
+        'parameters': {'type': 'object', 'properties': {'name': {'type': 'string'}},
+                       'required': ['name']}}},
+]
+
+SYSTEM = 'Answer from my notes and name the files you used.'
+
+def run(task, max_steps=8):
+    messages = [{'role': 'system', 'content': SYSTEM},
+                {'role': 'user', 'content': task}]
+    for _ in range(max_steps):              # a step budget: no endless loops
+        reply = client.chat.completions.create(
+            model=MODEL, messages=messages, tools=SCHEMAS).choices[0].message
+        messages.append(reply.model_dump(exclude_none=True))
+        if not reply.tool_calls:
+            return reply.content            # no tool call: this is the answer
+        for call in reply.tool_calls:       # validate before acting
+            print('  -&gt;', call.function.name, call.function.arguments)
+            tool = TOOLS.get(call.function.name)
+            try:
+                args = json.loads(call.function.arguments or '{}')
+                result = tool(**args) if tool else 'error: unknown tool'
+            except (TypeError, ValueError, OSError) as error:   # bad arguments
+                result = f'error: {error}'
+            messages.append({'role': 'tool', 'tool_call_id': call.id,
+                             'content': result})
+    return 'stopped: step budget used up'
+
+print(run('What do my notes say about the discount factor?'))</code></pre>
+
+					<p>
+						The defences of the text are all here. The tool layer, not the model, decides what can happen:
+						<code>read_note</code> resolves the path and refuses anything outside the folder, including
+						<code>../</code> tricks and symbolic links. Unknown tools and malformed arguments become error
+						messages that the model can read and correct, and the step budget stops a looping agent. In a test
+						against a scripted server that asked for <code>../secret.md</code>, for a tool called
+						<code>delete_everything</code>, and with arguments that were not JSON, all three were refused.
+					</p>
+
+					<p>
+						A second role turns this into the evaluator&ndash;optimizer pattern. Add to the same file:
+					</p>
+
+					<pre class="sh_python code-highlight"><code>WRITER = 'You write clear, correct explanations.'
+CRITIC = ('You review explanations strictly. If the text is correct and complete, '
+          'end your reply with the word APPROVED; otherwise list its problems.')
+
+def ask(role, text):
+    reply = client.chat.completions.create(model=MODEL, messages=[
+        {'role': 'system', 'content': role}, {'role': 'user', 'content': text}])
+    return reply.choices[0].message.content
+
+def write_with_critic(task, rounds=3):
+    draft = ask(WRITER, task)
+    for _ in range(rounds):
+        review = ask(CRITIC, f'Task: {task}\n\nText:\n{draft}')
+        if review.strip().endswith('APPROVED'):
+            break
+        draft = ask(WRITER, f'Task: {task}\n\nDraft:\n{draft}\n\n'
+                            f'Fix these problems:\n{review}')
+    return draft
+
+print(write_with_critic('Explain the discount factor of RL in three sentences.'))</code></pre>
+
+					<p>
+						The writer and the critic are the same model with different instructions, so they share blind
+						spots. A stronger setup gives the critic a different model, or replaces it with a check in code,
+						such as running tests, wherever one exists.
+					</p>
+
+					<h2 class="material-heading">Securing your agent lab</h2>
+
+					<ul>
+						<li><b>Keep the model server local.</b> Ollama listens only on <code>127.0.0.1:11434</code> by
+							default and has no authentication: anyone who can reach the port can use your models. Do not set
+							<code>OLLAMA_HOST=0.0.0.0</code> or forward the port on a network that you do not control.</li>
+						<li><b>Least privilege.</b> Give each tool the narrowest power that works: read-only before write,
+							one folder instead of the whole disk, no shell. Run agents that execute code in a container or
+							virtual machine without network access and with only a copy of the files they need.</li>
+						<li><b>Treat everything the agent reads as untrusted.</b> Web pages, e-mails, documents and tool
+							results can contain instructions (prompt injection). Simon Willison calls the combination of
+							access to private data, exposure to untrusted content and a way to communicate externally the
+							<i>lethal trifecta</i>: an agent with all three can be tricked into sending your data to an
+							attacker. Remove at least one of them.</li>
+						<li><b>Humans approve consequential actions.</b> Sending, deleting, paying or publishing should
+							wait for your confirmation. Budgets for steps, time and tokens stop runaway loops, and a log of
+							every tool call shows what happened.</li>
+						<li><b>Keep secrets out of reach.</b> API keys belong in environment variables, never in prompts or
+							in files that the agent can read; give agents their own accounts with limited rights.</li>
+						<li><b>Mind the supply chain.</b> Download models, agent plugins and MCP servers only from sources
+							you trust. Prefer the safetensors and GGUF formats, which are designed to store weights without
+							executable code, over pickle-based checkpoints (<code>.pt</code>, <code>.bin</code>), which can
+							run arbitrary code when loaded. An MCP server is a program that runs with your permissions.</li>
+					</ul>
+
+					<h2 class="material-heading">Project ideas</h2>
+
+					<ul>
+						<li><b>A study buddy for this course.</b> Index your notes with an embedding model (Week 5), let one
+							agent quiz you and a critic check each question against the notes, and count how often the
+							critic catches a wrong question.</li>
+						<li><b>Agent versus Q-learning.</b> Turn the gridworld of this page into a text environment with the
+							tools <i>look</i> and <i>move</i>, and compare an LLM agent's success rate and number of steps
+							with those of tabular Q-learning.</li>
+						<li><b>Single or multi-agent: measure it.</b> Write 20 tasks with known answers and compare one
+							agent, a writer&ndash;critic pair and a three-agent debate on accuracy, tokens and time. This
+							turns "multi-agent helps" from a belief into a result.</li>
+						<li><b>A paper digest.</b> A tool fetches new arXiv abstracts on a topic, the agent writes a weekly
+							summary with links, and a second pass checks every claim against its abstract. The agent reads
+							untrusted text, so give it no other tools.</li>
+						<li><b>Home automation with a human in the loop.</b> Home Assistant has an official Ollama
+							integration that uses a local model as a conversation agent. It needs Ollama to be reachable on
+							your home network, so allow only the Home Assistant machine in the firewall, start with
+							read-only access to sensors, and confirm every action yourself.</li>
+					</ul>
+
+					<h2 class="material-heading">Further reading</h2>
+
+					<ul>
+						<li>Anthropic (2024), <a href="https://www.anthropic.com/research/building-effective-agents" target="_blank" rel="noopener"><i>Building
+							effective agents</i></a>: workflows versus agents, and when to use which.</li>
+						<li>Yao et al. (2023), <a href="https://arxiv.org/abs/2210.03629" target="_blank" rel="noopener"><i>ReAct: Synergizing
+							Reasoning and Acting in Language Models</i></a>: the reason&ndash;act loop behind most LLM
+							agents.</li>
+						<li>Cemri et al. (2025), <a href="https://arxiv.org/abs/2503.13657" target="_blank" rel="noopener"><i>Why Do Multi-Agent
+							LLM Systems Fail?</i></a></li>
+						<li>Du et al. (2024), <a href="https://arxiv.org/abs/2305.14325" target="_blank" rel="noopener"><i>Improving Factuality and
+							Reasoning in Language Models through Multiagent Debate</i></a>, ICML 2024.</li>
+						<li>Simon Willison (2025), <a href="https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/" target="_blank" rel="noopener"><i>The
+							lethal trifecta for AI agents</i></a>.</li>
+						<li>The <a href="https://modelcontextprotocol.io" target="_blank" rel="noopener">Model Context Protocol</a> and
+							<a href="https://docs.ollama.com" target="_blank" rel="noopener">Ollama</a> documentation (see
+							Ollama's FAQ on network access).</li>
+					</ul>
+				</section>
 
 				<nav class="page-nav" aria-label="Previous and next page">
 					<a class="page-nav__link page-nav__link--prev" href="../week5/" rel="prev">
