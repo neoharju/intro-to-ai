@@ -217,12 +217,12 @@
         </p>
 
         <p>
-          Here's an example DAG:<br>
-          <img src="../img/diagrams/BNexample1-5591f5d5.png" width=25% align=middle>
+          Here's an example DAG:
         </p>
+        <img src="../img/diagrams/BNexample1-5591f5d5.png" width="210" alt="A DAG with four nodes: X has edges to Z and to Å, and Y has an edge to Z.">
 
         <p>
-          The random variables in the model are X,Y,Z, and &Aring;. (For the
+          The random variables in the model are X, Y, Z, and &Aring;. (For the
           non-Scandi students, the last one is what we call the "Swedish O" in
           Finland;
           see <a href="https://en.wikipedia.org/wiki/%C3%85">Wikipedia:&Aring;</a>.
@@ -239,12 +239,12 @@
         <p>
           In addition to the structure encoded as the DAG, a Bayesian network
           comes with a set of parameters quantifying the conditional
-          distributions of the variables. These are given in the form P(V=v |
-          Pa<sub>V</sub> = pa<sub>V</sub>), where V is a random variable and v
-          is a value, and Pa<sub>V</sub> denotes the <strong>parents</strong>
-          of node V in the graph: i.e., the nodes from which there is an edge
-          to V. For example, in the above DAG, we have Pa<sub>Z</sub> = {X,Y},
-          and Pa<sub>Y</sub> = &empty; because node Y has no parents at all.
+          distributions of the variables. These are given in the form
+          <span class="math">P(V = v \mid \mathrm{Pa}_V = \mathrm{pa}_V)</span>, where <span class="math">V</span> is a random variable and
+          <span class="math">v</span> is a value, and <span class="math">\mathrm{Pa}_V</span> denotes the <strong>parents</strong>
+          of node <span class="math">V</span> in the graph: i.e., the nodes from which there is an edge
+          to <span class="math">V</span>. For example, in the above DAG, we have <span class="math">\mathrm{Pa}_Z = \{X, Y\}</span>,
+          and <span class="math">\mathrm{Pa}_Y = \emptyset</span> because node Y has no parents at all.
         </p>
 
         <p>
@@ -260,48 +260,22 @@
           for Z. A concrete example is as follows
         </p>
 
-        <p>
-        <table style="background-color: #7fb3d5; text-align: center;">
-          <tr>
-            <td colspan=2></td>
-            <td colspan=2>Z</td>
-          </tr>
-          <tr>
-            <td>&nbsp;X&nbsp;</td>
-            <td>&nbsp;Y&nbsp;</td>
-            <td>0</td>
-            <td>1</td>
-          </tr>
-          <tr>
-            <td>0</td>
-            <td>0</td>
-            <td bgcolor=ecf0f1>&nbsp;0.1&nbsp;</td>
-            <td bgcolor=ecf0f1>&nbsp;0.9&nbsp;</td>
-          </tr>
-          <tr>
-            <td>0</td>
-            <td>1</td>
-            <td bgcolor=ecf0f1>0.2</td>
-            <td bgcolor=ecf0f1>0.8</td>
-          </tr>
-          <tr>
-            <td>1</td>
-            <td>0</td>
-            <td bgcolor=ecf0f1>0.5</td>
-            <td bgcolor=ecf0f1>0.5</td>
-          </tr>
-          <tr>
-            <td>1</td>
-            <td>1</td>
-            <td bgcolor=ecf0f1>0.0</td>
-            <td bgcolor=ecf0f1>1.0</td>
-          </tr>
-        </table>
-        </p>
+        <div class="cpt-group">
+            <table class="cpt">
+              <caption><span class="math">P(Z \mid X, Y)</span></caption>
+              <thead><tr><th scope="col">X</th><th scope="col">Y</th><th scope="col">Z = 0</th><th scope="col">Z = 1</th></tr></thead>
+              <tbody>
+                <tr><td class="cpt__parent">0</td><td class="cpt__parent">0</td><td class="cpt__p">0.1</td><td class="cpt__p">0.9</td></tr>
+                <tr><td class="cpt__parent">0</td><td class="cpt__parent">1</td><td class="cpt__p">0.2</td><td class="cpt__p">0.8</td></tr>
+                <tr><td class="cpt__parent">1</td><td class="cpt__parent">0</td><td class="cpt__p">0.5</td><td class="cpt__p">0.5</td></tr>
+                <tr><td class="cpt__parent">1</td><td class="cpt__parent">1</td><td class="cpt__p">0.0</td><td class="cpt__p">1.0</td></tr>
+              </tbody>
+            </table>
+        </div>
 
         <p>
-          So for instance, if X=1 and Y=0, then the conditional probability of Z=1
-          is given by P(Z=1 | X=1, Y=0) = 0.5, and so on.
+          So for instance, if <span class="math">X = 1</span> and <span class="math">Y = 0</span>, then the conditional probability of <span class="math">Z = 1</span>
+          is given by <span class="math">P(Z = 1 \mid X = 1, Y = 0) = 0.5</span>, and so on.
         </p>
 
         <p>
@@ -313,166 +287,82 @@
         <p>
           To make things concrete, we use a running example which is the
           car Bayesian network discussed at the lecture. Its structure is
-          the following:<br>
-          <img src="../img/diagrams/carBN-f8e83c71.png" width=50%>
+          the following:
         </p>
+        <img src="../img/diagrams/carBN-f8e83c71.png" width="420" alt="The car network: Battery points to Radio and Ignition, Ignition and Gas point to Starts, and Starts points to Moves.">
 
         <p>
           The variables in the model are abbreviated as the first letters:
-        <pre>
-    [B]attery
-    [R]adio
-    [I]gnition
-    [G]as
-    [S]tarts
-    [M]oves</pre>
         </p>
+        <ul class="abbr-list">
+          <li><b>B</b>attery</li>
+          <li><b>R</b>adio</li>
+          <li><b>I</b>gnition</li>
+          <li><b>G</b>as</li>
+          <li><b>S</b>tarts</li>
+          <li><b>M</b>oves</li>
+        </ul>
 
         <p>
           The CPTs are as follows:
-        <table style="background-color: #7fb3d5; text-align: center; display: inline-block;">
-          <tr>
-            <td colspan=2 align=center>B</td>
-          </tr>
-          <tr>
-            <td>0</td>
-            <td>1</td>
-          </tr>
-          <tr>
-            <td bgcolor=ecf0f1>&nbsp;0.1&nbsp;</td>
-            <td bgcolor=ecf0f1>&nbsp;0.9&nbsp;</td>
-          </tr>
-        </table>
-        &nbsp;&nbsp;
-
-        <table style="background-color: #7fb3d5; text-align: center; display: inline-block;">
-          <tr>
-            <td colspan=1></td>
-            <td colspan=2>R</td>
-          </tr>
-          <tr>
-            <td>B</td>
-            <td>0</td>
-            <td>1</td>
-          </tr>
-          <tr>
-            <td>&nbsp;0&nbsp;</td>
-            <td bgcolor=ecf0f1>&nbsp;1.0&nbsp;</td>
-            <td bgcolor=ecf0f1>&nbsp;0.0&nbsp;</td>
-          </tr>
-          <tr>
-            <td>1</td>
-            <td bgcolor=ecf0f1>&nbsp;0.1&nbsp;</td>
-            <td bgcolor=ecf0f1>&nbsp;0.9&nbsp;</td>
-          </tr>
-        </table>
-        &nbsp;&nbsp;
-
-        <table style="background-color: #7fb3d5; text-align: center; display: inline-block;">
-          <tr>
-            <td colspan=1></td>
-            <td colspan=2>I</td>
-          </tr>
-          <tr>
-            <td>B</td>
-            <td>0</td>
-            <td>1</td>
-          </tr>
-          <tr>
-            <td>&nbsp;0&nbsp;</td>
-            <td bgcolor=ecf0f1>&nbsp;1.0&nbsp;</td>
-            <td bgcolor=ecf0f1>&nbsp;0.0&nbsp;</td>
-          </tr>
-          <tr>
-            <td>1</td>
-            <td bgcolor=ecf0f1>&nbsp;0.05&nbsp;</td>
-            <td bgcolor=ecf0f1>&nbsp;0.95&nbsp;</td>
-          </tr>
-        </table>
-        &nbsp;&nbsp;
-
-        <table style="background-color: #7fb3d5; text-align: center; display: inline-block;">
-          <tr>
-            <td colspan=2 align=center>G</td>
-          </tr>
-          <tr>
-            <td>0</td>
-            <td>1</td>
-          </tr>
-          <tr>
-            <td bgcolor=ecf0f1>&nbsp;0.05&nbsp;</td>
-            <td bgcolor=ecf0f1>&nbsp;0.95&nbsp;</td>
-          </tr>
-        </table>
-        &nbsp;&nbsp;
-
-        <table style="background-color: #7fb3d5; text-align: center; display: inline-block;">
-          <tr>
-            <td colspan=2></td>
-            <td colspan=2>S</td>
-          </tr>
-          <tr>
-            <td>I</td>
-            <td>G</td>
-            <td>0</td>
-            <td>1</td>
-          </tr>
-          <tr>
-            <td>&nbsp;0&nbsp;</td>
-            <td>&nbsp;0&nbsp;</td>
-            <td bgcolor=ecf0f1>&nbsp;1.0&nbsp;</td>
-            <td bgcolor=ecf0f1>&nbsp;0.0&nbsp;</td>
-          </tr>
-          <tr>
-            <td>0</td>
-            <td>1</td>
-            <td bgcolor=ecf0f1>1.0</td>
-            <td bgcolor=ecf0f1>0.0</td>
-          </tr>
-          <tr>
-            <td>1</td>
-            <td>0</td>
-            <td bgcolor=ecf0f1>1.0</td>
-            <td bgcolor=ecf0f1>0.0</td>
-          </tr>
-          <tr>
-            <td>1</td>
-            <td>1</td>
-            <td bgcolor=ecf0f1>0.01</td>
-            <td bgcolor=ecf0f1>0.99</td>
-          </tr>
-        </table>
-        &nbsp;&nbsp;
-
-        <table style="background-color: #7fb3d5; text-align: center; display: inline-block;">
-          <tr>
-            <td colspan=1></td>
-            <td colspan=2>M</td>
-          </tr>
-          <tr>
-            <td>S</td>
-            <td>0</td>
-            <td>1</td>
-          </tr>
-          <tr>
-            <td>&nbsp;0&nbsp;</td>
-            <td bgcolor=ecf0f1>&nbsp;1.0&nbsp;</td>
-            <td bgcolor=ecf0f1>&nbsp;0.0&nbsp;</td>
-          </tr>
-          <tr>
-            <td>1</td>
-            <td bgcolor=ecf0f1>&nbsp;0.01&nbsp;</td>
-            <td bgcolor=ecf0f1>&nbsp;0.99&nbsp;</td>
-          </tr>
-        </table>
         </p>
+        <div class="cpt-group">
+            <table class="cpt">
+              <caption><span class="math">P(B)</span></caption>
+              <thead><tr><th scope="col">B = 0</th><th scope="col">B = 1</th></tr></thead>
+              <tbody>
+                <tr><td class="cpt__p">0.1</td><td class="cpt__p">0.9</td></tr>
+              </tbody>
+            </table>
+            <table class="cpt">
+              <caption><span class="math">P(R \mid B)</span></caption>
+              <thead><tr><th scope="col">B</th><th scope="col">R = 0</th><th scope="col">R = 1</th></tr></thead>
+              <tbody>
+                <tr><td class="cpt__parent">0</td><td class="cpt__p">1.0</td><td class="cpt__p">0.0</td></tr>
+                <tr><td class="cpt__parent">1</td><td class="cpt__p">0.1</td><td class="cpt__p">0.9</td></tr>
+              </tbody>
+            </table>
+            <table class="cpt">
+              <caption><span class="math">P(I \mid B)</span></caption>
+              <thead><tr><th scope="col">B</th><th scope="col">I = 0</th><th scope="col">I = 1</th></tr></thead>
+              <tbody>
+                <tr><td class="cpt__parent">0</td><td class="cpt__p">1.0</td><td class="cpt__p">0.0</td></tr>
+                <tr><td class="cpt__parent">1</td><td class="cpt__p">0.05</td><td class="cpt__p">0.95</td></tr>
+              </tbody>
+            </table>
+            <table class="cpt">
+              <caption><span class="math">P(G)</span></caption>
+              <thead><tr><th scope="col">G = 0</th><th scope="col">G = 1</th></tr></thead>
+              <tbody>
+                <tr><td class="cpt__p">0.05</td><td class="cpt__p">0.95</td></tr>
+              </tbody>
+            </table>
+            <table class="cpt">
+              <caption><span class="math">P(S \mid I, G)</span></caption>
+              <thead><tr><th scope="col">I</th><th scope="col">G</th><th scope="col">S = 0</th><th scope="col">S = 1</th></tr></thead>
+              <tbody>
+                <tr><td class="cpt__parent">0</td><td class="cpt__parent">0</td><td class="cpt__p">1.0</td><td class="cpt__p">0.0</td></tr>
+                <tr><td class="cpt__parent">0</td><td class="cpt__parent">1</td><td class="cpt__p">1.0</td><td class="cpt__p">0.0</td></tr>
+                <tr><td class="cpt__parent">1</td><td class="cpt__parent">0</td><td class="cpt__p">1.0</td><td class="cpt__p">0.0</td></tr>
+                <tr><td class="cpt__parent">1</td><td class="cpt__parent">1</td><td class="cpt__p">0.01</td><td class="cpt__p">0.99</td></tr>
+              </tbody>
+            </table>
+            <table class="cpt">
+              <caption><span class="math">P(M \mid S)</span></caption>
+              <thead><tr><th scope="col">S</th><th scope="col">M = 0</th><th scope="col">M = 1</th></tr></thead>
+              <tbody>
+                <tr><td class="cpt__parent">0</td><td class="cpt__p">1.0</td><td class="cpt__p">0.0</td></tr>
+                <tr><td class="cpt__parent">1</td><td class="cpt__p">0.01</td><td class="cpt__p">0.99</td></tr>
+              </tbody>
+            </table>
+        </div>
 
         <p>
-          Just to take an example, the car will start (S=1) with probability
-          0.99 in case the ignition works (I=1) and there is gasoline in the tank (G=1).
+          Just to take an example, the car will start (<span class="math">S = 1</span>) with probability
+          0.99 in case the ignition works (<span class="math">I = 1</span>) and there is gasoline in the tank (<span class="math">G = 1</span>).
           (No Tesla obviously). If there's a problem either with the ignition <i>or</i>
-          the gasoline, then the car won't start for sure, i.e., P(S=1 | I=i, G=g) = 0.0 for
-          all other combinations (i,g) than (1,1).
+          the gasoline, then the car won't start for sure, i.e., <span class="math">P(S = 1 \mid I = i, G = g) = 0.0</span> for
+          all other combinations <span class="math">(i, g)</span> than <span class="math">(1, 1)</span>.
         </p>
 
         <p>
@@ -493,7 +383,7 @@
           defines the probability of each elementary event, which are
           equivalent to joint value assignments for the random variables.
           In the car domain, an elementary event is defined by six bits,
-          B,R,I,G,S,M. For example, the event 1,1,1,1,1,1 would be a good
+          B, R, I, G, S, M. For example, the event 1, 1, 1, 1, 1, 1 would be a good
           day: the battery is alive, you listen to some good music, the
           car starts because you remembered to fill the tank yesterday, and
           you make it to the lecture in time.
@@ -501,13 +391,19 @@
 
         <p>
           The joint probability of any elementary event is obtained as the
-          product of the conditional probabilities of the form P(V=v |
-          Pa<sub>V</sub> = pa<sub>V</sub>), where you'll recall Pa<sub>V</sub>
-          refers to the parent set of V. In the car domain, the product is
-          thus of the form:<br><br>
-          P(B=b,R=r,I=i,G=g,S=s,M=m) =
-          P(B=b) P(R=r | B=b) P(I=i | B=b) P(G=g) P (S=s | I=i,G=g) P(M=m | S=s),<br><br>
-          where b,r,i,g,s, and m denote values of the respective random
+          product of the conditional probabilities of the form <span class="math">P(V = v \mid \mathrm{Pa}_V = \mathrm{pa}_V)</span>,
+          where you'll recall <span class="math">\mathrm{Pa}_V</span>
+          refers to the parent set of <span class="math">V</span>. In the car domain, the product is
+          thus of the form:
+        </p>
+        <div class="math math--key">
+          \begin{aligned}
+          P(B{=}b, R{=}r, I{=}i, G{=}g, S{=}s, M{=}m) = {}&amp; P(B{=}b)\, P(R{=}r \mid B{=}b)\, P(I{=}i \mid B{=}b) \\
+          &amp; \times P(G{=}g)\, P(S{=}s \mid I{=}i, G{=}g)\, P(M{=}m \mid S{=}s),
+          \end{aligned}
+        </div>
+        <p>
+          where <span class="math">b, r, i, g, s</span> and <span class="math">m</span> denote values of the respective random
           variables. The above formula is called a <strong>factorization</strong>
           of the joint probability.
         </p>
@@ -527,9 +423,9 @@
               notation like 1,1,1,1,1,1 to denote events in the car
               domain. Rather, we'll have a different label for the values of each
               of the random variables. For the variable Battery, we denote the
-              good case (battery is alive) by B and the bad case by &not;B.
+              good case (battery is alive) by <span class="math">B</span> and the bad case by <span class="math">\neg B</span>.
               Similarly, for Radio, we denote the good case (music is played) by
-              R, and the bad case by &not;R, and so on.
+              <span class="math">R</span>, and the bad case by <span class="math">\neg R</span>, and so on.
             </p>
 
             <p>
@@ -543,10 +439,13 @@
         </div>
 
         <p>
-          The probability of a good day with the car is<br><br>
-          P(B) P(R|B) P(I|B) P(G) P(S|I,G) P(M|S)
-          = 0.9 &times; 0.9 &times; 0.95 &times; 0.95 &times; 0.99 &times; 0.99
-          &asymp; 0.716.<br><br>
+          The probability of a good day with the car is
+        </p>
+        <div class="math">
+          P(B)\, P(R \mid B)\, P(I \mid B)\, P(G)\, P(S \mid I, G)\, P(M \mid S)
+          = 0.9 \times 0.9 \times 0.95 \times 0.95 \times 0.99 \times 0.99 \approx 0.716.
+        </div>
+        <p>
           Pay close attention to the form of the terms, and make sure you could
           choose the right values from the above CPTs to do the above
           calculation.
@@ -554,16 +453,16 @@
 
         <p>
           Or, some days are fine except the radio may not work, which is
-          denoted as &not;R. The probability of the elementary event where
+          denoted as <span class="math">\neg R</span>. The probability of the elementary event where
           everything else is good but the radio is out is obtained similarly,
           and the result is:
-          <br><br>
-          P(B) P(&not;R|B) P(I|B) P(G) P(S|I,G) P(M|S)
-          <!--= 0.9 &times; 0.1 &times; 0.95 &times; 0.95 &times; 0.99 &times; 0.99-->
-          &asymp; 0.080.
-          <br><br>
+        </p>
+        <div class="math">
+          P(B)\, P(\neg R \mid B)\, P(I \mid B)\, P(G)\, P(S \mid I, G)\, P(M \mid S) \approx 0.080.
+        </div>
+        <p>
           Check that you get the same result by substituting the numbers from
-          the CPTs in the correct places. Remember that &not;R means R=0 (see the
+          the CPTs in the correct places. Remember that <span class="math">\neg R</span> means <span class="math">R = 0</span> (see the
           hint above).
         </p>
 
@@ -573,11 +472,11 @@
           looks like a lot of work. Why not just directly try to come up with
           the probabilities of the elementary events if that is the end
           result? The answer is that we can sometimes save a whole lot of
-          work this way. In the car example, the CPTs contain 2+4+4+2+8+4 = 24
+          work this way. In the car example, the CPTs contain <span class="math">2 + 4 + 4 + 2 + 8 + 4 = 24</span>
           numbers, of which half are actually redundant since the numbers on
           each row must always sum up to one, i.e., there are really only 12
           numbers to choose. The number of elementary events, on the other
-          hand, is 2<sup>6</sup>=64, i.e., we would have to come up with 63
+          hand, is <span class="math">2^6 = 64</span>, i.e., we would have to come up with 63
           parameters (the last one could be obtained by subtracting the others
           from 1.0). This shows how Bayesian networks can lead to <b>compact
             representation</b> of probabilistic models.
@@ -601,52 +500,56 @@
           probability calculus methods to compute posterior probabilities of
           the kind P(state | observations), we can do the same with Bayesian
           networks. Continuing with the car example, we can for example
-          compute P(battery dead | radio doesn't work, car won't move), or
-          P(&not;B | &not;R, &not;M), to figure out what is wrong with our car.
+          compute <span class="math">P(\text{battery dead} \mid \text{radio doesn't work, car won't move})</span>, or
+          <span class="math">P(\neg B \mid \neg R, \neg M)</span>, to figure out what is wrong with our car.
         </p>
 
         <p>
           So, let's get to work. We can start by writing the conditional
           probability as a ratio of two probabilities
-        <pre>
-                   P(&not;B, &not;R, &not;M)
-  P(&notB | &not;R, &not;M) = -------------
-                      P(&not;R, &not;M)</pre>
-        To obtain these probabilities, we need to use the marginalization
-        rule, which we have used before to write the annoying denominator
-        as a sum of two terms. Here the sum will be composed of many
-        terms instead of only two, but the basic principle is the same.
-        The numerator becomes:<br><br>
-        P(&not;B, &not;R, &not;M) =
-        &Sigma;<sub>&omega; &isin; (&not;B,&not;R,&not;M)</sub> P(&omega;) <br>
-        = P(&not;B, &not;R, I, G, S, &not;M)<br>
-        + P(&not;B, &not;R, I, G, &not;S, &not;M)<br>
-        + P(&not;B, &not;R, I, &not;G, S, &not;M)<br>
-        + P(&not;B, &not;R, I, &not;G, &not;S, &not;M)<br>
-        + P(&not;B, &not;R, &not;I, G, S, &not;M)<br>
-        + P(&not;B, &not;R, &not;I, G, &not;S, &not;M)<br>
-        + P(&not;B, &not;R, &not;I, &not;G, S, &not;M)<br>
-        + P(&not;B, &not;R, &not;I, &not;G, &not;S, &not;M)<br><br>
-        where &omega; &isin; (&not;B,&not;R,&not;M) denotes the set of
-        elementary events that belong to the event (&not;B,&not;R,&not;M).
+        </p>
+        <div class="math">
+          P(\neg B \mid \neg R, \neg M) = \frac{P(\neg B, \neg R, \neg M)}{P(\neg R, \neg M)}
+        </div>
+        <p>
+          To obtain these probabilities, we need to use the marginalization
+          rule, which we have used before to write the annoying denominator
+          as a sum of two terms. Here the sum will be composed of many
+          terms instead of only two, but the basic principle is the same.
+          The numerator becomes:
+        </p>
+        <div class="math">
+          \begin{aligned}
+          P(\neg B, \neg R, \neg M) &amp;= \sum_{\omega \in (\neg B, \neg R, \neg M)} P(\omega) \\
+          &amp;= P(\neg B, \neg R, I, G, S, \neg M) + P(\neg B, \neg R, I, G, \neg S, \neg M) \\
+          &amp;\quad + P(\neg B, \neg R, I, \neg G, S, \neg M) + P(\neg B, \neg R, I, \neg G, \neg S, \neg M) \\
+          &amp;\quad + P(\neg B, \neg R, \neg I, G, S, \neg M) + P(\neg B, \neg R, \neg I, G, \neg S, \neg M) \\
+          &amp;\quad + P(\neg B, \neg R, \neg I, \neg G, S, \neg M) + P(\neg B, \neg R, \neg I, \neg G, \neg S, \neg M)
+          \end{aligned}
+        </div>
+        <p>
+          where <span class="math">\omega \in (\neg B, \neg R, \neg M)</span> denotes the set of
+          elementary events that belong to the event <span class="math">(\neg B, \neg R, \neg M)</span>.
         </p>
 
         <p>
           We can now obtain the probability of each of the above eight
           elementary events by using the factorization into a product of
           conditional probabilities, and substituting the appropriate values
-          into the product from the CPTs. Take the first one:<br><br>
-          P(&not;B, &not;R, I, G, S, &not;M)
-          = 0.1 &times; 1.0 &times; 0.0 &times; 0.95 &times; 0.99 &times; 0.01 = 0.0
-          <br><br>
+          into the product from the CPTs. Take the first one:
+        </p>
+        <div class="math">
+          P(\neg B, \neg R, I, G, S, \neg M) = 0.1 \times 1.0 \times 0.0 \times 0.95 \times 0.99 \times 0.01 = 0.0
+        </div>
+        <p>
           which turns out to be equal to zero. Can you see why this makes sense?
-          (Remember the meaning of &not;B and I. Can they happen at the same
+          (Remember the meaning of <span class="math">\neg B</span> and <span class="math">I</span>. Can they happen at the same
           time?)
         </p>
 
         <p>
           The denominator in the formula for the posterior probability we wish
-          to compute, P(&not;R, &not;M), can also be evaluated using the
+          to compute, <span class="math">P(\neg R, \neg M)</span>, can also be evaluated using the
           same technique. It will involve a sum of 16 terms since there are
           four variables that we need to sum over when we expand the
           event into a sum of elementary events. But if we work hard and
@@ -678,7 +581,7 @@
           Bayesian network. The data will consist of <b>tuples</b>, each of
           which is essentially a list of values for each of the random
           variables in the domain. Thus, each tuple corresponds one-to-one
-          to an elementary event &omega;.
+          to an elementary event <span class="math">\omega</span>.
         </p>
 
         <p>
@@ -715,22 +618,22 @@
             <p>
               For binary variables, the method works as follows. Let the
               probability of zero in the distribution you wish to sample from be
-              some P(X=0). Generate a random floating point value <code>r</code>
-              by the aforementioned functions. If <code>r</code> &lt; P(X=0), then
+              some <span class="math">P(X = 0)</span>. Generate a random floating point value <span class="math">r</span>
+              by the aforementioned functions. If <span class="math">r < P(X = 0)</span>, then
               output the value 0, and otherwise 1. Clearly a uniformly distributed
-              value between 0 and 1 is less than P(X=0) with probability P(X=0), so
-              our method produces value 0 with probability P(X=0), as it should.
+              value between 0 and 1 is less than <span class="math">P(X = 0)</span> with probability <span class="math">P(X = 0)</span>, so
+              our method produces value 0 with probability <span class="math">P(X = 0)</span>, as it should.
             </p>
 
             <p>
               In the following, we will only need the binary case, but just in
               case you are interested: For categorical variables with more than
               two values, the method works in a similar fashion. The value 0 is
-              produced if <code>r</code> is less than P(X=0). The value 1 is
-              produced if <code>r</code> is between P(X=0) and P(X=0)+P(X=1). And
-              generally, the value x is produced if
-              <code>r</code> is between A = &Sigma;<sub>i=0,...,x-1</sub> P(X=i)
-              = P(X=0) + ... + P(X=x-1) and A + P(X=x).
+              produced if <span class="math">r</span> is less than <span class="math">P(X = 0)</span>. The value 1 is
+              produced if <span class="math">r</span> is between <span class="math">P(X = 0)</span> and <span class="math">P(X = 0) + P(X = 1)</span>. And
+              generally, the value <span class="math">x</span> is produced if
+              <span class="math">r</span> is between <span class="math">A = \sum_{i=0}^{x-1} P(X = i) = P(X = 0) + \dots + P(X = x - 1)</span>
+              and <span class="math">A + P(X = x)</span>.
             </p>
 
 
@@ -743,10 +646,10 @@
           value(s) for its parent(s). After choosing the value for Battery, we
           can thus move on to variable Radio. The distribution from which we
           choose the value of a child variable (such as Radio) is determined
-          by the configuration of its parents (such as Battery). If B=1, then
-          we draw the value of R from distribution (0.1, 0.9). Whereas if B=0,
-          then we draw the value of R from distribution (1.0, 0.0) and the
-          outcome is always R=0. No battery, no music.
+          by the configuration of its parents (such as Battery). If <span class="math">B = 1</span>, then
+          we draw the value of <span class="math">R</span> from distribution (0.1, 0.9). Whereas if <span class="math">B = 0</span>,
+          then we draw the value of <span class="math">R</span> from distribution (1.0, 0.0) and the
+          outcome is always <span class="math">R = 0</span>. No battery, no music.
         </p>
 
         <p>
@@ -759,7 +662,7 @@
           is as follows.
         </p>
 
-        <pre class="sh_java code-highlight"><code>   generate_tuples(n, model):
+        <pre class="sh_pseudo code-highlight"><code>   generate_tuples(n, model):
 1:    for i = 1 to n:
 2:       v = empty array
 3:       for V in model.variables:
@@ -798,15 +701,14 @@
 
         <p>
           Thus, we get
-        <pre>
-                    #{tuples where B=0, R=0, M=0}
-    P(&not;B, &not;R, &not;M) &asymp; -----------------------------
-                                  n</pre>
         </p>
+        <div class="math">
+          P(\neg B, \neg R, \neg M) \approx \frac{\#\{\text{tuples where } B = 0,\ R = 0,\ M = 0\}}{n}
+        </div>
 
         <p>
           To approximate conditional probabilities, we simply write them as
-          ratios, P(A | B) = P(A, B) / P(B), and apply the same estimator to
+          ratios, <span class="math">P(A \mid B) = P(A, B) / P(B)</span>, and apply the same estimator to
           both the numerator and the denominator.
         </p>
 
@@ -817,7 +719,7 @@
           result is not exact. The variance that is caused by the random
           nature of the process can sometimes make the obtained probabilities
           quite inaccurate. The bigger the number of tuples, however, the
-          better the accuracy, and in the limit as n &rarr; &infin; the
+          better the accuracy, and in the limit as <span class="math">n \to \infty</span> the
           approximation converges to the exact value.
         </p>
 
@@ -846,27 +748,27 @@
               <p>
                 Above, we discussed how Bayesian networks lead to compact
                 representation of probabilistic models.
+              </p>
               <ol>
                 <li>
-                  Consider a model with N=4 variables, each of which has k possible
-                  values (0,1,...,k&ndash;1). How many different elementary events are there
+                  Consider a model with <span class="math">N = 4</span> variables, each of which has <span class="math">k</span> possible
+                  values <span class="math">(0, 1, \dots, k - 1)</span>. How many different elementary events are there
                   in the domain? One less is the number of probabilities that we'd have
                   to determine in order to fully specify the model. (For example, in the
-                  Car model above, with N=6 and k=2, this number was 63.)
+                  Car model above, with <span class="math">N = 6</span> and <span class="math">k = 2</span>, this number was 63.)
                 <li>
                   How many parameters would we have to define to specify the model using
                   an "empty" Bayesian network, i.e, a network with no edges at all?
                 <li>
                   What is the maximum number of parameters we'd have to define in a
-                  Bayesian network in this domain (N variables with k values each)?
+                  Bayesian network in this domain (<span class="math">N</span> variables with <span class="math">k</span> values each)?
                   Remember that the graph has to be a DAG, i.e., no directed cycles are
                   allowed.
                 <li>
-                  <i>Optional:</i> Generalize to arbitrary values of N. It may be helpful to
-                  recall the sum of a geometric series 1+k+k<sup>2</sup>+...+k<sup>N&ndash;1</sup> =
-                  (k<sup>N</sup>&ndash;1)/(k&ndash;1), where k&ne;1.
+                  <i>Optional:</i> Generalize to arbitrary values of <span class="math">N</span>. It may be helpful to
+                  recall the sum of a geometric series
+                  <span class="math">1 + k + k^2 + \dots + k^{N-1} = \frac{k^N - 1}{k - 1}</span>, where <span class="math">k \neq 1</span>.
               </ol>
-              </p>
 
 
             </div>
@@ -907,25 +809,23 @@
               </p>
 
               <p>
-                Generate a sample of n=100 000 tuples. Use it to approximate the following
+                Generate a sample of <span class="math">n = 100\,000</span> tuples. Use it to approximate the following
                 conditional probabilities:
+              </p>
               <ol>
                 <li>
-                  P(B | R,G,&not;S)
+                  <span class="math">P(B \mid R, G, \neg S)</span>
                 <li>
-                  P(S | R,I,G)
+                  <span class="math">P(S \mid R, I, G)</span>
                 <li>
-                  P(S | &not;R,I,G)
+                  <span class="math">P(S \mid \neg R, I, G)</span>
               </ol>
-              <strong>
-                and (don't forget this part):
-              </strong>
-              <ol start=4><br>
+              <p><strong>and (don't forget this part):</strong></p>
+              <ol start="4">
                 <li>
                   Give an interpretation to the above probabilities. Are they in line with
                   your intuition? In other words, do they make sense?
               </ol>
-              </p>
 
 
             </div>
@@ -966,18 +866,17 @@
 
               <p>
                 Now modify the algorithm from the previous exercise so that you can generate
-                data from variables [E]arthquake, [B]urglar, [A]larm. Generate a sample of
-                n=100 000 tuples.
+                data from variables <b>E</b>arthquake, <b>B</b>urglar, <b>A</b>larm. Generate a sample of
+                <span class="math">n = 100\,000</span> tuples.
+              </p>
               <ol>
                 <li>
-                  Among the tuples with A=1, what is the fraction where B=1?
+                  Among the tuples with <span class="math">A = 1</span>, what is the fraction where <span class="math">B = 1</span>?
                 <li>
-                  Among the tuples with A=1 and E=1, what is the fraction where B=1?
+                  Among the tuples with <span class="math">A = 1</span> and <span class="math">E = 1</span>, what is the fraction where <span class="math">B = 1</span>?
               </ol>
-              <strong>
-                and (don't forget these):
-              </strong>
-              <ol start=3><br>
+              <p><strong>and (don't forget these):</strong></p>
+              <ol start="3">
                 <li>
                   Give an interpretation to your answers for items 1 & 2. What
                   probabilities do they approximate?
@@ -988,10 +887,9 @@
                 <li>
                   Repeat the experiment a couple of times to get a feeling of how much
                   the results change just by chance. (This is the nature of the Monte
-                  Carlo approximation.) Experiment with different values of n. How does
+                  Carlo approximation.) Experiment with different values of <span class="math">n</span>. How does
                   it affect the variability?
               </ol>
-              </p>
 
 
             </div>
@@ -1065,29 +963,29 @@
         </h2>
         
         <p>
-          The tasks described above are examples of <b>supervised learning</b> problems, as the correct answers (targets) for each object in the training dataset are known in advance. Supervised learning tasks are categorized based on the nature of the set <code>Y</code>, which represents all possible answers (targets):
+          The tasks described above are examples of <b>supervised learning</b> problems, as the correct answers (targets) for each object in the training dataset are known in advance. Supervised learning tasks are categorized based on the nature of the set <span class="math">Y</span>, which represents all possible answers (targets):
         </p>
         
         <ol>
           <li>
-            <b>Regression (<code>Y = ℝ</code> or <code>Y = ℝ<sup>M</sup></code>):</b>  
+            <b>Regression (<span class="math">Y = \mathbb{R}</span> or <span class="math">Y = \mathbb{R}^M</span>):</b>  
             In regression tasks, the target values are continuous. Examples include predicting the duration of a car-sharing trip, estimating demand for a specific product on a given day, or forecasting the weather in a city (e.g., temperature, humidity, and pressure as a vector of continuous values).
           </li>
           <li>
-            <b>Binary Classification (<code>Y = {0, 1}</code>):</b>  
+            <b>Binary Classification (<span class="math">Y = \{0, 1\}</span>):</b>  
             Binary classification involves predicting one of two possible outcomes. Examples include determining whether a user will click on an ad, if a client will repay a loan on time, whether a student will pass their exams, whether a patient will develop a specific condition, or if a banana is present in an image.
           </li>
           <li>
-            <b>Multiclass Classification (<code>Y = {1, ..., K}</code>):</b>  
-            Multiclass classification assigns each object to one of <code>K</code> possible classes. For example, categorizing scientific articles into subject domains such as mathematics, biology, or psychology.
+            <b>Multiclass Classification (<span class="math">Y = \{1, \dots, K\}</span>):</b>  
+            Multiclass classification assigns each object to one of <span class="math">K</span> possible classes. For example, categorizing scientific articles into subject domains such as mathematics, biology, or psychology.
           </li>
           <li>
-            <b>Multilabel Classification (<code>Y = {0, 1}<sup>K</sup></code>):</b>  
+            <b>Multilabel Classification (<span class="math">Y = \{0, 1\}^K</span>):</b>  
             In multilabel classification, an object can belong to multiple classes simultaneously. For instance, assigning tags to a restaurant where multiple tags (e.g., "Italian," "Vegetarian") may apply at the same time.
           </li>
           <li>
             <b>Ranking:</b>
-            Ranking tasks involve ordering objects based on relevance or some comparative metric. The training labels are often relevance grades from a finite, ordered set (for example, <code>Y = {0, 1, 2, 3, 4}</code>), but the output is an ordering of the objects. A common example is search engine result ranking, where documents are sorted by relevance to a query. Importantly, the relevance score is meaningful only in the context of comparing two documents, rather than as an absolute value.
+            Ranking tasks involve ordering objects based on relevance or some comparative metric. The training labels are often relevance grades from a finite, ordered set (for example, <span class="math">Y = \{0, 1, 2, 3, 4\}</span>), but the output is an ordering of the objects. A common example is search engine result ranking, where documents are sorted by relevance to a query. Importantly, the relevance score is meaningful only in the context of comparing two documents, rather than as an absolute value.
           </li>
         </ol>
         
@@ -1144,7 +1042,7 @@
         <h3>Additional Question</h3>
         
         <p>
-          In ranking, the training labels often come from an ordered finite set (<code>Y = {1, ..., K}</code>). At first glance, ranking could then be treated as either classification (with <code>K</code> classes) or regression. Why is this not the case?
+          In ranking, the training labels often come from an ordered finite set (<span class="math">Y = \{1, \dots, K\}</span>). At first glance, ranking could then be treated as either classification (with <span class="math">K</span> classes) or regression. Why is this not the case?
         </p>
         
 
@@ -1155,7 +1053,7 @@
         <p>
           A classic example of a multiclass classification problem is handwritten digit recognition. 
           Each input is a small bitmap image of a digit and the task is to assign it to one of the ten classes 
-          <code>0, 1, ..., 9</code>.
+          <span class="math">0, 1, \dots, 9</span>.
         </p>
         
         <p>
@@ -1186,11 +1084,11 @@
         </p>
         
         <p>
-          This week, we will primarily focus on <b>predictive models</b>, which aim to capture the relationship between the feature representation <code>x</code> of an object and its target <code>y</code>. These models can be expressed as <code>y = f(x)</code>. Occasionally, we will also deal with <b>data models</b>, such as describing a feature with a normal distribution.
+          This week, we will primarily focus on <b>predictive models</b>, which aim to capture the relationship between the feature representation <span class="math">x</span> of an object and its target <span class="math">y</span>. These models can be expressed as <span class="math">y = f(x)</span>. Occasionally, we will also deal with <b>data models</b>, such as describing a feature with a normal distribution.
         </p>
         
         <p>
-          Predictive models are often chosen from a <b>parametric family</b> <code>y = f_w(x)</code>, where <code>w</code> represents the parameters that are optimized using data.
+          Predictive models are often chosen from a <b>parametric family</b> <span class="math">y = f_w(x)</span>, where <span class="math">w</span> represents the parameters that are optimized using data.
         </p>
 
         <p>
@@ -1201,17 +1099,17 @@
           Consider a binary classification task for points in a two-dimensional space, where we use a linear model. The metric for evaluation is <b>accuracy</b>, which measures the proportion of correct predictions. As a learning algorithm, we can use gradient descent:
         </p>
         
-        <p>
-          <code>w<sub>t+1</sub> = w<sub>t</sub> - α∇<sub>w</sub>L</code>
-        </p>
+        <div class="math">
+          w_{t+1} = w_t - \alpha \nabla_w L
+        </div>
         
         <p>
-          Here, <code>α</code> is the optimization step size, a coefficient influencing the speed and stability of the algorithm. Notably, different choices of <code>α</code> lead to different learning algorithms, potentially yielding varying results:
+          Here, <span class="math">\alpha</span> is the optimization step size, a coefficient influencing the speed and stability of the algorithm. Notably, different choices of <span class="math">\alpha</span> lead to different learning algorithms, potentially yielding varying results:
         </p>
         
         <ul>
-          <li>If <code>α</code> is too small, the descent may fail to reach the optimum.</li>
-          <li>If <code>α</code> is too large, the algorithm may "overshoot" the optimum and oscillate around it without ever converging, or even diverge, moving further away from the optimum at every step.</li>
+          <li>If <span class="math">\alpha</span> is too small, the descent may fail to reach the optimum.</li>
+          <li>If <span class="math">\alpha</span> is too large, the algorithm may "overshoot" the optimum and oscillate around it without ever converging, or even diverge, moving further away from the optimum at every step.</li>
         </ul>
         
         <p>
@@ -1219,7 +1117,7 @@
         </p>
         
         <p>
-          Now, for the training dataset, we need to determine the optimal decision boundary <code>y = w<sub>1</sub>x + w<sub>0</sub></code>. The parameters <code>w<sub>1</sub></code> and <code>w<sub>0</sub></code> are adjustable (trainable) parameters of the model, which the learning algorithm will infer from the dataset. However, there is a problem: the <b>accuracy</b> metric is not differentiable. To address this, we need to use a differentiable function <code>L(X, y, w)</code>, whose minimization approximately corresponds to optimizing the accuracy. Such a function is called a <b>loss function</b> or simply <b>loss</b>.
+          Now, for the training dataset, we need to determine the optimal decision boundary <span class="math">y = w_1 x + w_0</span>. The parameters <span class="math">w_1</span> and <span class="math">w_0</span> are adjustable (trainable) parameters of the model, which the learning algorithm will infer from the dataset. However, there is a problem: the <b>accuracy</b> metric is not differentiable. To address this, we need to use a differentiable function <span class="math">L(X, y, w)</span>, whose minimization approximately corresponds to optimizing the accuracy. Such a function is called a <b>loss function</b> or simply <b>loss</b>.
         </p>
 
         <h2 class="material-heading">
@@ -1245,7 +1143,7 @@
         <img src="../img/material/part4/three_regression_models.webp" width=100%>
 
         <p>
-          The leftmost linear model is insufficient: it does what it can but poorly approximates the relationship, especially for small and large values of <code>x</code>. On the right, we see a model that "memorized" the entire training dataset (indeed, to compute this function’s value, we would need to know the coordinates of all the original points) instead of modeling the underlying dependency. Finally, the central model, while not passing through the training data points, approximates the true dependency reasonably well.
+          The leftmost linear model is insufficient: it does what it can but poorly approximates the relationship, especially for small and large values of <span class="math">x</span>. On the right, we see a model that "memorized" the entire training dataset (indeed, to compute this function’s value, we would need to know the coordinates of all the original points) instead of modeling the underlying dependency. Finally, the central model, while not passing through the training data points, approximates the true dependency reasonably well.
         </p>
         
         <p>
@@ -1277,7 +1175,7 @@
         </h2>
 
         <p>
-          Imagine you have a set of objects <code>X</code>, and you want to assign a value to each object. For example, you might have a set of bank card transactions and want to determine which of these transactions were fraudulent. By dividing all transactions into two classes—labeling legitimate transactions as 0 and fraudulent ones as 1—you obtain a basic classification problem.
+          Imagine you have a set of objects <span class="math">X</span>, and you want to assign a value to each object. For example, you might have a set of bank card transactions and want to determine which of these transactions were fraudulent. By dividing all transactions into two classes—labeling legitimate transactions as 0 and fraudulent ones as 1—you obtain a basic classification problem.
         </p>
         
         <p>
@@ -1285,7 +1183,7 @@
         </p>
         
         <p>
-          Thus, classification and regression tasks can be formulated as finding a mapping from the set of objects <code>X</code> to the set of possible targets.
+          Thus, classification and regression tasks can be formulated as finding a mapping from the set of objects <span class="math">X</span> to the set of possible targets.
         </p>
 
         <h2 class="material-heading">
@@ -1294,10 +1192,10 @@
         
         <ul>
           <li>
-            <b>Classification:</b> <code>X → {1, ..., K}</code>, where <code>1, ..., K</code> are class labels.
+            <b>Classification:</b> <span class="math">X \to \{1, \dots, K\}</span>, where <span class="math">1, \dots, K</span> are class labels.
           </li>
           <li>
-            <b>Regression:</b> <code>X → R</code>.
+            <b>Regression:</b> <span class="math">X \to \mathbb{R}</span>.
           </li>
         </ul>
         
@@ -1309,46 +1207,46 @@
           For now, a simpler question arises: <i>Among which mappings will we search for the best one?</i> There are countless possible mappings, but we can simplify the task by agreeing to search only within a predefined parameterized family of functions. This section focuses on the simplest such family—linear functions of the form:
         </p>
         
+        <div class="math">
+          y = w_1 x_1 + \dots + w_D x_D + w_0,
+        </div>
+        
         <p>
-          <code>y = w<sub>1</sub>x<sub>1</sub> + ... + w<sub>D</sub>x<sub>D</sub> + w<sub>0</sub></code>,
+          where <span class="math">y</span> is the target variable, <span class="math">(x_1, \dots, x_D)</span> is the feature vector corresponding to an object in the dataset, and <span class="math">w_1, \dots, w_D, w_0</span> are the model parameters.
         </p>
         
         <p>
-          where <code>y</code> is the target variable, <code>(x<sub>1</sub>, ..., x<sub>D</sub>)</code> is the feature vector corresponding to an object in the dataset, and <code>w<sub>1</sub>, ..., w<sub>D</sub>, w<sub>0</sub></code> are the model parameters.
+          The vector <span class="math">w = (w_1, \dots, w_D)</span> is often referred to as the <b>weight vector</b>, since the model's prediction can be viewed as a weighted sum of the object's features. The term <span class="math">w_0</span> is called the <b>bias</b> or <b>intercept</b>. More compactly, a linear model can be expressed as:
         </p>
         
-        <p>
-          The vector <code>w = (w<sub>1</sub>, ..., w<sub>D</sub>)</code> is often referred to as the <b>weight vector</b>, since the model's prediction can be viewed as a weighted sum of the object's features. The term <code>w<sub>0</sub></code> is called the <b>bias</b> or <b>intercept</b>. More compactly, a linear model can be expressed as:
-        </p>
+        <div class="math">
+          y = \langle x, w \rangle + w_0,
+        </div>
         
         <p>
-          <code>y = ⟨x, w⟩ + w<sub>0</sub></code>,
-        </p>
-        
-        <p>
-          where <code>⟨x, w⟩</code> denotes the dot product of the feature vector <code>x</code> and the weight vector <code>w</code>.
+          where <span class="math">\langle x, w \rangle</span> denotes the dot product of the feature vector <span class="math">x</span> and the weight vector <span class="math">w</span>.
         </p>
 
         <p>
-          Now that we have chosen a family of functions to search for a solution, the task becomes significantly simpler. Instead of finding an abstract mapping, we now search for a specific vector <code>(w<sub>0</sub>, w<sub>1</sub>, ..., w<sub>D</sub>) ∈ ℝ<sup>D+1</sup></code>.
+          Now that we have chosen a family of functions to search for a solution, the task becomes significantly simpler. Instead of finding an abstract mapping, we now search for a specific vector <span class="math">(w_0, w_1, \dots, w_D) \in \mathbb{R}^{D+1}</span>.
         </p>
         
         <div class="note">
           <p>
-            <b>Note:</b> To apply a linear model, each object must already be represented as a vector of numerical features <code>(x<sub>1</sub>, ..., x<sub>D</sub>)</code>. Naturally, raw data such as text or graphs cannot be directly input into a linear model. It is necessary to first derive numerical features for these data types. A model is called linear if it is linear with respect to these numerical features.
+            <b>Note:</b> To apply a linear model, each object must already be represented as a vector of numerical features <span class="math">(x_1, \dots, x_D)</span>. Naturally, raw data such as text or graphs cannot be directly input into a linear model. It is necessary to first derive numerical features for these data types. A model is called linear if it is linear with respect to these numerical features.
           </p>
         </div>
         
         <p>
-          Let’s analyze how such a model would work if <code>D = 1</code>, meaning our objects differ by only one numerical feature. In this case, our linear model takes a very simple form: 
+          Let’s analyze how such a model would work if <span class="math">D = 1</span>, meaning our objects differ by only one numerical feature. In this case, our linear model takes a very simple form: 
         </p>
         
-        <p>
-          <code>y = w<sub>1</sub>x<sub>1</sub> + w<sub>0</sub></code>.
-        </p>
+        <div class="math">
+          y = w_1 x_1 + w_0.
+        </div>
         
         <p>
-          For a regression task, we aim to approximate the target value <code>y</code> as a linear function of the variable <code>x</code>. But what does linearity mean for a classification task?
+          For a regression task, we aim to approximate the target value <span class="math">y</span> as a linear function of the variable <span class="math">x</span>. But what does linearity mean for a classification task?
         </p>
         
         <p>
@@ -1368,7 +1266,7 @@
         <h3>Advantages of Linear Models</h3>
         
         <p>
-          Beyond their simplicity, linear models have several other advantages. For instance, it is relatively easy to evaluate how specific features influence the prediction. If a weight <code>w<sub>i</sub></code> is positive, an increase in the <code>i</code>-th feature will:
+          Beyond their simplicity, linear models have several other advantages. For instance, it is relatively easy to evaluate how specific features influence the prediction. If a weight <span class="math">w_i</span> is positive, an increase in the <span class="math">i</span>-th feature will:
         </p>
         
         <ul>
@@ -1377,7 +1275,7 @@
         </ul>
         
         <p>
-          The magnitude of the weights also has a clear interpretation: the larger the weight <code>w<sub>i</sub></code>, the more "important" the <code>i</code>-th feature is for the final prediction. This interpretability makes linear models particularly valuable in industrial applications where errors can have significant consequences. For example, in scenarios where human lives depend on the model's decisions, it is critical to understand how the model makes decisions and the principles it follows.
+          The magnitude of the weights also has a clear interpretation: the larger the weight <span class="math">w_i</span>, the more "important" the <span class="math">i</span>-th feature is for the final prediction. This interpretability makes linear models particularly valuable in industrial applications where errors can have significant consequences. For example, in scenarios where human lives depend on the model's decisions, it is critical to understand how the model makes decisions and the principles it follows.
         </p>
         
         <p>
@@ -1410,11 +1308,11 @@
         </h2>
         
         <p>
-          Let’s now discuss the task of classification. To begin, we’ll focus on binary classification with two classes. Generalizing this problem to classification with <code>K</code> classes is straightforward.
+          Let’s now discuss the task of classification. To begin, we’ll focus on binary classification with two classes. Generalizing this problem to classification with <span class="math">K</span> classes is straightforward.
         </p>
         
         <p>
-          In this case, our targets <code>y</code> encode membership in either the positive or negative class, represented by the set <code>{-1, 1}</code>. (In this section, we will use this convention to denote classes, though in practice you may often encounter labels such as <code>{0, 1}</code>.) The feature vectors <code>x</code> remain elements of <code>ℝ<sup>D</sup></code>.
+          In this case, our targets <span class="math">y</span> encode membership in either the positive or negative class, represented by the set <span class="math">\{-1, 1\}</span>. (In this section, we will use this convention to denote classes, though in practice you may often encounter labels such as <span class="math">\{0, 1\}</span>.) The feature vectors <span class="math">x</span> remain elements of <span class="math">\mathbb{R}^D</span>.
         </p>
         
         <p>
@@ -1436,43 +1334,43 @@
         </p>
         
         <p>
-          The challenge is that probability, by definition, is a value between 0 and 1, and there is no straightforward way to train a linear model while ensuring this constraint is satisfied. To address this, we can train the linear model to predict a value related to probability but unconstrained, ranging from <code>(−∞, ∞)</code>, and then transform the model's output into a probability. This value is the <b>logit</b> (or log-odds)—the logarithm of the ratio of the probability of a positive event to a negative event:
+          The challenge is that probability, by definition, is a value between 0 and 1, and there is no straightforward way to train a linear model while ensuring this constraint is satisfied. To address this, we can train the linear model to predict a value related to probability but unconstrained, ranging from <span class="math">(-\infty, \infty)</span>, and then transform the model's output into a probability. This value is the <b>logit</b> (or log-odds)—the logarithm of the ratio of the probability of a positive event to a negative event:
         </p>
         
-        <p>
-          <code>log(p / (1 − p))</code>.
-        </p>
+        <div class="math">
+          \log \frac{p}{1 - p}.
+        </div>
         
         <p>
-          If the model's output is <code>log(p / (1 − p))</code>, then calculating the desired probability is straightforward:
+          If the model's output is <span class="math">\log\bigl(p / (1 - p)\bigr)</span>, then calculating the desired probability is straightforward:
         </p>
         
-        <p>
-          <code>⟨w, x<sub>i</sub>⟩ = log(p / (1 − p))</code>
-        </p>
+        <div class="math">
+          \langle w, x_i \rangle = \log \frac{p}{1 - p}
+        </div>
+        
+        <div class="math">
+          e^{\langle w, x_i \rangle} = \frac{p}{1 - p}
+        </div>
         
         <p>
-          <code>e<sup>⟨w, x<sub>i</sub>⟩</sup> = p / (1 − p)</code>
+          Solving for <span class="math">p</span>, we get:
         </p>
         
-        <p>
-          Solving for <code>p</code>, we get:
-        </p>
-        
-        <p>
-          <code>p = 1 / (1 + e<sup>−⟨w, x<sub>i</sub>⟩</sup>)</code>
-        </p>
+        <div class="math">
+          p = \frac{1}{1 + e^{-\langle w, x_i \rangle}}
+        </div>
         
         <p>
           The function on the right-hand side is called the <b>sigmoid function</b> and is defined as:
         </p>
         
-        <p>
-          <code>σ(z) = 1 / (1 + e<sup>−z</sup>)</code>
-        </p>
+        <div class="math">
+          \sigma(z) = \frac{1}{1 + e^{-z}}
+        </div>
         
         <p>
-          Thus, <code>p = σ(⟨w, x<sub>i</sub>⟩)</code>.
+          Thus, <span class="math">p = \sigma(\langle w, x_i \rangle)</span>.
         </p>
 
         <p>
@@ -1480,7 +1378,7 @@
         </p>
         
         <p>
-          An intuitive—but not always correct—approach is to use a threshold of <code>0.5</code>. A more accurate method is to select this threshold separately, specifically for the trained regression model, by optimizing the desired metric on a held-out validation dataset (not on the test set, which is kept for the final evaluation). For example, you could adjust the threshold to ensure that the proportion of positive and negative classes aligns closely with real-world distributions.
+          An intuitive—but not always correct—approach is to use a threshold of <span class="math">0.5</span>. A more accurate method is to select this threshold separately, specifically for the trained regression model, by optimizing the desired metric on a held-out validation dataset (not on the test set, which is kept for the final evaluation). For example, you could adjust the threshold to ensure that the proportion of positive and negative classes aligns closely with real-world distributions.
         </p>
         
         <p>
@@ -1489,10 +1387,10 @@
 
         <figure class="viz" data-viz="logreg">
           <figcaption class="viz__caption">
-            Two numeric features, classes 0 and 1. The model is <code>p = &sigma;(&lang;w, x&rang; + w<sub>0</sub>)</code>,
-            trained by gradient descent on the mean log-loss (cross-entropy). The shading shows <code>p</code>; the line
-            is where <code>p</code> equals the threshold <code>t</code>, that is, where the logit
-            <code>&lang;w, x&rang; + w<sub>0</sub></code> equals <code>log(t / (1 &minus; t))</code>. Moving the threshold
+            Two numeric features, classes 0 and 1. The model is <span class="math">p = \sigma(\langle w, x \rangle + w_0)</span>,
+            trained by gradient descent on the mean log-loss (cross-entropy). The shading shows <span class="math">p</span>; the line
+            is where <span class="math">p</span> equals the threshold <span class="math">t</span>, that is, where the logit
+            <span class="math">\langle w, x \rangle + w_0</span> equals <span class="math">\log\bigl(t / (1 - t)\bigr)</span>. Moving the threshold
             does not change the model, only which predictions count as class 1. Here accuracy is measured on the
             points shown; in practice the threshold is chosen on a validation set.
           </figcaption>
@@ -1529,10 +1427,10 @@
 
               <p>
                 The notes above write a one-feature linear model as
-                <code>y = w<sub>1</sub> x<sub>1</sub> + w<sub>0</sub></code>.
-                The same model is often written <code>y = β<sub>0</sub> + β<sub>1</sub> x</code>,
-                with intercept <code>β<sub>0</sub></code> and slope <code>β<sub>1</sub></code>.
-                The extra parameter <code>σ̂</code> is the residual standard deviation:
+                <span class="math">y = w_1 x_1 + w_0</span>.
+                The same model is often written <span class="math">y = \beta_0 + \beta_1 x</span>,
+                with intercept <span class="math">\beta_0</span> and slope <span class="math">\beta_1</span>.
+                The extra parameter <span class="math">\hat\sigma</span> is the residual standard deviation:
                 how far the points typically sit from the fitted line, not a weight of the line itself.
               </p>
 
@@ -1616,7 +1514,7 @@
 			      </ol>
 			
 			      <h2>Submission format</h2>
-			      <pre><code>id,Churn
+			      <pre><code class="nohighlight">id,Churn
 			10001,0.137
 			10002,0.842
 			10003,0.023
@@ -1685,9 +1583,9 @@
           The <b>nearest neighbor</b> (NN) classifier is among the simplest
           possible classifiers. In the training stage, if you can call it
           that, all the training data is simply stored. When given a new
-          instance, x<sup>(test)</sup>, we find the training data point
-          x<sup>(NN)</sup> which is closest to x<sup>(test)</sup> and
-          output its class label y<sup>(NN)</sup> as the predicted class
+          instance, <span class="math">x^{(\text{test})}</span>, we find the training data point
+          <span class="math">x^{(\text{NN})}</span> which is closest to <span class="math">x^{(\text{test})}</span> and
+          output its class label <span class="math">y^{(\text{NN})}</span> as the predicted class
           label. An example is given in the following diagram (panels a and b).
         </p>
 
@@ -1718,27 +1616,27 @@
         </p>
         
         <p>
-          Suppose we are given a training dataset <code>X = {(x<sub>i</sub>, y<sub>i</sub>)<sub>i=1</sub><sup>N</sup>}</code>, where <code>x<sub>i</sub> ∈ X</code> and <code>y<sub>i</sub> ∈ Y = {1, ..., C}</code>. Additionally, let a symmetric distance function <code>ρ: X × X → [0, +∞)</code> be defined. Assume we want to classify a new object <code>u</code>. To do so, we find the <code>k</code> nearest neighbors of <code>u</code> in terms of the distance <code>ρ</code> from the training dataset:
+          Suppose we are given a training dataset <span class="math">X = \{(x_i, y_i)\}_{i=1}^{N}</span>, where <span class="math">x_i \in X</span> and <span class="math">y_i \in Y = \{1, \dots, C\}</span>. Additionally, let a symmetric distance function <span class="math">\rho\colon X \times X \to [0, +\infty)</span> be defined. Assume we want to classify a new object <span class="math">u</span>. To do so, we find the <span class="math">k</span> nearest neighbors of <span class="math">u</span> in terms of the distance <span class="math">\rho</span> from the training dataset:
         </p>
         
-        <p>
-          <code>X<sub>k</sub>(u) = {x<sub>u(1)</sub>, ..., x<sub>u(k)</sub>}</code>, such that:
-        </p>
+        <div class="math">
+          X_k(u) = \{x_{u(1)}, \dots, x_{u(k)}\}, \quad \text{such that}
+        </div>
+        
+        <div class="math">
+          \forall x_{\text{in}} \in X_k(u),\ \forall x_{\text{out}} \in X \setminus X_k(u):\quad \rho(u, x_{\text{in}}) \le \rho(u, x_{\text{out}}). \tag{1}
+        </div>
         
         <p>
-          <code>∀ x<sub>in</sub> ∈ X<sub>k</sub>(u), ∀ x<sub>out</sub> ∈ X ∖ X<sub>k</sub>(u): ρ(u, x<sub>in</sub>) ≤ ρ(u, x<sub>out</sub>).</code> (1)
+          Let the class label of the object <span class="math">x_{u(i)}</span> be denoted by <span class="math">y_{u(i)}</span>. The class of the new object <span class="math">u</span> is then naturally defined as the most frequently occurring class among the objects in <span class="math">X_k(u)</span>:
         </p>
         
-        <p>
-          Let the class label of the object <code>x<sub>u(i)</sub></code> be denoted by <code>y<sub>u(i)</sub></code>. The class of the new object <code>u</code> is then naturally defined as the most frequently occurring class among the objects in <code>X<sub>k</sub>(u)</code>:
-        </p>
+        <div class="math">
+          a(u) = \argmax_{y \in Y} \sum_{i=1}^{k} \mathbb{I}[y_{u(i)} = y]. \tag{2}
+        </div>
         
         <p>
-          <code>a(u) = argmax<sub>y ∈ Y</sub> ∑<sub>i=1</sub><sup>k</sup> I[y<sub>u(i)</sub> = y].</code> (2)
-        </p>
-        
-        <p>
-          This formula might seem intimidating at first, but it’s quite simple: for each class label <code>y ∈ Y</code>, the number of neighbors of <code>u</code> with that label is calculated by summing over all neighbors the indicators of the events where the neighbor’s label equals <code>y</code>.
+          This formula might seem intimidating at first, but it’s quite simple: for each class label <span class="math">y \in Y</span>, the number of neighbors of <span class="math">u</span> with that label is calculated by summing over all neighbors the indicators of the events where the neighbor’s label equals <span class="math">y</span>.
         </p>
         
         <h3>Estimating Class Probabilities</h3>
@@ -1747,9 +1645,9 @@
           This algorithm also allows us to estimate class probabilities. To do so, we simply compute the class frequencies among the neighbors:
         </p>
         
-        <p>
-          <code>P(u ∼ y) = (1 / k) ∑<sub>i=1</sub><sup>k</sup> I[y<sub>u(i)</sub> = y].</code>
-        </p>
+        <div class="math">
+          P(u \sim y) = \frac{1}{k} \sum_{i=1}^{k} \mathbb{I}[y_{u(i)} = y].
+        </div>
         
         <p>
           While this function satisfies the properties of a probability (it is non-negative, additive, and bounded by 1), it is merely a heuristic.
@@ -1765,10 +1663,10 @@
 
         <figure class="viz" data-viz="knn">
           <figcaption class="viz__caption">
-            Drag the query point <code>u</code> (or select the plot and use the arrow keys). Its <code>k</code> nearest
-            training points are joined to it, and the outline marks the distance of the <code>k</code>-th neighbour, a
+            Drag the query point <span class="math">u</span> (or select the plot and use the arrow keys). Its <span class="math">k</span> nearest
+            training points are joined to it, and the outline marks the distance of the <span class="math">k</span>-th neighbour, a
             circle for Euclidean and a diamond for Manhattan distance. The prediction is the majority class, formula
-            (2) above; a tie goes to the class of the nearest of the tied neighbours. With <code>k = 1</code> the
+            (2) above; a tie goes to the class of the nearest of the tied neighbours. With <span class="math">k = 1</span> the
             regions follow every single point, which is the overfitting described above.
           </figcaption>
         </figure>
@@ -1894,16 +1792,16 @@
         <img src="../img/material/part4/DecisionTreeExample.webp" width="70%" alt="Example of a Decision Tree">
 
         <p>
-          In this example, objects have two features with real-valued attributes: <code>X</code> and <code>Y</code>. The decision about which class a given object belongs to is made by traversing the tree from the root to a leaf.
+          In this example, objects have two features with real-valued attributes: <span class="math">X</span> and <span class="math">Y</span>. The decision about which class a given object belongs to is made by traversing the tree from the root to a leaf.
         </p>
         
         <p>
           Each node in the tree contains a <b>predicate</b>. If the predicate is true for the current example in the dataset, we move to the right child; otherwise, we move to the left child. In this example, all predicates are simple threshold checks for a feature value:
         </p>
         
-        <p>
-          <code>B(x, j, t) = [x<sub>j</sub> ≥ t]</code>
-        </p>
+        <div class="math">
+          B(x, j, t) = [x_j \ge t]
+        </div>
         
         <p>
           The leaves of the tree contain predictions (e.g., class labels). Once we reach a leaf, the object is assigned the prediction recorded in that leaf.
@@ -1916,7 +1814,7 @@
         <img src="../img/material/part4/DecisionTreeSurfaces.webp" width="70%" alt="Decision Boundaries Created by the Tree">
 
         <p>
-          Each predicate splits the current subset of the feature space into two parts. In the first step, the split based on <code>[x ≥ x<sub>1</sub>]</code> divides the entire plane into two corresponding regions. At the next level, the region where <code>x &lt; x<sub>1</sub></code> (the left branch, where the predicate is false) is further split into two parts based on the second feature, <code>[y ≥ y<sub>1</sub>]</code>, resulting in regions 1 and 2. The same process is repeated for the right branch of the tree, and so on, until the leaf nodes are reached, forming five regions in the feature space. Each object in the dataset is assigned to one of these five regions, determining its class based on the region it falls into.
+          Each predicate splits the current subset of the feature space into two parts. In the first step, the split based on <span class="math">[x \ge x_1]</span> divides the entire plane into two corresponding regions. At the next level, the region where <span class="math">x < x_1</span> (the left branch, where the predicate is false) is further split into two parts based on the second feature, <span class="math">[y \ge y_1]</span>, resulting in regions 1 and 2. The same process is repeated for the right branch of the tree, and so on, until the leaf nodes are reached, forming five regions in the feature space. Each object in the dataset is assigned to one of these five regions, determining its class based on the region it falls into.
         </p>
         
         <p>
@@ -1935,10 +1833,10 @@
           node we only see the training examples that have fallen into that region,
           and we must pick a predicate that splits this subset into child regions
           whose labels are more homogeneous than before. For the real-valued
-          features <code>X</code> and <code>Y</code> above, candidate predicates
-          are threshold tests <code>[x<sub>j</sub> ≤ t]</code>, which always
+          features <span class="math">X</span> and <span class="math">Y</span> above, candidate predicates
+          are threshold tests <span class="math">[x_j \le t]</span>, which always
           create two children. When a feature instead takes a few named values,
-          a natural predicate is an equality test <code>A = v</code>, with one
+          a natural predicate is an equality test <span class="math">A = v</span>, with one
           child per value. In both cases we need a score for how useful a
           candidate split is.
         </p>
@@ -1964,34 +1862,34 @@
 
         <p>
           Entropy is a number for “how mixed are the labels in this region?”
-          For a set <code>S</code> of examples with a yes/no label, let
-          <code>p</code> be the fraction of positive examples. Then
+          For a set <span class="math">S</span> of examples with a yes/no label, let
+          <span class="math">p</span> be the fraction of positive examples. Then
         </p>
-        <pre>
-Entropy(S) = -p&middot;log&#8322;(p) - (1-p)&middot;log&#8322;(1-p)
-</pre>
+        <div class="math math--key">
+          \operatorname{Entropy}(S) = -p \log_2 p - (1 - p) \log_2 (1 - p)
+        </div>
         <p>
-          We take <code>0&middot;log(0) = 0</code>. Then:
+          We take <span class="math">0 \cdot \log 0 = 0</span>. Then:
         </p>
         <ul>
-          <li>If the region is pure (<code>p = 1</code> or <code>p = 0</code>),
-            <code>Entropy(S) = 0</code>: the leaf label is already determined.</li>
-          <li>If the two classes are equally common (<code>p = 1/2</code>),
-            <code>Entropy(S) = 1</code>.</li>
+          <li>If the region is pure (<span class="math">p = 1</span> or <span class="math">p = 0</span>),
+            <span class="math">\operatorname{Entropy}(S) = 0</span>: the leaf label is already determined.</li>
+          <li>If the two classes are equally common (<span class="math">p = 1/2</span>),
+            <span class="math">\operatorname{Entropy}(S) = 1</span>.</li>
           <li>Otherwise entropy lies strictly between 0 and 1.</li>
         </ul>
         <p>
           For example, suppose four training examples have reached a node, three
-          labeled Yes and one No. Then <code>p = 3/4</code> and
+          labeled Yes and one No. Then <span class="math">p = 3/4</span> and
         </p>
-        <pre>
-Entropy(S) = -(3/4)&middot;log&#8322;(3/4) - (1/4)&middot;log&#8322;(1/4) &asymp; 0.811
-</pre>
+        <div class="math">
+          \operatorname{Entropy}(S) = -\tfrac34 \log_2 \tfrac34 - \tfrac14 \log_2 \tfrac14 \approx 0.811
+        </div>
         <p>
           In information theory, this is the average number of bits needed to
-          encode the class of an example drawn uniformly from <code>S</code>.
+          encode the class of an example drawn uniformly from <span class="math">S</span>.
           If the target has more than two classes, one adds a term
-          <code>-p<sub>i</sub> log<sub>2</sub>(p<sub>i</sub>)</code> for each class.
+          <span class="math">-p_i \log_2 p_i</span> for each class.
         </p>
 
         <h3 class="material-heading">
@@ -2000,15 +1898,15 @@ Entropy(S) = -(3/4)&middot;log&#8322;(3/4) - (1/4)&middot;log&#8322;(1/4) &asymp
 
         <p>
           <b>Information gain</b> is the expected drop in entropy after applying
-          a predicate on attribute <code>A</code>. Let <code>Values(A)</code> be
-          the possible values of <code>A</code>, and let <code>S<sub>v</sub></code>
-          be the examples for which <code>A = v</code> (one child region per
+          a predicate on attribute <span class="math">A</span>. Let <span class="math">\operatorname{Values}(A)</span> be
+          the possible values of <span class="math">A</span>, and let <span class="math">S_v</span>
+          be the examples for which <span class="math">A = v</span> (one child region per
           value; for a numeric threshold there are just two values, true and false).
           Then
         </p>
-        <pre>
-Gain(S, A) = Entropy(S) - &sum;<sub>v &isin; Values(A)</sub> (|S<sub>v</sub>| / |S|) &middot; Entropy(S<sub>v</sub>)
-</pre>
+        <div class="math math--key">
+          \operatorname{Gain}(S, A) = \operatorname{Entropy}(S) - \sum_{v \in \operatorname{Values}(A)} \frac{|S_v|}{|S|}\, \operatorname{Entropy}(S_v)
+        </div>
         <p>
           The first term is the entropy of the current region. The sum is the
           entropy after the split, weighting each child by how many examples it
@@ -2023,21 +1921,21 @@ Gain(S, A) = Entropy(S) - &sum;<sub>v &isin; Values(A)</sub> (|S<sub>v</sub>| / 
           both Red examples are Yes (entropy 0), and Blue is one Yes and one No
           (entropy 1). Then
         </p>
-        <pre>
-Gain(S, Color) = 0.811 - (2/4)&middot;0 - (2/4)&middot;1 = 0.311
-</pre>
+        <div class="math">
+          \operatorname{Gain}(S, \text{Color}) = 0.811 - \tfrac24 \cdot 0 - \tfrac24 \cdot 1 = 0.311
+        </div>
         <p>
           Testing <code>Color</code> is worth about 0.311 bits: the child regions
           are easier to label than the mixed parent region of four points.
           The same calculation applies to a threshold predicate
-          <code>[x<sub>j</sub> ≤ t]</code>; only the definition of the two
-          subsets <code>S<sub>v</sub></code> changes.
+          <span class="math">[x_j \le t]</span>; only the definition of the two
+          subsets <span class="math">S_v</span> changes.
         </p>
 
         <figure class="viz" data-viz="infogain">
           <figcaption class="viz__caption">
-            Drag the threshold <code>t</code> (or use the arrow keys). The violet curve is the gain of every possible
-            threshold; it only changes when <code>t</code> passes a point. On the entropy curve, the weighted entropy
+            Drag the threshold <span class="math">t</span> (or use the arrow keys). The violet curve is the gain of every possible
+            threshold; it only changes when <span class="math">t</span> passes a point. On the entropy curve, the weighted entropy
             after the split lies on the straight line between the two children, so the gain (the violet segment) is
             the gap between that line and the curve. Because the curve bends downwards, the gain is never negative.
           </figcaption>
@@ -2089,27 +1987,29 @@ Gain(S, Color) = 0.811 - (2/4)&middot;0 - (2/4)&middot;1 = 0.311
       </table>
 
       <p>
-        Recall the entropy of a binary variable with a fraction <code>p</code> of
+        Recall the entropy of a binary variable with a fraction <span class="math">p</span> of
         positive examples:
-      <pre>
-Entropy(S) = -p&middot;log&#8322;(p) - (1-p)&middot;log&#8322;(1-p)
-</pre>
-        and the information gain from splitting a set <code>S</code> on attribute
-        <code>A</code>, which has values <code>v &isin; Values(A)</code>:
-      <pre>
-Gain(S, A) = Entropy(S) - &sum;<sub>v</sub> (|S<sub>v</sub>| / |S|) &middot; Entropy(S<sub>v</sub>)
-</pre>
       </p>
+      <div class="math">
+        \operatorname{Entropy}(S) = -p \log_2 p - (1 - p) \log_2 (1 - p)
+      </div>
+      <p>
+        and the information gain from splitting a set <span class="math">S</span> on attribute
+        <span class="math">A</span>, which has values <span class="math">v \in \operatorname{Values}(A)</span>:
+      </p>
+      <div class="math">
+        \operatorname{Gain}(S, A) = \operatorname{Entropy}(S) - \sum_{v} \frac{|S_v|}{|S|}\, \operatorname{Entropy}(S_v)
+      </div>
 
       <ol>
         <li>
-          Compute <code>Entropy(S)</code> for the full 14-day dataset above (9 "Yes",
+          Compute <span class="math">\operatorname{Entropy}(S)</span> for the full 14-day dataset above (9 "Yes",
           5 "No").
         </li>
         <li>
           Split on <code>Outlook</code>: <code>Sunny</code> (2 Yes, 3 No),
           <code>Overcast</code> (4 Yes, 0 No), <code>Rain</code> (3 Yes, 2 No).
-          Compute the entropy of each subset, then <code>Gain(S, Outlook)</code>.
+          Compute the entropy of each subset, then <span class="math">\operatorname{Gain}(S, \text{Outlook})</span>.
         </li>
         <li>
           Do the same for the other three attributes.
@@ -2119,8 +2019,8 @@ Gain(S, A) = Entropy(S) - &sum;<sub>v</sub> (|S<sub>v</sub>| / |S|) &middot; Ent
           (6 Yes, 1 No).
           <code>Wind</code>: <code>Weak</code> (6 Yes, 2 No), <code>Strong</code>
           (3 Yes, 3 No).
-          Compute <code>Gain(S, Temperature)</code>, <code>Gain(S, Humidity)</code>,
-          and <code>Gain(S, Wind)</code>.
+          Compute <span class="math">\operatorname{Gain}(S, \text{Temperature})</span>, <span class="math">\operatorname{Gain}(S, \text{Humidity})</span>,
+          and <span class="math">\operatorname{Gain}(S, \text{Wind})</span>.
         </li>
         <li>
           Which attribute has the highest information gain? That one becomes the
@@ -2160,36 +2060,36 @@ Gain(S, A) = Entropy(S) - &sum;<sub>v</sub> (|S<sub>v</sub>| / |S|) &middot; Ent
         </h2>
         
         <p>
-          The idea behind <b>bagging</b> (bootstrap aggregation) is as follows. Suppose the training dataset contains <code>n</code> objects. We randomly sample <code>n</code> examples from it with replacement, forming a new dataset <code>X<sub>1</sub></code>. This means some elements of the original dataset might not appear in <code>X<sub>1</sub></code>, while others might appear multiple times. Using an algorithm <code>b</code>, we train a model <code>b<sub>1</sub>(x) = b(x, X<sub>1</sub>)</code> on this dataset.
+          The idea behind <b>bagging</b> (bootstrap aggregation) is as follows. Suppose the training dataset contains <span class="math">n</span> objects. We randomly sample <span class="math">n</span> examples from it with replacement, forming a new dataset <span class="math">X_1</span>. This means some elements of the original dataset might not appear in <span class="math">X_1</span>, while others might appear multiple times. Using an algorithm <span class="math">b</span>, we train a model <span class="math">b_1(x) = b(x, X_1)</span> on this dataset.
         </p>
         
         <p>
-          We repeat this procedure: form a second dataset <code>X<sub>2</sub></code> by sampling <code>n</code> examples with replacement, and train another model <code>b<sub>2</sub>(x) = b(x, X<sub>2</sub>)</code>. Repeating the process <code>k</code> times, we obtain <code>k</code> models trained on <code>k</code> datasets.
+          We repeat this procedure: form a second dataset <span class="math">X_2</span> by sampling <span class="math">n</span> examples with replacement, and train another model <span class="math">b_2(x) = b(x, X_2)</span>. Repeating the process <span class="math">k</span> times, we obtain <span class="math">k</span> models trained on <span class="math">k</span> datasets.
         </p>
         
         <p>
           To make a prediction for a new object, we average the predictions of all models:
         </p>
         
-        <p>
-          <code>a(x) = (1 / k) (b<sub>1</sub>(x) + ⋯ + b<sub>k</sub>(x))</code>.
-        </p>
+        <div class="math">
+          a(x) = \frac{1}{k} \bigl(b_1(x) + \dots + b_k(x)\bigr).
+        </div>
         
         <p>
-          The process of generating subsets through sampling with replacement is called <b>bootstrapping</b>, and the models <code>b<sub>1</sub>(x), …, b<sub>k</sub>(x)</code> are often referred to as <b>base algorithms</b> (though "base models" might be a more accurate term). The model <code>a(x)</code> is called the <b>ensemble</b> of these base models.
+          The process of generating subsets through sampling with replacement is called <b>bootstrapping</b>, and the models <span class="math">b_1(x), \dots, b_k(x)</span> are often referred to as <b>base algorithms</b> (though "base models" might be a more accurate term). The model <span class="math">a(x)</span> is called the <b>ensemble</b> of these base models.
         </p>
 
         <h3>Example: Bagging with Decision Trees</h3>
         <p>
-          Suppose our target dependency <code>f(x)</code> is defined as:
+          Suppose our target dependency <span class="math">f(x)</span> is defined as:
         </p>
         
-        <p>
-          <code>f(x) = x sin(x)</code>,
-        </p>
+        <div class="math">
+          f(x) = x \sin x,
+        </div>
         
         <p>
-          with added normal noise <code>ϵ ∼ N(0, 9)</code>. Here is an example of a sample from such data:
+          with added normal noise <span class="math">\epsilon \sim \mathcal{N}(0, 9)</span> (mean 0, variance 9). Here is an example of a sample from such data:
         </p>
         
         <img src="../img/material/part4/BaggingDecisionTreesExample.webp" width="70%" alt="Example Data for Bagging with Decision Trees">
@@ -2216,7 +2116,7 @@ Gain(S, A) = Entropy(S) - &sum;<sub>v</sub> (|S<sub>v</sub>| / |S|) &middot; Ent
 
 
         <p>
-          The graph clearly shows how significantly bagging reduces variance. In fact, the variance decreased by almost a factor of 10, which corresponds to the number of base algorithms (<code>k</code>) used by bagging for prediction.
+          The graph clearly shows how significantly bagging reduces variance. In fact, the variance decreased by almost a factor of 10, which corresponds to the number of base algorithms (<span class="math">k</span>) used by bagging for prediction.
         </p>
         
         <img src="../img/material/part4/BaggingVarianceReduction.webp" width="70%" alt="Variance Reduction with Bagging">
@@ -2237,11 +2137,11 @@ Gain(S, A) = Entropy(S) - &sum;<sub>v</sub> (|S<sub>v</sub>| / |S|) &middot; Ent
         
         <ol>
           <li>
-            For constructing the <code>i</code>-th tree:
+            For constructing the <span class="math">i</span>-th tree:
             <ul>
-              <li>As in standard bagging, a random subset <code>X<sub>i</sub></code> is drawn with replacement from the training dataset <code>X</code>, maintaining the same size as <code>X</code>.</li>
+              <li>As in standard bagging, a random subset <span class="math">X_i</span> is drawn with replacement from the training dataset <span class="math">X</span>, maintaining the same size as <span class="math">X</span>.</li>
               <li>
-                During training, at each node of the tree, <code>n &lt; N</code> features are randomly selected (where <code>N</code> is the total number of features). The optimal split is then found among these features. This per-node feature sampling, introduced in Breiman's random forest algorithm, helps reduce the correlation between the trees. (Ho's earlier <b>random subspace method</b> chose one random subset of features for each whole tree.)
+                During training, at each node of the tree, <span class="math">n < N</span> features are randomly selected (where <span class="math">N</span> is the total number of features). The optimal split is then found among these features. This per-node feature sampling, introduced in Breiman's random forest algorithm, helps reduce the correlation between the trees. (Ho's earlier <b>random subspace method</b> chose one random subset of features for each whole tree.)
               </li>
             </ul>
           </li>
@@ -2287,7 +2187,7 @@ Gain(S, A) = Entropy(S) - &sum;<sub>v</sub> (|S<sub>v</sub>| / |S|) &middot; Ent
         <h3>How Many Trees Should a Random Forest Contain?</h3>
         
         <p>
-          As shown earlier, increasing the number of base algorithms in the ensemble reduces variance but does not affect bias. However, the trees are trained on overlapping data and are therefore correlated, so variance cannot be reduced indefinitely: if each tree has variance <code>σ²</code> and the pairwise correlation between trees is <code>ρ</code>, the variance of the average of <code>B</code> trees is <code>ρσ² + (1 − ρ)σ²/B</code>, which approaches <code>ρσ²</code>, not zero, as <code>B</code> grows. Adding more trees does not cause overfitting; it only costs computation. It is advisable to plot the error as a function of the number of trees and limit the forest size when the error stops decreasing significantly.
+          As shown earlier, increasing the number of base algorithms in the ensemble reduces variance but does not affect bias. However, the trees are trained on overlapping data and are therefore correlated, so variance cannot be reduced indefinitely: if each tree has variance <span class="math">\sigma^2</span> and the pairwise correlation between trees is <span class="math">\rho</span>, the variance of the average of <span class="math">B</span> trees is <span class="math">\rho\sigma^2 + (1 - \rho)\,\sigma^2 / B</span>, which approaches <span class="math">\rho\sigma^2</span>, not zero, as <span class="math">B</span> grows. Adding more trees does not cause overfitting; it only costs computation. It is advisable to plot the error as a function of the number of trees and limit the forest size when the error stops decreasing significantly.
         </p>
         
         <p>
@@ -2361,10 +2261,10 @@ Gain(S, A) = Entropy(S) - &sum;<sub>v</sub> (|S<sub>v</sub>| / |S|) &middot; Ent
             The overall dataset is split into training and test sets.
           </li>
           <li>
-            The training set is divided into <code>n</code> folds. These folds are processed similarly to cross-validation:
+            The training set is divided into <span class="math">n</span> folds. These folds are processed similarly to cross-validation:
             <ul>
               <li>
-                On each iteration, <code>(n−1)</code> folds are used to train the base algorithms, while the remaining fold is used for predictions (to compute meta-features).
+                On each iteration, <span class="math">(n - 1)</span> folds are used to train the base algorithms, while the remaining fold is used for predictions (to compute meta-features).
               </li>
             </ul>
             This approach ensures that the entire training set is utilized, and that each meta-feature is predicted by a model that did not see the object during training. Otherwise the meta-model would learn from overfitted predictions and trust the most overfitted base algorithms too much.
@@ -2446,8 +2346,8 @@ Gain(S, A) = Entropy(S) - &sum;<sub>v</sub> (|S<sub>v</sub>| / |S|) &middot; Ent
           different values (0,...,9), and the feature variables are the
           28 &times; 28 = 784 pixel values (binary black/white) in the bitmap
           images. We store the pixel values in a single vector and use the
-          value X<sub>j</sub>=1 to indicate that the j-th pixel is white.
-          The value X<sub>j</sub>=&ndash;1 is used for the black color
+          value <span class="math">X_j = 1</span> to indicate that the <span class="math">j</span>th pixel is white.
+          The value <span class="math">X_j = -1</span> is used for the black color
           for convenience.
         </p>
 
@@ -2456,51 +2356,55 @@ Gain(S, A) = Entropy(S) - &sum;<sub>v</sub> (|S<sub>v</sub>| / |S|) &middot; Ent
           Here too, the feature variables are assumed to be independent of
           each other given the class. In the training stage, the algorithm estimates
           the conditional probability of each pixel being white, for every class
-          i = 0,...,9 and every pixel. In the same manner as in the spam filter case, these
-          probabilities can be estimated as empirical frequencies:<br><br>
-          P(X<sub>j</sub> = 1 | Class = i) = #{X<sub>j</sub>=1, Class=i} /
-          #{Class=i},
-          <br><br>
-          where #{X<sub>j</sub> = 1, Class=i} is the number of training instances
-          of class i where the j-th pixel is white, and #{Class=i} is the
-          overall number of class i instances.
+          <span class="math">i = 0, \dots, 9</span> and every pixel. In the same manner as in the spam filter case, these
+          probabilities can be estimated as empirical frequencies:
+        </p>
+        <div class="math">
+          P(X_j = 1 \mid \text{Class} = i) = \frac{\#\{X_j = 1, \text{Class} = i\}}{\#\{\text{Class} = i\}},
+        </div>
+        <p>
+          where <span class="math">\#\{X_j = 1, \text{Class} = i\}</span> is the number of training instances
+          of class <span class="math">i</span> where the <span class="math">j</span>th pixel is white, and <span class="math">\#\{\text{Class} = i\}</span> is the
+          overall number of class <span class="math">i</span> instances.
         </p>
 
         <p>
           This estimator is implemented by the following pseudocode:
         </p>
 
-        <pre class="sh_java code-highlight"><code>train_NB(data):
+        <pre class="sh_pseudo code-highlight"><code>train_NB(data):
 1:  for each class i in 0,...,9:
 2:     model.prior[i] = #{class=i} / n
 3:     for each pixel j in 0,...,783:
-4:        model.cpt[i,j] = #{X<sub>j</sub>=1, class=i} / #{class=i}
+4:        model.cpt[i,j] = #{X_j=1, class=i} / #{class=i}
 5:  return model
 </code></pre>
 
         <p>
           The estimated values are stored as the array <code>cpt</code> in
           a <code>model</code> object. The array <code>prior</code> stores
-          the estimates of the probabilities P(Class=i) for all i=0,...,9.
+          the estimates of the probabilities <span class="math">P(\text{Class} = i)</span> for all <span class="math">i = 0, \dots, 9</span>.
         </p>
 
-        <p> Given a new image with pixel values
-          x<sub>0</sub>,...,x<sub>783</sub> (so, for example, &ndash;1,&ndash;1,&ndash;1,1,... if the first
-          three pixels are black and the fourth is white, etc) the classifier computes
-          the joint probability<br><br>
-          P(Class=i, X<sub>0</sub>=x<sub>0</sub>,...,X<sub>783</sub>=x<sub>783</sub>)
-          = P(Class=i) P(X<sub>0</sub>=x<sub>0</sub> | Class=i) &times; ...
-          &times; P(X<sub>783</sub>=x<sub>783</sub> | Class=i)
-          <br><br>
-          for all i=0,...,9.
-          The sum of these probabilities over the ten class values,
-          Z, is the annoying denominator in the Bayes rule, so we can obtain
-          the posterior probabilities by dividing the above joint
-          probabilities by Z:<br><br>
-          P(Class=i | X<sub>0</sub>=x<sub>0</sub>,...,X<sub>783</sub>=x<sub>783</sub>)
-          = P(Class=i) P(X<sub>0</sub>=x<sub>0</sub> | Class=i) &times; ...
-          &times; P(X<sub>783</sub>=x<sub>783</sub> | Class=i) / Z
+        <p>
+          Given a new image with pixel values
+          <span class="math">x_0, \dots, x_{783}</span> (so, for example, &ndash;1, &ndash;1, &ndash;1, 1, &hellip; if the first
+          three pixels are black and the fourth is white, etc.) the classifier computes
+          the joint probability
         </p>
+        <div class="math">
+          P(\text{Class} = i, X_0 = x_0, \dots, X_{783} = x_{783}) = P(\text{Class} = i) \prod_{j=0}^{783} P(X_j = x_j \mid \text{Class} = i)
+        </div>
+        <p>
+          for all <span class="math">i = 0, \dots, 9</span>.
+          The sum of these probabilities over the ten class values,
+          <span class="math">Z</span>, is the annoying denominator in the Bayes rule, so we can obtain
+          the posterior probabilities by dividing the above joint
+          probabilities by <span class="math">Z</span>:
+        </p>
+        <div class="math">
+          P(\text{Class} = i \mid X_0 = x_0, \dots, X_{783} = x_{783}) = \frac{1}{Z}\, P(\text{Class} = i) \prod_{j=0}^{783} P(X_j = x_j \mid \text{Class} = i)
+        </div>
 
         <p>
           Pseudocode for computing the posterior probabilities is
@@ -2508,7 +2412,7 @@ Gain(S, A) = Entropy(S) - &sum;<sub>v</sub> (|S<sub>v</sub>| / |S|) &middot; Ent
         </p>
 
 
-        <pre class="sh_java code-highlight"><code>posterior_NB(model, image):
+        <pre class="sh_pseudo code-highlight"><code>posterior_NB(model, image):
 1:  Z = 0; posterior = empty array
 2:  for each class i in 0,...,9:
 3:     posterior[i] = model.prior[i]
@@ -2543,7 +2447,7 @@ Gain(S, A) = Entropy(S) - &sum;<sub>v</sub> (|S<sub>v</sub>| / |S|) &middot; Ent
           posterior of class i zero however well the rest of the image
           matches. If that happens for every class, Z = 0 and line 11 divides
           by zero. The usual remedy is <b>Laplace (add-one) smoothing</b>,
-          <code>model.cpt[i,j] = (#{X<sub>j</sub>=1, class=i} + 1) / (#{class=i} + 2)</code>,
+          <span class="math">\frac{\#\{X_j = 1, \text{class} = i\} + 1}{\#\{\text{class} = i\} + 2}</span>,
           which never gives exactly 0 or 1 (in the spam filter of Week 2, we
           used a small lower bound for the same purpose). Second, a product of
           784 probabilities can underflow to zero in floating point, so
@@ -2565,6 +2469,126 @@ Gain(S, A) = Entropy(S) - &sum;<sub>v</sub> (|S<sub>v</sub>| / |S|) &middot; Ent
         <p>
           Next week turns to neural networks.
         </p>
+
+        <section class="bonus" aria-label="Bonus material">
+          <p class="bonus__badge">Bonus &middot; outside the course</p>
+          <h1 class="material-heading">Bonus: classical machine learning in practice</h1>
+          <p class="bonus__note">
+            This section is optional extra material for the curious, and handy for the Kaggle competition. It is
+            <b>not part of the course requirements</b>: you do not need it for the exercises or the exam.
+          </p>
+
+          <h2 class="material-heading">What the Kaggle score measures: ROC AUC</h2>
+
+          <p>
+            In the churn data most customers stay. If 90% stay, the model "nobody churns" is 90% accurate and
+            completely useless. That is why the competition is scored with the <b>area under the ROC curve</b>
+            (ROC AUC). The ROC curve plots the true-positive rate against the false-positive rate as the
+            threshold moves from 1 down to 0, and the area under it has a simple meaning:
+          </p>
+
+          <div class="math math--key">
+            \text{AUC} = P\bigl(\text{score of a random churner} &gt; \text{score of a random stayer}\bigr),
+          </div>
+
+          <p>
+            with ties counted as one half. A model that ranks perfectly scores 1, guessing scores 0.5, and the
+            "nobody churns" model, which gives everybody the same score, also scores 0.5. You can compute it by
+            comparing all pairs:
+          </p>
+
+          <pre class="sh_python code-highlight"><code>def auc_by_pairs(y_true, scores):
+    """ROC AUC: the probability that a random positive gets a higher score than a random negative."""
+    pos = [s for s, y in zip(scores, y_true) if y == 1]
+    neg = [s for s, y in zip(scores, y_true) if y == 0]
+    wins = sum((p &gt; n) + 0.5 * (p == n) for p in pos for n in neg)
+    return wins / (len(pos) * len(neg))</code></pre>
+
+          <p>
+            On any data it gives the same number as <code>sklearn.metrics.roc_auc_score</code>, just more slowly.
+            The definition shows something useful for the competition: only the <i>order</i> of your scores
+            matters. Squashing them through a sigmoid or any other increasing function leaves the AUC unchanged,
+            so a better AUC needs a better ranking of the customers, not better-calibrated probabilities.
+          </p>
+
+          <h2 class="material-heading">Gradient boosting in a dozen lines</h2>
+
+          <p>
+            Boosting, described above, trains its trees one after another. For the squared error the recipe is
+            short: start from the mean, and fit every new tree to the <b>residuals</b>, what the ensemble still
+            gets wrong. The residuals are the negative gradient of the squared error with respect to the
+            predictions, which is where the name comes from.
+          </p>
+
+          <pre class="sh_python code-highlight"><code>import numpy as np
+from sklearn.tree import DecisionTreeRegressor
+
+def boost(X, y, rounds=100, learning_rate=0.1, depth=3):
+    """Gradient boosting for squared error: each tree fits what the ensemble still gets wrong."""
+    base = y.mean()
+    prediction = np.full(len(y), base)
+    trees = []
+    for _ in range(rounds):
+        tree = DecisionTreeRegressor(max_depth=depth).fit(X, y - prediction)   # fit the residuals
+        prediction += learning_rate * tree.predict(X)
+        trees.append(tree)
+    return base, trees
+
+def predict(model, X, learning_rate=0.1):
+    base, trees = model
+    return base + learning_rate * sum(tree.predict(X) for tree in trees)</code></pre>
+
+          <p>
+            On the <span class="math">x \sin x</span> data of the bagging example (noise of variance 9, 150
+            training and 50 test points) one run gave a test error of 21 after 1 round, 10.9 after 10 rounds and
+            9.2 after 100, close to the noise level of 9 that no model can beat. After 1000 rounds the training
+            error was 0.00 and the test error had climbed back to 16.5. Unlike a random forest, boosting
+            <b>can overfit</b> by adding trees, which is why libraries stop early on a validation set.
+          </p>
+
+          <h2 class="material-heading">Leakage: the easiest way to fool yourself</h2>
+
+          <p>
+            A validation score is only honest if the model could not peek at the validation data. Common leaks:
+          </p>
+
+          <ul>
+            <li><b>Preprocessing on all the data.</b> Fitting a scaler, an encoder or a feature selector before
+              splitting lets information from the validation rows into training. Put the preprocessing inside a
+              pipeline, so that it is fitted on each training fold only.</li>
+            <li><b>Features that know the answer.</b> In churn data, a column such as "contract end date" or
+              "number of calls to the cancellation line" may only be filled in because the customer left.</li>
+            <li><b>Time.</b> When the data has an order in time, validate on later rows than the ones you train
+              on, as the real use will.</li>
+            <li><b>Tuning on the public leaderboard.</b> It is a small sample of the test set. Submitting
+              variants until the public score rises overfits it; the private ranking decides.</li>
+          </ul>
+
+          <pre class="sh_python code-highlight"><code>from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import cross_val_score
+
+model = make_pipeline(StandardScaler(), LogisticRegression(max_iter=1000))
+scores = cross_val_score(model, X_train, y_train, cv=5, scoring="roc_auc")  # the scaler is fit on each training fold only
+print(f"ROC AUC {scores.mean():.3f} ± {scores.std():.3f}")</code></pre>
+
+          <h2 class="material-heading">Further reading</h2>
+
+          <ul>
+            <li>James, Witten, Hastie, Tibshirani and Taylor, <a href="https://www.statlearning.com/" target="_blank" rel="noopener"><i>An
+              Introduction to Statistical Learning</i></a>: the friendliest textbook on this week's methods, free to
+              download, with labs in Python.</li>
+            <li>Hastie, Tibshirani and Friedman (2009), <i>The Elements of Statistical Learning</i>, 2nd edition,
+              Springer: the same topics with more mathematics; the authors offer the PDF for free.</li>
+            <li>scikit-learn, <a href="https://scikit-learn.org/stable/common_pitfalls.html" target="_blank" rel="noopener"><i>Common
+              pitfalls and recommended practices</i></a>: data leakage and how pipelines prevent it.</li>
+            <li>Breiman (2001), <a href="https://doi.org/10.1023/A:1010933404324" target="_blank" rel="noopener"><i>Random Forests</i></a>,
+              Machine Learning 45, 5&ndash;32.</li>
+            <li>Chen and Guestrin (2016), <a href="https://doi.org/10.1145/2939672.2939785" target="_blank" rel="noopener"><i>XGBoost: A
+              Scalable Tree Boosting System</i></a>, KDD 2016.</li>
+          </ul>
+        </section>
 
         <nav class="page-nav" aria-label="Previous and next page">
           <a class="page-nav__link page-nav__link--prev" href="../week2/" rel="prev">
@@ -2615,6 +2639,7 @@ Gain(S, A) = Entropy(S) - &sum;<sub>v</sub> (|S<sub>v</sub>| / |S|) &middot; Ent
 
 
 
+  <script src="../javascripts/math.js"></script>
   <script src="../javascripts/main.js"></script>
   <script src="../javascripts/week3.js"></script>
 

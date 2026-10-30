@@ -377,3 +377,84 @@
     fill: var(--dg-arrow);
   }
 }
+
+// --- Conditional probability tables (Week 3) ------------------------------------------------------
+// The parent values on the left, the distribution of the variable on the right (shaded); the caption
+// names the table, e.g. P(S | I, G).
+.cpt-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 1rem 1.25rem;
+  margin: 1.25rem 0 1.5rem;
+}
+
+table.cpt {
+  font-size: .9375rem;
+  font-variant-numeric: tabular-nums;
+  background-color: var(--surface);
+  border: 1px solid var(--line-strong);
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: var(--radius-sm);
+
+  caption {
+    padding: 0 0 .35rem;
+    font-weight: 650;
+    color: var(--ink);
+    text-align: center;
+    caption-side: top;
+  }
+
+  th, td {
+    padding: .3rem .75rem;
+    text-align: center;
+    border-bottom: 1px solid var(--line);
+  }
+
+  thead th {
+    font-size: .8125rem;
+    font-weight: 650;
+    color: var(--muted);
+    background-color: var(--surface-2);
+  }
+
+  thead th:first-child { border-top-left-radius: var(--radius-sm); }
+  thead th:last-child { border-top-right-radius: var(--radius-sm); }
+
+  .cpt__parent {
+    font-weight: 600;
+    color: var(--muted);
+  }
+
+  .cpt__p {
+    color: var(--ink);
+    background-color: var(--primary-soft);
+  }
+
+  tbody tr:last-child > * {
+    border-bottom: 0;
+  }
+}
+
+// A short list of names with their abbreviation highlighted, e.g. the variables of the car network.
+.abbr-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem .6rem;
+  margin: .75rem 0 1rem;
+  padding: 0 !important;
+  list-style: none;
+
+  li {
+    padding: .2rem .65rem;
+    background-color: var(--surface-2);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+  }
+
+  b {
+    color: var(--primary);
+  }
+}
