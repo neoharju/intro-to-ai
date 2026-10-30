@@ -4,6 +4,8 @@ This is my personal copy of the course material for **Introduction to AI**, a co
 Computer Science, University of Helsinki. I am only modifying it for my own use. It is not the official
 course.
 
+Served at: <https://neoharju.github.io/intro-to-ai/>
+
 ## Credits
 
 The course material is the work of the course staff and the contributors of the original repository.
