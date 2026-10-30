@@ -170,7 +170,25 @@
 
         <h2 class="material-heading">One word, different context</h2>
         <p>Consider the word <i>bank</i> in “the bank approved the loan” and “we sat on the river bank.” A static lookup gives the same initial vector in both sentences. Attention creates a contextual representation by combining information from the surrounding tokens with different strengths.</p>
-        <svg viewBox="0 0 960 330" role="img" aria-label="Attention connects the word bank to different context words in two sentences" style="width:100%;max-width:960px"><g font-family="Roboto, sans-serif" text-anchor="middle"><text x="480" y="35" font-size="23">Context changes which words matter</text><g font-size="21"><text x="100" y="105">the</text><text x="245" y="105">bank</text><text x="420" y="105">approved</text><text x="590" y="105">the</text><text x="750" y="105">loan</text><path d="M245 118 C300 180 650 180 750 118" fill="none" stroke="#7b3fa1" stroke-width="9" opacity=".85"/><path d="M245 118 C290 150 365 150 420 118" fill="none" stroke="#2878a5" stroke-width="5" opacity=".75"/><text x="100" y="245">river</text><text x="245" y="245">bank</text><text x="420" y="245">was</text><text x="590" y="245">covered</text><text x="750" y="245">in reeds</text><path d="M245 230 C210 175 135 175 100 230" fill="none" stroke="#2f8a50" stroke-width="10" opacity=".85"/><path d="M245 230 C345 165 650 165 750 230" fill="none" stroke="#c58a00" stroke-width="4" opacity=".7"/></g><text x="480" y="305" font-size="19">Thicker connections illustrate greater attention weight</text></g></svg>
+        <svg class="dg" viewBox="0 0 960 345" role="img" aria-label="Attention connects the word bank to different words in two sentences: in &quot;the bank approved the loan&quot; mostly to loan and approved, in &quot;we sat on the river bank&quot; mostly to river.">
+          <text class="dg-heading" x="480" y="26">Context changes which words matter</text>
+          <path class="dg-curve dg-curve--violet" style="stroke-width:10px;opacity:.85" d="M280 145 Q580 -39 880 145"/>
+          <path class="dg-curve dg-curve--blue" style="stroke-width:5px;opacity:.85" d="M280 145 Q380 49 480 145"/>
+          <text class="dg-large" x="80" y="165">the</text>
+          <text class="dg-title" x="280" y="165">bank</text>
+          <text class="dg-large" x="480" y="165">approved</text>
+          <text class="dg-large" x="680" y="165">the</text>
+          <text class="dg-large" x="880" y="165">loan</text>
+          <path class="dg-curve dg-curve--green" style="stroke-width:10px;opacity:.85" d="M880 280 Q800 192.8 720 280"/>
+          <path class="dg-curve dg-curve--amber" style="stroke-width:3px;opacity:.85" d="M880 280 Q560 87.2 240 280"/>
+          <text class="dg-large" x="80" y="300">we</text>
+          <text class="dg-large" x="240" y="300">sat</text>
+          <text class="dg-large" x="400" y="300">on</text>
+          <text class="dg-large" x="560" y="300">the</text>
+          <text class="dg-large" x="720" y="300">river</text>
+          <text class="dg-title" x="880" y="300">bank</text>
+          <text class="dg-small" x="480" y="335">Thicker connections illustrate greater attention weight</text>
+        </svg>
 	<h2 class="material-heading">Why Do We Need Attention?</h2>
 	
 	<p>
@@ -190,8 +208,8 @@
 	
 	  <li>
 	    <b>Sequential processing:</b> Training recurrent networks is difficult to parallelize. 
-	    To compute the hidden state of the RNN layer at step <code>i+1</code>, 
-	    you must first compute the state for step <code>i</code>. Thus, processing a batch 
+	    To compute the hidden state of the RNN layer at step <span class="math">i + 1</span>,
+	    you must first compute the state for step <span class="math">i</span>. Thus, processing a batch 
 	    of sequences with a length of 1000 requires 1000 sequential operations, 
 	    making training time-consuming and inefficient on GPUs, which are optimized for parallel computations.
 	  </li>
@@ -220,7 +238,7 @@
 	<h3>Transformer Encoder and Decoder</h3>
 	
 	<p>
-	  On the left side of the diagram, we see the structure of the encoder. It sequentially applies <code>N</code> blocks to the input sequence:
+	  On the left side of the diagram, we see the structure of the encoder. It sequentially applies <span class="math">N</span> blocks to the input sequence:
 	</p>
 	
 	<img src="../img/material/part5/transformer_encoder.svg" alt="Transformer Encoder Structure" width="60%">
@@ -234,7 +252,7 @@
 	</p>
 	
 	<p>
-	  The decoder follows a similar structure, but each of its <code>N</code> blocks contains 
+	  The decoder follows a similar structure, but each of its <span class="math">N</span> blocks contains  
 	  two <b>multi-head attention</b> layers, one of which incorporates the encoder's outputs.
 	</p>
 	
@@ -253,9 +271,9 @@
 	
 	<p>
 	  More specifically, the computation of attention for a sequence involves three trainable 
-	  matrices: <b>W<sub>Q</sub>, W<sub>K</sub>, W<sub>V</sub></b>. Each input element representation 
-	  <code>x<sub>i</sub></code> is multiplied by these matrices, producing row vectors 
-	  <code>q<sub>i</sub>, k<sub>i</sub>, v<sub>i</sub></code> (where <code>i</code> is the index of 
+	  matrices: <span class="math">W_Q, W_K, W_V</span>. Each input element representation
+	  <span class="math">x_i</span> is multiplied by these matrices, producing row vectors
+	  <span class="math">q_i = x_i W_Q,\ k_i = x_i W_K,\ v_i = x_i W_V</span> (where <span class="math">i</span> is the index of
 	  the element). These vectors are referred to as <b>query, key, and value</b>, respectively.
 	</p>
 	
@@ -264,9 +282,9 @@
 	</p>
 	
 	<ul>
-	  <li><b>q<sub>i</sub></b> — the query to a database.</li>
-	  <li><b>k<sub>i</sub></b> — the keys of stored values in the database, used for lookup.</li>
-	  <li><b>v<sub>i</sub></b> — the actual stored values.</li>
+	  <li><span class="math">q_i</span> — the query to a database.</li>
+	  <li><span class="math">k_i</span> — the keys of stored values in the database, used for lookup.</li>
+	  <li><span class="math">v_i</span> — the actual stored values.</li>
 	</ul>
 	
 	<img src="../img/material/part5/self_attention_queries.webp" alt="Self-Attention Queries and Keys" width="60%">
@@ -275,26 +293,27 @@
 	  The closeness of a query to a key can be determined using a dot product:
 	</p>
 	
-	<p style="text-align: center;">
-	  self-attention weights<sub>i</sub> = softmax(C ⟨q<sub>i</sub>, k<sub>1</sub>⟩, C ⟨q<sub>i</sub>, k<sub>2</sub>⟩, …),
+	<div class="math">
+	  (w_{i1}, w_{i2}, \dots) = \softmax\bigl(C \langle q_i, k_1 \rangle,\ C \langle q_i, k_2 \rangle,\ \dots\bigr),
+	</div>
+	
+	<p>
+	  where <span class="math">C</span> is a normalization constant. In the original paper, the normalization constant was chosen as
+	  <span class="math">1 / \sqrt{d_k}</span>, where <span class="math">d_k</span> is the dimension of the queries and keys.
 	</p>
 	
 	<p>
-	  where <b>C</b> is a normalization constant. In the original paper, the normalization constant was chosen as
-	  <b>1/√d<sub>k</sub></b>, where <b>d<sub>k</sub></b> is the dimension of the queries and keys.
-	</p>
-	
-	<p>
-	  Now, we sum the values <b>v<sub>i</sub></b> with the obtained coefficients. This is the output of the self-attention 
+	  Now, we sum the values with the obtained coefficients: the output for element <span class="math">i</span> is
+	  <span class="math">\sum_j w_{ij} v_j</span>. This is the output of the self-attention
 	  layer. In matrix form, it can be written as:
 	</p>
 	
-	<p style="text-align: center;">
-	  self-attention(Q, K, V) = softmax (QK<sup>T</sup> / √d<sub>k</sub>) V,
-	</p>
+	<div class="math math--key">
+	  \operatorname{Attention}(Q, K, V) = \softmax\!\left(\frac{Q K^\top}{\sqrt{d_k}}\right) V,
+	</div>
 	
 	<p>
-	  where <b>Q, K, V</b> are matrices of queries, keys, and values, respectively, with <b>q<sub>i</sub>, k<sub>i</sub>, v<sub>i</sub></b> 
+	  where <span class="math">Q, K, V</span> are matrices of queries, keys, and values, respectively, with <span class="math">q_i, k_i, v_i</span>
 	  stored as row vectors, and softmax is applied row-wise.
 	</p>
 
@@ -309,9 +328,9 @@
 
 	<figure class="viz" data-viz="posenc">
 	  <figcaption class="viz__caption">
-	    The fixed encodings of the original Transformer, here with <code>d_model</code> = 64:
-	    <code>PE(pos, 2i) = sin(pos / 10000<sup>2i/d</sup>)</code> and
-	    <code>PE(pos, 2i+1) = cos(pos / 10000<sup>2i/d</sup>)</code>. The wavelengths grow geometrically from
+	    The fixed encodings of the original Transformer, here with <span class="math">d = d_{\text{model}} = 64</span>:
+	    <span class="math">\mathrm{PE}(pos, 2i) = \sin\bigl(pos / 10000^{2i/d}\bigr)</span> and
+	    <span class="math">\mathrm{PE}(pos, 2i+1) = \cos\bigl(pos / 10000^{2i/d}\bigr)</span>. The wavelengths grow geometrically from
 	    2&pi; in the first dimensions to about 10000&middot;2&pi; in the last, so every position gets its own pattern,
 	    which is added to the token embedding. Point at a cell, or click a column to plot that dimension.
 	  </figcaption>
@@ -337,7 +356,7 @@
 	<p>
 	  To prevent this issue, an <b>autoregressive mask</b> is applied to attention in the decoder, both during
 	  training and when a prompt is processed during generation. It sets the attention scores for future
-	  tokens to <code>-∞</code> before the softmax operation, ensuring their weights become zero after softmax. As shown in the image below, this
+	  tokens to <span class="math">-\infty</span> before the softmax operation, ensuring their weights become zero after softmax. As shown in the image below, this
 	  mask has a lower triangular shape.
 	</p>
 	
@@ -346,7 +365,7 @@
 	<figure class="viz" data-viz="attention">
 	  <figcaption class="viz__caption">
 	    The same word gets the same query, key and value vectors in both sentences, so it starts from the same
-	    static embedding; the attention weights <code>softmax(QK<sup>T</sup> / &radic;d<sub>k</sub>)</code> and
+	    static embedding; the attention weights <span class="math">\softmax(QK^\top / \sqrt{d_k})</span> and
 	    therefore the output depend on the other words. With the causal mask, scores for later tokens are set to
 	    &minus;&infin; before the softmax, so the weight matrix becomes lower triangular. The table follows one
 	    query row step by step, from the dot products to the weighted sum of the values. The vectors are small
@@ -421,7 +440,29 @@
         </p>
 
         <h2 class="material-heading">From tokens to contextual predictions</h2>
-        <svg viewBox="0 0 980 250" role="img" aria-label="A transformer maps tokens through embeddings and repeated blocks to contextual outputs" style="width:100%;max-width:980px"><defs><marker id="tf-arrow" markerWidth="9" markerHeight="9" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#555"/></marker></defs><g font-family="Roboto, sans-serif" text-anchor="middle" font-size="20"><rect x="25" y="75" width="145" height="80" rx="10" fill="#e4f2fb"/><text x="98" y="108">tokens</text><text x="98" y="135">+ positions</text><rect x="220" y="75" width="145" height="80" rx="10" fill="#f1e7fb"/><text x="293" y="108">embedding</text><text x="293" y="135">vectors</text><rect x="415" y="45" width="220" height="140" rx="10" fill="#fff1c9" stroke="#c58a00"/><text x="525" y="88">repeated blocks</text><text x="525" y="120">attention</text><text x="525" y="150">feed-forward layers</text><rect x="685" y="75" width="130" height="80" rx="10" fill="#e7f6e7"/><text x="750" y="108">contextual</text><text x="750" y="135">vectors</text><rect x="865" y="75" width="90" height="80" rx="10" fill="#e4f2fb"/><text x="910" y="108">task</text><text x="910" y="135">output</text><path d="M170 115 H210 M365 115 H405 M635 115 H675 M815 115 H855" stroke="#555" stroke-width="3" marker-end="url(#tf-arrow)"/></g></svg>
+        <svg class="dg" viewBox="0 0 980 230" role="img" aria-label="A transformer turns tokens and their positions into embedding vectors, passes them through repeated blocks of attention and feed-forward layers, and produces contextual vectors that a task-specific output uses.">
+          <defs><marker id="dg-pipeline-head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrowhead" d="M0,0 L10,5 L0,10 z"/></marker></defs>
+          <rect class="dg-box dg-box--blue" x="10" y="60" width="150" height="110" rx="12"/>
+          <text class="dg-title" x="85" y="102">tokens</text>
+          <text class="dg-large" x="85" y="128">+ positions</text>
+          <path class="dg-arrow" d="M165 115 L198 115" marker-end="url(#dg-pipeline-head)"/>
+          <rect class="dg-box dg-box--violet" x="204" y="60" width="150" height="110" rx="12"/>
+          <text class="dg-title" x="279" y="102">embedding</text>
+          <text class="dg-large" x="279" y="128">vectors</text>
+          <path class="dg-arrow" d="M359 115 L392 115" marker-end="url(#dg-pipeline-head)"/>
+          <rect class="dg-box dg-box--amber" x="398" y="60" width="230" height="110" rx="12"/>
+          <text class="dg-title" x="513" y="89">repeated blocks</text>
+          <text class="dg-large" x="513" y="115">attention</text>
+          <text class="dg-large" x="513" y="141">feed-forward layers</text>
+          <path class="dg-arrow" d="M633 115 L666 115" marker-end="url(#dg-pipeline-head)"/>
+          <rect class="dg-box dg-box--green" x="672" y="60" width="150" height="110" rx="12"/>
+          <text class="dg-title" x="747" y="102">contextual</text>
+          <text class="dg-large" x="747" y="128">vectors</text>
+          <path class="dg-arrow" d="M827 115 L860 115" marker-end="url(#dg-pipeline-head)"/>
+          <rect class="dg-box dg-box--blue" x="866" y="60" width="120" height="110" rx="12"/>
+          <text class="dg-title" x="926" y="102">task</text>
+          <text class="dg-large" x="926" y="128">output</text>
+        </svg>
         <p>The same general pipeline supports different objectives. An encoder can produce contextual representations for classification or retrieval. An autoregressive decoder uses a causal mask and predicts the next token repeatedly. Encoder-decoder models transform one sequence into another, as in translation. The details below explain the operations repeated inside each block.</p>
 	<h2 class="material-heading">Inside the Transformer block</h2>
 	
@@ -440,20 +481,20 @@
 	  represented as:
 	</p>
 	
-	<p class="math">
-	  FFN(x) = act(xW_1 + b_1)W_2 + b_2
-	</p>
+	<div class="math">
+	  \operatorname{FFN}(x) = \operatorname{act}(x W_1 + b_1)\, W_2 + b_2
+	</div>
 	
 	<p>
-	  The activation function <span class="math">act</span> in the FFN has varied over time. 
+	  The activation function <span class="math">\operatorname{act}</span> in the FFN has varied over time. 
 	  Initially, ReLU was widely used, but the community later adopted 
 	  <a href="https://arxiv.org/abs/1606.08415v4" target="_blank" rel="noopener">GELU</a>
 	  (Gaussian Error Linear Unit), which follows the formula:
 	</p>
 	
-	<p class="math">
-	  GELU(x) = x \cdot \Phi(x)
-	</p>
+	<div class="math">
+	  \operatorname{GELU}(x) = x \cdot \Phi(x)
+	</div>
 	
 	<p>
 	  where <span class="math">\Phi</span> is the cumulative distribution function
@@ -476,7 +517,7 @@
 	  a large number of layers. Instead, an alternative approach, 
 	  <strong>PreLN</strong> (shown on the right in the image below),
 	  applies normalization to the <em>input</em> of each sub-layer (attention or FFN) inside the residual
-	  branch, <span class="math">x + F(LN(x))</span>, so that the residual connection itself skips the
+	  branch, <span class="math">x + F\bigl(\operatorname{LN}(x)\bigr)</span>, so that the residual connection itself skips the
 	  normalization.
 	</p>
 	
@@ -666,14 +707,10 @@
                 any of the calls below.
         </p>
 
-        <p>
-              <pre>
-from transformers import pipeline
+              <pre class="sh_python code-highlight"><code>from transformers import pipeline
 
 classifier = pipeline("sentiment-analysis", model="distilbert/distilbert-base-uncased-finetuned-sst-2-english")
-classifier("I've been waiting for a HuggingFace course my whole life.")
-</pre>
-              </p>
+classifier("I've been waiting for a HuggingFace course my whole life.")</code></pre>
 
               <p>Try each of these three pipeline tasks in turn:</p>
               <ol>
@@ -681,19 +718,15 @@ classifier("I've been waiting for a HuggingFace course my whole life.")
                   including one that's deliberately ambiguous or sarcastic. Report whether the
                   model's confidence score reflects the ambiguity.
                 <li> <b>Fill-mask</b> — a Transformer guessing a missing word:
-                <pre>
-unmasker = pipeline("fill-mask", model="distilbert/distilroberta-base")
-unmasker("This course will teach you all about &lt;mask&gt; models.", top_k=3)
-</pre>
+                <pre class="sh_python code-highlight"><code>unmasker = pipeline("fill-mask", model="distilbert/distilroberta-base")
+unmasker("This course will teach you all about &lt;mask&gt; models.", top_k=3)</code></pre>
                   Try it on 2 sentences of your own with different missing words. The mask
                   token depends on the model: this one uses <code>&lt;mask&gt;</code>, while
                   BERT models use <code>[MASK]</code> (<code>unmasker.tokenizer.mask_token</code>
                   tells you which).
                 <li> <b>Text generation</b> — the model continues your prompt:
-                <pre>
-generator = pipeline("text-generation", model="openai-community/gpt2")
-generator("In this course, we will teach you how to", max_new_tokens=20, do_sample=True, num_return_sequences=2)
-</pre>
+                <pre class="sh_python code-highlight"><code>generator = pipeline("text-generation", model="openai-community/gpt2")
+generator("In this course, we will teach you how to", max_new_tokens=20, do_sample=True, num_return_sequences=2)</code></pre>
                   Try 2 different prompts and compare how coherent/relevant the continuations are.
               </ol>
 
@@ -1037,7 +1070,19 @@ git checkout 3adf61e1</code></pre>
           additional training.
         </p>
 
-        <svg viewBox="0 0 980 285" role="img" aria-label="A broadly pretrained foundation model can be adapted to several downstream uses" style="width:100%;max-width:980px"><defs><marker id="fm-arrow" markerWidth="9" markerHeight="9" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#555"/></marker></defs><g font-family="Roboto, sans-serif" text-anchor="middle"><rect x="35" y="85" width="190" height="105" rx="12" fill="#e4f2fb"/><text x="130" y="125" font-size="21">broad data</text><text x="130" y="155" font-size="21">general objective</text><path d="M225 137 H330" stroke="#555" stroke-width="3" marker-end="url(#fm-arrow)"/><rect x="340" y="60" width="250" height="155" rx="16" fill="#f1e7fb" stroke="#7b3fa1" stroke-width="3"/><text x="465" y="125" font-size="25">foundation model</text><text x="465" y="160" font-size="19">shared representations</text><path d="M590 100 H705 M590 137 H705 M590 174 H705" stroke="#555" stroke-width="3" marker-end="url(#fm-arrow)"/><rect x="715" y="35" width="220" height="55" rx="9" fill="#e7f6e7"/><rect x="715" y="110" width="220" height="55" rx="9" fill="#fff1c9"/><rect x="715" y="185" width="220" height="55" rx="9" fill="#e4f2fb"/><text x="825" y="70" font-size="20">prompt or retrieve</text><text x="825" y="145" font-size="20">fine-tune or adapt</text><text x="825" y="220" font-size="20">embed or generate</text><text x="465" y="265" font-size="19">One pretrained model supports many downstream systems</text></g></svg>
+        <svg class="dg" viewBox="0 0 980 300" role="img" aria-label="A foundation model is pretrained on broad data with a general objective; the same model then supports many downstream uses: prompting or retrieval, fine-tuning or adaptation, and embedding or generation.">
+          <defs><marker id="dg-foundation-head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrowhead" d="M0,0 L10,5 L0,10 z"/></marker></defs>
+          <rect class="dg-box dg-box--blue" x="20" y="95" width="200" height="100" rx="12"/><text class="dg-title" x="120" y="132">broad data</text><text class="dg-large" x="120" y="160">general objective</text>
+          <path class="dg-arrow" d="M225 145 L324 145" marker-end="url(#dg-foundation-head)"/>
+          <rect class="dg-box dg-box--violet" x="330" y="70" width="260" height="150" rx="16"/><text class="dg-title" x="460" y="132" style="font-size:22px">foundation model</text><text class="dg-large" x="460" y="164">shared representations</text>
+          <path class="dg-arrow" d="M595 118.05 L704 68" marker-end="url(#dg-foundation-head)"/>
+          <rect class="dg-box dg-box--green" x="710" y="40" width="245" height="56" rx="10"/><text class="dg-large" x="832.5" y="68">prompt or retrieve</text>
+          <path class="dg-arrow" d="M595 145 L704 145" marker-end="url(#dg-foundation-head)"/>
+          <rect class="dg-box dg-box--amber" x="710" y="117" width="245" height="56" rx="10"/><text class="dg-large" x="832.5" y="145">fine-tune or adapt</text>
+          <path class="dg-arrow" d="M595 171.95 L704 222" marker-end="url(#dg-foundation-head)"/>
+          <rect class="dg-box dg-box--blue" x="710" y="194" width="245" height="56" rx="10"/><text class="dg-large" x="832.5" y="222">embed or generate</text>
+          <text class="dg-small" x="480" y="286">One pretrained model supports many downstream systems</text>
+        </svg>
 
         <h2 class="material-heading">Transfer and adaptation</h2>
         <table class="table"><tr><th>Method</th><th>What changes</th><th>Main trade-off</th></tr>
@@ -1065,7 +1110,17 @@ git checkout 3adf61e1</code></pre>
           test grounding, robustness and performance across modalities rather than assess language quality alone.
         </p>
 
-        <svg viewBox="0 0 960 300" role="img" aria-label="Text, image, audio, and sensor data connect through learned representations" style="width:100%;max-width:960px"><g font-family="Roboto, sans-serif" text-anchor="middle"><circle cx="480" cy="145" r="88" fill="#f1e7fb" stroke="#7b3fa1" stroke-width="3"/><text x="480" y="135" font-size="23">shared or aligned</text><text x="480" y="167" font-size="23">representation</text><g font-size="22"><rect x="55" y="45" width="165" height="65" rx="10" fill="#e4f2fb"/><text x="138" y="85">text</text><rect x="55" y="190" width="165" height="65" rx="10" fill="#fff1c9"/><text x="138" y="230">images</text><rect x="740" y="45" width="165" height="65" rx="10" fill="#e7f6e7"/><text x="823" y="85">audio</text><rect x="740" y="190" width="165" height="65" rx="10" fill="#f9e3df"/><text x="823" y="230">video/actions</text></g><path d="M220 78 L395 115 M220 222 L395 175 M740 78 L565 115 M740 222 L565 175" stroke="#555" stroke-width="4"/></g></svg>
+        <svg class="dg" viewBox="0 0 960 300" role="img" aria-label="Text, images, audio and video or actions are connected through a shared or aligned representation.">
+          <line class="dg-edge" x1="220" y1="78" x2="395" y2="115" style="stroke-width:3px"/>
+          <line class="dg-edge" x1="220" y1="222" x2="395" y2="175" style="stroke-width:3px"/>
+          <line class="dg-edge" x1="740" y1="78" x2="565" y2="115" style="stroke-width:3px"/>
+          <line class="dg-edge" x1="740" y1="222" x2="565" y2="175" style="stroke-width:3px"/>
+          <circle class="dg-box dg-box--violet" cx="480" cy="145" r="92"/><text class="dg-title" x="480" y="132">shared or aligned</text><text class="dg-title" x="480" y="160">representation</text>
+          <rect class="dg-box dg-box--blue" x="55" y="45" width="165" height="65" rx="10"/><text class="dg-large" x="137.5" y="77.5">text</text>
+          <rect class="dg-box dg-box--amber" x="55" y="190" width="165" height="65" rx="10"/><text class="dg-large" x="137.5" y="222.5">images</text>
+          <rect class="dg-box dg-box--green" x="740" y="45" width="165" height="65" rx="10"/><text class="dg-large" x="822.5" y="77.5">audio</text>
+          <rect class="dg-box dg-box--pink" x="740" y="190" width="165" height="65" rx="10"/><text class="dg-large" x="822.5" y="222.5">video / actions</text>
+        </svg>
 
         <h2 class="material-heading">Generative models</h2>
 	
@@ -1109,7 +1164,7 @@ git checkout 3adf61e1</code></pre>
 	<ul>
 	  <li>
 	    <strong>Explicit modeling:</strong> In this case, we construct and estimate the probability 
-	    density function <code>p(x)</code>. From this distribution, we can sample new objects. 
+	    density function <span class="math">p(x)</span>. From this distribution, we can sample new objects. 
 	    Examples of such models include:
 	    <ul>
 	      <li>Autoregressive models (e.g., 
@@ -1134,15 +1189,15 @@ git checkout 3adf61e1</code></pre>
 	
 	<p>
 	  Let's formalize the difference between discriminative and generative tasks. In discriminative 
-	  modeling, given an object <code>x</code> and a label <code>y</code>, we typically want to 
-	  estimate the conditional probability <code>p(y|x)</code>.
+	  modeling, given an object <span class="math">x</span> and a label <span class="math">y</span>, we typically want to 
+	  estimate the conditional probability <span class="math">p(y \mid x)</span>.
 	</p>
 	
 	<p>
 	  In generative modeling, the goal is the opposite: to recover the probability 
-	  <code>p(x)</code> or <code>p(x|y)</code>. Here, <code>y</code> can represent either a class 
+	  <span class="math">p(x)</span> or <span class="math">p(x \mid y)</span>. Here, <span class="math">y</span> can represent either a class 
 	  label or another object. For example, if we aim to generate images based on a textual 
-	  description, the images would be <code>x</code>, and the text would be <code>y</code>.
+	  description, the images would be <span class="math">x</span>, and the text would be <span class="math">y</span>.
 	</p>
 
 	<h2 class="material-heading">Interpolations in Latent Space</h2>
@@ -1159,33 +1214,33 @@ git checkout 3adf61e1</code></pre>
 	  or uniform) as input. This can be expressed as:
 	</p>
 	
-	<p style="text-align: center;">
-	  <code>x = G(z)</code>
-	</p>
+	<div class="math">
+	  x = G(z)
+	</div>
 	
 	<p>
-	  where <code>x</code> is the generated object, <code>G</code> is the generator function, and 
-	  <code>z</code> is the vector of random values. The space in which <code>z</code> exists is 
+	  where <span class="math">x</span> is the generated object, <span class="math">G</span> is the generator function, and 
+	  <span class="math">z</span> is the vector of random values. The space in which <span class="math">z</span> exists is 
 	  called the <strong>latent space</strong>.
 	</p>
 	
 	<p>
-	  The distribution of <code>z</code> is usually predefined before model training and remains 
+	  The distribution of <span class="math">z</span> is usually predefined before model training and remains 
 	  unchanged during the process. Since we know the distribution, we can sample as many different 
-	  <code>z</code> values as needed.
+	  <span class="math">z</span> values as needed.
 	</p>
 
 	<p>
-	  Consider two vectors <code>z₁</code> and <code>z₂</code> from the latent space and their 
+	  Consider two vectors <span class="math">z_1</span> and <span class="math">z_2</span> from the latent space and their 
 	  corresponding generated objects:
 	</p>
 	
-	<p style="text-align: center;">
-	  <code>x₁ = G(z₁), x₂ = G(z₂)</code>
-	</p>
+	<div class="math">
+	  x_1 = G(z_1), \qquad x_2 = G(z_2)
+	</div>
 	
 	<p>
-	  Since <code>z₁</code> and <code>z₂</code> are two points in the latent space, we can draw a 
+	  Since <span class="math">z_1</span> and <span class="math">z_2</span> are two points in the latent space, we can draw a 
 	  line between them. The points on this line also belong to the latent space. If we move along 
 	  this line and use these intermediate points as input to the generator, we obtain a smoothly 
 	  transitioning generated object.
@@ -1417,10 +1472,11 @@ git checkout 3adf61e1</code></pre>
 	</ul>
 	
 	<p>
-	  Modern generative models have achieved remarkable quality and are now being actively used 
+	  Modern generative models have achieved remarkable quality and are now being actively used
 	  in real-world applications, as we have described throughout this section.
+	</p>
+
         <h2 class="material-heading">Generative adversarial networks</h2>
-	<h2 class="material-heading">Introduction</h2>
 	
 	<p>
 	  Generative Adversarial Networks (GANs) are a broad class of generative models 
@@ -1444,7 +1500,7 @@ git checkout 3adf61e1</code></pre>
 	  but not estimate density is the transformation of one set of random variables into another.
 	</p>
 
-	<h2 class="material-heading">Fundamentals of GAN Training</h2>
+	<h3 class="material-heading">Fundamentals of GAN training</h3>
 	
 	<p>
 	  Generative Adversarial Networks (GANs) are implicit generative models. 
@@ -1663,6 +1719,104 @@ git checkout 3adf61e1</code></pre>
         <div class="hint"><div class="hint__header"><i class="fa fa-info-circle hint__icon"></i>Checkpoint</div>
         <div class="hint__body"><ul><li>What makes a pretrained model a foundation model rather than merely a large model?</li><li>When would prompting, retrieval or fine-tuning be the appropriate adaptation?</li><li>How should a multimodal model be tested for grounding?</li></ul></div></div>
 
+        <section class="bonus" aria-label="Bonus material">
+          <p class="bonus__badge">Bonus &middot; outside the course</p>
+          <h1 class="material-heading">Bonus: Transformers under the hood</h1>
+          <p class="bonus__note">
+            This section is optional extra material for the curious. It is <b>not part of the course
+            requirements</b>: you do not need it for the exercises or the exam.
+          </p>
+
+          <h2 class="material-heading">Self-attention in a dozen lines of NumPy</h2>
+
+          <p>
+            The formula <span class="math">\softmax(QK^\top / \sqrt{d_k})\,V</span> is short in code too. The
+            function below adds the causal mask of a decoder and subtracts each row's maximum before
+            exponentiating, the trick that keeps softmax from overflowing. With the toy vectors of the interactive
+            figure it reproduces the figure's numbers for "bank".
+          </p>
+
+          <pre class="sh_python code-highlight"><code>import numpy as np
+
+def attention(Q, K, V, causal=False):
+    """Scaled dot-product attention: softmax(Q K^T / sqrt(d_k)) V."""
+    scores = Q @ K.T / np.sqrt(K.shape[1])        # one row of scores per query
+    if causal:                                    # no peeking at later positions
+        scores = np.where(np.tri(len(Q), dtype=bool), scores, -np.inf)
+    scores -= scores.max(axis=1, keepdims=True)   # the log-sum-exp trick (Week 2)
+    weights = np.exp(scores)
+    weights /= weights.sum(axis=1, keepdims=True)
+    return weights @ V, weights
+
+# The toy vectors of the figure above
+#                   query           key             value
+toy = {'the':      ([.5, .5, 0, 0], [0, 0, 0, 2],   [0, 0]),
+       'bank':     ([2, 2, 0, 0],   [.6, .6, 0, 0], [.5, .5]),
+       'approved': ([1, 0, .5, 0],  [1.5, 0, 1, 0], [.6, 0]),
+       'loan':     ([1, 0, .5, 0],  [2, 0, 0, 0],   [1, 0])}
+words = ['the', 'bank', 'approved', 'the', 'loan']
+Q, K, V = (np.array([toy[w][i] for w in words], dtype=float) for i in range(3))
+output, weights = attention(Q, K, V)
+print(weights[1].round(3))   # bank's weights: [0.058 0.193 0.261 0.058 0.43 ]
+print(output[1].round(3))    # bank's output:  [0.683 0.097]</code></pre>
+
+          <p>
+            A real layer computes <span class="math">Q</span>, <span class="math">K</span> and
+            <span class="math">V</span> from the token vectors with learned matrices, runs several such heads side
+            by side on smaller slices of the vectors, and concatenates their outputs: multi-head attention is this
+            function, a few matrix multiplications and a reshape.
+          </p>
+
+          <h2 class="material-heading">Why generation is fast: the KV cache</h2>
+
+          <p>
+            A decoder generates one token at a time, and the causal mask means that the keys and values of the
+            earlier tokens never change. So they are computed once and kept in a <b>KV cache</b>: each new token
+            only computes its own query, key and value and attends to the cache, instead of re-running the whole
+            sequence. The price is memory. A model shaped like Llama&nbsp;2&nbsp;7B (32 layers of width 4096, 16-bit
+            numbers) stores
+          </p>
+
+          <div class="math">
+            \underbrace{2}_{K,\,V} \times 32 \text{ layers} \times 4096 \times 2 \text{ bytes} = 512\ \text{KiB per token},
+          </div>
+
+          <p>
+            so a 4096-token conversation needs 2 GiB of cache on top of the weights. This is why long contexts are
+            expensive, and why newer models share keys and values between groups of heads (grouped-query
+            attention): with 8 key-value heads of size 128, as in Llama&nbsp;3&nbsp;8B, the cache shrinks to 128 KiB
+            per token. Keep this in mind when you run models locally, as in the Ollama exercise.
+          </p>
+
+          <h2 class="material-heading">Scaling laws in one paragraph</h2>
+
+          <p>
+            Training a dense Transformer with <span class="math">N</span> parameters on <span class="math">D</span>
+            tokens costs about <span class="math">6ND</span> floating-point operations: for GPT-3,
+            <span class="math">6 \times 175 \cdot 10^{9} \times 300 \cdot 10^{9} \approx 3 \cdot 10^{23}</span>.
+            Kaplan et al. (2020) found that the loss falls as a smooth power law in model size, data and compute.
+            Hoffmann et al. (2022) asked how to split a fixed budget between <span class="math">N</span> and
+            <span class="math">D</span>, and found that models of the time were too large for the data they saw:
+            their 70-billion-parameter Chinchilla, trained on 1.4 trillion tokens (about 20 tokens per parameter),
+            beat the 280-billion-parameter Gopher trained with the same compute.
+          </p>
+
+          <h2 class="material-heading">Further reading and watching</h2>
+
+          <ul>
+            <li>3Blue1Brown, <a href="https://www.3blue1brown.com/lessons/attention/" target="_blank" rel="noopener"><i>Attention in
+              transformers, step-by-step</i></a>: queries, keys, values and masking, animated.</li>
+            <li>Jay Alammar, <a href="https://jalammar.github.io/illustrated-transformer/" target="_blank" rel="noopener"><i>The Illustrated
+              Transformer</i></a>: the architecture of the original paper, one picture at a time.</li>
+            <li>Alexander Rush, <a href="https://nlp.seas.harvard.edu/annotated-transformer" target="_blank" rel="noopener"><i>The Annotated
+              Transformer</i></a>: the paper with a line-by-line PyTorch implementation.</li>
+            <li>Andrej Karpathy, <a href="https://karpathy.ai/zero-to-hero.html" target="_blank" rel="noopener"><i>Neural Networks: Zero to
+              Hero</i></a>: the lecture "Let's build GPT" writes a small GPT from an empty file.</li>
+            <li>Hoffmann et al. (2022), <a href="https://arxiv.org/abs/2203.15556" target="_blank" rel="noopener"><i>Training
+              Compute-Optimal Large Language Models</i></a> (the Chinchilla paper).</li>
+          </ul>
+        </section>
+
         <nav class="page-nav" aria-label="Previous and next page">
           <a class="page-nav__link page-nav__link--prev" href="../week4/" rel="prev">
             <span class="page-nav__arrow" aria-hidden="true"></span>
@@ -1716,6 +1870,7 @@ git checkout 3adf61e1</code></pre>
 
 
 
+  <script src="../javascripts/math.js"></script>
   <script src="../javascripts/main.js"></script>
   <script src="../javascripts/week5.js"></script>
 
