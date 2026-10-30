@@ -39,12 +39,11 @@ div.math--key {
   border-radius: var(--radius-sm);
 }
 
-// KaTeX's default 1.21em makes formulas look larger than the surrounding Inter text.
+// The size of a formula relative to the text around it. KaTeX's fonts have a small x-height (0.445 em
+// against Inter's 0.55 em), so at the text's own size the letters of a formula look a size smaller than
+// the words next to them. At 1.24em the lowercase letters of both are equally tall; the capitals of a
+// formula are then a little taller than Inter's, as in KaTeX's own default of 1.21em. Being relative
+// to the surrounding text, this also holds in the smaller text of captions and notes.
 .katex {
-  font-size: 1.1em;
-}
-
-// Inside figure captions and hints the text is smaller, and so are the formulas.
-.viz__caption .katex, .vz-note .katex {
-  font-size: 1.05em;
+  font-size: 1.24em;
 }
