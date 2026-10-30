@@ -174,29 +174,77 @@
 
         <p>
           A perceptron receives an input vector <i>x</i>, multiplies each input by a learned weight, adds a bias, and
-          applies a threshold. In compact form, it predicts from <i>w</i><sup>T</sup><i>x</i> + <i>b</i>. During
+          applies a threshold. In compact form, it predicts from <span class="math">w^\top x + b</span>. During
           training, the weights are adjusted when the prediction is wrong. A perceptron can learn a linear decision
           boundary, but it cannot represent every classification problem.
         </p>
 
-        <svg viewBox="0 0 900 300" role="img" aria-label="A perceptron combines weighted inputs, bias, and an activation function" style="width:100%;max-width:900px">
-          <defs><marker id="p-arrow" markerWidth="9" markerHeight="9" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#555"/></marker></defs>
-          <g font-family="Roboto, sans-serif" font-size="22" text-anchor="middle"><circle cx="90" cy="55" r="29" fill="#e4f2fb"/><circle cx="90" cy="150" r="29" fill="#e4f2fb"/><circle cx="90" cy="245" r="29" fill="#e4f2fb"/><text x="90" y="63">x₁</text><text x="90" y="158">x₂</text><text x="90" y="253">x₃</text><circle cx="390" cy="150" r="78" fill="#f1e7fb" stroke="#7b3fa1" stroke-width="3"/><text x="390" y="142">weighted sum</text><text x="390" y="174">w·x + b</text><rect x="570" y="105" width="170" height="90" rx="12" fill="#fff1c9" stroke="#c58a00"/><text x="655" y="143">activation</text><text x="655" y="174">f(z)</text><circle cx="835" cy="150" r="34" fill="#e7f6e7"/><text x="835" y="158">ŷ</text><path d="M120 55 L310 125 M120 150 H305 M120 245 L310 175 M468 150 H560 M740 150 H792" stroke="#555" stroke-width="3" fill="none" marker-end="url(#p-arrow)"/><text x="215" y="72">w₁</text><text x="215" y="140">w₂</text><text x="215" y="240">w₃</text></g>
+        <svg class="dg" viewBox="0 0 900 300" role="img" aria-label="A perceptron: the inputs x1, x2 and x3 are multiplied by the weights w1, w2 and w3 and summed with the bias b; an activation function turns the sum into the prediction y-hat.">
+          <defs><marker id="dg-perceptron-head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrowhead" d="M0,0 L10,5 L0,10 z"/></marker></defs>
+          <path class="dg-arrow" d="M121.5 65 L309.8 124.6" marker-end="url(#dg-perceptron-head)"/>
+          <text class="dg-math" x="215.6" y="82.8">w<tspan baseline-shift="sub" font-size="12">1</tspan></text>
+          <path class="dg-arrow" d="M123 150 L305.9 150" marker-end="url(#dg-perceptron-head)"/>
+          <text class="dg-math" x="214.4" y="138">w<tspan baseline-shift="sub" font-size="12">2</tspan></text>
+          <path class="dg-arrow" d="M121.5 235 L309.8 175.4" marker-end="url(#dg-perceptron-head)"/>
+          <text class="dg-math" x="215.6" y="193.2">w<tspan baseline-shift="sub" font-size="12">3</tspan></text>
+          <circle class="dg-box dg-box--blue" cx="90" cy="55" r="29"/><text class="dg-title dg-math" x="90" y="55">x<tspan baseline-shift="sub" font-size="13">1</tspan></text>
+          <circle class="dg-box dg-box--blue" cx="90" cy="150" r="29"/><text class="dg-title dg-math" x="90" y="150">x<tspan baseline-shift="sub" font-size="13">2</tspan></text>
+          <circle class="dg-box dg-box--blue" cx="90" cy="245" r="29"/><text class="dg-title dg-math" x="90" y="245">x<tspan baseline-shift="sub" font-size="13">3</tspan></text>
+          <circle class="dg-box dg-box--violet" cx="390" cy="150" r="78"/><text class="dg-title" x="390" y="132">weighted sum</text><text class="dg-math dg-large" x="390" y="164">z = w · x + b</text>
+          <path class="dg-arrow" d="M472 150 L566 150" marker-end="url(#dg-perceptron-head)"/>
+          <rect class="dg-box dg-box--amber" x="572" y="105" width="170" height="90" rx="12"/><text class="dg-title" x="657" y="135">activation</text><text class="dg-math dg-large" x="657" y="167">f(z)</text>
+          <path class="dg-arrow" d="M746 150 L793 150" marker-end="url(#dg-perceptron-head)"/>
+          <circle class="dg-box dg-box--green" cx="835" cy="150" r="34"/><text class="dg-title dg-math" x="835" y="150">ŷ</text>
         </svg>
 
-        <p>For example, with inputs (1, 2), weights (0.7, -0.2), and bias 0.1, the weighted sum is 0.7 × 1 - 0.2 × 2 + 0.1 = 0.4. A step activation produces class 1 because the result is positive. The weights determine the position and orientation of the separating line; the bias moves it without changing its orientation.</p>
+        <p>For example, with inputs <span class="math">(1, 2)</span>, weights <span class="math">(0.7, -0.2)</span>, and bias 0.1, the weighted sum is <span class="math">0.7 \times 1 - 0.2 \times 2 + 0.1 = 0.4</span>. A step activation produces class 1 because the result is positive. The weights determine the position and orientation of the separating line; the bias moves it without changing its orientation.</p>
 
-        <svg viewBox="0 0 900 330" role="img" aria-label="A perceptron moves a straight decision boundary when it makes classification errors" style="width:100%;max-width:900px"><g font-family="Roboto, sans-serif"><line x1="100" y1="280" x2="400" y2="280" stroke="#555"/><line x1="100" y1="280" x2="100" y2="35" stroke="#555"/><circle cx="155" cy="225" r="12" fill="#2878a5"/><circle cx="205" cy="195" r="12" fill="#2878a5"/><circle cx="245" cy="235" r="12" fill="#2878a5"/><circle cx="305" cy="100" r="12" fill="#db4b3f"/><circle cx="345" cy="75" r="12" fill="#db4b3f"/><circle cx="365" cy="135" r="12" fill="#db4b3f"/><line x1="145" y1="70" x2="355" y2="255" stroke="#c58a00" stroke-width="5"/><text x="250" y="315" text-anchor="middle" font-size="20">A linear decision boundary</text><path d="M430 155 H540" stroke="#555" stroke-width="3" marker-end="url(#p-arrow)"/><text x="485" y="135" text-anchor="middle" font-size="19">update weights</text><line x1="590" y1="280" x2="860" y2="280" stroke="#555"/><line x1="590" y1="280" x2="590" y2="35" stroke="#555"/><circle cx="645" cy="225" r="12" fill="#2878a5"/><circle cx="695" cy="195" r="12" fill="#2878a5"/><circle cx="735" cy="235" r="12" fill="#2878a5"/><circle cx="795" cy="100" r="12" fill="#db4b3f"/><circle cx="835" cy="75" r="12" fill="#db4b3f"/><circle cx="855" cy="135" r="12" fill="#db4b3f"/><line x1="635" y1="75" x2="825" y2="245" stroke="#7b3fa1" stroke-width="5"/><text x="725" y="315" text-anchor="middle" font-size="20">Errors drive the boundary</text></g></svg>
+        <svg class="dg" viewBox="0 0 900 330" role="img" aria-label="Two scatter plots. On the left a straight boundary has one blue point on the wrong side; on the right, after a weight update, the moved boundary separates the blue points from the orange ones.">
+          <defs><marker id="dg-boundary-head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrowhead" d="M0,0 L10,5 L0,10 z"/></marker></defs>
+          <path class="dg-axis" d="M100 280 H410 M100 280 V35"/>
+          <line class="dg-boundary" x1="170" y1="60" x2="350" y2="270"/>
+          <circle class="dg-dot--a" cx="150" cy="230" r="11"/>
+          <circle class="dg-dot--a" cx="195" cy="190" r="11"/>
+          <circle class="dg-dot--a" cx="240" cy="240" r="11"/>
+          <circle class="dg-dot--a" cx="275" cy="165" r="11"/>
+          <circle class="dg-dot--b" cx="300" cy="100" r="11"/>
+          <circle class="dg-dot--b" cx="345" cy="75" r="11"/>
+          <circle class="dg-dot--b" cx="370" cy="140" r="11"/>
+          <text class="dg-large" x="255" y="312">1. a point on the wrong side</text>
+          <path class="dg-axis" d="M590 280 H900 M590 280 V35"/>
+          <line class="dg-boundary dg-boundary--after" x1="705" y1="60" x2="885" y2="250"/>
+          <circle class="dg-dot--a" cx="640" cy="230" r="11"/>
+          <circle class="dg-dot--a" cx="685" cy="190" r="11"/>
+          <circle class="dg-dot--a" cx="730" cy="240" r="11"/>
+          <circle class="dg-dot--a" cx="765" cy="165" r="11"/>
+          <circle class="dg-dot--b" cx="790" cy="100" r="11"/>
+          <circle class="dg-dot--b" cx="835" cy="75" r="11"/>
+          <circle class="dg-dot--b" cx="860" cy="140" r="11"/>
+          <text class="dg-large" x="745" y="312">2. the update moves the line</text>
+          <circle class="dg-ring" cx="275" cy="165" r="19"/><text class="dg-small" x="275" y="132">misclassified</text>
+          <path class="dg-arrow" d="M420 155 L532 155" marker-end="url(#dg-boundary-head)"/>
+          <text class="dg-math dg-large" x="476" y="133">w ← w + y·x</text>
+        </svg>
 
         <h3 class="material-heading">The limit of a single boundary</h3>
         <p>The perceptron learning rule converges when the classes are linearly separable. It cannot solve XOR: no single straight line can place the two blue points on one side and the two orange points on the other. This is a representational limitation, not a failure to train long enough.</p>
-        <svg viewBox="0 0 520 340" role="img" aria-label="The XOR pattern cannot be separated by one straight line" style="width:70%;max-width:520px"><g font-family="Roboto, sans-serif" font-size="20"><line x1="90" y1="280" x2="450" y2="280" stroke="#555"/><line x1="90" y1="280" x2="90" y2="40" stroke="#555"/><circle cx="160" cy="220" r="18" fill="#2878a5"/><circle cx="380" cy="90" r="18" fill="#2878a5"/><circle cx="160" cy="90" r="18" fill="#e28b32"/><circle cx="380" cy="220" r="18" fill="#e28b32"/><text x="270" y="322" text-anchor="middle">XOR requires more than one boundary</text></g></svg>
+        <svg class="dg" viewBox="0 0 520 360" role="img" aria-label="The XOR pattern: blue points at (0, 0) and (1, 1), orange points at (0, 1) and (1, 0). No single straight line separates them; two dashed lines do.">
+          <path class="dg-axis" d="M90 290 H460 M90 290 V40"/>
+          <line class="dg-boundary dg-boundary--faint" x1="100" y1="125" x2="275" y2="300"/>
+          <line class="dg-boundary dg-boundary--faint" x1="250" y1="40" x2="440" y2="230"/>
+          <circle class="dg-dot--a" cx="160" cy="230" r="17"/><text class="dg-small" x="160" y="263">(0, 0)</text>
+          <circle class="dg-dot--a" cx="380" cy="90" r="17"/><text class="dg-small" x="380" y="123">(1, 1)</text>
+          <circle class="dg-dot--b" cx="160" cy="90" r="17"/><text class="dg-small" x="160" y="123">(0, 1)</text>
+          <circle class="dg-dot--b" cx="380" cy="230" r="17"/><text class="dg-small" x="380" y="263">(1, 0)</text>
+          <text class="dg-math dg-small" x="465" y="305">x₁</text><text class="dg-math dg-small" x="76" y="40">x₂</text>
+          <text class="dg-large" x="270" y="338">XOR needs two boundaries; one straight line is not enough</text>
+        </svg>
 
         <figure class="viz" data-viz="perceptron">
           <figcaption class="viz__caption">
-            The perceptron predicts +1 when <code>w&middot;x + b &gt; 0</code> and &minus;1 otherwise. It visits the
-            examples in a fixed order, and after each mistake updates <code>w &larr; w + y&middot;x</code> and
-            <code>b &larr; b + y</code>. On linearly separable data it stops making mistakes after a finite number
+            The perceptron predicts +1 when <span class="math">w \cdot x + b > 0</span> and &minus;1 otherwise. It visits the
+            examples in a fixed order, and after each mistake updates <span class="math">w \leftarrow w + y\,x</span> and
+            <span class="math">b \leftarrow b + y</span>. On linearly separable data it stops making mistakes after a finite number
             of updates; on XOR it never does.
           </figcaption>
         </figure>
@@ -215,11 +263,36 @@
           calculation is a linear transformation followed by an activation function:
         </p>
 
-        <p style="text-align:center">
-          <i>h</i> = activation(<i>Wx</i> + <i>b</i>)
-        </p>
+        <div class="math math--key">
+          h = \operatorname{activation}(Wx + b)
+        </div>
 
-        <svg viewBox="0 0 940 350" role="img" aria-label="A multilayer perceptron transforms inputs through two hidden layers to an output" style="width:100%;max-width:940px"><g stroke="#aaa" stroke-width="2"><path d="M130 85 L360 65 M130 85 L360 175 M130 175 L360 65 M130 175 L360 175 M130 265 L360 65 M130 265 L360 175 M400 65 L635 105 M400 65 L635 235 M400 175 L635 105 M400 175 L635 235 M675 105 L850 175 M675 235 L850 175"/></g><g font-family="Roboto, sans-serif" text-anchor="middle"><g fill="#e4f2fb"><circle cx="110" cy="85" r="28"/><circle cx="110" cy="175" r="28"/><circle cx="110" cy="265" r="28"/></g><g fill="#f1e7fb"><circle cx="380" cy="65" r="28"/><circle cx="380" cy="175" r="28"/></g><g fill="#fff1c9"><circle cx="655" cy="105" r="28"/><circle cx="655" cy="235" r="28"/></g><circle cx="870" cy="175" r="30" fill="#e7f6e7"/><text x="110" y="330" font-size="21">input</text><text x="380" y="330" font-size="21">hidden representation 1</text><text x="655" y="330" font-size="21">hidden representation 2</text><text x="870" y="330" font-size="21">output</text></g></svg>
+        <svg class="dg" viewBox="0 0 960 350" role="img" aria-label="A multilayer perceptron: three inputs, two hidden layers with two units each, and one output; every unit is connected to every unit of the next layer.">
+          <line class="dg-edge" x1="138" y1="85" x2="352" y2="65"/>
+          <line class="dg-edge" x1="138" y1="85" x2="352" y2="175"/>
+          <line class="dg-edge" x1="138" y1="175" x2="352" y2="65"/>
+          <line class="dg-edge" x1="138" y1="175" x2="352" y2="175"/>
+          <line class="dg-edge" x1="138" y1="265" x2="352" y2="65"/>
+          <line class="dg-edge" x1="138" y1="265" x2="352" y2="175"/>
+          <line class="dg-edge" x1="408" y1="65" x2="627" y2="105"/>
+          <line class="dg-edge" x1="408" y1="65" x2="627" y2="235"/>
+          <line class="dg-edge" x1="408" y1="175" x2="627" y2="105"/>
+          <line class="dg-edge" x1="408" y1="175" x2="627" y2="235"/>
+          <line class="dg-edge" x1="683" y1="105" x2="842" y2="175"/>
+          <line class="dg-edge" x1="683" y1="235" x2="842" y2="175"/>
+          <circle class="dg-box dg-box--blue" cx="110" cy="85" r="28"/>
+          <circle class="dg-box dg-box--blue" cx="110" cy="175" r="28"/>
+          <circle class="dg-box dg-box--blue" cx="110" cy="265" r="28"/>
+          <text class="dg-large" x="110" y="330">input</text>
+          <circle class="dg-box dg-box--violet" cx="380" cy="65" r="28"/>
+          <circle class="dg-box dg-box--violet" cx="380" cy="175" r="28"/>
+          <text class="dg-large" x="380" y="330">hidden layer 1</text>
+          <circle class="dg-box dg-box--amber" cx="655" cy="105" r="28"/>
+          <circle class="dg-box dg-box--amber" cx="655" cy="235" r="28"/>
+          <text class="dg-large" x="655" y="330">hidden layer 2</text>
+          <circle class="dg-box dg-box--green" cx="870" cy="175" r="28"/>
+          <text class="dg-large" x="870" y="330">output</text>
+        </svg>
 
         <h2 class="material-heading">Why activation functions matter</h2>
 
@@ -230,13 +303,42 @@
           trains and what kinds of decision boundaries it can learn.
         </p>
 
-        <svg viewBox="0 0 960 310" role="img" aria-label="Comparison of step, sigmoid, tanh, and ReLU activation functions" style="width:100%;max-width:960px"><g font-family="Roboto, sans-serif" text-anchor="middle"><g transform="translate(20,20)"><path d="M25 135 H200 M112 15 V245" stroke="#aaa"/><path d="M25 205 H112 V65 H200" stroke="#2878a5" stroke-width="5" fill="none"/><text x="112" y="275" font-size="20">step</text></g><g transform="translate(250,20)"><path d="M25 135 H200 M112 15 V245" stroke="#aaa"/><path d="M25 215 C70 215 85 190 112 135 C139 80 155 55 200 55" stroke="#7b3fa1" stroke-width="5" fill="none"/><text x="112" y="275" font-size="20">sigmoid</text></g><g transform="translate(480,20)"><path d="M25 135 H200 M112 15 V245" stroke="#aaa"/><path d="M25 220 C75 220 85 185 112 135 C139 85 150 50 200 50" stroke="#c58a00" stroke-width="5" fill="none"/><text x="112" y="275" font-size="20">tanh</text></g><g transform="translate(710,20)"><path d="M25 205 H200 M112 15 V245" stroke="#aaa"/><path d="M25 205 H112 L200 55" stroke="#2f8a50" stroke-width="5" fill="none"/><text x="112" y="275" font-size="20">ReLU</text></g></g></svg>
+        <div class="math">
+          \sigma(z) = \frac{1}{1 + e^{-z}}, \qquad
+          \tanh z = \frac{e^{z} - e^{-z}}{e^{z} + e^{-z}}, \qquad
+          \operatorname{ReLU}(z) = \max(0, z)
+        </div>
+
+        <svg class="dg" viewBox="0 0 960 290" role="img" aria-label="Four activation functions on the same axes: the step function jumps from 0 to 1 at zero; the sigmoid rises smoothly from 0 to 1 and is 0.5 at zero; tanh rises from minus 1 to 1 and is 0 at zero; ReLU is 0 for negative inputs and grows linearly after zero.">
+          <path class="dg-guide" d="M45 74.5 H235 M45 214.5 H235"/>
+          <path class="dg-axis" d="M45 144.5 H235 M140 22 V232"/>
+          <text class="dg-small" x="31" y="74.5">1</text><text class="dg-small" x="31" y="144.5">0</text><text class="dg-small" x="29" y="214.5">−1</text>
+          <path class="dg-curve dg-curve--blue" d="M45 144.5 H140 M140 74.5 H235"/>
+          <circle class="dg-box dg-box--blue" cx="140" cy="144.5" r="4.5"/><circle class="dg-dot--a" cx="140" cy="74.5" r="4.5"/>
+          <text class="dg-title" x="140" y="272">step</text>
+          <path class="dg-guide" d="M285 74.5 H475 M285 214.5 H475"/>
+          <path class="dg-axis" d="M285 144.5 H475 M380 22 V232"/>
+          <text class="dg-small" x="271" y="74.5">1</text><text class="dg-small" x="271" y="144.5">0</text><text class="dg-small" x="269" y="214.5">−1</text>
+          <path class="dg-curve dg-curve--violet" d="M285 141.2 L286.6 141 L288.2 140.8 L289.8 140.7 L291.3 140.5 L292.9 140.3 L294.5 140.1 L296.1 139.9 L297.7 139.7 L299.2 139.4 L300.8 139.2 L302.4 138.9 L304 138.7 L305.6 138.4 L307.2 138.1 L308.8 137.8 L310.3 137.5 L311.9 137.2 L313.5 136.9 L315.1 136.5 L316.7 136.2 L318.2 135.8 L319.8 135.4 L321.4 135 L323 134.6 L324.6 134.1 L326.2 133.7 L327.8 133.2 L329.3 132.7 L330.9 132.2 L332.5 131.7 L334.1 131.2 L335.7 130.7 L337.2 130.1 L338.8 129.5 L340.4 128.9 L342 128.3 L343.6 127.7 L345.2 127 L346.8 126.4 L348.3 125.7 L349.9 125 L351.5 124.3 L353.1 123.5 L354.7 122.8 L356.2 122 L357.8 121.3 L359.4 120.5 L361 119.7 L362.6 118.9 L364.2 118.1 L365.8 117.2 L367.3 116.4 L368.9 115.6 L370.5 114.7 L372.1 113.9 L373.7 113 L375.2 112.1 L376.8 111.2 L378.4 110.4 L380 109.5 L381.6 108.6 L383.2 107.8 L384.8 106.9 L386.3 106 L387.9 105.1 L389.5 104.3 L391.1 103.4 L392.7 102.6 L394.2 101.8 L395.8 100.9 L397.4 100.1 L399 99.3 L400.6 98.5 L402.2 97.7 L403.8 97 L405.3 96.2 L406.9 95.5 L408.5 94.7 L410.1 94 L411.7 93.3 L413.2 92.6 L414.8 92 L416.4 91.3 L418 90.7 L419.6 90.1 L421.2 89.5 L422.8 88.9 L424.3 88.3 L425.9 87.8 L427.5 87.3 L429.1 86.8 L430.7 86.3 L432.2 85.8 L433.8 85.3 L435.4 84.9 L437 84.4 L438.6 84 L440.2 83.6 L441.8 83.2 L443.3 82.8 L444.9 82.5 L446.5 82.1 L448.1 81.8 L449.7 81.5 L451.2 81.2 L452.8 80.9 L454.4 80.6 L456 80.3 L457.6 80.1 L459.2 79.8 L460.8 79.6 L462.3 79.3 L463.9 79.1 L465.5 78.9 L467.1 78.7 L468.7 78.5 L470.2 78.3 L471.8 78.2 L473.4 78 L475 77.8"/>
+          <text class="dg-title" x="380" y="272">sigmoid</text>
+          <path class="dg-guide" d="M525 74.5 H715 M525 214.5 H715"/>
+          <path class="dg-axis" d="M525 144.5 H715 M620 22 V232"/>
+          <text class="dg-small" x="511" y="74.5">1</text><text class="dg-small" x="511" y="144.5">0</text><text class="dg-small" x="509" y="214.5">−1</text>
+          <path class="dg-curve dg-curve--amber" d="M525 214.2 L526.6 214.1 L528.2 214.1 L529.8 214 L531.3 214 L532.9 213.9 L534.5 213.9 L536.1 213.8 L537.7 213.7 L539.2 213.7 L540.8 213.6 L542.4 213.5 L544 213.4 L545.6 213.2 L547.2 213.1 L548.8 213 L550.3 212.8 L551.9 212.6 L553.5 212.4 L555.1 212.2 L556.7 212 L558.2 211.7 L559.8 211.4 L561.4 211.1 L563 210.8 L564.6 210.4 L566.2 210 L567.8 209.5 L569.3 209 L570.9 208.5 L572.5 207.9 L574.1 207.2 L575.7 206.5 L577.2 205.7 L578.8 204.8 L580.4 203.9 L582 202.9 L583.6 201.7 L585.2 200.5 L586.8 199.2 L588.3 197.8 L589.9 196.3 L591.5 194.6 L593.1 192.9 L594.7 191 L596.2 189 L597.8 186.8 L599.4 184.5 L601 182.1 L602.6 179.5 L604.2 176.8 L605.8 174 L607.3 171.1 L608.9 168 L610.5 164.9 L612.1 161.6 L613.7 158.3 L615.2 154.9 L616.8 151.5 L618.4 148 L620 144.5 L621.6 141 L623.2 137.5 L624.8 134.1 L626.3 130.7 L627.9 127.4 L629.5 124.1 L631.1 121 L632.7 117.9 L634.2 115 L635.8 112.2 L637.4 109.5 L639 106.9 L640.6 104.5 L642.2 102.2 L643.8 100 L645.3 98 L646.9 96.1 L648.5 94.4 L650.1 92.7 L651.7 91.2 L653.2 89.8 L654.8 88.5 L656.4 87.3 L658 86.1 L659.6 85.1 L661.2 84.2 L662.8 83.3 L664.3 82.5 L665.9 81.8 L667.5 81.1 L669.1 80.5 L670.7 80 L672.2 79.5 L673.8 79 L675.4 78.6 L677 78.2 L678.6 77.9 L680.2 77.6 L681.8 77.3 L683.3 77 L684.9 76.8 L686.5 76.6 L688.1 76.4 L689.7 76.2 L691.2 76 L692.8 75.9 L694.4 75.8 L696 75.6 L697.6 75.5 L699.2 75.4 L700.8 75.3 L702.3 75.3 L703.9 75.2 L705.5 75.1 L707.1 75.1 L708.7 75 L710.2 75 L711.8 74.9 L713.4 74.9 L715 74.8"/>
+          <text class="dg-title" x="620" y="272">tanh</text>
+          <path class="dg-guide" d="M765 74.5 H955 M765 214.5 H955"/>
+          <path class="dg-axis" d="M765 144.5 H955 M860 22 V232"/>
+          <text class="dg-small" x="751" y="74.5">1</text><text class="dg-small" x="751" y="144.5">0</text><text class="dg-small" x="749" y="214.5">−1</text>
+          <path class="dg-curve dg-curve--green" d="M765 144.5 L766.6 144.5 L768.2 144.5 L769.8 144.5 L771.3 144.5 L772.9 144.5 L774.5 144.5 L776.1 144.5 L777.7 144.5 L779.2 144.5 L780.8 144.5 L782.4 144.5 L784 144.5 L785.6 144.5 L787.2 144.5 L788.8 144.5 L790.3 144.5 L791.9 144.5 L793.5 144.5 L795.1 144.5 L796.7 144.5 L798.2 144.5 L799.8 144.5 L801.4 144.5 L803 144.5 L804.6 144.5 L806.2 144.5 L807.8 144.5 L809.3 144.5 L810.9 144.5 L812.5 144.5 L814.1 144.5 L815.7 144.5 L817.2 144.5 L818.8 144.5 L820.4 144.5 L822 144.5 L823.6 144.5 L825.2 144.5 L826.8 144.5 L828.3 144.5 L829.9 144.5 L831.5 144.5 L833.1 144.5 L834.7 144.5 L836.2 144.5 L837.8 144.5 L839.4 144.5 L841 144.5 L842.6 144.5 L844.2 144.5 L845.8 144.5 L847.3 144.5 L848.9 144.5 L850.5 144.5 L852.1 144.5 L853.7 144.5 L855.2 144.5 L856.8 144.5 L858.4 144.5 L860 144.5 L861.6 141 L863.2 137.5 L864.8 134 L866.3 130.5 L867.9 127 L869.5 123.5 L871.1 120 L872.7 116.5 L874.2 113 L875.8 109.5 L877.4 106 L879 102.5 L880.6 99 L882.2 95.5 L883.8 92 L885.3 88.5 L886.9 85 L888.5 81.5 L890.1 78 L891.7 74.5 L893.2 71 L894.8 67.5 L896.4 64 L898 60.5 L899.6 57 L901.2 53.5 L902.8 50 L904.3 46.5 L905.9 43 L907.5 39.5 L909.1 36 L910.7 32.5 L912.2 29 L913.8 25.5 L915.4 22"/>
+          <text class="dg-title" x="860" y="272">ReLU</text>
+        </svg>
 
         <figure class="viz" data-viz="activations">
           <figcaption class="viz__caption">
             Backpropagation multiplies by the derivative of the activation function. The step function's derivative
             is zero everywhere except at 0, where it is undefined, so it gives no gradient to learn from. The
-            sigmoid's derivative is at most 0.25, tanh's at most 1, and ReLU's is 0 for negative inputs and 1 for
+            sigmoid's derivative <span class="math">\sigma'(z) = \sigma(z)\bigl(1 - \sigma(z)\bigr)</span> is at most 0.25,
+            tanh's <span class="math">1 - \tanh^2 z</span> at most 1, and ReLU's is 0 for negative inputs and 1 for
             positive ones.
           </figcaption>
         </figure>
@@ -253,7 +355,18 @@
           supplies gradients, and the optimizer updates the model.
         </p>
 
-        <svg viewBox="0 0 940 240" role="img" aria-label="Training alternates a forward pass, loss calculation, backward pass, and parameter update" style="width:100%;max-width:940px"><defs><marker id="t-arrow" markerWidth="9" markerHeight="9" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#555"/></marker></defs><g font-family="Roboto, sans-serif" text-anchor="middle" font-size="20"><rect x="25" y="75" width="180" height="75" rx="10" fill="#e4f2fb"/><rect x="265" y="75" width="180" height="75" rx="10" fill="#f1e7fb"/><rect x="505" y="75" width="180" height="75" rx="10" fill="#fff1c9"/><rect x="745" y="75" width="170" height="75" rx="10" fill="#e7f6e7"/><text x="115" y="108">forward pass</text><text x="115" y="134">prediction</text><text x="355" y="108">loss</text><text x="355" y="134">error signal</text><text x="595" y="108">backpropagation</text><text x="595" y="134">gradients</text><text x="830" y="108">optimizer</text><text x="830" y="134">new parameters</text><path d="M205 112 H255 M445 112 H495 M685 112 H735" stroke="#555" stroke-width="3" marker-end="url(#t-arrow)"/><path d="M830 158 C830 215 115 215 115 158" stroke="#555" stroke-width="3" fill="none" marker-end="url(#t-arrow)"/></g></svg>
+        <svg class="dg" viewBox="0 0 940 250" role="img" aria-label="The training loop: a forward pass makes a prediction, the loss measures the error, backpropagation computes the gradients, the optimizer updates the parameters, and the next forward pass uses them.">
+          <defs><marker id="dg-training-head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrowhead" d="M0,0 L10,5 L0,10 z"/></marker></defs>
+          <rect class="dg-box dg-box--blue" x="15" y="70" width="190" height="80" rx="12"/><text class="dg-title" x="110" y="100">forward pass</text><text class="dg-large" x="110" y="126">prediction</text>
+          <path class="dg-arrow" d="M210 110 L249 110" marker-end="url(#dg-training-head)"/>
+          <rect class="dg-box dg-box--violet" x="255" y="70" width="190" height="80" rx="12"/><text class="dg-title" x="350" y="100">loss</text><text class="dg-large" x="350" y="126">error signal</text>
+          <path class="dg-arrow" d="M450 110 L489 110" marker-end="url(#dg-training-head)"/>
+          <rect class="dg-box dg-box--amber" x="495" y="70" width="190" height="80" rx="12"/><text class="dg-title" x="590" y="100">backpropagation</text><text class="dg-large" x="590" y="126">gradients</text>
+          <path class="dg-arrow" d="M690 110 L729 110" marker-end="url(#dg-training-head)"/>
+          <rect class="dg-box dg-box--green" x="735" y="70" width="190" height="80" rx="12"/><text class="dg-title" x="830" y="100">optimizer</text><text class="dg-large" x="830" y="126">new parameters</text>
+          <path class="dg-arrow" d="M830 155 C830 222 110 222 110 159" marker-end="url(#dg-training-head)"/>
+          <text class="dg-small" x="470" y="240">repeat for the next batch of examples</text>
+        </svg>
 
         <p>
           Performance on the training data alone is not enough. We use separate validation and test data to evaluate
@@ -279,7 +392,19 @@
           text tokens, images, users, products, and many other kinds of data.
         </p>
 
-        <svg viewBox="0 0 900 360" role="img" aria-label="Words used in similar contexts occupy nearby positions in an embedding space" style="width:100%;max-width:900px"><g font-family="Roboto, sans-serif"><line x1="80" y1="305" x2="840" y2="305" stroke="#aaa"/><line x1="80" y1="305" x2="80" y2="35" stroke="#aaa"/><g fill="#2878a5" font-size="22"><circle cx="215" cy="105" r="7"/><text x="230" y="100">cat</text><circle cx="270" cy="135" r="7"/><text x="285" y="130">dog</text><circle cx="245" cy="75" r="7"/><text x="260" y="70">kitten</text></g><g fill="#7b3fa1" font-size="22"><circle cx="620" cy="105" r="7"/><text x="635" y="100">car</text><circle cx="690" cy="135" r="7"/><text x="705" y="130">truck</text><circle cx="650" cy="70" r="7"/><text x="665" y="65">bus</text></g><g fill="#c58a00" font-size="22"><circle cx="390" cy="245" r="7"/><text x="405" y="240">apple</text><circle cx="455" cy="265" r="7"/><text x="470" y="260">pear</text><circle cx="425" cy="215" r="7"/><text x="440" y="210">banana</text></g><text x="450" y="345" text-anchor="middle" font-size="20">Illustrative two-dimensional projection of learned vectors</text></g></svg>
+        <svg class="dg" viewBox="0 0 900 360" role="img" aria-label="Words used in similar contexts lie close together in an embedding space: animals, vehicles and fruits form three groups.">
+          <path class="dg-axis" d="M80 305 H840 M80 305 V35"/>
+          <circle class="dg-ink--blue" cx="215" cy="105" r="7"/><text class="dg-ink--blue dg-xlarge dg-start" x="227" y="99">cat</text>
+          <circle class="dg-ink--blue" cx="270" cy="135" r="7"/><text class="dg-ink--blue dg-xlarge dg-start" x="282" y="129">dog</text>
+          <circle class="dg-ink--blue" cx="245" cy="75" r="7"/><text class="dg-ink--blue dg-xlarge dg-start" x="257" y="69">kitten</text>
+          <circle class="dg-ink--violet" cx="620" cy="105" r="7"/><text class="dg-ink--violet dg-xlarge dg-start" x="632" y="99">car</text>
+          <circle class="dg-ink--violet" cx="690" cy="135" r="7"/><text class="dg-ink--violet dg-xlarge dg-start" x="702" y="129">truck</text>
+          <circle class="dg-ink--violet" cx="650" cy="70" r="7"/><text class="dg-ink--violet dg-xlarge dg-start" x="662" y="64">bus</text>
+          <circle class="dg-ink--amber" cx="390" cy="245" r="7"/><text class="dg-ink--amber dg-xlarge dg-start" x="402" y="239">apple</text>
+          <circle class="dg-ink--amber" cx="455" cy="265" r="7"/><text class="dg-ink--amber dg-xlarge dg-start" x="467" y="259">pear</text>
+          <circle class="dg-ink--amber" cx="425" cy="215" r="7"/><text class="dg-ink--amber dg-xlarge dg-start" x="437" y="209">banana</text>
+          <text class="dg-small" x="450" y="342">An illustrative two-dimensional projection of learned vectors</text>
+        </svg>
 
         <h2 class="material-heading">Summary</h2>
 
@@ -476,8 +601,8 @@
                 <a href="../files/tests/Perceptron.zip">Perceptron.zip</a> (6,000 images
                 whose pixels are already 0 or 1, so skip the division by 255), as long as
                 you split them into training and test sets:
-              <pre>
-from sklearn.datasets import fetch_openml
+              </p>
+              <pre class="sh_python code-highlight"><code>from sklearn.datasets import fetch_openml
 from sklearn.neural_network import MLPClassifier
 
 X, y = fetch_openml("mnist_784", version=1, return_X_y=True, as_frame=False)
@@ -493,9 +618,7 @@ clf = MLPClassifier(
     random_state=1,
 )
 clf.fit(X_train, y_train)
-print("Test accuracy:", clf.score(X_test, y_test))
-</pre>
-              </p>
+print("Test accuracy:", clf.score(X_test, y_test))</code></pre>
 
               <ol>
                 <li> Run the code above as-is and note the test accuracy.
@@ -553,15 +676,13 @@ print("Test accuracy:", clf.score(X_test, y_test))
                   rel="noopener">beginner quickstart</a>, which uses the model below. The model
                 architecture, training loop, and dataset all stay exactly the same — the only
                 thing that changes is one word:
-              <pre>
-model = tf.keras.models.Sequential([
+              </p>
+              <pre class="sh_python code-highlight"><code>model = tf.keras.models.Sequential([
     tf.keras.layers.Flatten(input_shape=(28, 28)),
     tf.keras.layers.Dense(128, activation='relu'),   # &larr; change just this word
     tf.keras.layers.Dropout(0.2),
     tf.keras.layers.Dense(10)
-])
-</pre>
-        </p>
+])</code></pre>
         
         <ol>
                 <li> Train and evaluate the model with <code>activation='relu'</code> (as in
@@ -598,13 +719,11 @@ model = tf.keras.models.Sequential([
                 You don't need to train a word-embedding model yourself to explore one — huge
                 pretrained ones are a download away. This entire exercise is three lines of
                 setup:
-              <pre>
-import gensim.downloader as api
+              </p>
+              <pre class="sh_python code-highlight"><code>import gensim.downloader as api
 
 model = api.load("glove-wiki-gigaword-50")   # ~66MB, downloads once
-model.most_similar("glass")
-</pre>
-              </p>
+model.most_similar("glass")</code></pre>
 
               <ol>
                 <li> Run the code above. You'll get a ranked list of the words whose vectors are
@@ -627,6 +746,92 @@ model.most_similar("glass")
         </div>
 
         <!-- New exercise: NN Slot D, Priority 1 -->
+
+        <section class="bonus" aria-label="Bonus material">
+          <p class="bonus__badge">Bonus &middot; outside the course</p>
+          <h1 class="material-heading">Bonus: a neural network from scratch</h1>
+          <p class="bonus__note">
+            This section is optional extra material for the curious. It is <b>not part of the course
+            requirements</b>: you do not need it for the exercises or the exam.
+          </p>
+
+          <h2 class="material-heading">Backpropagation by hand: XOR in NumPy</h2>
+
+          <p>
+            <code>MLPClassifier</code> and Keras hide the training loop. Here it is in full, for the XOR problem
+            that a single perceptron cannot solve: two inputs, a hidden layer of four <span class="math">\tanh</span>
+            units, a sigmoid output and the cross-entropy loss. The backward pass is the chain rule applied layer by
+            layer, from the loss back to the first weights.
+          </p>
+
+          <pre class="sh_python code-highlight"><code>import numpy as np
+
+X = np.array([[0, 0], [0, 1], [1, 0], [1, 1]], dtype=float)
+y = np.array([[0], [1], [1], [0]], dtype=float)                 # XOR
+
+def train(W1, b1, W2, b2, steps=5000, lr=0.5):
+    for _ in range(steps):
+        # Forward pass
+        h = np.tanh(X @ W1 + b1)                                 # hidden layer, shape (4, 4)
+        p = 1 / (1 + np.exp(-(h @ W2 + b2)))                     # output probability, shape (4, 1)
+        # Backward pass: the chain rule, layer by layer
+        d_out = (p - y) / len(X)                                 # dLoss/d(output logit)
+        d_W2, d_b2 = h.T @ d_out, d_out.sum(axis=0)
+        d_h = d_out @ W2.T * (1 - h ** 2)                        # tanh'(z) = 1 - tanh(z)^2
+        d_W1, d_b1 = X.T @ d_h, d_h.sum(axis=0)
+        # Gradient descent step
+        W1 -= lr * d_W1; b1 -= lr * d_b1; W2 -= lr * d_W2; b2 -= lr * d_b2
+    return p
+
+rng = np.random.default_rng(1)
+p = train(rng.normal(0, 1, (2, 4)), np.zeros(4), rng.normal(0, 1, (4, 1)), np.zeros(1))
+print(p.ravel().round(3))                                         # [0.    0.999 0.999 0.002]</code></pre>
+
+          <p>
+            The line <code>d_out = (p - y) / len(X)</code> is worth a second look: for a sigmoid output with the
+            cross-entropy loss, the derivative of the loss with respect to the output's logit is simply
+            <span class="math">p - y</span>, the prediction minus the target. Everything else is matrix calculus
+            that a framework like PyTorch does for you with automatic differentiation.
+          </p>
+
+          <h2 class="material-heading">Why the starting point matters</h2>
+
+          <p>
+            Try two experiments with the code above. First, change the seed to 0: this time the network gets stuck
+            on a plateau and predicts about 0.5 for two of the four inputs (in our runs, 19 of 20 seeds solved XOR).
+            Gradient descent finds <i>a</i> low point, not necessarily the best one. Second, start every weight at
+            0.5 instead of a random number. Now all hidden units compute the same thing and receive the same
+            gradient, so they stay identical forever: the network behaves as if it had one hidden unit, and it
+            cannot solve XOR. Random initialization breaks this symmetry, and choosing its scale well (Xavier or He
+            initialization) keeps the signals in deep networks from fading or exploding.
+          </p>
+
+          <h2 class="material-heading">What the universal approximation theorem says, and what it does not</h2>
+
+          <p>
+            A network with one hidden layer can approximate any continuous function on a bounded region as closely
+            as you like, given enough hidden units: Cybenko (1989) proved this for sigmoids, and Leshno, Lin, Pinkus
+            and Schocken (1993) for every continuous activation that is not a polynomial. It is often quoted as
+            "neural networks can learn anything". It does not say that: it says nothing about <b>how many</b>
+            units are needed (possibly astronomically many), whether <b>gradient descent</b> will find the weights,
+            or how well the result <b>generalizes</b> from a finite training set. Depth is part of the practical
+            answer: some functions that a deep network represents compactly need exponentially many units in a
+            shallow one.
+          </p>
+
+          <h2 class="material-heading">Further reading and watching</h2>
+
+          <ul>
+            <li>3Blue1Brown, <a href="https://www.3blue1brown.com/lessons/neural-networks/" target="_blank" rel="noopener"><i>But what is a
+              neural network?</i></a> and the chapters that follow on gradient descent and backpropagation.</li>
+            <li>Andrej Karpathy, <a href="https://karpathy.ai/zero-to-hero.html" target="_blank" rel="noopener"><i>Neural Networks: Zero to
+              Hero</i></a>: video lectures that build backpropagation (micrograd) and finally a GPT from scratch.</li>
+            <li>Michael Nielsen, <a href="http://neuralnetworksanddeeplearning.com/" target="_blank" rel="noopener"><i>Neural Networks and Deep
+              Learning</i></a>: a free online book; chapter 2 derives backpropagation step by step.</li>
+            <li>Cybenko (1989), <a href="https://doi.org/10.1007/BF02551274" target="_blank" rel="noopener"><i>Approximation by
+              superpositions of a sigmoidal function</i></a>, Mathematics of Control, Signals and Systems 2, 303&ndash;314.</li>
+          </ul>
+        </section>
 
         <nav class="page-nav" aria-label="Previous and next page">
           <a class="page-nav__link page-nav__link--prev" href="../week3/" rel="prev">
@@ -679,6 +884,7 @@ model.most_similar("glass")
 
 
 
+  <script src="../javascripts/math.js"></script>
   <script src="../javascripts/main.js"></script>
   <script src="../javascripts/week4.js"></script>
 
