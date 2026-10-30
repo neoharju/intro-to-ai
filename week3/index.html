@@ -1112,7 +1112,7 @@
         </p>
         
         <ul>
-          <li>If <span class="math">\alpha</span> is too small, the descent may fail to reach the optimum.</li>
+          <li>If <span class="math">\alpha</span> is too small, the descent moves very slowly: after any reasonable number of steps it may still be far from the optimum.</li>
           <li>If <span class="math">\alpha</span> is too large, the algorithm may "overshoot" the optimum and oscillate around it without ever converging, or even diverge, moving further away from the optimum at every step.</li>
         </ul>
         
@@ -1279,7 +1279,7 @@
         </ul>
         
         <p>
-          The magnitude of the weights also has a clear interpretation: the larger the weight <span class="math">w_i</span>, the more "important" the <span class="math">i</span>-th feature is for the final prediction. This interpretability makes linear models particularly valuable in industrial applications where errors can have significant consequences. For example, in scenarios where human lives depend on the model's decisions, it is critical to understand how the model makes decisions and the principles it follows.
+          The magnitude of the weights also has a clear interpretation, provided that the features are on comparable scales (for example, standardized): the larger the absolute value of the weight <span class="math">w_i</span>, the more "important" the <span class="math">i</span>-th feature is for the final prediction. This interpretability makes linear models particularly valuable in industrial applications where errors can have significant consequences. For example, in scenarios where human lives depend on the model's decisions, it is critical to understand how the model makes decisions and the principles it follows.
         </p>
         
         <p>
@@ -1858,6 +1858,10 @@
           to revise an earlier choice. A branch becomes a leaf when its examples
           all have the same label (the region is <b>pure</b>), when no unused
           attributes remain, or when no training examples fall along that branch.
+          (A categorical attribute is used at most once on a path from the root, because after the split
+          on it every example below has the same value. A numeric feature can be split again at another
+          threshold: the tree above tests <span class="math">x</span> at <span class="math">x_1</span>
+          and again at <span class="math">x_2</span>.)
         </p>
 
         <h3 class="material-heading">
@@ -2106,31 +2110,28 @@
           If we visualize the predictions of the trained models across all 100 iterations, we get a result similar to this:
         </p>
         
-        <img src="../img/material/part4/BaggingPredictionsExample.webp" width="70%" alt="Predictions of Decision Trees and Bagging">
+        <img src="../img/material/part4/BaggingPredictionsExample.webp" width="70%" alt="Predictions of single depth-7 trees and of bagging, each trained on 100 different training sets of 20 points">
 
         <p>
-          From the illustration above, it is evident that the overall variance of predictions with respect to the training set is significantly lower for bagging compared to individual decision trees. However, on average, the predictions of individual trees and bagging do not differ.
+          The predictions of bagging vary less from one training set to another than those of a single tree. On average the two are close, but the mean prediction of bagging is a little flatter at the peaks: each bootstrap sample contains only about 63&nbsp;% of the distinct training points (about 13 of the 20), so each of its trees is fitted to less data.
         </p>
         
         <p>
-          To confirm this observation, we can visualize the bias and variance of random trees and bagging as a function of the maximum tree depth:
+          To quantify this, we can compute the bias and variance of single trees and of bagging as a function of the maximum tree depth, here averaged over 300 training sets for each depth:
         </p>
         
-        <img src="../img/material/part4/BiasVarianceBagging.webp" width="70%" alt="Bias and Variance of Trees and Bagging">
-
+        <img src="../img/material/part4/BiasVarianceBagging.webp" width="70%" alt="Bias squared and variance of single trees and of bagging against the maximum tree depth">
 
         <p>
-          The graph clearly shows how significantly bagging reduces variance. In fact, the variance decreased by almost a factor of 10, which corresponds to the number of base algorithms (<span class="math">k</span>) used by bagging for prediction.
+          Bagging reduces the variance, but by a factor of about 1.6, not 10. Ten <i>uncorrelated</i> trees, each with variance <span class="math">\sigma^2</span>, would average to a variance of <span class="math">\sigma^2 / 10</span> (the dashed line). The trees of one bagging ensemble are far from uncorrelated: their bootstrap samples are drawn from the same 20 points, so they share most of their data and its noise. Two trees of the same ensemble have a correlation of about <span class="math">\rho = 0.45</span> here, and the variance of an average of <span class="math">B</span> such trees is <span class="math">\rho\sigma^2 + (1 - \rho)\,\sigma^2 / B</span> (see below), which never falls below <span class="math">\rho\sigma^2</span>, however many trees are added. The bias grows a little at the same time, but for deep trees the total error, bias<sup>2</sup> plus variance, still falls by about a quarter, from about 15 to 12.
         </p>
-        
-        <img src="../img/material/part4/BaggingVarianceReduction.webp" width="70%" alt="Variance Reduction with Bagging">
 
         <h2 class="material-heading">
           Random Forest
         </h2>
 
         <p>
-          In the previous section, we assumed that base algorithms are uncorrelated, leading to a significant reduction in the ensemble's variance compared to its individual components. However, in practice, achieving zero correlation is difficult since base algorithms are trained on overlapping datasets and the same target dependency. Nevertheless, strict independence is not necessary; it is sufficient for the algorithms to be somewhat different from each other. This principle underlies the development of the bagging idea for decision trees, resulting in the <b>Random Forest</b>.
+          The example shows the limit of bagging: models trained on overlapping bootstrap samples of the same data are correlated, and averaging removes only the part of the variance in which they differ. Strict independence is not necessary, though; it helps to make the models more different from each other. Applied to decision trees, this idea leads to the <b>Random Forest</b>.
         </p>
         
         <h4>Constructing a Random Forest</h4>
@@ -2157,7 +2158,7 @@
             </ul>
           </li>
           <li>
-            <b>Profit.</b> You have constructed a <b>Random Forest</b>, combining bagging with the random subspace method for decision trees.
+            <b>Profit.</b> You have constructed a <b>Random Forest</b>, combining bagging with a random choice of features at every split.
           </li>
         </ol>
 
@@ -2165,7 +2166,7 @@
         <h3>What Should Be the Depth of Trees in a Random Forest?</h3>
         
         <p>
-          The error of a model (which we can influence) consists of bias and variance. Bagging reduces variance, but it does not affect bias. Therefore, to ensure that a random forest has low bias, the individual trees in the ensemble must also have low bias.
+          The error of a model (which we can influence) consists of bias and variance. Bagging reduces variance, but it does not reduce bias (with a small training set it can even raise it a little, as in the example above). Therefore, to ensure that a random forest has low bias, the individual trees in the ensemble must also have low bias.
         </p>
         
         <p>

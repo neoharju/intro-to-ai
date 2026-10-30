@@ -223,7 +223,7 @@
 	  These issues make it challenging to apply RNNs to truly long sequences: even if you wait for 
 	  training to finish, your model, by design, will inevitably lose information from the beginning of the text. 
 	  Ideally, we want a way to "read" a sequence such that at any moment, the model can refer to 
-	  any previous point in constant time, without losing information.
+	  any previous point directly, in a single step, without losing information.
 	</p>
 	
 	<p>
@@ -616,8 +616,9 @@
 	</p>
 	
 	<p>
-	  Recent research also suggests <a href="https://openreview.net/forum?id=B1Yy1BxCZ" target="_blank" rel="noopener">
-	  increasing the batch size dynamically</a> during training. The idea is that during early training stages, 
+	  Smith et al. (2018) also suggested <a href="https://openreview.net/forum?id=B1Yy1BxCZ" target="_blank" rel="noopener">
+	  increasing the batch size dynamically</a> during training, and large language models are often trained with a batch size
+	  that grows during the first part of training. The idea is that during early training stages, 
 	  making more frequent gradient descent steps is crucial, while in later stages, it is more important 
 	  to have an accurate gradient estimation.
 	</p>
@@ -666,10 +667,11 @@
 	<h2 class="material-heading">Transformers in Image Generation and Reinforcement Learning</h2>
 	
 	<p>
-	  Transformers also serve as the foundation for the generative component of <strong>DALL-E</strong>— 
-	  a model that sparked a wave of research in text-to-image generation in recent years. Conceptually, 
-	  DALL-E is quite simple: it can be viewed as an autoregressive <strong>"language model"</strong> 
-	  that generates an image one <strong>"visual token"</strong> at a time.
+	  Transformers also serve as the foundation for the generative component of the first <strong>DALL-E</strong> (2021),
+	  a model that sparked a wave of research in text-to-image generation. Conceptually, 
+	  it is quite simple: it can be viewed as an autoregressive <strong>"language model"</strong> 
+	  that generates an image one <strong>"visual token"</strong> at a time. (Its successors DALL-E 2 and 3, like
+	  Stable Diffusion, are diffusion models; their denoising networks also use attention.)
 	</p>
 	
 	<p>
@@ -1169,6 +1171,9 @@ git checkout 3adf61e1</code></pre>
 	  <li>
 	    <strong>Explicit modeling:</strong> In this case, we construct and estimate the probability 
 	    density function <span class="math">p(x)</span>. From this distribution, we can sample new objects. 
+	    Autoregressive models and normalizing flows can compute <span class="math">p(x)</span> exactly; variational
+	    autoencoders and diffusion models are trained on a lower bound of <span class="math">\log p(x)</span>, so their
+	    density is only approximate.
 	    Examples of such models include:
 	    <ul>
 	      <li>Autoregressive models (e.g., 
