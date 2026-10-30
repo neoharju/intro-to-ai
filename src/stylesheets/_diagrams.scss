@@ -39,6 +39,11 @@
     text-wrap: balance;
   }
 
+  // A small drawing (a single state) that would be blown up to the width of the text.
+  &--narrow > svg {
+    max-width: 24rem;
+  }
+
   // A wide diagram scrolls sideways on a phone instead of shrinking its labels.
   &--wide {
     overflow-x: auto;
