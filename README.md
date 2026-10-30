@@ -35,10 +35,12 @@ Compared with the original `gh-pages` branch (commit `b9dedeb`):
   exercises, a table of contents that highlights the current section) and interactive figures in every
   week, from search algorithms and alpha-beta pruning to attention and Q-learning. The figures run the
   algorithms described in the text, in the browser; their code is in `src/javascripts/viz/`.
+- **Practice quiz:** `quiz/` has 20 multiple-choice questions for each week, each with an explanation.
 
 ## Preview locally
 
-GitHub Pages publishes this branch as it is. The pages are plain HTML (`index.html`, `week1/` to `week7/`).
+GitHub Pages publishes this branch as it is. The pages are plain HTML (`index.html`, `week1/` to `week7/`
+and `quiz/`).
 To preview them:
 
 ```bash
@@ -53,6 +55,14 @@ Formulas are written in TeX in the pages, inline in `<span class="math">…</spa
 their own in `<div class="math">…</div>` (add `math--key` to set a key equation on a card). Pages with formulas
 load `javascripts/math.js`, which typesets them with KaTeX. Pseudocode listings use
 `<pre class="sh_pseudo"><code>…</code></pre>`, highlighted by the grammar in `src/javascripts/pseudocode.js`.
+
+## The practice quiz
+
+The questions are in `src/javascripts/quiz/questions.json`, 20 for each week. Each has the question `q`, four
+`options` with the correct one first (`answer` is 0; the page shuffles the options), and an explanation
+`explain`. All three may contain HTML and formulas in `<span class="math">…</span>`. Keep the options of a
+question similar in length and form, so that the longest one is not a giveaway. Results are kept in the
+reader's browser only (`localStorage`, key `introai-quiz-v1`). `quiz/#week-3` opens the questions of week 3.
 
 ## Rebuild the assets
 
