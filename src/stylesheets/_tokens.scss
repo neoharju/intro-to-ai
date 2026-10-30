@@ -59,6 +59,15 @@
   --viz-mud-hatch: #cdb999;
   --viz-quiet: #dfe5ee;
 
+  // Syntax colours of code listings (styled in _theme.scss): blue keywords, teal names, orange strings and
+  // grey comments, which also differ in lightness and style (bold keywords, italic comments). No two of
+  // them are confused with a colour vision deficiency: their CIEDE2000 distance stays above 13 with
+  // simulated protanopia, deuteranopia and tritanopia, and each has a contrast above 4.6:1.
+  --code-keyword: #1740c8;
+  --code-name: #0b5c52;
+  --code-string: #b05000;
+  --code-comment: #6a7088;
+
   --radius: .875rem;
   --radius-sm: .625rem;
   --shadow-sm: 0 1px 2px rgba(15, 23, 42, .06);

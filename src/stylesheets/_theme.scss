@@ -148,11 +148,48 @@ h3.material-heading {
 }
 
 // Code blocks: the block itself is styled above, so the highlighted <code> inside stays transparent.
+pre code.hljs {
+  display: block;
+  overflow-x: auto;
+}
+
 .hljs {
   padding: 0 !important;
   color: var(--ink);
   background: transparent !important;
 }
+
+// Syntax colours, the --code-* tokens of each theme (see _tokens.scss).
+.hljs-keyword, .hljs-selector-tag, .hljs-doctag, .hljs-template-tag {
+  font-weight: 650;
+  color: var(--code-keyword);
+}
+
+.hljs-literal, .hljs-number, .hljs-symbol, .hljs-bullet, .hljs-regexp, .hljs-link {
+  color: var(--code-keyword);
+}
+
+.hljs-title, .hljs-built_in, .hljs-type, .hljs-class, .hljs-section, .hljs-name, .hljs-meta, .hljs-attr,
+.hljs-attribute, .hljs-tag, .hljs-selector-id, .hljs-selector-class, .hljs-selector-attr, .hljs-selector-pseudo {
+  color: var(--code-name);
+}
+
+.hljs-string, .hljs-char, .hljs-code, .hljs-meta .hljs-string, .hljs-addition {
+  color: var(--code-string);
+}
+
+.hljs-comment, .hljs-quote {
+  font-style: italic;
+  color: var(--code-comment);
+}
+
+.hljs-params, .hljs-variable, .hljs-template-variable, .hljs-subst, .hljs-property, .hljs-operator,
+.hljs-punctuation, .hljs-deletion {
+  color: inherit;
+}
+
+.hljs-emphasis { font-style: italic; }
+.hljs-strong { font-weight: 650; }
 
 // Line numbers of pseudocode listings (see pseudocode.js): a quiet gutter that the text refers to.
 .hljs-line-number {

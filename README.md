@@ -71,6 +71,10 @@ should use the tokens instead of fixed colours. The interactive figures take the
 with `createCanvas` redraw by themselves, and a figure that uses derived colours (`sequential`, `diverging`)
 re-renders with `onThemeChange(render)`.
 
+Code listings are coloured with the `--code-*` tokens of each theme: bold blue keywords, teal names, orange
+strings and grey italic comments. They were chosen to stay distinct with colour vision deficiencies (no
+red-green or pink contrasts), so check a new colour with a colour-blindness simulator before changing them.
+
 ## Text size
 
 The "Aa" menu (`src/javascripts/font-size-menu.js`) sets `data-font-size="large"` or `"xlarge"` on `<html>`,

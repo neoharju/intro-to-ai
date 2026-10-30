@@ -5,7 +5,7 @@
 // to "light" or "dark" before anything is drawn, so a page never flashes in the wrong colours; the light
 // theme is the set of tokens in _tokens.scss. The dark theme is a map of token values: the components
 // read the tokens, so most of them need nothing more. The rules at
-// the end cover what tokens cannot: Bootstrap's own variables, the code highlighting, and pictures.
+// the end cover what tokens cannot: Bootstrap's own variables and pictures.
 //
 // Every token that viz/lib.js reads into COLORS must have a distinct value within a theme: when the
 // theme changes, the figures swap each old colour for the new one by its value.
@@ -95,13 +95,10 @@ $dark: (
   "hanoi-small": #fbbf24,
   "hanoi-medium": #2dd4bf,
   "hanoi-large": #60a5fa,
-);
-
-// Syntax colours for code listings (highlight.js classes; the light theme uses xcode.css).
-$code-dark: (
-  "keyword": #ff7b72, "built-in": #ffa657, "type": #ffa657, "title": #d2a8ff, "string": #a5d6ff, "number": #79c0ff,
-  "literal": #79c0ff, "comment": #8b949e, "attr": #79c0ff, "meta": #8b949e, "params": #c9d1d9, "variable": #ffa657,
-  "addition": #7ee787, "deletion": #ffa198,
+  "code-keyword": #5b9dff,
+  "code-name": #5ad7b0,
+  "code-string": #f3b251,
+  "code-comment": #8c91a1,
 );
 
 @function rgb-triplet($color) {
@@ -135,21 +132,6 @@ $code-dark: (
   --bs-link-hover-color-rgb: #{rgb-triplet(map.get($dark, primary-strong))};
   --bs-code-color: var(--ink);
   --bs-highlight-bg: var(--amber-line);
-
-  .hljs-keyword, .hljs-selector-tag, .hljs-doctag { color: map.get($code-dark, keyword); }
-  .hljs-built_in, .hljs-class { color: map.get($code-dark, built-in); }
-  .hljs-type, .hljs-title.class_ { color: map.get($code-dark, type); }
-  .hljs-title, .hljs-section, .hljs-name, .hljs-selector-id, .hljs-selector-class { color: map.get($code-dark, title); }
-  .hljs-string, .hljs-regexp, .hljs-link, .hljs-code { color: map.get($code-dark, string); }
-  .hljs-number, .hljs-symbol, .hljs-bullet { color: map.get($code-dark, number); }
-  .hljs-literal { color: map.get($code-dark, literal); }
-  .hljs-comment, .hljs-quote { color: map.get($code-dark, comment); }
-  .hljs-attr, .hljs-attribute, .hljs-tag { color: map.get($code-dark, attr); }
-  .hljs-meta { color: map.get($code-dark, meta); }
-  .hljs-params { color: map.get($code-dark, params); }
-  .hljs-variable, .hljs-template-variable, .hljs-subst { color: map.get($code-dark, variable); }
-  .hljs-addition { color: map.get($code-dark, addition); background-color: transparent; }
-  .hljs-deletion { color: map.get($code-dark, deletion); background-color: transparent; }
 }
 
 :root[data-theme="dark"] {
