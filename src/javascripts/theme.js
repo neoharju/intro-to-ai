@@ -67,6 +67,16 @@ if (media) {
   }
 }
 
+// Zen mode (zen.js) is restored here too, so that a page opened in zen mode never shows its navigation
+// bar for a moment.
+try {
+  if (window.localStorage.getItem('introai-zen') === 'on') {
+    root.setAttribute('data-zen', 'on');
+  }
+} catch (error) {
+  // Blocked storage: no zen mode to restore.
+}
+
 window.IntroAI = Object.assign(window.IntroAI || {}, {
   theme: { choices: CHOICES, get: () => choice, resolved, set },
 });

@@ -1,0 +1,107 @@
+// Zen mode (zen.js): the material alone. The navigation bar collapses to its reading-progress line at
+// the top of the window; the page header, the lecture and deadline boxes, the footer and the back-to-top
+// button are hidden. A faint button in the corner leaves zen mode.
+:root[data-zen="on"] {
+  .navbar {
+    min-height: 0;
+    padding: 0;
+    border-bottom: 0;
+    background: none !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+
+    > :not(.read-progress) {
+      display: none !important;
+    }
+  }
+
+  .read-progress {
+    bottom: auto;
+    top: 0;
+    height: 3px;
+  }
+
+  .page-hero,
+  .footer-wrapper,
+  .back-to-top,
+  .hint--deadline,
+  .hint:has(> .hint__header .fa-calendar) {
+    display: none !important;
+  }
+
+  .material {
+    padding-top: 3.5rem !important;
+  }
+
+  .zen-exit {
+    display: inline-flex;
+  }
+}
+
+.zen-exit {
+  position: fixed;
+  top: .75rem;
+  right: .75rem;
+  z-index: 1040;
+  display: none;
+  align-items: center;
+  gap: .45rem;
+  padding: .45rem .8rem;
+  font: inherit;
+  font-size: .8125rem;
+  font-weight: 600;
+  color: var(--muted);
+  background-color: var(--overlay-bg);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  opacity: .55;
+  transition: opacity .2s, color .2s, border-color .2s;
+
+  &:hover, &:focus-visible {
+    color: var(--ink);
+    border-color: var(--primary-line);
+    opacity: 1;
+  }
+}
+
+// A short message when zen mode is switched (zen.js shows it for a few seconds).
+.zen-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 1.5rem;
+  z-index: 1050;
+  padding: .55rem 1rem;
+  font-size: .875rem;
+  font-weight: 600;
+  color: var(--surface);
+  background-color: var(--ink);
+  border-radius: 999px;
+  box-shadow: var(--shadow-lg);
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, .5rem);
+  transition: opacity .25s, transform .25s var(--ease);
+
+  &.is-visible {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+
+  &:empty {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .zen-toast {
+    transition: none;
+  }
+}
+
+@media print {
+  .zen-exit, .zen-toast {
+    display: none !important;
+  }
+}

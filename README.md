@@ -37,6 +37,8 @@ Compared with the original `gh-pages` branch (commit `b9dedeb`):
   algorithms described in the text, in the browser; their code is in `src/javascripts/viz/`.
 - **Practice quiz:** `quiz/` has 20 multiple-choice questions for each week, each with an explanation.
 - **Colour themes:** light, dark and Tokyo Night, following the device's setting by default.
+- **Zen mode:** the material without the navigation bar, page header, lecture and deadline boxes and footer
+  (the lotus button or the Z key; Z or Esc leaves it).
 
 ## Preview locally
 
