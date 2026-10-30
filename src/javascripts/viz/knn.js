@@ -192,7 +192,7 @@ export default function mountKnn(figure) {
     // Query point: a ringed dot in the colour of its predicted class.
     ctx.beginPath();
     ctx.arc(qx, qy, 10, 0, Math.PI * 2);
-    ctx.fillStyle = '#fff';
+    ctx.fillStyle = COLORS.surface;
     ctx.fill();
     ctx.lineWidth = 2.5;
     ctx.strokeStyle = COLORS.ink;

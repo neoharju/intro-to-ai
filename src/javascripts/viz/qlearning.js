@@ -3,7 +3,8 @@ import {
   transition, update,
 } from './qlearning-core';
 import {
-  COLORS, button, createCanvas, createLoop, diverging, el, fmt, frame, legend, lineChart, playButton, slider, stat,
+  COLORS, button, createCanvas, createLoop, diverging, el, fmt, frame, legend, lineChart, playButton,
+  slider, stat, textOn, withAlpha,
 } from './lib';
 
 const MAX_MOVES = 100;
@@ -25,7 +26,7 @@ export default function mountQLearning(figure) {
   let history = { xs: [], ys: [] };
   let outcomes = { goal: 0, pit: 0, timeout: 0 };
 
-  const stage = el('div', { class: 'vz-stage', style: 'background:#fff' });
+  const stage = el('div', { class: 'vz-stage', style: 'background:var(--surface)' });
   const view = createCanvas(stage, {
     aspect: ROWS / COLS,
     minHeight: 160,
@@ -80,7 +81,7 @@ export default function mountQLearning(figure) {
     el('div', { class: 'vz-split' },
       el('div', {}, stage,
         legend([
-          { style: `background:linear-gradient(90deg, ${diverging(-1, COLORS.red, COLORS.blue)}, #f0efec, ${diverging(1, COLORS.red, COLORS.blue)})`, label: 'Q-value from −10 to +10' },
+          { style: () => `background:linear-gradient(90deg, ${diverging(-1, COLORS.red, COLORS.blue)}, ${COLORS.neutral}, ${diverging(1, COLORS.red, COLORS.blue)})`, label: 'Q-value from −10 to +10' },
           { color: COLORS.ink, label: 'Agent' },
         ])),
       el('div', {},
@@ -163,7 +164,7 @@ export default function mountQLearning(figure) {
       const cy = y + cell / 2;
 
       if (WALLS.has(s)) {
-        ctx.fillStyle = '#334155';
+        ctx.fillStyle = COLORS.wall;
         ctx.fillRect(x, y, cell, cell);
         continue;
       }
@@ -171,7 +172,7 @@ export default function mountQLearning(figure) {
       if (s === GOAL || s === PIT) {
         ctx.fillStyle = s === GOAL ? diverging(1, COLORS.red, COLORS.blue) : diverging(-1, COLORS.red, COLORS.blue);
         ctx.fillRect(x, y, cell, cell);
-        ctx.fillStyle = '#fff';
+        ctx.fillStyle = textOn(ctx.fillStyle);
         ctx.font = `700 ${Math.round(cell * 0.2)}px "Inter Variable", system-ui, sans-serif`;
         ctx.fillText(s === GOAL ? `+${GOAL_REWARD}` : `${PIT_REWARD}`.replace('-', '−'), cx, cy - cell * 0.08);
         ctx.font = `600 ${Math.max(9, Math.round(cell * 0.12))}px "Inter Variable", system-ui, sans-serif`;
@@ -186,19 +187,21 @@ export default function mountQLearning(figure) {
       ACTIONS.forEach((a, i) => {
         const [p1, p2] = [corners[i], corners[(i + 1) % 4]];
 
-        ctx.fillStyle = diverging(q[s][i] / 10, COLORS.red, COLORS.blue);
+        const fill = diverging(q[s][i] / 10, COLORS.red, COLORS.blue);
+
+        ctx.fillStyle = fill;
         ctx.beginPath();
         ctx.moveTo(cx, cy);
         ctx.lineTo(p1[0], p1[1]);
         ctx.lineTo(p2[0], p2[1]);
         ctx.closePath();
         ctx.fill();
-        ctx.strokeStyle = '#fff';
+        ctx.strokeStyle = COLORS.surface;
         ctx.lineWidth = 1;
         ctx.stroke();
 
         if (showNumbers) {
-          ctx.fillStyle = Math.abs(q[s][i]) > 6 ? '#fff' : COLORS.ink;
+          ctx.fillStyle = Math.abs(q[s][i]) > 6 ? textOn(fill) : COLORS.ink;
           ctx.fillText(fmt(q[s][i], 1), cx + a[0] * cell * 0.33, cy + a[1] * cell * 0.33);
         }
       });
@@ -235,7 +238,7 @@ export default function mountQLearning(figure) {
 
     // The path of the current episode and the agent.
     if (trail.length > 1) {
-      ctx.strokeStyle = 'rgba(15, 23, 42, .3)';
+      ctx.strokeStyle = withAlpha(COLORS.ink, 0.3);
       ctx.lineWidth = 2;
       ctx.lineJoin = 'round';
       ctx.beginPath();
@@ -255,7 +258,7 @@ export default function mountQLearning(figure) {
 
     ctx.beginPath();
     ctx.arc(ax + cell / 2, ay + cell / 2, Math.max(6, cell * 0.13) + 2.5, 0, Math.PI * 2);
-    ctx.fillStyle = '#fff';
+    ctx.fillStyle = COLORS.surface;
     ctx.fill();
     ctx.beginPath();
     ctx.arc(ax + cell / 2, ay + cell / 2, Math.max(6, cell * 0.13), 0, Math.PI * 2);

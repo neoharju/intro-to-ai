@@ -45,7 +45,7 @@
       font-weight: 700;
       letter-spacing: .08em;
       text-transform: uppercase;
-      color: #fff;
+      color: var(--on-accent);
       background: linear-gradient(135deg, var(--brand), var(--primary));
       border-radius: 999px;
     }

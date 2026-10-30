@@ -22,7 +22,7 @@ export default function mountActivations(figure) {
   const grid = el('div', { class: 'vz-multiples' });
   const readout = el('div', { class: 'vz-table-wrap' });
   const panels = FUNCTIONS.map(fn => {
-    const holder = el('div', { class: 'vz-stage', style: 'background:#fff;padding:.4rem .4rem .1rem' });
+    const holder = el('div', { class: 'vz-stage', style: 'background:var(--surface);padding:.4rem .4rem .1rem' });
     const title = el('p', { class: 'vz-multiples__title' }, fn.name);
     const panel = el('div', {}, title, holder);
 

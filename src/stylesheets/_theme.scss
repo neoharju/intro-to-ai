@@ -10,7 +10,7 @@ body {
 }
 
 ::selection {
-  background-color: #dbeafe;
+  background-color: var(--selection);
 }
 
 :focus-visible {

@@ -1,6 +1,6 @@
 // Builds javascripts/main.js, the interactive figures of each week (javascripts/week1.js, ...), the
-// formula typesetting (javascripts/math.js), the practice quiz (javascripts/quiz.js),
-// stylesheets/main.css and fonts/vendor/* from src/.
+// formula typesetting (javascripts/math.js), the practice quiz (javascripts/quiz.js), the colour theme
+// (javascripts/theme.js, loaded in the <head>), stylesheets/main.css and fonts/vendor/* from src/.
 // The outputs are committed: GitHub Pages serves this branch as-is, without a build step.
 //
 //   npm run build          one-off build
@@ -61,6 +61,7 @@ const options = {
     ...Object.fromEntries([1, 2, 3, 4, 5, 6, 7].map(week => [`javascripts/week${week}`, `src/javascripts/weeks/week${week}.js`])),
     'javascripts/math': 'src/javascripts/math.js',
     'javascripts/quiz': 'src/javascripts/quiz.js',
+    'javascripts/theme': 'src/javascripts/theme.js',
     'stylesheets/main': 'src/stylesheets/main.scss',
   },
   outdir: '.',

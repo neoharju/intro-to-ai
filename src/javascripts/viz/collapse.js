@@ -60,7 +60,7 @@ export default function mountCollapse(figure) {
   let shareIndex = 0;
   let history;
 
-  const stage = el('div', { class: 'vz-stage', style: 'background:#fff' });
+  const stage = el('div', { class: 'vz-stage', style: 'background:var(--surface)' });
   const view = createCanvas(stage, {
     aspect: 0.36,
     minHeight: 170,
@@ -133,7 +133,7 @@ export default function mountCollapse(figure) {
     stage,
     legend([
       { color: COLORS.blue, label: 'Current model' },
-      { style: `background:#fff;box-shadow:inset 0 0 0 1.5px ${COLORS.ink}`, label: 'Original data' },
+      { style: `background:var(--surface);box-shadow:inset 0 0 0 1.5px ${COLORS.ink}`, label: 'Original data' },
     ]),
     el('div', { class: 'vz-controls' },
       el('div', { class: 'vz-group' },

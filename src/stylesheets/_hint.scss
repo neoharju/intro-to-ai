@@ -1,8 +1,8 @@
 .hint {
   margin: 1.5rem 0;
   padding: 1rem 1.25rem 1.1rem;
-  background-color: #f8faff;
-  border: 1px solid #dbe5fd;
+  background-color: var(--hint-bg);
+  border: 1px solid var(--hint-line);
   border-radius: var(--radius);
 
   &__icon {

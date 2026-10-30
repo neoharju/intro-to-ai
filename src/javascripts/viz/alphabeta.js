@@ -283,8 +283,8 @@ export default function mountAlphaBeta(figure) {
       const state = step.state[node.id];
       const current = node.id === step.node;
       const group = svg('g', { opacity: state === 'pruned' ? 0.32 : 1 });
-      const fill = state === 'done' ? '#eff4ff' : state === 'active' ? '#fffbeb' : '#ffffff';
-      const stroke = current ? '#b45309' : state === 'done' ? COLORS.blue : state === 'active' ? '#f59e0b' : COLORS.axis;
+      const fill = state === 'done' ? COLORS.primarySoft : state === 'active' ? COLORS.amberSoft : COLORS.surface;
+      const stroke = current ? COLORS.amber : state === 'done' ? COLORS.blue : state === 'active' ? COLORS.yellow : COLORS.axis;
       const strokeWidth = current ? 2.6 : state === 'idle' || state === 'pruned' ? 1.2 : 1.8;
 
       if (node.type === 'leaf') {
@@ -318,7 +318,7 @@ export default function mountAlphaBeta(figure) {
 
           group.append(svg('rect', {
             x: left, y: py - 10, width, height: 19, rx: 9.5,
-            fill: '#fffbeb', stroke: '#fde68a',
+            fill: COLORS.amberSoft, stroke: COLORS.amberLine,
           }));
           group.append(svg('text', { x: left + width / 2, y: py, class: 'vz-tree__window' }, text));
         }

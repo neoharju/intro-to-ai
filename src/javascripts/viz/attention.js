@@ -1,5 +1,5 @@
 import { D_K, SENTENCES, WORDS, attention } from './attention-core';
-import { COLORS, el, fmt, frame, segmented, sequential, svg } from './lib';
+import { COLORS, el, fmt, frame, onThemeChange, segmented, sequential, svg, textOn } from './lib';
 
 const ARC_W = 640;
 const ARC_H = 172;
@@ -45,10 +45,10 @@ export default function mountAttention(figure) {
         el('div', { class: 'vz-stage vz-stage--plain' }, heat)),
       el('div', {},
         el('p', { class: 'vz-multiples__title' }, 'Output = weighted sum of the values'),
-        el('div', { class: 'vz-stage', style: 'background:#fff' }, plane),
+        el('div', { class: 'vz-stage', style: 'background:var(--surface)' }, plane),
         el('ul', { class: 'vz-legend' },
           el('li', {}, el('i', { style: `background:${COLORS.blue};border-radius:50%;opacity:.6` }), 'value vectors (larger = more weight)'),
-          el('li', {}, el('i', { style: `background:#fff;border-radius:50%;box-shadow:inset 0 0 0 2px ${COLORS.ink}` }), 'output of the selected token')))),
+          el('li', {}, el('i', { style: `background:var(--surface);border-radius:50%;box-shadow:inset 0 0 0 2px ${COLORS.ink}` }), 'output of the selected token')))),
     steps
   );
 
@@ -158,10 +158,8 @@ export default function mountAttention(figure) {
         const masked = r.scores[j] === -Infinity;
         const x = left + j * cell;
         const y = top + i * cell;
-        const rect = svg('rect', {
-          x: x + 1, y: y + 1, width: cell - 2, height: cell - 2, rx: 4,
-          fill: masked ? '#f1f5f9' : sequential(0.05 + 0.95 * w),
-        });
+        const fill = masked ? COLORS.surface3 : sequential(0.05 + 0.95 * w);
+        const rect = svg('rect', { x: x + 1, y: y + 1, width: cell - 2, height: cell - 2, rx: 4, fill });
 
         rect.append(svg('title', {}, masked
           ? `${words[i]} → ${words[j]}: masked (score −∞, weight 0)`
@@ -169,7 +167,9 @@ export default function mountAttention(figure) {
         heat.append(rect);
         heat.append(svg('text', {
           x: x + cell / 2, y: y + cell / 2 + 1,
-          class: `vz-heat__value${w > 0.45 ? ' is-dark' : ''}${masked ? ' is-masked' : ''}`,
+          class: `vz-heat__value${masked ? ' is-masked' : ''}`,
+          // Dark or white, whichever reads better on the cell (inline, so that it wins over the class).
+          style: masked ? undefined : `fill:${textOn(fill)}`,
         }, masked ? '–' : fmt(w, 2)));
       });
     });
@@ -221,7 +221,7 @@ export default function mountAttention(figure) {
 
     const [ox, oy] = row.output;
 
-    plane.append(svg('circle', { cx: px(ox), cy: py(oy), r: 7, fill: '#fff', stroke: COLORS.ink, 'stroke-width': 2.5 }));
+    plane.append(svg('circle', { cx: px(ox), cy: py(oy), r: 7, fill: COLORS.surface, stroke: COLORS.ink, 'stroke-width': 2.5 }));
     plane.append(svg('circle', { cx: px(ox), cy: py(oy), r: 3, fill: COLORS.ink }));
   }
 
@@ -258,4 +258,6 @@ export default function mountAttention(figure) {
   }
 
   render();
+  // The heatmap uses the colour ramp, which depends on the theme.
+  onThemeChange(render);
 }

@@ -1,7 +1,7 @@
 import { accuracy, adamStep, createNetwork, forward, lossAndGradient } from './mlp-core';
 import {
   CLASS_COLORS, COLORS, button, checkbox, createCanvas, createLoop, createRandom, el, fmt, frame, legend,
-  lineChart, marker, playButton, segmented, select, slider, stat, withAlpha,
+  lineChart, marker, playButton, rgbOf, segmented, select, slider, stat, withAlpha,
 } from './lib';
 
 const RANGE = 1.15;
@@ -109,7 +109,7 @@ export default function mountMlp(figure) {
         legend([
           { color: CLASS_COLORS[0], label: 'Class 0 (circles)' },
           { color: CLASS_COLORS[1], label: 'Class 1 (squares)' },
-          { style: `background:linear-gradient(90deg, ${CLASS_COLORS[0]}66, #f0efec, ${CLASS_COLORS[1]}66)`, label: 'Predicted p' },
+          { style: `background:linear-gradient(90deg, ${CLASS_COLORS[0]}66, ${COLORS.neutral}, ${CLASS_COLORS[1]}66)`, label: 'Predicted p' },
         ])),
       el('div', {},
         el('div', { class: 'vz-stats', style: 'margin-top:0' }, Object.values(stats).map(s => s.node)),
@@ -163,9 +163,10 @@ export default function mountMlp(figure) {
     shade.height = rows;
 
     const image = shadeCtx.createImageData(cols, rows);
-    const blue = [42, 120, 214];
-    const orange = [235, 104, 52];
-    const neutral = [240, 239, 236];
+    // Read at every draw, so that the shading follows the colour theme.
+    const blue = rgbOf(COLORS.blue);
+    const orange = rgbOf(COLORS.orange);
+    const neutral = rgbOf(COLORS.neutral);
 
     for (let j = 0; j < rows; j++) {
       for (let i = 0; i < cols; i++) {

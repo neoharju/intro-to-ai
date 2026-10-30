@@ -255,7 +255,7 @@
     border-color: var(--green);
 
     .quiz-option__key {
-      color: #fff;
+      color: var(--on-accent);
       background-color: var(--green);
       border-color: var(--green);
     }
@@ -266,7 +266,7 @@
     border-color: var(--red);
 
     .quiz-option__key {
-      color: #fff;
+      color: var(--on-accent);
       background-color: var(--red);
       border-color: var(--red);
     }
@@ -351,7 +351,7 @@
 }
 
 .quiz-next {
-  color: #fff;
+  color: var(--on-accent);
   background-color: var(--primary);
 
   &:hover, &:focus-visible {

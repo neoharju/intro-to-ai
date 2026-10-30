@@ -1,5 +1,6 @@
 import {
-  CLASS_COLORS, COLORS, button, createCanvas, createRandom, dot, el, fmt, frame, legend, marker, pointerPosition,
+  CLASS_COLORS, COLORS, button, createCanvas, createRandom, dot, el, fmt, frame, legend, marker,
+  pointerPosition, withAlpha,
 } from './lib';
 
 const X_MAX = 10;
@@ -132,7 +133,7 @@ export default function mountInfoGain(figure) {
     ctx.clearRect(0, 0, width, height);
 
     // Left side of the threshold.
-    ctx.fillStyle = 'rgba(37, 99, 235, .06)';
+    ctx.fillStyle = withAlpha(COLORS.blue, 0.06);
     ctx.fillRect(pad, 8, Math.max(0, tx - pad), gainBottom - 8);
 
     // Axis with ticks.

@@ -33,6 +33,32 @@
   --violet-soft: #f5f3ff;
   --violet-line: #ddd6fe;
 
+  // Text on a solid accent (a primary button, a filled badge); dark in the dark themes, whose accents
+  // are light.
+  --on-accent: #fff;
+  --selection: #dbeafe;
+  --hint-bg: #f8faff;
+  --hint-line: #dbe5fd;
+  --nav-bg: rgba(255, 255, 255, .86);
+  --nav-bg-blur: rgba(255, 255, 255, .72);
+  --overlay-bg: rgba(255, 255, 255, .9);
+
+  // The interactive figures (viz/lib.js reads these into COLORS, as six-digit hex): a categorical
+  // palette and the colours of roles such as walls, mud and highlights.
+  --viz-blue: #2a78d6;
+  --viz-orange: #eb6834;
+  --viz-aqua: #1baf7a;
+  --viz-yellow: #eda100;
+  --viz-violet: #6250d6;
+  --viz-red: #e34948;
+  --viz-neutral: #f0efec;
+  --viz-amber: #b45309;
+  --viz-amber-ink: #92400e;
+  --viz-wall: #334155;
+  --viz-mud: #eadfcf;
+  --viz-mud-hatch: #cdb999;
+  --viz-quiet: #dfe5ee;
+
   --radius: .875rem;
   --radius-sm: .625rem;
   --shadow-sm: 0 1px 2px rgba(15, 23, 42, .06);

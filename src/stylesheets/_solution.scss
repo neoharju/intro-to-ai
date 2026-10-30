@@ -4,11 +4,11 @@
   background-color: var(--surface);
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  box-shadow: inset 3px 0 0 #6d28d9, var(--shadow-sm);
+  box-shadow: inset 3px 0 0 var(--violet), var(--shadow-sm);
 
   &__icon {
     flex: none;
-    color: #6d28d9;
+    color: var(--violet);
   }
 
   &__arrow {
@@ -32,7 +32,7 @@
       font-weight: 650;
       letter-spacing: .06em;
       text-transform: uppercase;
-      color: #6d28d9 !important;
+      color: var(--violet) !important;
     }
   }
 

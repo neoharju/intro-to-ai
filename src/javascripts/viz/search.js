@@ -1,7 +1,7 @@
 import { createSearch, FREE, WALL, MUD } from './search-core';
 import {
   COLORS, button, createCanvas, createLoop, el, fmt, frame, legend, playButton, pointerPosition,
-  prefersReducedMotion, segmented, sequential, slider, stat,
+  prefersReducedMotion, segmented, sequential, slider, stat, textOn,
 } from './lib';
 
 const COLS = 27;
@@ -27,16 +27,17 @@ const NAMES = {
 
 const STEPS_PER_SECOND = [4, 8, 16, 32, 64, 128, 256, 512];
 
+// Getters, so that the colours follow the theme (lib.js updates COLORS when it changes).
 const COLOR = {
-  free: '#ffffff',
-  grid: '#e9eef5',
-  wall: '#334155',
-  mud: '#eadfcf',
-  mudHatch: '#cdb999',
-  frontier: COLORS.yellow,
-  path: COLORS.orange,
-  start: COLORS.blue,
-  goal: COLORS.violet,
+  get free() { return COLORS.surface; },
+  get grid() { return COLORS.grid; },
+  get wall() { return COLORS.wall; },
+  get mud() { return COLORS.mud; },
+  get mudHatch() { return COLORS.mudHatch; },
+  get frontier() { return COLORS.yellow; },
+  get path() { return COLORS.orange; },
+  get start() { return COLORS.blue; },
+  get goal() { return COLORS.violet; },
 };
 
 // A U-shaped wall that opens towards the start (greedy best-first walks into it) and mud over the
@@ -208,8 +209,8 @@ export default function mountSearch(figure) {
       { color: COLOR.goal, label: 'Goal' },
       { color: COLOR.wall, label: 'Wall' },
       { color: COLOR.mud, label: 'Mud (a move into it costs 5)' },
-      { style: `background:linear-gradient(90deg, ${sequential(0.1)}, ${sequential(0.5)})`, label: 'Visited (darker = later)' },
-      { style: `background:#fff;box-shadow:inset 0 0 0 2px ${COLOR.frontier}`, label: 'In node_list' },
+      { style: () => `background:linear-gradient(90deg, ${sequential(0.1)}, ${sequential(0.5)})`, label: 'Visited (bluer = later)' },
+      { style: `background:var(--surface);box-shadow:inset 0 0 0 2px ${COLOR.frontier}`, label: 'In node_list' },
       { color: COLOR.path, label: 'Path found' },
     ]),
     el('div', { class: 'vz-stats' }, Object.values(stats).map(s => s.node)),
@@ -437,7 +438,7 @@ export default function mountSearch(figure) {
     ctx.fillStyle = color;
     roundRect(ctx, x + inset, y + inset, size - 2 * inset, size - 2 * inset, Math.max(2, size * 0.2));
     ctx.fill();
-    ctx.fillStyle = '#fff';
+    ctx.fillStyle = textOn(color);
     ctx.font = `700 ${Math.max(8, Math.round(size * 0.55))}px "Inter Variable", system-ui, sans-serif`;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';

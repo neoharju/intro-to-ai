@@ -1,0 +1,290 @@
+@use "sass:color";
+@use "sass:map";
+
+// Dark and Tokyo Night themes. javascripts/theme.js, loaded in the <head> of every page, sets
+// data-theme on <html> to "light", "dark" or "tokyo-night" before anything is drawn, so a page never
+// flashes in the wrong colours; the light theme is the set of tokens in _tokens.scss. A theme is a map
+// of token values: the components read the tokens, so most of them need nothing more. The rules at
+// the end cover what tokens cannot: Bootstrap's own variables, the code highlighting, and pictures.
+//
+// Every token that viz/lib.js reads into COLORS must have a distinct value within a theme: when the
+// theme changes, the figures swap each old colour for the new one by its value.
+
+$dark: (
+  "ink": #f1f5f9,
+  "text": #cbd5e1,
+  "muted": #94a3b8,
+  "faint": #64748b,
+  "line": #243049,
+  "line-strong": #33415c,
+  "surface": #0e1525,
+  "surface-2": #131c2f,
+  "surface-3": #1a2438,
+  "primary": #60a5fa,
+  "primary-strong": #93c5fd,
+  "primary-soft": #15233e,
+  "primary-line": #2a467e,
+  "orange": #fb923c,
+  "orange-soft": #2b1d14,
+  "orange-line": #7c3a12,
+  "amber": #fbbf24,
+  "amber-soft": #2a2312,
+  "amber-line": #6b4f12,
+  "green": #4ade80,
+  "green-soft": #10261a,
+  "red": #f87171,
+  "red-soft": #2c1618,
+  "violet": #a78bfa,
+  "violet-soft": #1d1a36,
+  "violet-line": #4b3a8f,
+  "on-accent": #0b1220,
+  "selection": #1e3a8a,
+  "hint-bg": #121b30,
+  "hint-line": #24365a,
+  "nav-bg": rgba(14, 21, 37, .86),
+  "nav-bg-blur": rgba(14, 21, 37, .72),
+  "overlay-bg": rgba(19, 28, 47, .94),
+  "shadow-sm": (0 1px 2px rgba(0, 0, 0, .45)),
+  "shadow": (0 1px 2px rgba(0, 0, 0, .35), 0 10px 30px -18px rgba(0, 0, 0, .7)),
+  "shadow-lg": (0 2px 6px rgba(0, 0, 0, .4), 0 24px 48px -20px rgba(0, 0, 0, .8)),
+  "viz-blue": #5b9cf0,
+  "viz-orange": #f2814f,
+  "viz-aqua": #34c38f,
+  "viz-yellow": #f2b632,
+  "viz-violet": #9b8cf2,
+  "viz-red": #f06a69,
+  "viz-neutral": #1c2436,
+  "viz-amber": #fbbf24,
+  "viz-amber-ink": #fcd34d,
+  "viz-wall": #6b7a94,
+  "viz-mud": #3a3122,
+  "viz-mud-hatch": #5c4d33,
+  "viz-quiet": #26324a,
+  "viz-ramp-start": #172540,
+  "viz-ramp-end": #60a5fa,
+  "dg-blue-fill": #132744,
+  "dg-blue-line": #60a5fa,
+  "dg-violet-fill": #221d3f,
+  "dg-violet-line": #a78bfa,
+  "dg-amber-fill": #2b2210,
+  "dg-amber-line": #fbbf24,
+  "dg-pink-fill": #2e1a28,
+  "dg-pink-line": #f472b6,
+  "dg-green-fill": #11291c,
+  "dg-green-line": #4ade80,
+  "dg-grey-fill": #1a2438,
+  "dg-grey-line": #94a3b8,
+  "dg-arrow": #94a3b8,
+  "dg-class-a": #60a5fa,
+  "dg-class-b": #fb923c,
+  "wgc-bank": #132a1c,
+  "wgc-river": #14284a,
+  "wgc-wave": #3b82f6,
+  "wgc-boat": #f59e0b,
+  "wgc-f": #fbbf24,
+  "wgc-w": #cbd5e1,
+  "wgc-g": #c4b5fd,
+  "wgc-c": #4ade80,
+  "wgc-letter": #0b1220,
+  "ttt-line": #475569,
+  "ttt-x": #60a5fa,
+  "ttt-o": #fb923c,
+  "hanoi-small": #fbbf24,
+  "hanoi-medium": #2dd4bf,
+  "hanoi-large": #60a5fa,
+);
+
+// Tokyo Night: the colours of the "night" variant of the Tokyo Night editor theme.
+$tokyo-night: (
+  "ink": #c0caf5,
+  "text": #a9b1d6,
+  "muted": #787c99,
+  "faint": #565f89,
+  "line": #292e42,
+  "line-strong": #3b4261,
+  "surface": #1a1b26,
+  "surface-2": #1f2335,
+  "surface-3": #24283b,
+  "primary": #7aa2f7,
+  "primary-strong": #7dcfff,
+  "primary-soft": #222a46,
+  "primary-line": #3d59a1,
+  "orange": #ff9e64,
+  "orange-soft": #2e2520,
+  "orange-line": #7a4d35,
+  "amber": #e0af68,
+  "amber-soft": #2b2721,
+  "amber-line": #6e5634,
+  "green": #9ece6a,
+  "green-soft": #222c22,
+  "red": #f7768e,
+  "red-soft": #2e1f2a,
+  "violet": #bb9af7,
+  "violet-soft": #262340,
+  "violet-line": #57479a,
+  "on-accent": #1a1b26,
+  "selection": #33467c,
+  "hint-bg": #1e2131,
+  "hint-line": #2f3549,
+  "nav-bg": rgba(26, 27, 38, .86),
+  "nav-bg-blur": rgba(26, 27, 38, .72),
+  "overlay-bg": rgba(31, 35, 53, .94),
+  "shadow-sm": (0 1px 2px rgba(0, 0, 0, .4)),
+  "shadow": (0 1px 2px rgba(0, 0, 0, .3), 0 10px 30px -18px rgba(0, 0, 0, .65)),
+  "shadow-lg": (0 2px 6px rgba(0, 0, 0, .35), 0 24px 48px -20px rgba(0, 0, 0, .75)),
+  "viz-blue": #7aa2f7,
+  "viz-orange": #ff9e64,
+  "viz-aqua": #73daca,
+  "viz-yellow": #e5c07b,
+  "viz-violet": #bb9af7,
+  "viz-red": #f7768e,
+  "viz-neutral": #262b40,
+  "viz-amber": #e0af68,
+  "viz-amber-ink": #e0af68,
+  "viz-wall": #7a82ac,
+  "viz-mud": #3b3428,
+  "viz-mud-hatch": #5e5340,
+  "viz-quiet": #2f344d,
+  "viz-ramp-start": #232a47,
+  "viz-ramp-end": #89b4fa,
+  "dg-blue-fill": #1f2b4a,
+  "dg-blue-line": #7aa2f7,
+  "dg-violet-fill": #2a2443,
+  "dg-violet-line": #bb9af7,
+  "dg-amber-fill": #2e2a22,
+  "dg-amber-line": #e0af68,
+  "dg-pink-fill": #33222c,
+  "dg-pink-line": #f7768e,
+  "dg-green-fill": #24301f,
+  "dg-green-line": #9ece6a,
+  "dg-grey-fill": #24283b,
+  "dg-grey-line": #737aa2,
+  "dg-arrow": #737aa2,
+  "dg-class-a": #7aa2f7,
+  "dg-class-b": #ff9e64,
+  "wgc-bank": #1f2a22,
+  "wgc-river": #1f2b4a,
+  "wgc-wave": #3d59a1,
+  "wgc-boat": #e0af68,
+  "wgc-f": #ff9e64,
+  "wgc-w": #a9b1d6,
+  "wgc-g": #bb9af7,
+  "wgc-c": #9ece6a,
+  "wgc-letter": #1a1b26,
+  "ttt-line": #3b4261,
+  "ttt-x": #7aa2f7,
+  "ttt-o": #ff9e64,
+  "hanoi-small": #e0af68,
+  "hanoi-medium": #73daca,
+  "hanoi-large": #7aa2f7,
+);
+
+// Syntax colours for code listings (highlight.js classes; the light theme uses xcode.css).
+$code-dark: (
+  "keyword": #ff7b72, "built-in": #ffa657, "type": #ffa657, "title": #d2a8ff, "string": #a5d6ff, "number": #79c0ff,
+  "literal": #79c0ff, "comment": #8b949e, "attr": #79c0ff, "meta": #8b949e, "params": #c9d1d9, "variable": #ffa657,
+  "addition": #7ee787, "deletion": #ffa198,
+);
+
+$code-tokyo-night: (
+  "keyword": #bb9af7, "built-in": #7dcfff, "type": #2ac3de, "title": #7aa2f7, "string": #9ece6a, "number": #ff9e64,
+  "literal": #ff9e64, "comment": #565f89, "attr": #73daca, "meta": #7dcfff, "params": #e0af68, "variable": #c0caf5,
+  "addition": #9ece6a, "deletion": #f7768e,
+);
+
+@function rgb-triplet($color) {
+  @return #{color.channel($color, "red", $space: rgb)}, #{color.channel($color, "green", $space: rgb)}, #{color.channel($color, "blue", $space: rgb)};
+}
+
+@each $name, $palette, $code in ("dark", $dark, $code-dark), ("tokyo-night", $tokyo-night, $code-tokyo-night) {
+  :root[data-theme="#{$name}"] {
+    color-scheme: dark;
+
+    @each $token, $value in $palette {
+      --#{$token}: #{$value};
+    }
+
+    // Bootstrap's own variables (body text, headings, borders, links, tables and menus use them).
+    --bs-body-color: var(--text);
+    --bs-body-color-rgb: #{rgb-triplet(map.get($palette, text))};
+    --bs-body-bg: var(--surface);
+    --bs-body-bg-rgb: #{rgb-triplet(map.get($palette, surface))};
+    --bs-emphasis-color: var(--ink);
+    --bs-emphasis-color-rgb: #{rgb-triplet(map.get($palette, ink))};
+    --bs-heading-color: var(--ink);
+    --bs-secondary-color: var(--muted);
+    --bs-tertiary-color: var(--faint);
+    --bs-secondary-bg: var(--surface-2);
+    --bs-tertiary-bg: var(--surface-3);
+    --bs-border-color: var(--line);
+    --bs-border-color-translucent: var(--line);
+    --bs-link-color: var(--primary);
+    --bs-link-color-rgb: #{rgb-triplet(map.get($palette, primary))};
+    --bs-link-hover-color: var(--primary-strong);
+    --bs-link-hover-color-rgb: #{rgb-triplet(map.get($palette, primary-strong))};
+    --bs-code-color: var(--ink);
+    --bs-highlight-bg: var(--amber-line);
+
+    .hljs-keyword, .hljs-selector-tag, .hljs-doctag { color: map.get($code, keyword); }
+    .hljs-built_in, .hljs-class { color: map.get($code, built-in); }
+    .hljs-type, .hljs-title.class_ { color: map.get($code, type); }
+    .hljs-title, .hljs-section, .hljs-name, .hljs-selector-id, .hljs-selector-class { color: map.get($code, title); }
+    .hljs-string, .hljs-regexp, .hljs-link, .hljs-code { color: map.get($code, string); }
+    .hljs-number, .hljs-symbol, .hljs-bullet { color: map.get($code, number); }
+    .hljs-literal { color: map.get($code, literal); }
+    .hljs-comment, .hljs-quote { color: map.get($code, comment); }
+    .hljs-attr, .hljs-attribute, .hljs-tag { color: map.get($code, attr); }
+    .hljs-meta { color: map.get($code, meta); }
+    .hljs-params { color: map.get($code, params); }
+    .hljs-variable, .hljs-template-variable, .hljs-subst { color: map.get($code, variable); }
+    .hljs-addition { color: map.get($code, addition); background-color: transparent; }
+    .hljs-deletion { color: map.get($code, deletion); background-color: transparent; }
+  }
+}
+
+:root[data-theme="dark"],
+:root[data-theme="tokyo-night"] {
+  .navbar {
+    --bs-navbar-color: var(--muted);
+    --bs-navbar-hover-color: var(--ink);
+    --bs-navbar-active-color: var(--ink);
+  }
+
+  .btn-secondary {
+    --bs-btn-color: var(--text);
+    --bs-btn-bg: var(--surface);
+    --bs-btn-border-color: var(--line);
+    --bs-btn-hover-color: var(--ink);
+    --bs-btn-hover-bg: var(--surface-3);
+    --bs-btn-hover-border-color: var(--line-strong);
+    --bs-btn-active-color: var(--ink);
+    --bs-btn-active-bg: var(--line);
+    --bs-btn-active-border-color: var(--line-strong);
+  }
+
+  .page-hero {
+    background:
+      radial-gradient(60rem 22rem at 85% -20%, rgba(96, 165, 250, .14), transparent 70%),
+      radial-gradient(40rem 18rem at 0% 120%, rgba(255, 171, 14, .07), transparent 70%),
+      linear-gradient(180deg, var(--surface-2), var(--surface));
+  }
+
+  .page-hero__eyebrow {
+    background-color: var(--overlay-bg);
+  }
+
+  // Course pictures are mostly drawings on white or transparent backgrounds: they sit on a light sheet
+  // of paper, slightly dimmed, instead of glaring (or vanishing) on the dark page.
+  .material img {
+    padding: .4rem;
+    background-color: #eef1f6;
+    border-radius: var(--radius-sm);
+    filter: brightness(.92);
+
+    // Photographs need no sheet.
+    &[src$=".jpg"], &[src$=".jpeg"] {
+      padding: 0;
+      background-color: transparent;
+    }
+  }
+}

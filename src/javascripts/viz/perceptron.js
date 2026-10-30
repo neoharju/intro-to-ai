@@ -237,7 +237,7 @@ export default function mountPerceptron(figure) {
     });
 
     if (last) {
-      ctx.strokeStyle = '#b45309';
+      ctx.strokeStyle = COLORS.amber;
       ctx.lineWidth = 2.5;
       ctx.beginPath();
       ctx.arc(sx(last.point.x), sy(last.point.y), 12, 0, Math.PI * 2);

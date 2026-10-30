@@ -4,10 +4,10 @@ const PEOPLE = 1000;
 const PRIORS = [0.001, 0.002, 0.005, 0.01, 0.02, 0.05, 0.1, 0.2, 0.3, 0.5];
 
 const COLOR = {
-  truePositive: COLORS.orange,
-  falseNegative: COLORS.orange,
-  falsePositive: COLORS.blue,
-  trueNegative: '#dfe5ee',
+  get truePositive() { return COLORS.orange; },
+  get falseNegative() { return COLORS.orange; },
+  get falsePositive() { return COLORS.blue; },
+  get trueNegative() { return COLORS.quiet; },
 };
 
 const percent = (p, digits = 1) => `${fmt(100 * p, digits)}%`;
@@ -87,7 +87,7 @@ export default function mountBayes(figure) {
     stage,
     legend([
       { color: COLOR.truePositive, label: 'Has the condition, tests positive' },
-      { style: `background:#fff;box-shadow:inset 0 0 0 2px ${COLOR.falseNegative}`, label: 'Has the condition, tests negative' },
+      { style: `background:var(--surface);box-shadow:inset 0 0 0 2px ${COLOR.falseNegative}`, label: 'Has the condition, tests negative' },
       { color: COLOR.falsePositive, label: 'No condition, tests positive' },
       { color: COLOR.trueNegative, label: 'No condition, tests negative' },
     ]),

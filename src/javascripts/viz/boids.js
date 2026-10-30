@@ -1,5 +1,6 @@
 import {
-  button, createCanvas, createLoop, createRandom, el, fmt, frame, playButton, prefersReducedMotion, slider, stat,
+  COLORS, button, createCanvas, createLoop, createRandom, el, fmt, frame, playButton,
+  prefersReducedMotion, slider, stat,
 } from './lib';
 
 const MAX_SPEED = 2.2;
@@ -181,7 +182,7 @@ export default function mountBoids(figure) {
       ctx.lineTo(-3, 0);
       ctx.lineTo(-5, -3.6);
       ctx.closePath();
-      ctx.fillStyle = '#2a78d6';
+      ctx.fillStyle = COLORS.blue;
       ctx.fill();
       ctx.restore();
     });

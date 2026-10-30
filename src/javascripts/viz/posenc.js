@@ -17,7 +17,7 @@ export default function mountPositionalEncoding(figure) {
   let dim = 4;
   let hover = { pos: 10, dim: 4 };
 
-  const stage = el('div', { class: 'vz-stage', style: 'background:#fff;padding:.4rem' });
+  const stage = el('div', { class: 'vz-stage', style: 'background:var(--surface);padding:.4rem' });
   const view = createCanvas(stage, {
     aspect: 0.5,
     minHeight: 180,

@@ -12,10 +12,10 @@
   border-bottom: 1px solid var(--line);
 
   &.bg-white {
-    background-color: rgba(255, 255, 255, .86) !important;
+    background-color: var(--nav-bg) !important;
 
     @supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
-      background-color: rgba(255, 255, 255, .72) !important;
+      background-color: var(--nav-bg-blur) !important;
       -webkit-backdrop-filter: saturate(180%) blur(14px);
       backdrop-filter: saturate(180%) blur(14px);
     }
@@ -162,5 +162,26 @@
     transform: scaleX(0);
     transform-origin: 0 50%;
     will-change: transform;
+  }
+}
+
+// The colour theme menu (theme-menu.js): the toggle shows the current theme; the menu marks the choice.
+.theme-menu__item {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+
+  .fa {
+    color: var(--muted);
+  }
+
+  .theme-menu__check {
+    margin-left: auto;
+    color: var(--primary);
+    visibility: hidden;
+  }
+
+  &[aria-pressed="true"] .theme-menu__check {
+    visibility: visible;
   }
 }

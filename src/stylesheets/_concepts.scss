@@ -1,0 +1,111 @@
+// The concept cards, term table, reasoning example, numbered questions and AGI aspects of Week 1
+// ("What is AI?"). They used to be an inline <style> in the page with fixed light colours; the
+// tokens make them follow the theme.
+.concept-matrix {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 1.25rem 0 1.75rem;
+}
+.concept-card {
+  border: 1px solid var(--line);
+  border-left: 5px solid var(--primary);
+  border-radius: 4px;
+  padding: 1rem 1.1rem;
+  background: var(--surface-2);
+}
+.concept-card h3 {
+  margin: 0 0 .45rem;
+  font-size: 1.15rem;
+}
+.concept-card p {
+  margin: .35rem 0;
+}
+.concept-card__label {
+  color: var(--muted);
+  font-size: .88rem;
+  font-weight: 700;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+}
+.term-list {
+  margin: 1.25rem 0 1.75rem;
+}
+.term-row {
+  display: grid;
+  grid-template-columns: minmax(10rem, 1fr) minmax(14rem, 1.65fr) minmax(14rem, 1.65fr);
+  gap: 1rem;
+  padding: 1rem;
+  border-bottom: 1px solid var(--line);
+}
+.term-row:first-child {
+  border-top: 4px solid var(--primary);
+  background: var(--primary-soft);
+}
+.term-row__heading {
+  font-weight: 700;
+  color: var(--ink);
+}
+.reasoning-example {
+  border: 1px solid var(--line-strong);
+  border-left: 6px solid var(--green);
+  padding: 1rem 1.2rem;
+  margin: 1.25rem 0;
+  background: var(--green-soft);
+}
+.reasoning-step {
+  margin: .65rem 0;
+}
+.question-sequence {
+  counter-reset: question;
+  margin: 1.25rem 0 1.75rem;
+}
+.question-sequence > div {
+  counter-increment: question;
+  position: relative;
+  margin: .8rem 0;
+  padding: .85rem 1rem .85rem 3.5rem;
+  border-left: 5px solid var(--primary);
+  background: var(--surface-2);
+}
+.question-sequence > div::before {
+  content: counter(question);
+  position: absolute;
+  left: 1rem;
+  top: .75rem;
+  color: var(--primary);
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+.agi-aspects {
+  margin: 1.25rem 0 1.75rem;
+}
+.agi-aspect {
+  display: grid;
+  grid-template-columns: minmax(9rem, .8fr) minmax(16rem, 2fr) minmax(12rem, 1.25fr);
+  gap: 1rem;
+  padding: .9rem 1rem;
+  border-bottom: 1px solid var(--line);
+}
+.agi-aspect:first-child {
+  border-top: 4px solid var(--green);
+  background: var(--green-soft);
+}
+.agi-aspect__name {
+  font-weight: 700;
+  color: var(--ink);
+}
+.agi-aspect__source {
+  color: var(--muted);
+  font-size: .95rem;
+}
+@media (max-width: 760px) {
+  .agi-aspect { grid-template-columns: 1fr; gap: .3rem; }
+}
+@media (max-width: 760px) {
+  .concept-matrix { grid-template-columns: 1fr; }
+  .term-row { grid-template-columns: 1fr; gap: .35rem; }
+  .term-row:first-child { display: none; }
+  .term-row__meaning::before { content: "Meaning: "; font-weight: 700; }
+  .term-row__example::before { content: "Example or qualification: "; font-weight: 700; }
+}

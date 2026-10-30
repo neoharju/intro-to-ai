@@ -3,8 +3,10 @@
 // generator, an animation loop that only runs while its figure is on screen, and a small line chart
 // with a hover/keyboard read-out.
 
-// Categorical slots (validated for colour-vision deficiencies, up to three classes in one plot), a
-// sequential blue ramp and a diverging blue-grey-red pair.
+// Categorical slots (validated for colour-vision deficiencies, up to three classes in one plot), the
+// neutrals, the colours of roles (walls, mud, highlights), and the ends of a sequential blue ramp. The
+// values are the light theme's; readColors() replaces them with the CSS tokens of the current theme
+// (see _tokens.scss and _themes.scss) when the page loads and whenever the theme changes.
 export const COLORS = {
   blue: '#2a78d6',
   orange: '#eb6834',
@@ -20,19 +22,92 @@ export const COLORS = {
   axis: '#cbd5e1',
   surface: '#ffffff',
   surface2: '#f8fafc',
+  surface3: '#f1f5f9',
   neutral: '#f0efec',
+  amber: '#b45309',
+  amberSoft: '#fffbeb',
+  amberLine: '#fde68a',
+  primarySoft: '#eff4ff',
+  wall: '#334155',
+  mud: '#eadfcf',
+  mudHatch: '#cdb999',
+  quiet: '#dfe5ee',
+  rampStart: '#f1f6fe',
+  rampEnd: '#0d366b',
 };
+
+const TOKENS = {
+  blue: '--viz-blue',
+  orange: '--viz-orange',
+  aqua: '--viz-aqua',
+  yellow: '--viz-yellow',
+  violet: '--viz-violet',
+  red: '--viz-red',
+  ink: '--ink',
+  text: '--text',
+  muted: '--muted',
+  faint: '--faint',
+  grid: '--line',
+  axis: '--line-strong',
+  surface: '--surface',
+  surface2: '--surface-2',
+  surface3: '--surface-3',
+  neutral: '--viz-neutral',
+  amber: '--viz-amber',
+  amberSoft: '--amber-soft',
+  amberLine: '--amber-line',
+  primarySoft: '--primary-soft',
+  wall: '--viz-wall',
+  mud: '--viz-mud',
+  mudHatch: '--viz-mud-hatch',
+  quiet: '--viz-quiet',
+  rampStart: '--viz-ramp-start',
+  rampEnd: '--viz-ramp-end',
+};
+
+const LIGHT = { ...COLORS };
 
 export const CLASS_COLORS = [COLORS.blue, COLORS.orange, COLORS.aqua];
 
+// The light theme's ramp, tuned by eye; the dark themes go straight from a dark start to a bright blue.
+// Labels on ramp colours choose their own colour with textOn().
 const BLUE_RAMP = ['#cde2fb', '#b7d3f6', '#9ec5f4', '#86b6ef', '#6da7ec', '#5598e7', '#3987e5',
   '#2a78d6', '#256abf', '#1c5cab', '#184f95', '#104281', '#0d366b'];
+
+let dark = false;
 
 function hexToRgb(hex) {
   const value = parseInt(hex.slice(1), 16);
 
   return [(value >> 16) & 255, (value >> 8) & 255, value & 255];
 }
+
+// Relative luminance (WCAG) of "#rrggbb" or "rgb(r, g, b)".
+function luminance(color) {
+  const channels = color.startsWith('#') ? hexToRgb(color) : (color.match(/\d+(\.\d+)?/g) || [0, 0, 0]).slice(0, 3).map(Number);
+  const [r, g, b] = channels.map(v => {
+    const c = v / 255;
+
+    return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
+  });
+
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+}
+
+// Reads the colours of the current theme from the CSS tokens (each a six-digit hex colour).
+function readColors() {
+  const style = window.getComputedStyle(document.documentElement);
+
+  Object.entries(TOKENS).forEach(([key, token]) => {
+    const value = style.getPropertyValue(token).trim().toLowerCase();
+
+    COLORS[key] = /^#[0-9a-f]{6}$/.test(value) ? value : LIGHT[key];
+  });
+  CLASS_COLORS.splice(0, CLASS_COLORS.length, COLORS.blue, COLORS.orange, COLORS.aqua);
+  dark = luminance(COLORS.surface) < 0.2;
+}
+
+readColors();
 
 function mix(a, b, t) {
   const ca = hexToRgb(a);
@@ -43,8 +118,12 @@ function mix(a, b, t) {
 }
 
 // t in [0, 1] -> a colour on the blue ramp (0 is the near-surface step).
-export function sequential(t, from = '#f1f6fe') {
+export function sequential(t, from = COLORS.rampStart) {
   const x = Math.min(1, Math.max(0, t));
+
+  if (dark) {
+    return mix(from, COLORS.rampEnd, x);
+  }
 
   if (x < 1 / BLUE_RAMP.length) {
     return mix(from, BLUE_RAMP[0], x * BLUE_RAMP.length);
@@ -61,6 +140,16 @@ export function diverging(t, negative = COLORS.blue, positive = COLORS.red) {
   const x = Math.min(1, Math.max(-1, t));
 
   return x < 0 ? mix(COLORS.neutral, negative, -x) : mix(COLORS.neutral, positive, x);
+}
+
+// "#rrggbb" -> [r, g, b], for pixel-level drawing (ImageData).
+export function rgbOf(hex) {
+  return hexToRgb(hex);
+}
+
+// White or near-black text, whichever reads better on the given background colour.
+export function textOn(color) {
+  return luminance(color) > 0.25 ? '#0f172a' : '#ffffff';
 }
 
 export function withAlpha(hex, alpha) {
@@ -311,10 +400,26 @@ export function stat(label, initial = '–') {
   };
 }
 
+// items: [{ color, label }] or [{ style, label }]. A style that depends on derived colours (a ramp, a
+// gradient) can be a function: it is evaluated again when the theme changes.
 export function legend(items) {
-  return el('ul', { class: 'vz-legend' }, items.map(item => el('li', {},
-    el('i', { 'aria-hidden': 'true', style: item.style || `background:${item.color}` }),
-    item.label)));
+  return el('ul', { class: 'vz-legend' }, items.map(item => {
+    const swatch = el('i', { 'aria-hidden': 'true', style: swatchStyle(item) });
+
+    if (typeof item.style === 'function') {
+      themed.swatches.add({ swatch, item });
+    }
+
+    return el('li', {}, swatch, item.label);
+  }));
+}
+
+function swatchStyle(item) {
+  if (typeof item.style === 'function') {
+    return item.style();
+  }
+
+  return item.style || `background:${item.color}`;
 }
 
 // --- Figure frame -----------------------------------------------------------------------------
@@ -353,6 +458,60 @@ export function mountAll(builders) {
   });
 }
 
+// --- Theme changes ----------------------------------------------------------------------------
+
+// When the reader changes the colour theme (theme.js), the figures follow without losing their state:
+// the canvases are redrawn, the palette colours written into the figures' markup (SVG fills, legend
+// swatches) are swapped for the new ones, and figures that use derived colours re-render.
+const themed = { canvases: new Set(), swatches: new Set(), listeners: new Set() };
+
+export function onThemeChange(listener) {
+  themed.listeners.add(listener);
+}
+
+function recolor(root, swaps) {
+  const swap = value => value.replace(/#([0-9a-f]{6})([0-9a-f]{2})?(?![0-9a-f])/gi, (match, hex, alpha) => {
+    const next = swaps.get(`#${hex.toLowerCase()}`);
+
+    return next ? next + (alpha || '') : match;
+  });
+
+  [root, ...root.querySelectorAll('[style], [fill], [stroke]')].forEach(node => {
+    ['style', 'fill', 'stroke'].forEach(name => {
+      const value = node.getAttribute(name);
+
+      if (value && value.includes('#')) {
+        const next = swap(value);
+
+        if (next !== value) {
+          node.setAttribute(name, next);
+        }
+      }
+    });
+  });
+}
+
+document.addEventListener('introai:themechange', () => {
+  const previous = { ...COLORS };
+
+  readColors();
+
+  const swaps = new Map(Object.keys(COLORS).filter(key => previous[key] !== COLORS[key]).map(key => [previous[key], COLORS[key]]));
+
+  if (!swaps.size) {
+    return;
+  }
+
+  document.querySelectorAll('figure.viz').forEach(figure => recolor(figure, swaps));
+  themed.swatches.forEach(({ swatch, item }) => swatch.setAttribute('style', item.style()));
+  themed.canvases.forEach(({ view, onResize }) => {
+    if (view.width) {
+      onResize(view);
+    }
+  });
+  themed.listeners.forEach(listener => listener());
+});
+
 // --- Canvas -----------------------------------------------------------------------------------
 
 // A canvas that fills the width of `parent` and keeps a height of width * aspect (clamped). Drawing
@@ -363,6 +522,10 @@ export function createCanvas(parent, { aspect = 0.5, minHeight = 180, maxHeight 
   const view = { canvas, ctx, width: 0, height: 0 };
 
   parent.append(canvas);
+
+  if (onResize) {
+    themed.canvases.add({ view, onResize });
+  }
 
   // The first sizing does not call onResize: the caller has not received `view` yet.
   const resize = (notify = true) => {

@@ -36,6 +36,7 @@ Compared with the original `gh-pages` branch (commit `b9dedeb`):
   week, from search algorithms and alpha-beta pruning to attention and Q-learning. The figures run the
   algorithms described in the text, in the browser; their code is in `src/javascripts/viz/`.
 - **Practice quiz:** `quiz/` has 20 multiple-choice questions for each week, each with an explanation.
+- **Colour themes:** light, dark and Tokyo Night, following the device's setting by default.
 
 ## Preview locally
 
@@ -55,6 +56,17 @@ Formulas are written in TeX in the pages, inline in `<span class="math">…</spa
 their own in `<div class="math">…</div>` (add `math--key` to set a key equation on a card). Pages with formulas
 load `javascripts/math.js`, which typesets them with KaTeX. Pseudocode listings use
 `<pre class="sh_pseudo"><code>…</code></pre>`, highlighted by the grammar in `src/javascripts/pseudocode.js`.
+
+## Colour themes
+
+The pages have a light, a dark and a Tokyo Night theme, chosen from the menu in the navigation bar ("Match the
+system" follows the device). `javascripts/theme.js`, loaded in the `<head>` of every page, applies the choice
+before the page is drawn and remembers it in `localStorage`. The colours are CSS custom properties: the light
+values in `src/stylesheets/_tokens.scss`, the other themes in `src/stylesheets/_themes.scss`, so components
+should use the tokens instead of fixed colours. The interactive figures take their colours from `COLORS` in
+`src/javascripts/viz/lib.js`, which reads the tokens and updates them when the theme changes: canvases made
+with `createCanvas` redraw by themselves, and a figure that uses derived colours (`sequential`, `diverging`)
+re-renders with `onThemeChange(render)`.
 
 ## The practice quiz
 

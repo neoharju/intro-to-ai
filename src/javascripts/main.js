@@ -13,6 +13,7 @@ import TableOfContents from './table-of-contents';
 import Navigation from './navigation';
 import mountUi from './ui';
 import mountHero from './hero';
+import mountThemeMenu from './theme-menu';
 
 // The page modules use the jQuery globals, as they did when jQuery came from a CDN.
 window.$ = window.jQuery = $;
@@ -51,4 +52,5 @@ $(() => {
   highlightCode();
   mountUi();
   mountHero();
+  mountThemeMenu();
 });

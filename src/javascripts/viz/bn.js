@@ -187,8 +187,8 @@ export default function mountBayesNet(figure) {
 
       graph.append(svg('circle', {
         cx: x, cy: y, r: R,
-        fill: value === 1 ? COLORS.blue : '#ffffff',
-        stroke: active ? '#b45309' : value === null ? COLORS.axis : COLORS.blue,
+        fill: value === 1 ? COLORS.blue : COLORS.surface,
+        stroke: active ? COLORS.amber : value === null ? COLORS.axis : COLORS.blue,
         'stroke-width': active ? 3 : 1.6,
       }));
       graph.append(svg('text', {
@@ -202,7 +202,7 @@ export default function mountBayesNet(figure) {
           : `query ${query.query[name] ? name : `¬${name}`}`;
         const width = 12 + tag.length * 6.4;
 
-        graph.append(svg('rect', { x: x - width / 2, y: y - R - 19, width, height: 17, rx: 8.5, fill: '#fffbeb', stroke: '#fde68a' }));
+        graph.append(svg('rect', { x: x - width / 2, y: y - R - 19, width, height: 17, rx: 8.5, fill: COLORS.amberSoft, stroke: COLORS.amberLine }));
         graph.append(svg('text', { x, y: y - R - 10, class: 'vz-bn__tag' }, tag));
       }
     });
