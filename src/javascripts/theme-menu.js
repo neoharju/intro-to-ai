@@ -1,13 +1,12 @@
-// The colour theme menu in the navigation bar: match the system, light, dark or Tokyo Night. The
+// The colour theme menu in the navigation bar: match the system, light or dark. The
 // choice itself is applied and remembered by theme.js (in the <head>); this only offers it. The menu is
 // a Bootstrap dropdown, like the menu of the narrow navigation bar.
 const OPTIONS = [
   { choice: 'system', label: 'Match the system', icon: 'fa-desktop' },
   { choice: 'light', label: 'Light', icon: 'fa-sun' },
   { choice: 'dark', label: 'Dark', icon: 'fa-moon' },
-  { choice: 'tokyo-night', label: 'Tokyo Night', icon: 'fa-palette' },
 ];
-const THEME_ICONS = { light: 'fa-sun', dark: 'fa-moon', 'tokyo-night': 'fa-palette' };
+const THEME_ICONS = { light: 'fa-sun', dark: 'fa-moon' };
 
 function icon(name) {
   const node = document.createElement('i');

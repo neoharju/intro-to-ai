@@ -1,11 +1,11 @@
 // Applies the reader's colour theme before the page is drawn: this script is loaded in the <head> of
-// every page, so a page never flashes light before turning dark. The choice is "system", "light",
-// "dark" or "tokyo-night"; "system" follows the light or dark mode of the device. It is remembered in
+// every page, so a page never flashes light before turning dark. The choice is "system", "light" or
+// "dark"; "system" follows the light or dark mode of the device. It is remembered in
 // localStorage when the browser allows it. The menu in the navigation bar (theme-menu.js) changes it
 // through window.IntroAI.theme, and every change is announced with an "introai:themechange" event,
 // which the interactive figures use to redraw themselves.
 const KEY = 'introai-theme';
-const CHOICES = ['system', 'light', 'dark', 'tokyo-night'];
+const CHOICES = ['system', 'light', 'dark'];
 const root = document.documentElement;
 const media = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
 let choice = 'system';
@@ -15,6 +15,9 @@ try {
 
   if (CHOICES.includes(saved)) {
     choice = saved;
+  } else if (saved === 'tokyo-night') {
+    // The Tokyo Night theme was removed; its readers get the dark theme.
+    choice = 'dark';
   }
 } catch (error) {
   // Blocked storage: follow the system.

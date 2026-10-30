@@ -36,7 +36,7 @@ Compared with the original `gh-pages` branch (commit `b9dedeb`):
   week, from search algorithms and alpha-beta pruning to attention and Q-learning. The figures run the
   algorithms described in the text, in the browser; their code is in `src/javascripts/viz/`.
 - **Practice quiz:** `quiz/` has 20 multiple-choice questions for each week, each with an explanation.
-- **Colour themes:** light, dark and Tokyo Night, following the device's setting by default.
+- **Colour themes:** light and dark, following the device's setting by default.
 - **Zen mode:** the material without the navigation bar, page header, lecture and deadline boxes and footer
   (the lotus button or the Z key; Z or Esc leaves it).
 
@@ -61,10 +61,10 @@ load `javascripts/math.js`, which typesets them with KaTeX. Pseudocode listings 
 
 ## Colour themes
 
-The pages have a light, a dark and a Tokyo Night theme, chosen from the menu in the navigation bar ("Match the
-system" follows the device). `javascripts/theme.js`, loaded in the `<head>` of every page, applies the choice
+The pages have a light and a dark theme, chosen from the menu in the navigation bar ("Match the system"
+follows the device). `javascripts/theme.js`, loaded in the `<head>` of every page, applies the choice
 before the page is drawn and remembers it in `localStorage`. The colours are CSS custom properties: the light
-values in `src/stylesheets/_tokens.scss`, the other themes in `src/stylesheets/_themes.scss`, so components
+values in `src/stylesheets/_tokens.scss`, the dark ones in `src/stylesheets/_themes.scss`, so components
 should use the tokens instead of fixed colours. The interactive figures take their colours from `COLORS` in
 `src/javascripts/viz/lib.js`, which reads the tokens and updates them when the theme changes: canvases made
 with `createCanvas` redraw by themselves, and a figure that uses derived colours (`sequential`, `diverging`)

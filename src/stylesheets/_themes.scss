@@ -1,10 +1,10 @@
 @use "sass:color";
 @use "sass:map";
 
-// Dark and Tokyo Night themes. javascripts/theme.js, loaded in the <head> of every page, sets
-// data-theme on <html> to "light", "dark" or "tokyo-night" before anything is drawn, so a page never
-// flashes in the wrong colours; the light theme is the set of tokens in _tokens.scss. A theme is a map
-// of token values: the components read the tokens, so most of them need nothing more. The rules at
+// The dark theme. javascripts/theme.js, loaded in the <head> of every page, sets data-theme on <html>
+// to "light" or "dark" before anything is drawn, so a page never flashes in the wrong colours; the light
+// theme is the set of tokens in _tokens.scss. The dark theme is a map of token values: the components
+// read the tokens, so most of them need nothing more. The rules at
 // the end cover what tokens cannot: Bootstrap's own variables, the code highlighting, and pictures.
 //
 // Every token that viz/lib.js reads into COLORS must have a distinct value within a theme: when the
@@ -94,91 +94,6 @@ $dark: (
   "hanoi-large": #60a5fa,
 );
 
-// Tokyo Night: the colours of the "night" variant of the Tokyo Night editor theme.
-$tokyo-night: (
-  "ink": #c0caf5,
-  "text": #a9b1d6,
-  "muted": #787c99,
-  "faint": #565f89,
-  "line": #292e42,
-  "line-strong": #3b4261,
-  "surface": #1a1b26,
-  "surface-2": #1f2335,
-  "surface-3": #24283b,
-  "primary": #7aa2f7,
-  "primary-strong": #7dcfff,
-  "primary-soft": #222a46,
-  "primary-line": #3d59a1,
-  "orange": #ff9e64,
-  "orange-soft": #2e2520,
-  "orange-line": #7a4d35,
-  "amber": #e0af68,
-  "amber-soft": #2b2721,
-  "amber-line": #6e5634,
-  "green": #9ece6a,
-  "green-soft": #222c22,
-  "red": #f7768e,
-  "red-soft": #2e1f2a,
-  "violet": #bb9af7,
-  "violet-soft": #262340,
-  "violet-line": #57479a,
-  "on-accent": #1a1b26,
-  "selection": #33467c,
-  "hint-bg": #1e2131,
-  "hint-line": #2f3549,
-  "nav-bg": rgba(26, 27, 38, .86),
-  "nav-bg-blur": rgba(26, 27, 38, .72),
-  "overlay-bg": rgba(31, 35, 53, .94),
-  "shadow-sm": (0 1px 2px rgba(0, 0, 0, .4)),
-  "shadow": (0 1px 2px rgba(0, 0, 0, .3), 0 10px 30px -18px rgba(0, 0, 0, .65)),
-  "shadow-lg": (0 2px 6px rgba(0, 0, 0, .35), 0 24px 48px -20px rgba(0, 0, 0, .75)),
-  "viz-blue": #7aa2f7,
-  "viz-orange": #ff9e64,
-  "viz-aqua": #73daca,
-  "viz-yellow": #e5c07b,
-  "viz-violet": #bb9af7,
-  "viz-red": #f7768e,
-  "viz-neutral": #262b40,
-  "viz-amber": #e0af68,
-  "viz-amber-ink": #e0af68,
-  "viz-wall": #7a82ac,
-  "viz-mud": #3b3428,
-  "viz-mud-hatch": #5e5340,
-  "viz-quiet": #2f344d,
-  "viz-ramp-start": #232a47,
-  "viz-ramp-end": #89b4fa,
-  "dg-blue-fill": #1f2b4a,
-  "dg-blue-line": #7aa2f7,
-  "dg-violet-fill": #2a2443,
-  "dg-violet-line": #bb9af7,
-  "dg-amber-fill": #2e2a22,
-  "dg-amber-line": #e0af68,
-  "dg-pink-fill": #33222c,
-  "dg-pink-line": #f7768e,
-  "dg-green-fill": #24301f,
-  "dg-green-line": #9ece6a,
-  "dg-grey-fill": #24283b,
-  "dg-grey-line": #737aa2,
-  "dg-arrow": #737aa2,
-  "dg-class-a": #7aa2f7,
-  "dg-class-b": #ff9e64,
-  "wgc-bank": #1f2a22,
-  "wgc-river": #1f2b4a,
-  "wgc-wave": #3d59a1,
-  "wgc-boat": #e0af68,
-  "wgc-f": #ff9e64,
-  "wgc-w": #a9b1d6,
-  "wgc-g": #bb9af7,
-  "wgc-c": #9ece6a,
-  "wgc-letter": #1a1b26,
-  "ttt-line": #3b4261,
-  "ttt-x": #7aa2f7,
-  "ttt-o": #ff9e64,
-  "hanoi-small": #e0af68,
-  "hanoi-medium": #73daca,
-  "hanoi-large": #7aa2f7,
-);
-
 // Syntax colours for code listings (highlight.js classes; the light theme uses xcode.css).
 $code-dark: (
   "keyword": #ff7b72, "built-in": #ffa657, "type": #ffa657, "title": #d2a8ff, "string": #a5d6ff, "number": #79c0ff,
@@ -186,64 +101,55 @@ $code-dark: (
   "addition": #7ee787, "deletion": #ffa198,
 );
 
-$code-tokyo-night: (
-  "keyword": #bb9af7, "built-in": #7dcfff, "type": #2ac3de, "title": #7aa2f7, "string": #9ece6a, "number": #ff9e64,
-  "literal": #ff9e64, "comment": #565f89, "attr": #73daca, "meta": #7dcfff, "params": #e0af68, "variable": #c0caf5,
-  "addition": #9ece6a, "deletion": #f7768e,
-);
-
 @function rgb-triplet($color) {
   @return #{color.channel($color, "red", $space: rgb)}, #{color.channel($color, "green", $space: rgb)}, #{color.channel($color, "blue", $space: rgb)};
 }
 
-@each $name, $palette, $code in ("dark", $dark, $code-dark), ("tokyo-night", $tokyo-night, $code-tokyo-night) {
-  :root[data-theme="#{$name}"] {
-    color-scheme: dark;
+:root[data-theme="dark"] {
+  color-scheme: dark;
 
-    @each $token, $value in $palette {
-      --#{$token}: #{$value};
-    }
-
-    // Bootstrap's own variables (body text, headings, borders, links, tables and menus use them).
-    --bs-body-color: var(--text);
-    --bs-body-color-rgb: #{rgb-triplet(map.get($palette, text))};
-    --bs-body-bg: var(--surface);
-    --bs-body-bg-rgb: #{rgb-triplet(map.get($palette, surface))};
-    --bs-emphasis-color: var(--ink);
-    --bs-emphasis-color-rgb: #{rgb-triplet(map.get($palette, ink))};
-    --bs-heading-color: var(--ink);
-    --bs-secondary-color: var(--muted);
-    --bs-tertiary-color: var(--faint);
-    --bs-secondary-bg: var(--surface-2);
-    --bs-tertiary-bg: var(--surface-3);
-    --bs-border-color: var(--line);
-    --bs-border-color-translucent: var(--line);
-    --bs-link-color: var(--primary);
-    --bs-link-color-rgb: #{rgb-triplet(map.get($palette, primary))};
-    --bs-link-hover-color: var(--primary-strong);
-    --bs-link-hover-color-rgb: #{rgb-triplet(map.get($palette, primary-strong))};
-    --bs-code-color: var(--ink);
-    --bs-highlight-bg: var(--amber-line);
-
-    .hljs-keyword, .hljs-selector-tag, .hljs-doctag { color: map.get($code, keyword); }
-    .hljs-built_in, .hljs-class { color: map.get($code, built-in); }
-    .hljs-type, .hljs-title.class_ { color: map.get($code, type); }
-    .hljs-title, .hljs-section, .hljs-name, .hljs-selector-id, .hljs-selector-class { color: map.get($code, title); }
-    .hljs-string, .hljs-regexp, .hljs-link, .hljs-code { color: map.get($code, string); }
-    .hljs-number, .hljs-symbol, .hljs-bullet { color: map.get($code, number); }
-    .hljs-literal { color: map.get($code, literal); }
-    .hljs-comment, .hljs-quote { color: map.get($code, comment); }
-    .hljs-attr, .hljs-attribute, .hljs-tag { color: map.get($code, attr); }
-    .hljs-meta { color: map.get($code, meta); }
-    .hljs-params { color: map.get($code, params); }
-    .hljs-variable, .hljs-template-variable, .hljs-subst { color: map.get($code, variable); }
-    .hljs-addition { color: map.get($code, addition); background-color: transparent; }
-    .hljs-deletion { color: map.get($code, deletion); background-color: transparent; }
+  @each $token, $value in $dark {
+    --#{$token}: #{$value};
   }
+
+  // Bootstrap's own variables (body text, headings, borders, links, tables and menus use them).
+  --bs-body-color: var(--text);
+  --bs-body-color-rgb: #{rgb-triplet(map.get($dark, text))};
+  --bs-body-bg: var(--surface);
+  --bs-body-bg-rgb: #{rgb-triplet(map.get($dark, surface))};
+  --bs-emphasis-color: var(--ink);
+  --bs-emphasis-color-rgb: #{rgb-triplet(map.get($dark, ink))};
+  --bs-heading-color: var(--ink);
+  --bs-secondary-color: var(--muted);
+  --bs-tertiary-color: var(--faint);
+  --bs-secondary-bg: var(--surface-2);
+  --bs-tertiary-bg: var(--surface-3);
+  --bs-border-color: var(--line);
+  --bs-border-color-translucent: var(--line);
+  --bs-link-color: var(--primary);
+  --bs-link-color-rgb: #{rgb-triplet(map.get($dark, primary))};
+  --bs-link-hover-color: var(--primary-strong);
+  --bs-link-hover-color-rgb: #{rgb-triplet(map.get($dark, primary-strong))};
+  --bs-code-color: var(--ink);
+  --bs-highlight-bg: var(--amber-line);
+
+  .hljs-keyword, .hljs-selector-tag, .hljs-doctag { color: map.get($code-dark, keyword); }
+  .hljs-built_in, .hljs-class { color: map.get($code-dark, built-in); }
+  .hljs-type, .hljs-title.class_ { color: map.get($code-dark, type); }
+  .hljs-title, .hljs-section, .hljs-name, .hljs-selector-id, .hljs-selector-class { color: map.get($code-dark, title); }
+  .hljs-string, .hljs-regexp, .hljs-link, .hljs-code { color: map.get($code-dark, string); }
+  .hljs-number, .hljs-symbol, .hljs-bullet { color: map.get($code-dark, number); }
+  .hljs-literal { color: map.get($code-dark, literal); }
+  .hljs-comment, .hljs-quote { color: map.get($code-dark, comment); }
+  .hljs-attr, .hljs-attribute, .hljs-tag { color: map.get($code-dark, attr); }
+  .hljs-meta { color: map.get($code-dark, meta); }
+  .hljs-params { color: map.get($code-dark, params); }
+  .hljs-variable, .hljs-template-variable, .hljs-subst { color: map.get($code-dark, variable); }
+  .hljs-addition { color: map.get($code-dark, addition); background-color: transparent; }
+  .hljs-deletion { color: map.get($code-dark, deletion); background-color: transparent; }
 }
 
-:root[data-theme="dark"],
-:root[data-theme="tokyo-night"] {
+:root[data-theme="dark"] {
   .navbar {
     --bs-navbar-color: var(--muted);
     --bs-navbar-hover-color: var(--ink);
