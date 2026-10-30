@@ -70,14 +70,20 @@ if (media) {
   }
 }
 
-// Zen mode (zen.js) is restored here too, so that a page opened in zen mode never shows its navigation
-// bar for a moment.
+// Zen mode (zen.js) and the text size (font-size-menu.js) are restored here too, so that a page never
+// shows its navigation bar for a moment in zen mode, nor jumps from the normal to a larger text size.
 try {
   if (window.localStorage.getItem('introai-zen') === 'on') {
     root.setAttribute('data-zen', 'on');
   }
+
+  const size = window.localStorage.getItem('introai-font-size');
+
+  if (size === 'large' || size === 'xlarge') {
+    root.setAttribute('data-font-size', size);
+  }
 } catch (error) {
-  // Blocked storage: no zen mode to restore.
+  // Blocked storage: nothing to restore.
 }
 
 window.IntroAI = Object.assign(window.IntroAI || {}, {

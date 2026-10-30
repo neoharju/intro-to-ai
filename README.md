@@ -37,6 +37,7 @@ Compared with the original `gh-pages` branch (commit `b9dedeb`):
   algorithms described in the text, in the browser; their code is in `src/javascripts/viz/`.
 - **Practice quiz:** `quiz/` has 20 multiple-choice questions for each week, each with an explanation.
 - **Colour themes:** light and dark, following the device's setting by default.
+- **Text size:** normal, large or extra large reading text, from the "Aa" menu in the navigation bar.
 - **Zen mode:** the material without the navigation bar, page header, lecture and deadline boxes and footer
   (the lotus button or the Z key; Z or Esc leaves it).
 
@@ -69,6 +70,13 @@ should use the tokens instead of fixed colours. The interactive figures take the
 `src/javascripts/viz/lib.js`, which reads the tokens and updates them when the theme changes: canvases made
 with `createCanvas` redraw by themselves, and a figure that uses derived colours (`sequential`, `diverging`)
 re-renders with `onThemeChange(render)`.
+
+## Text size
+
+The "Aa" menu (`src/javascripts/font-size-menu.js`) sets `data-font-size="large"` or `"xlarge"` on `<html>`,
+which raises the root font size from 16px to 18px or 20px; `theme.js` restores it before the page is drawn.
+Everything in the page is sized in `rem`, so it follows. The navigation bar (`_navbar.scss`) is sized in `px`
+on purpose, so that it keeps its size and still fits on one line.
 
 ## The practice quiz
 

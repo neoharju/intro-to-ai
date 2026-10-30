@@ -14,6 +14,7 @@ import Navigation from './navigation';
 import mountUi from './ui';
 import mountHero from './hero';
 import mountThemeMenu from './theme-menu';
+import mountFontSizeMenu from './font-size-menu';
 import mountZen from './zen';
 
 // The page modules use the jQuery globals, as they did when jQuery came from a CDN.
@@ -54,5 +55,6 @@ $(() => {
   mountUi();
   mountHero();
   mountThemeMenu();
+  mountFontSizeMenu();
   mountZen();
 });

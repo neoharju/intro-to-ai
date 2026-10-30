@@ -3,7 +3,7 @@
 // the top of the window. It is switched with the lotus button in the navigation bar or the Z key, and
 // left with the button in the corner, Z or Esc. theme.js restores it before the page is drawn; the
 // choice is remembered in localStorage when the browser allows it.
-import { navOffset, prefersReducedMotion } from './utils';
+import { prefersReducedMotion, readingAnchor } from './utils';
 
 const KEY = 'introai-zen';
 const root = document.documentElement;
@@ -27,20 +27,6 @@ function icon(name) {
   node.setAttribute('aria-hidden', 'true');
 
   return node;
-}
-
-// The element at the top of the reading area, and its distance from the top of the window, so that
-// the reader stays at the same place when the layout above it changes.
-function readingAnchor() {
-  const y = navOffset() + 8;
-  const material = document.getElementById('material');
-  let node = document.elementFromPoint(window.innerWidth / 2, y);
-
-  while (node && node.parentElement && node.parentElement !== material && node !== document.body) {
-    node = node.parentElement;
-  }
-
-  return node && material && material.contains(node) ? { node, top: node.getBoundingClientRect().top } : null;
 }
 
 export default function mountZen() {
@@ -70,7 +56,7 @@ export default function mountZen() {
   toast.className = 'zen-toast';
   toast.setAttribute('role', 'status');
 
-  buttons.insertBefore(toggle, buttons.querySelector('.theme-menu') || document.getElementById('table-of-contents-toggle'));
+  buttons.insertBefore(toggle, buttons.querySelector('.font-size-menu, .theme-menu') || document.getElementById('table-of-contents-toggle'));
   document.body.append(exit, toast);
 
   let toastTimer = 0;

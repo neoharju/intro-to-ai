@@ -43,7 +43,7 @@ export default function mountThemeMenu() {
 
     item.type = 'button';
     item.className = 'dropdown-item theme-menu__item';
-    item.append(icon(option.icon), document.createTextNode(option.label), icon('fa-check theme-menu__check'));
+    item.append(icon(option.icon), document.createTextNode(option.label), icon('fa-check menu-check'));
     item.addEventListener('click', () => theme.set(option.choice));
     menu.append(item);
 

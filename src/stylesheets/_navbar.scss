@@ -1,4 +1,5 @@
-// The navigation bar stays at the top of the window while the page scrolls.
+// The navigation bar stays at the top of the window while the page scrolls. It is sized in px, not rem,
+// so that it keeps its size when the reader chooses a larger text size (the page itself grows).
 .header-wrapper {
   position: sticky;
   top: 0;
@@ -8,7 +9,11 @@
 .navbar {
   position: relative;
   min-height: var(--nav-h);
-  padding: 0 1rem;
+  padding: 0 16px;
+  // Bootstrap sizes its navigation links and menus in rem.
+  --bs-navbar-nav-link-padding-x: 11.2px;
+  --bs-dropdown-font-size: 16px;
+  --bs-dropdown-min-width: 160px;
   border-bottom: 1px solid var(--line);
 
   &.bg-white {
@@ -23,17 +28,17 @@
 
   .navbar__buttons {
     display: flex;
-    gap: .5rem;
-    padding: .5rem 0;
+    gap: 8px;
+    padding: 8px 0;
 
     .btn {
       display: inline-flex;
       align-items: center;
-      gap: .45rem;
-      height: 2.25rem;
-      padding: 0 .8rem;
-      font-size: .875rem;
-      border-radius: .6rem;
+      gap: 7.2px;
+      height: 36px;
+      padding: 0 12.8px;
+      font-size: 14px;
+      border-radius: 9.6px;
     }
   }
 
@@ -56,11 +61,11 @@
 
   // Wide screens: centre the week links. Three columns (logo | links | buttons): the two outer columns
   // share the free space equally, so the links sit in the middle of the bar. On narrower screens the
-  // first column keeps 5rem and the buttons keep their full width, so nothing overlaps or wraps; the
+  // first column keeps 80px and the buttons keep their full width, so nothing overlaps or wraps; the
   // links then sit slightly off centre.
   @include media-breakpoint-up(lg) {
     display: grid;
-    grid-template-columns: minmax(5rem, 1fr) auto minmax(max-content, 1fr);
+    grid-template-columns: minmax(80px, 1fr) auto minmax(max-content, 1fr);
 
     .navbar-brand {
       grid-column: 1;
@@ -78,7 +83,7 @@
   }
 
   .navbar-nav {
-    gap: .125rem;
+    gap: 2px;
   }
 
   .nav-item {
@@ -86,15 +91,25 @@
   }
 
   .navbar-nav .nav-link {
-    padding: .4rem .7rem;
-    font-size: .9375rem;
+    padding: 6.4px 11.2px;
+    font-size: 15px;
     font-weight: 500;
     white-space: nowrap;
-    border-radius: .6rem;
+    border-radius: 9.6px;
     transition: color .15s, background-color .15s;
 
     &:hover {
       background-color: var(--surface-3);
+    }
+  }
+
+  // Up to 1200px the week links and the buttons only fit on one line with a little less padding
+  // around the links (and with the table of contents button showing just its icon).
+  @include media-breakpoint-only(lg) {
+    --bs-navbar-nav-link-padding-x: 8px;
+
+    .navbar-nav .nav-link {
+      padding-inline: 8px;
     }
   }
 
@@ -108,15 +123,15 @@
   .navbar-brand {
     display: grid;
     place-items: center;
-    width: 2.25rem;
-    height: 2.25rem;
-    margin: 0 .75rem 0 0;
+    width: 36px;
+    height: 36px;
+    margin: 0 12px 0 0;
     padding: 0;
-    font-size: 1.6rem;
+    font-size: 25.6px;
     line-height: 1;
     color: #fff;
     background: linear-gradient(145deg, #ffbc3d, $brand-mooc 55%, #f59e0b);
-    border-radius: .65rem;
+    border-radius: 10.4px;
     box-shadow: 0 1px 2px rgba(15, 23, 42, .12), inset 0 -2px 0 rgba(0, 0, 0, .08);
     transition: transform .2s var(--ease);
 
@@ -127,16 +142,16 @@
   }
 
   .dropdown-menu {
-    padding: .4rem;
+    padding: 6.4px;
     border-color: var(--line);
     border-radius: var(--radius-sm);
     box-shadow: var(--shadow-lg);
   }
 
   .dropdown-item {
-    padding: .45rem .75rem;
-    font-size: .9375rem;
-    border-radius: .45rem;
+    padding: 7.2px 12px;
+    font-size: 15px;
+    border-radius: 7.2px;
 
     &:active {
       color: var(--ink);
@@ -165,23 +180,45 @@
   }
 }
 
-// The colour theme menu (theme-menu.js): the toggle shows the current theme; the menu marks the choice.
-.theme-menu__item {
+// The colour theme and text size menus (theme-menu.js, font-size-menu.js): the toggle shows the current
+// theme or "Aa"; the menu marks the choice with a check.
+.theme-menu__item,
+.font-size-menu__item {
   display: flex;
   align-items: center;
-  gap: .6rem;
+  gap: 9.6px;
 
   .fa {
     color: var(--muted);
   }
 
-  .theme-menu__check {
+  .menu-check {
     margin-left: auto;
     color: var(--primary);
     visibility: hidden;
   }
 
-  &[aria-pressed="true"] .theme-menu__check {
+  &[aria-pressed="true"] .menu-check {
     visibility: visible;
   }
+}
+
+.font-size-menu__glyph {
+  font-size: 15px;
+  font-weight: 650;
+  letter-spacing: -.01em;
+}
+
+// A letter "A" at three sizes stands for the choices in the menu.
+.font-size-menu__sample {
+  display: inline-grid;
+  place-items: center;
+  width: 20px;
+  font-weight: 650;
+  line-height: 1;
+  color: var(--muted);
+
+  &--normal { font-size: 12px; }
+  &--large { font-size: 15px; }
+  &--xlarge { font-size: 18px; }
 }
