@@ -163,7 +163,17 @@
 
 				                <h1 class="material-heading">Agents, reinforcement learning, and robots</h1>
                 <p>An <b>agent</b> is a system that perceives an environment and acts in it. This definition covers a thermostat, a chess program, a delivery robot, and an LLM that chooses tools. The important shift is from predicting an answer to selecting an action whose consequences change what happens next. An agent therefore operates in a loop: observe, update an internal state, choose an action, and observe the result.</p>
-                <svg viewBox="0 0 800 210" role="img" aria-label="Agent environment loop" style="width:100%;max-width:800px"><defs><marker id="a" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#555"/></marker></defs><rect x="60" y="55" width="210" height="100" rx="12" fill="#f1e7fb" stroke="#7b3fa1"/><text x="165" y="112" text-anchor="middle" font-size="25">Agent</text><rect x="530" y="55" width="210" height="100" rx="12" fill="#e4f2fb" stroke="#2878a5"/><text x="635" y="112" text-anchor="middle" font-size="25">Environment</text><path d="M275 78 H520" stroke="#555" stroke-width="3" marker-end="url(#a)"/><text x="400" y="65" text-anchor="middle">actions</text><path d="M525 137 H280" stroke="#555" stroke-width="3" marker-end="url(#a)"/><text x="400" y="165" text-anchor="middle">percepts and rewards</text></svg>
+                <svg class="dg" viewBox="0 0 800 236" role="img" aria-label="The agent-environment loop: the agent sends an action to the environment, and the environment returns a percept and a reward to the agent, which updates its internal state and chooses the next action.">
+                  <defs><marker id="dg-agent-head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrowhead" d="M0,0 L10,5 L0,10 z"/></marker></defs>
+                  <text class="dg-heading" x="400" y="22">Observe, update, act, and observe the result</text>
+                  <rect class="dg-box dg-box--violet" x="40" y="58" width="230" height="124" rx="14"/><text class="dg-title" x="155" y="94">Agent</text><text x="155" y="126">updates its internal state</text><text x="155" y="148">and chooses an action</text>
+                  <rect class="dg-box dg-box--blue" x="530" y="58" width="230" height="124" rx="14"/><text class="dg-title" x="645" y="94">Environment</text><text x="645" y="126">changes state after</text><text x="645" y="148">the action (and by itself)</text>
+                  <path class="dg-arrow" d="M276 88 H522" marker-end="url(#dg-agent-head)"/>
+                  <text class="dg-large" x="400" y="70">action</text>
+                  <path class="dg-arrow" d="M524 152 H278" marker-end="url(#dg-agent-head)"/>
+                  <text class="dg-large" x="400" y="172">percept and reward</text>
+                  <text class="dg-small" x="400" y="216">The loop repeats until the task ends</text>
+                </svg>
 
                 <h2 class="material-heading">Rational action under limited information</h2>
                 <p>A <b>rational agent</b> chooses the action expected to perform best according to its performance measure, given what it has perceived and what it knows. Rational does not mean omniscient or morally good. A route planner can be rational while choosing a road that later becomes blocked; it acted on the information available. Nor does rationality imply unlimited computation. Real agents have deadlines, finite memory, incomplete models, and limited energy. <b>Bounded rationality</b> asks what good action is possible within those limits.</p>
@@ -179,32 +189,37 @@
 
                 <h2 class="material-heading">Agent architectures</h2>
                 <p>A <b>simple reflex agent</b> uses condition–action rules: if the temperature is low, turn on heating. It is fast but fails when the current observation does not reveal everything relevant. A <b>model-based agent</b> maintains an internal state—such as an estimate of where a robot is—and updates it as observations arrive. A <b>goal-based agent</b> evaluates actions by whether they reach a desired state, often using search or planning. A <b>utility-based agent</b> compares trade-offs among outcomes, for example speed, safety, energy, and comfort. A <b>learning agent</b> changes its behaviour from data or experience. Practical systems combine these ideas rather than fitting one box.</p>
-                <svg viewBox="0 0 960 270" role="img" aria-label="Progression from reflex to model-based, goal-based, utility-based, and learning agent architectures" style="width:100%;max-width:960px">
-                  <defs><marker id="arch-arrow" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#555"/></marker></defs>
-                  <g font-family="sans-serif" text-anchor="middle">
-                    <rect x="20" y="70" width="160" height="105" rx="12" fill="#f5f5f5" stroke="#777"/><text x="100" y="106" font-size="19" font-weight="bold">Reflex</text><text x="100" y="135" font-size="15">current percept</text><text x="100" y="157" font-size="15">→ rule → action</text>
-                    <rect x="210" y="70" width="160" height="105" rx="12" fill="#e9f3fb" stroke="#2878a5"/><text x="290" y="106" font-size="19" font-weight="bold">Model-based</text><text x="290" y="135" font-size="15">percept + memory</text><text x="290" y="157" font-size="15">→ estimated state</text>
-                    <rect x="400" y="70" width="160" height="105" rx="12" fill="#eee9f8" stroke="#674397"/><text x="480" y="106" font-size="19" font-weight="bold">Goal-based</text><text x="480" y="135" font-size="15">possible futures</text><text x="480" y="157" font-size="15">→ goal reached?</text>
-                    <rect x="590" y="70" width="160" height="105" rx="12" fill="#f8eaf1" stroke="#a24c79"/><text x="670" y="106" font-size="19" font-weight="bold">Utility-based</text><text x="670" y="135" font-size="15">compare trade-offs</text><text x="670" y="157" font-size="15">→ best expected value</text>
-                    <rect x="780" y="70" width="160" height="105" rx="12" fill="#e9f5e8" stroke="#43834a"/><text x="860" y="106" font-size="19" font-weight="bold">Learning</text><text x="860" y="135" font-size="15">experience changes</text><text x="860" y="157" font-size="15">model or policy</text>
-                    <path d="M182 122 H202 M372 122 H392 M562 122 H582 M752 122 H772" stroke="#555" stroke-width="2.5" marker-end="url(#arch-arrow)"/>
-                    <text x="480" y="35" font-size="18" font-weight="bold">Architectures add internal state, foresight, preferences, and adaptation</text>
-                    <path d="M100 205 H860" stroke="#888" stroke-width="2" marker-end="url(#arch-arrow)"/><text x="480" y="238" font-size="16">increasing capability — and increasing design and validation demands</text>
-                  </g>
+                <svg class="dg" viewBox="0 0 960 262" role="img" aria-label="Progression from reflex to model-based, goal-based, utility-based and learning agent architectures: each adds internal state, foresight, preferences or adaptation, and increases capability and the demands on design and validation.">
+                  <defs><marker id="dg-arch-head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrowhead" d="M0,0 L10,5 L0,10 z"/></marker></defs>
+                  <text class="dg-heading" x="480" y="24">Architectures add internal state, foresight, preferences, and adaptation</text>
+                  <rect class="dg-box dg-box--grey" x="20" y="58" width="160" height="108" rx="12"/><text class="dg-title" x="100" y="90">Reflex</text><text x="100" y="120">current percept</text><text x="100" y="142">→ rule → action</text>
+                  <path class="dg-arrow" d="M183 112 H206" marker-end="url(#dg-arch-head)"/>
+                  <rect class="dg-box dg-box--blue" x="210" y="58" width="160" height="108" rx="12"/><text class="dg-title" x="290" y="90">Model-based</text><text x="290" y="120">percept + memory</text><text x="290" y="142">→ estimated state</text>
+                  <path class="dg-arrow" d="M373 112 H396" marker-end="url(#dg-arch-head)"/>
+                  <rect class="dg-box dg-box--violet" x="400" y="58" width="160" height="108" rx="12"/><text class="dg-title" x="480" y="90">Goal-based</text><text x="480" y="120">possible futures</text><text x="480" y="142">→ goal reached?</text>
+                  <path class="dg-arrow" d="M563 112 H586" marker-end="url(#dg-arch-head)"/>
+                  <rect class="dg-box dg-box--pink" x="590" y="58" width="160" height="108" rx="12"/><text class="dg-title" x="670" y="90">Utility-based</text><text x="670" y="120">compare trade-offs</text><text x="670" y="142">→ best expected value</text>
+                  <path class="dg-arrow" d="M753 112 H776" marker-end="url(#dg-arch-head)"/>
+                  <rect class="dg-box dg-box--green" x="780" y="58" width="160" height="108" rx="12"/><text class="dg-title" x="860" y="90">Learning</text><text x="860" y="120">experience changes</text><text x="860" y="142">model or policy</text>
+                  <path class="dg-arrow" d="M100 202 H858" marker-end="url(#dg-arch-head)"/>
+                  <text class="dg-caption" x="480" y="234">increasing capability, and increasing design and validation demands</text>
                 </svg>
                 <table class="table"><tr><th>Architecture</th><th>Question it answers</th><th>Typical limitation</th></tr><tr><td>Reflex</td><td>What rule matches now?</td><td>No memory or foresight</td></tr><tr><td>Model-based</td><td>What state am I probably in?</td><td>The model may be wrong</td></tr><tr><td>Goal/utility-based</td><td>Which future outcome is preferable?</td><td>Planning can be expensive</td></tr><tr><td>Learning</td><td>How should behaviour change with experience?</td><td>Needs suitable feedback and safe exploration</td></tr></table>
                 <p>Modern LLM agents often implement a repeated <b>plan–act–observe</b> cycle. The model receives a goal and current context, proposes a tool call, receives the tool result, and continues until it returns an answer or reaches a stopping rule. Useful components include a tool registry, working memory, longer-term retrieval, a planner, and an evaluator. Reliability comes from engineering the whole loop: typed tool interfaces, least-privilege permissions, time and cost limits, validation of outputs, logging, and human approval for consequential actions.</p>
-                <svg viewBox="0 0 960 300" role="img" aria-label="Tool-using language-model agent loop with validation and human approval" style="width:100%;max-width:960px">
-                  <defs><marker id="tool-arrow" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#555"/></marker></defs>
-                  <g font-family="sans-serif" text-anchor="middle">
-                    <rect x="25" y="105" width="150" height="75" rx="12" fill="#e9f3fb" stroke="#2878a5"/><text x="100" y="137" font-size="18" font-weight="bold">Goal + context</text><text x="100" y="160" font-size="14">user · memory</text>
-                    <rect x="235" y="85" width="190" height="115" rx="12" fill="#eee9f8" stroke="#674397"/><text x="330" y="125" font-size="20" font-weight="bold">Language model</text><text x="330" y="151" font-size="15">reason / plan</text><text x="330" y="174" font-size="15">propose tool call</text>
-                    <polygon points="500,85 620,85 660,142 620,200 500,200 460,142" fill="#fff3d9" stroke="#b47d16"/><text x="560" y="129" font-size="18" font-weight="bold">Validate</text><text x="560" y="153" font-size="14">schema · permission</text><text x="560" y="175" font-size="14">limits · approval</text>
-                    <rect x="720" y="85" width="200" height="115" rx="12" fill="#e9f5e8" stroke="#43834a"/><text x="820" y="124" font-size="20" font-weight="bold">Tool / environment</text><text x="820" y="152" font-size="15">search · code · API</text><text x="820" y="176" font-size="15">act and return result</text>
-                    <path d="M177 142 H225 M427 142 H451 M666 142 H710" stroke="#555" stroke-width="3" marker-end="url(#tool-arrow)"/>
-                    <path d="M820 210 C820 270 330 270 330 210" fill="none" stroke="#555" stroke-width="3" marker-end="url(#tool-arrow)"/><text x="580" y="260" font-size="16">observation becomes new context; repeat or stop</text>
-                    <text x="560" y="45" font-size="18" font-weight="bold">The agent is the engineered loop—not the model alone</text>
-                  </g>
+                <svg class="dg" viewBox="0 0 960 330" role="img" aria-label="A tool-using language-model agent: goal and context go to the language model, which proposes a tool call; the call is validated for schema, permission, limits and approval before the tool acts; the observation returns to the model as new context, until the model gives a final answer or a stopping rule ends the loop.">
+                  <defs><marker id="dg-tool-head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrowhead" d="M0,0 L10,5 L0,10 z"/></marker></defs>
+                  <text class="dg-heading" x="480" y="22">The agent is the engineered loop, not the model alone</text>
+                  <rect class="dg-box dg-box--grey" x="245" y="44" width="170" height="36" rx="18"/><text x="330" y="62">final answer or stop</text>
+                  <path class="dg-arrow" d="M330 110 V84" marker-end="url(#dg-tool-head)"/>
+                  <rect class="dg-box dg-box--blue" x="25" y="132" width="150" height="80" rx="12"/><text class="dg-title" x="100" y="160" style="font-size:16px">Goal + context</text><text x="100" y="186">user · memory</text>
+                  <rect class="dg-box dg-box--violet" x="235" y="112" width="190" height="120" rx="12"/><text class="dg-title" x="330" y="146">Language model</text><text x="330" y="176">reason or plan</text><text x="330" y="198">propose a tool call</text>
+                  <polygon class="dg-box dg-box--amber" points="500,112 620,112 660,172 620,232 500,232 460,172"/><text class="dg-title" x="560" y="146">Validate</text><text x="560" y="176">schema · permission</text><text x="560" y="198">limits · approval</text>
+                  <rect class="dg-box dg-box--green" x="720" y="112" width="215" height="120" rx="12"/><text class="dg-title" x="827.5" y="146">Tool or environment</text><text x="827.5" y="176">search · code · API</text><text x="827.5" y="198">act and return a result</text>
+                  <path class="dg-arrow" d="M179 172 H229" marker-end="url(#dg-tool-head)"/>
+                  <path class="dg-arrow" d="M429 172 H454" marker-end="url(#dg-tool-head)"/>
+                  <path class="dg-arrow" d="M664 172 H714" marker-end="url(#dg-tool-head)"/>
+                  <path class="dg-arrow" d="M827.5 236 C827.5 304 330 304 330 240" marker-end="url(#dg-tool-head)"/>
+                  <text class="dg-caption" x="580" y="314">the observation becomes new context; repeat until done</text>
                 </svg>
                 <h3 class="material-heading">Memory, planning, and tools in LLM agents</h3>
                 <p>An LLM has a finite context window, not a durable autobiographical memory. Agent systems therefore distinguish several forms of memory. <b>Working memory</b> holds the current goal, intermediate results, and recent observations. <b>Episodic memory</b> stores previous trajectories or task outcomes. <b>Semantic memory</b> retrieves facts and documents, often through embeddings. <b>Procedural memory</b> is represented by instructions, tools, code, or learned policies. More memory is not automatically better: irrelevant retrieval can distract the model, stale information can conflict with the present environment, and stored material may contain sensitive data.</p>
@@ -215,35 +230,99 @@
                 <table class="table"><tr><th>Failure</th><th>Example</th><th>Engineering response</th></tr><tr><td>Wrong action</td><td>Searches when calculation is required</td><td>Tool descriptions, routing tests, evaluator</td></tr><tr><td>Invalid action</td><td>Malformed API arguments</td><td>Typed schemas and validation</td></tr><tr><td>Unsafe authority</td><td>Sends or deletes without confirmation</td><td>Least privilege and approval gates</td></tr><tr><td>Looping</td><td>Repeats the same unsuccessful call</td><td>Step, time, and cost budgets</td></tr><tr><td>False completion</td><td>Claims success without checking result</td><td>Explicit success tests and verification</td></tr><tr><td>Untrusted instruction</td><td>Web content redirects the agent’s goal</td><td>Provenance, isolation, and policy checks</td></tr></table>
 
                 <h2 class="material-heading">Reinforcement learning: learning from consequences</h2>
-                <p>In supervised learning, a training example normally supplies a target answer. In <b>reinforcement learning (RL)</b>, an agent instead interacts with an environment. At time <i>t</i> it observes state <i>s</i>, chooses action <i>a</i>, receives reward <i>r</i>, and moves to a new state. A <b>policy</b> specifies how actions are selected. The objective is not necessarily the next reward but the expected <b>return</b>: the accumulated future reward, often discounted so that distant rewards count less.</p>
-                <svg viewBox="0 0 900 175" role="img" aria-label="Reinforcement learning trajectory" style="width:100%;max-width:900px"><g font-size="20" text-anchor="middle"><circle cx="80" cy="85" r="42" fill="#e4f2fb"/><text x="80" y="92">s₀</text><circle cx="330" cy="85" r="42" fill="#e4f2fb"/><text x="330" y="92">s₁</text><circle cx="580" cy="85" r="42" fill="#e4f2fb"/><text x="580" y="92">s₂</text><circle cx="830" cy="85" r="42" fill="#e4f2fb"/><text x="830" y="92">…</text><path d="M125 85 H282 M375 85 H532 M625 85 H782" stroke="#555" stroke-width="3"/><text x="205" y="62">a₀</text><text x="205" y="123">r₁</text><text x="455" y="62">a₁</text><text x="455" y="123">r₂</text><text x="705" y="62">a₂</text><text x="705" y="123">r₃</text></g></svg>
+                <p>In supervised learning, a training example normally supplies a target answer. In <b>reinforcement learning (RL)</b>, an agent instead interacts with an environment. At time <span class="math">t</span> it observes state <span class="math">s_t</span>, chooses action <span class="math">a_t</span>, receives reward <span class="math">r_{t+1}</span>, and moves to a new state <span class="math">s_{t+1}</span>. A <b>policy</b> specifies how actions are selected. The objective is not necessarily the next reward but the expected <b>return</b>: the accumulated future reward, often discounted so that distant rewards count less. With a discount factor <span class="math">\gamma</span> between 0 and 1, the return from time <span class="math">t</span> is</p>
+                <div class="math">
+                  G_t = r_{t+1} + \gamma\, r_{t+2} + \gamma^2 r_{t+3} + \dots = \sum_{k=0}^{\infty} \gamma^k\, r_{t+k+1}.
+                </div>
+                <svg class="dg" viewBox="0 0 900 196" role="img" aria-label="A trajectory: in state s0 the agent takes action a0, receives reward r1 and reaches state s1; then action a1, reward r2, state s2, and so on.">
+                  <defs><marker id="dg-traj-head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrowhead" d="M0,0 L10,5 L0,10 z"/></marker></defs>
+                  <text class="dg-heading" x="450" y="22">A trajectory: state, action, reward, next state, …</text>
+                  <circle class="dg-box dg-box--blue" cx="80" cy="104" r="40"/><text class="dg-xlarge" x="76" y="101"><tspan class="dg-math">s</tspan><tspan class="dg-sub" dy="6">0</tspan></text>
+                  <circle class="dg-box dg-box--blue" cx="330" cy="104" r="40"/><text class="dg-xlarge" x="326" y="101"><tspan class="dg-math">s</tspan><tspan class="dg-sub" dy="6">1</tspan></text>
+                  <circle class="dg-box dg-box--blue" cx="580" cy="104" r="40"/><text class="dg-xlarge" x="576" y="101"><tspan class="dg-math">s</tspan><tspan class="dg-sub" dy="6">2</tspan></text>
+                  <circle class="dg-box dg-box--grey" cx="830" cy="104" r="40" style="stroke-dasharray:5 4"/><text class="dg-xlarge" x="830" y="101">…</text>
+                  <path class="dg-arrow" d="M124 104 H284" marker-end="url(#dg-traj-head)"/>
+                  <text class="dg-large" x="201" y="82"><tspan class="dg-math">a</tspan><tspan class="dg-sub" dy="6">0</tspan></text>
+                  <text class="dg-large" x="201" y="124"><tspan class="dg-math">r</tspan><tspan class="dg-sub" dy="6">1</tspan></text>
+                  <path class="dg-arrow" d="M374 104 H534" marker-end="url(#dg-traj-head)"/>
+                  <text class="dg-large" x="451" y="82"><tspan class="dg-math">a</tspan><tspan class="dg-sub" dy="6">1</tspan></text>
+                  <text class="dg-large" x="451" y="124"><tspan class="dg-math">r</tspan><tspan class="dg-sub" dy="6">2</tspan></text>
+                  <path class="dg-arrow" d="M624 104 H784" marker-end="url(#dg-traj-head)"/>
+                  <text class="dg-large" x="701" y="82"><tspan class="dg-math">a</tspan><tspan class="dg-sub" dy="6">2</tspan></text>
+                  <text class="dg-large" x="701" y="124"><tspan class="dg-math">r</tspan><tspan class="dg-sub" dy="6">3</tspan></text>
+                  <text class="dg-small" x="450" y="178">above each arrow the action taken, below it the reward received</text>
+                </svg>
                 <p>The central difficulty is delayed consequence. A chess move receives no immediate label saying whether it was good; its value may become visible many moves later. RL must assign credit across a trajectory. In a <b>Markov decision process</b>, the state is assumed to contain the information needed to predict the next-state and reward distributions. This abstraction is powerful, although real observations are often partial, making memory or belief-state estimation necessary.</p>
                 <h3 class="material-heading">The Markov decision process</h3>
                 <p>A finite Markov decision process can be described by states, actions, transition probabilities, rewards, and a discount factor. The transition model answers how likely each next state is after an action. The reward model assigns immediate numerical feedback. The discount factor determines how strongly future rewards matter. A <b>policy</b> maps a state—or an observation history—to a distribution over actions. Learning seeks a policy with high expected return, while planning computes a policy when a sufficiently accurate environment model is already known.</p>
                 <p>The Markov assumption does not mean that history never matters. It means that the chosen state representation summarizes the relevant history. The physical location of a delivery robot is not enough if battery level, payload, traffic direction, and current reservation also affect what happens next. If important information is hidden, the agent may maintain a <b>belief state</b>: a probability distribution over possible underlying states. This connects RL with the probabilistic reasoning introduced earlier in the course.</p>
-                <p><b>Value functions</b> estimate long-term return. The action-value function Q(s,a) asks: if I take action a in state s and then continue according to a policy, how much return should I expect? Q-learning updates an estimate toward the observed reward plus the best estimated value of the next state. In words:</p>
-                <p style="text-align:center"><b>new estimate ← old estimate + learning rate × (better target − old estimate)</b></p>
-                <p>The “better target” contains two pieces: the reward just observed and the estimated value of the best action available next. This is the Bellman idea: the value of a decision can be decomposed into immediate consequence plus the value of what becomes possible afterward. Repeated updates propagate information about distant rewards backward through previously visited states. Q-learning is <b>model-free</b> because it does not first estimate the complete transition model.</p>
+                <p><b>Value functions</b> estimate long-term return. The action-value function <span class="math">Q(s, a)</span> asks: if I take action <span class="math">a</span> in state <span class="math">s</span> and then continue according to a policy, how much return should I expect? Q-learning updates an estimate toward the observed reward plus the best estimated value of the next state. In words, <b>new estimate ← old estimate + learning rate × (better target − old estimate)</b>; in symbols, with learning rate <span class="math">\alpha</span> and discount factor <span class="math">\gamma</span>:</p>
+                <div class="math math--key">
+                  Q(s, a) \leftarrow Q(s, a) + \alpha \bigl[\, \underbrace{r + \gamma \max_{a'} Q(s', a')}_{\text{better target}} - Q(s, a) \,\bigr]
+                </div>
+                <p>The “better target” contains two pieces: the reward just observed and the estimated value of the best action <span class="math">a'</span> available in the next state <span class="math">s'</span>. This is the Bellman idea: the value of a decision can be decomposed into immediate consequence plus the value of what becomes possible afterward. Repeated updates propagate information about distant rewards backward through previously visited states. Q-learning is <b>model-free</b> because it does not first estimate the complete transition model.</p>
                 <p>By contrast, <b>model-based RL</b> learns or uses a model of how the environment changes, then plans through that model. It can be more data-efficient because imagined experience supplements real interaction, but errors in the model may be exploited by the planner. <b>Policy-gradient</b> methods optimize a parameterized policy directly, which is useful for continuous actions. <b>Actor–critic</b> methods combine an actor that selects actions with a critic that estimates value. These families differ technically, but they address the same core problem: improving sequential decisions from evaluative feedback.</p>
                 <p>The discount factor controls the weight of future rewards. The learning rate controls how quickly new evidence replaces old estimates. With neural networks, deep RL approximates values or policies for large state spaces, but training can be unstable and data-hungry.</p>
-                <svg viewBox="0 0 900 380" role="img" aria-label="Gridworld illustrating value propagation and Q-learning" style="width:100%;max-width:900px">
-                  <defs><marker id="grid-arrow" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#674397"/></marker></defs>
-                  <g font-family="sans-serif">
-                    <text x="450" y="30" text-anchor="middle" font-size="19" font-weight="bold">A reward at the goal gives earlier actions value</text>
-                    <g transform="translate(70,60)" stroke="#777" stroke-width="2">
-                      <rect x="0" y="0" width="120" height="90" fill="#e9f3fb"/><rect x="120" y="0" width="120" height="90" fill="#f5f5f5"/><rect x="240" y="0" width="120" height="90" fill="#f5f5f5"/><rect x="360" y="0" width="120" height="90" fill="#e9f5e8"/>
-                      <rect x="0" y="90" width="120" height="90" fill="#f5f5f5"/><rect x="120" y="90" width="120" height="90" fill="#555"/><rect x="240" y="90" width="120" height="90" fill="#f5f5f5"/><rect x="360" y="90" width="120" height="90" fill="#f8eaf1"/>
-                      <rect x="0" y="180" width="120" height="90" fill="#f5f5f5"/><rect x="120" y="180" width="120" height="90" fill="#f5f5f5"/><rect x="240" y="180" width="120" height="90" fill="#f5f5f5"/><rect x="360" y="180" width="120" height="90" fill="#f5f5f5"/>
-                      <g stroke="none" text-anchor="middle"><text x="60" y="52" font-size="20" font-weight="bold">START</text><text x="420" y="42" font-size="20" font-weight="bold">GOAL</text><text x="420" y="68" font-size="18">+10</text><text x="180" y="143" font-size="17" fill="white">wall</text><text x="420" y="132" font-size="19" font-weight="bold">−10</text></g>
-                      <path d="M72 62 H166 H286 H400" fill="none" stroke="#674397" stroke-width="5" marker-end="url(#grid-arrow)"/>
-                    </g>
-                    <g transform="translate(610,75)"><text x="0" y="15" font-size="17" font-weight="bold">One Q-learning update</text><text x="0" y="52" font-size="16">1. take action</text><text x="0" y="82" font-size="16">2. observe reward + next state</text><text x="0" y="112" font-size="16">3. form a better target</text><text x="0" y="142" font-size="16">4. move Q(s,a) toward it</text><text x="0" y="195" font-size="16" font-weight="bold">Over many trials:</text><text x="0" y="225" font-size="16">future reward propagates</text><text x="0" y="250" font-size="16">back through the route</text></g>
-                  </g>
+                <svg class="dg" viewBox="0 0 900 400" role="img" aria-label="A gridworld with the start at the bottom left, the goal worth +10 at the top right, a pit worth -10 below it and a wall square. Each square shows the best expected return from it after learning, with discount 0.9: 10 next to the goal, 9 one step further, then 8.1, 7.29 and 6.56 at the start, with an arrow for the best action.">
+                  <defs><marker id="dg-grid-head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="4.5" markerHeight="4.5" orient="auto-start-reverse"><path class="dg-arrowhead" d="M0,0 L10,5 L0,10 z"/></marker></defs>
+                  <text class="dg-heading" x="450" y="22">A reward at the goal gives earlier actions value</text>
+                  <rect class="dg-heat" x="30" y="46" width="120" height="90" style="fill-opacity:0.22"/>
+                  <text class="dg-xlarge" x="90" y="80">8.1</text>
+                  <path class="dg-arrow" d="M77 110 H102" marker-end="url(#dg-grid-head)"/>
+                  <rect class="dg-heat" x="150" y="46" width="120" height="90" style="fill-opacity:0.28"/>
+                  <text class="dg-xlarge" x="210" y="80">9</text>
+                  <path class="dg-arrow" d="M197 110 H222" marker-end="url(#dg-grid-head)"/>
+                  <rect class="dg-heat" x="270" y="46" width="120" height="90" style="fill-opacity:0.36"/>
+                  <text class="dg-xlarge" x="330" y="80">10</text>
+                  <path class="dg-arrow" d="M317 110 H342" marker-end="url(#dg-grid-head)"/>
+                  <rect class="dg-box dg-box--green" x="390" y="46" width="120" height="90"/><text class="dg-title" x="450" y="80">GOAL</text><text class="dg-large" x="450" y="106">+10</text>
+                  <rect class="dg-heat" x="30" y="136" width="120" height="90" style="fill-opacity:0.16"/>
+                  <text class="dg-xlarge" x="90" y="170">7.29</text>
+                  <path class="dg-arrow" d="M90 213 V188" marker-end="url(#dg-grid-head)"/>
+                  <rect class="dg-wall" x="150" y="136" width="120" height="90"/><text class="dg-small" x="210" y="181">wall</text>
+                  <rect class="dg-heat" x="270" y="136" width="120" height="90" style="fill-opacity:0.28"/>
+                  <text class="dg-xlarge" x="330" y="170">9</text>
+                  <path class="dg-arrow" d="M330 213 V188" marker-end="url(#dg-grid-head)"/>
+                  <rect class="dg-box dg-box--pink" x="390" y="136" width="120" height="90"/><text class="dg-title" x="450" y="170">PIT</text><text class="dg-large" x="450" y="196">−10</text>
+                  <rect class="dg-heat" x="30" y="226" width="120" height="90" style="fill-opacity:0.10"/>
+                  <text class="dg-xlarge" x="90" y="260">6.56</text>
+                  <path class="dg-arrow" d="M73 303 V278" marker-end="url(#dg-grid-head)"/>
+                  <path class="dg-arrow" d="M94 290 H119" marker-end="url(#dg-grid-head)"/>
+                  <text class="dg-small dg-start" x="38" y="239">start</text>
+                  <rect class="dg-heat" x="150" y="226" width="120" height="90" style="fill-opacity:0.16"/>
+                  <text class="dg-xlarge" x="210" y="260">7.29</text>
+                  <path class="dg-arrow" d="M197 290 H222" marker-end="url(#dg-grid-head)"/>
+                  <rect class="dg-heat" x="270" y="226" width="120" height="90" style="fill-opacity:0.22"/>
+                  <text class="dg-xlarge" x="330" y="260">8.1</text>
+                  <path class="dg-arrow" d="M330 303 V278" marker-end="url(#dg-grid-head)"/>
+                  <rect class="dg-heat" x="390" y="226" width="120" height="90" style="fill-opacity:0.16"/>
+                  <text class="dg-xlarge" x="450" y="260">7.29</text>
+                  <path class="dg-arrow" d="M463 290 H438" marker-end="url(#dg-grid-head)"/>
+                  <path class="dg-edge" d="M30 46 V316"/>
+                  <path class="dg-edge" d="M150 46 V316"/>
+                  <path class="dg-edge" d="M270 46 V316"/>
+                  <path class="dg-edge" d="M390 46 V316"/>
+                  <path class="dg-edge" d="M510 46 V316"/>
+                  <path class="dg-edge" d="M30 46 H510"/>
+                  <path class="dg-edge" d="M30 136 H510"/>
+                  <path class="dg-edge" d="M30 226 H510"/>
+                  <path class="dg-edge" d="M30 316 H510"/>
+                  <text class="dg-small" x="270" y="342">number: best expected return from the square after learning (γ = 0.9)</text>
+                  <text class="dg-small" x="270" y="362">arrow: the best action; two arrows mean a tie</text>
+                  <text class="dg-title dg-start" x="570" y="72">One Q-learning update</text>
+                  <text class="dg-start" x="570" y="106" style="font-size:15px">1. take action <tspan class="dg-math">a</tspan> in state <tspan class="dg-math">s</tspan></text>
+                  <text class="dg-start" x="570" y="134" style="font-size:15px">2. observe reward <tspan class="dg-math">r</tspan> and state <tspan class="dg-math">s′</tspan></text>
+                  <text class="dg-start" x="570" y="162" style="font-size:15px">3. target = <tspan class="dg-math">r</tspan> + <tspan class="dg-math">γ</tspan> · max <tspan class="dg-math">Q</tspan>(<tspan class="dg-math">s′</tspan>, ·)</text>
+                  <text class="dg-start" x="570" y="190" style="font-size:15px">4. move <tspan class="dg-math">Q</tspan>(<tspan class="dg-math">s</tspan>, <tspan class="dg-math">a</tspan>) toward the target</text>
+                  <text class="dg-title dg-start" x="570" y="244">Over many episodes</text>
+                  <text class="dg-start" x="570" y="276" style="font-size:15px">the value of the goal spreads back,</text>
+                  <text class="dg-start" x="570" y="300" style="font-size:15px">one transition per update,</text>
+                  <text class="dg-start" x="570" y="324" style="font-size:15px">shrinking by the factor 0.9 per step</text>
                 </svg>
                 <h3 class="material-heading">A worked Q-learning update</h3>
-                <p>Suppose the agent is one step from the goal. Moving right gives reward 10 and ends the episode. The present estimate is Q(state, right) = 2, and the learning rate is 0.5. Because the episode ends, there is no future value to add. The target is therefore 10, the prediction error is 10 − 2 = 8, and the updated estimate is 2 + 0.5 × 8 = 6. The estimate moves halfway toward the newly observed outcome.</p>
-                <p>Now consider an earlier state. Moving right gives immediate reward 0 and reaches the state whose best estimated action has value 6. With discount factor 0.9, the target is 0 + 0.9 × 6 = 5.4. If the old estimate was 1 and the learning rate remains 0.5, the new estimate becomes 1 + 0.5 × (5.4 − 1) = 3.2. In this way, information about the goal propagates backward one transition at a time. Repeated experience gradually distinguishes actions that merely look promising from actions that reliably lead to long-term reward.</p>
-                <table class="table"><tr><th>Quantity</th><th>Meaning</th><th>Worked value</th></tr><tr><td>Q(s,a)</td><td>Current expected return for the chosen action</td><td>1.0</td></tr><tr><td>r</td><td>Reward observed after acting</td><td>0</td></tr><tr><td>γ max Q(s′,a′)</td><td>Discounted value available next</td><td>0.9 × 6 = 5.4</td></tr><tr><td>Target</td><td>Immediate reward plus estimated future value</td><td>5.4</td></tr><tr><td>TD error</td><td>Target minus current estimate</td><td>4.4</td></tr><tr><td>Updated Q</td><td>Old value plus learning rate times error</td><td>1 + 0.5 × 4.4 = 3.2</td></tr></table>
+                <p>Suppose the agent is one step from the goal. Moving right gives reward 10 and ends the episode. The present estimate is <span class="math">Q(s, \text{right}) = 2</span>, and the learning rate is <span class="math">\alpha = 0.5</span>. Because the episode ends, there is no future value to add. The target is therefore 10, the prediction error is <span class="math">10 - 2 = 8</span>, and the updated estimate is <span class="math">2 + 0.5 \times 8 = 6</span>. The estimate moves halfway toward the newly observed outcome.</p>
+                <p>Now consider an earlier state. Moving right gives immediate reward 0 and reaches the state whose best estimated action has value 6. With discount factor <span class="math">\gamma = 0.9</span>, the target is <span class="math">0 + 0.9 \times 6 = 5.4</span>. If the old estimate was 1 and the learning rate remains 0.5, the new estimate becomes <span class="math">1 + 0.5 \times (5.4 - 1) = 3.2</span>. In this way, information about the goal propagates backward one transition at a time. Repeated experience gradually distinguishes actions that merely look promising from actions that reliably lead to long-term reward.</p>
+                <table class="table"><tr><th>Quantity</th><th>Meaning</th><th>Worked value</th></tr><tr><td><span class="math">Q(s, a)</span></td><td>Current expected return for the chosen action</td><td>1.0</td></tr><tr><td><span class="math">r</span></td><td>Reward observed after acting</td><td>0</td></tr><tr><td><span class="math">\gamma \max_{a'} Q(s', a')</span></td><td>Discounted value available next</td><td><span class="math">0.9 \times 6 = 5.4</span></td></tr><tr><td>Target</td><td>Immediate reward plus estimated future value</td><td>5.4</td></tr><tr><td>TD error</td><td>Target minus current estimate</td><td>4.4</td></tr><tr><td>Updated Q</td><td>Old value plus learning rate times error</td><td><span class="math">1 + 0.5 \times 4.4 = 3.2</span></td></tr></table>
                 <figure class="viz" data-viz="qlearning">
                   <figcaption class="viz__caption">
                     The agent starts at the bottom left. Reaching the goal gives +10 and falling into the pit &minus;10;
@@ -262,7 +341,7 @@
                 <p>Sample efficiency matters because celebrated game-playing results may require millions or billions of simulated interactions. A physical robot cannot safely repeat that amount of trial and error. Offline RL learns from an existing dataset; imitation learning begins from demonstrations; model-based learning generates imagined transitions; and curriculum learning introduces harder situations gradually. Each reduces some cost but introduces assumptions about coverage, model accuracy, or demonstrator quality.</p>
                 <p>Evaluation should separate training return from genuine capability. A policy may memorize a fixed level, exploit an emulator bug, depend on an exact camera angle, or collapse after a small change in dynamics. Strong evaluation uses unseen initial states, altered environments, several random seeds, explicit safety measures, and comparisons with simple baselines. The question is not only whether reward increased, but what behaviour produced that reward and whether it transfers.</p>
                 <h3 class="material-heading">Exploration, exploitation, and reward design</h3>
-                <p>An agent faces an <b>exploration–exploitation dilemma</b>: use the action currently believed best, or try alternatives that may teach it something. An epsilon-greedy policy usually chooses the best-known action but sometimes explores randomly. Too little exploration locks in early mistakes; too much prevents consistent performance. In real systems, random exploration may be unsafe, so learning may begin in simulation, from logged data, or under explicit safety constraints.</p>
+                <p>An agent faces an <b>exploration–exploitation dilemma</b>: use the action currently believed best, or try alternatives that may teach it something. An <span class="math">\varepsilon</span>-greedy policy usually chooses the best-known action but sometimes explores randomly. Too little exploration locks in early mistakes; too much prevents consistent performance. In real systems, random exploration may be unsafe, so learning may begin in simulation, from logged data, or under explicit safety constraints.</p>
                 <p>Reward is not the same as the true goal. If a cleaning robot earns points for detecting dirt, it might avoid finishing the job so that dirt remains detectable. This illustrates <b>reward hacking</b>: the agent finds a high-scoring behaviour that violates the designer’s intent. Good design combines reward shaping with constraints, evaluation on varied situations, monitoring for distribution shift, and the ability to interrupt or correct behaviour.</p>
                 <h3 class="material-heading">From human feedback to language-model behaviour</h3>
                 <p>Reinforcement learning also appears in the development of language models. After pretraining, people may compare alternative responses. A reward model learns to predict these preferences, and the language model is then optimized to produce responses receiving higher predicted reward. This family of methods is commonly called <b>reinforcement learning from human feedback</b> (RLHF). Related approaches optimize directly from preference pairs or use AI-generated feedback.</p>
@@ -401,12 +480,12 @@
 								Now it's your turn. For each of the following three tasks, <i>(a)</i> write out a
 								PEAS description in a table like the one above, and <i>(b)</i> classify the
 								environment along all six dimensions, with one sentence justifying each choice:
-							<ol>
-								<li> An autonomous drone delivering parcels across a city.
-								<li> A poker-playing agent at an online table with human opponents.
-								<li> A customer-service chatbot answering questions on a retailer's website.
-							</ol>
 							</p>
+							<ol>
+								<li>An autonomous drone delivering parcels across a city.</li>
+								<li>A poker-playing agent at an online table with human opponents.</li>
+								<li>A customer-service chatbot answering questions on a retailer's website.</li>
+							</ol>
 
 							<p>
 								<i>Bonus (no extra points, just for fun):</i> pick a job or hobby of your own and
@@ -444,8 +523,8 @@
 
 							<p>
 								The core training loop, already provided:
-							<pre>
-for episode in tqdm(range(n_episodes)):
+							</p>
+							<pre class="sh_python code-highlight"><code>for episode in tqdm(range(n_episodes)):
     obs, info = env.reset()
     done = False
     while not done:
@@ -454,11 +533,11 @@ for episode in tqdm(range(n_episodes)):
         agent.update(obs, action, reward, terminated, next_obs)
         done = terminated or truncated
         obs = next_obs
-    agent.decay_epsilon()
-</pre>
-							and the agent's hyperparameters are exposed right at the top of the script:
-							<code>learning_rate</code>, <code>n_episodes</code>, <code>start_epsilon</code>,
-							<code>epsilon_decay</code>, <code>final_epsilon</code>.
+    agent.decay_epsilon()</code></pre>
+							<p>
+								The agent's hyperparameters are exposed right at the top of the script:
+								<code>learning_rate</code>, <code>n_episodes</code>, <code>start_epsilon</code>,
+								<code>epsilon_decay</code>, <code>final_epsilon</code>.
 							</p>
 
 							<ol>
@@ -515,14 +594,12 @@ for episode in tqdm(range(n_episodes)):
 								We've talked about agentic frameworks conceptually — now let's build one you can
 								actually run. <code>smolagents</code> is a lightweight agent library from
 								Hugging Face (it describes itself as "a barebones library for agents").
-								Getting a first agent running is genuinely four lines:
-							<pre>
-from smolagents import CodeAgent, InferenceClientModel
+								Getting a first agent running takes three lines:
+							</p>
+							<pre class="sh_python code-highlight"><code>from smolagents import CodeAgent, InferenceClientModel
 
 agent = CodeAgent(tools=[], model=InferenceClientModel())
-agent.run("Could you give me the 118th number in the Fibonacci sequence?")
-</pre>
-							</p>
+agent.run("Could you give me the 118th number in the Fibonacci sequence?")</code></pre>
 
 							<p>
 								<i>Setup note: this needs a free Hugging Face account and an access token
@@ -548,8 +625,7 @@ agent.run("Could you give me the 118th number in the Fibonacci sequence?")
 								<li> Add your own tool — a Python function decorated with <code>@tool</code>
 									that does something simple, e.g. converts a temperature between Celsius and
 									Fahrenheit, or counts vowels in a string:
-								<pre>
-from smolagents import tool
+								<pre class="sh_python code-highlight"><code>from smolagents import tool
 
 @tool
 def celsius_to_fahrenheit(celsius: float) -&gt; float:
@@ -560,8 +636,7 @@ def celsius_to_fahrenheit(celsius: float) -&gt; float:
     return celsius * 9 / 5 + 32
 
 agent = CodeAgent(tools=[celsius_to_fahrenheit], model=InferenceClientModel())
-agent.run("What is 24 degrees Celsius in Fahrenheit?")
-</pre>
+agent.run("What is 24 degrees Celsius in Fahrenheit?")</code></pre>
 								<li> Ask the agent a question that requires it to use your tool, and one that
 									doesn't. Confirm from the printed trace that it only calls your tool when it's
 									actually relevant.
@@ -583,6 +658,7 @@ agent.run("What is 24 degrees Celsius in Fahrenheit?")
 					Robotics can be thought of as a Grand Challenge in AI: it
 					requires that we address virtually all aspects of AI
 					including
+				</p>
 				<ul>
 					<li> motor control
 					<li> computer vision
@@ -593,9 +669,10 @@ agent.run("What is 24 degrees Celsius in Fahrenheit?")
 					<li> search
 					<li> ...
 				</ul>
-				And of course, machine learning, deep learning, and other
-				techniques for developing any of the above are relevant in
-				making better and more general purpose robots.
+				<p>
+					And of course, machine learning, deep learning, and other
+					techniques for developing any of the above are relevant in
+					making better and more general-purpose robots.
 				</p>
 
 				<div class="hint">
@@ -770,6 +847,7 @@ agent.run("What is 24 degrees Celsius in Fahrenheit?")
 
 							<p>
 								Choose one of the following talking points:
+							</p>
 							<ol>
 								<li> AI-generated art is currently a hot topic
 									with systems like DALL-E, Imagen, and Stable
@@ -797,7 +875,6 @@ agent.run("What is 24 degrees Celsius in Fahrenheit?")
 									Others argue that science can no longer pretend
 									to be separate from the real world.
 							</ol>
-							</p>
 
 							<p>
 								Your task is to have a debate about the topic of
@@ -812,6 +889,7 @@ agent.run("What is 24 degrees Celsius in Fahrenheit?")
 								Document your dialogue by summarizing at least ten
 								(10) arguments and counter-arguments in an
 								alternating order like
+							</p>
 							<dl>
 								<dt>You</dt>
 								<dd>&mdash; <i>I think X</i></dd>
@@ -820,9 +898,10 @@ agent.run("What is 24 degrees Celsius in Fahrenheit?")
 								<dt>You</dt>
 								<dd>&mdash; <i>That may be, but even so, there's Z...</i></dd>
 							</dl>
-							So both you and your opponent get to make at least
-							five points. (And no, "you're a f**king idiot"
-							does <b>not</b> count as an argument.)
+							<p>
+								So both you and your opponent get to make at least
+								five points. (And no, "you're a f**king idiot"
+								does <b>not</b> count as an argument.)
 							</p>
 
 							<p>
@@ -967,6 +1046,7 @@ agent.run("What is 24 degrees Celsius in Fahrenheit?")
 
 
 
+	<script src="../javascripts/math.js"></script>
 	<script src="../javascripts/main.js"></script>
 	<script src="../javascripts/week6.js"></script>
 

@@ -402,6 +402,11 @@
   .dg-xlarge { font-size: 20px; }
   .dg-start { text-anchor: start; }
   .dg-math { font-style: italic; }
+  .dg-sub { font-size: 0.7em; }
+
+  // Gridworld squares: a tint that grows with the value of the square (its fill-opacity), and walls.
+  .dg-heat { fill: var(--dg-green-line); }
+  .dg-wall { fill: var(--line-strong); }
 }
 
 // --- Conditional probability tables (Week 3) ------------------------------------------------------
