@@ -984,3 +984,62 @@
   padding-top: .6rem;
   border-top: 1px solid var(--line);
 }
+
+// Dead reckoning (drift.js): the planned polygon, the driven paths and where they end. (.viz .drift:
+// the general .viz svg rule would otherwise stretch the plot to the full width.)
+.viz .drift {
+  display: block;
+  width: 100%;
+  max-width: 30rem;
+  height: auto;
+  margin: 0 auto;
+
+  .drift-plan {
+    fill: none;
+    stroke: var(--faint);
+    stroke-width: 2;
+    stroke-dasharray: 6 6;
+  }
+
+  .drift-run {
+    fill: none;
+    stroke: var(--primary);
+    stroke-width: 2;
+    stroke-linejoin: round;
+    opacity: .4;
+
+    &.is-first {
+      opacity: .9;
+    }
+  }
+
+  .drift-end {
+    fill: var(--primary);
+  }
+
+  .drift-start {
+    fill: var(--red);
+    stroke: var(--surface);
+    stroke-width: 2;
+  }
+}
+
+.vz-legend .drift-key {
+  &--plan {
+    width: 1.2rem;
+    height: 0;
+    border-top: 2px dashed var(--faint);
+    border-radius: 0;
+  }
+
+  &--run {
+    width: 1.2rem;
+    height: 3px;
+    background-color: var(--primary);
+  }
+
+  &--start {
+    background-color: var(--red);
+    border-radius: 50%;
+  }
+}

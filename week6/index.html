@@ -288,21 +288,34 @@
 
                 <h2 class="material-heading">Robots: agents with bodies</h2>
                 <p>A robot closes the agent loop in the physical world. Sensors translate light, force, sound, distance, or joint position into measurements. Actuators produce motion. Perception estimates relevant state; planning selects a route or sequence of actions; control turns that plan into motor commands. All stages are uncertain. A wheel slips, a camera is occluded, an object moves, or the environment differs from training.</p>
-                <svg viewBox="0 0 960 300" role="img" aria-label="Robotics perception planning control loop with uncertainty and human oversight" style="width:100%;max-width:960px">
-                  <defs><marker id="robot-arrow" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#555"/></marker></defs>
-                  <g font-family="sans-serif" text-anchor="middle">
-                    <rect x="25" y="90" width="155" height="90" rx="12" fill="#e9f3fb" stroke="#2878a5"/><text x="102" y="126" font-size="19" font-weight="bold">Sensors</text><text x="102" y="151" font-size="14">camera · force</text><text x="102" y="171" font-size="14">range · joints</text>
-                    <rect x="220" y="90" width="155" height="90" rx="12" fill="#eee9f8" stroke="#674397"/><text x="297" y="126" font-size="19" font-weight="bold">Perception</text><text x="297" y="151" font-size="14">estimate state</text><text x="297" y="171" font-size="14">and uncertainty</text>
-                    <rect x="415" y="90" width="155" height="90" rx="12" fill="#fff3d9" stroke="#b47d16"/><text x="492" y="126" font-size="19" font-weight="bold">Planning</text><text x="492" y="151" font-size="14">choose route</text><text x="492" y="171" font-size="14">or action sequence</text>
-                    <rect x="610" y="90" width="155" height="90" rx="12" fill="#f8eaf1" stroke="#a24c79"/><text x="687" y="126" font-size="19" font-weight="bold">Control</text><text x="687" y="151" font-size="14">convert plan to</text><text x="687" y="171" font-size="14">motor commands</text>
-                    <rect x="805" y="90" width="130" height="90" rx="12" fill="#e9f5e8" stroke="#43834a"/><text x="870" y="126" font-size="19" font-weight="bold">Actuators</text><text x="870" y="151" font-size="14">move · grasp</text><text x="870" y="171" font-size="14">change world</text>
-                    <path d="M182 135 H210 M377 135 H405 M572 135 H600 M767 135 H795" stroke="#555" stroke-width="3" marker-end="url(#robot-arrow)"/>
-                    <path d="M870 190 C870 265 102 265 102 190" fill="none" stroke="#555" stroke-width="3" marker-end="url(#robot-arrow)"/><text x="485" y="257" font-size="16">physical consequences produce new, noisy measurements</text>
-                    <rect x="350" y="10" width="285" height="48" rx="10" fill="#f5f5f5" stroke="#777"/><text x="492" y="40" font-size="17" font-weight="bold">Human goal · supervision · intervention</text><path d="M492 60 V80" stroke="#555" stroke-width="2" marker-end="url(#robot-arrow)"/>
-                  </g>
+                <svg class="dg" viewBox="0 0 960 316" role="img" aria-label="The robot loop: sensors, perception, planning, control and actuators in a row; the physical consequences come back to the sensors as new, noisy measurements; people supply goals, supervise and can intervene in planning.">
+                  <defs><marker id="dg-robot-head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrowhead" d="M0,0 L10,5 L0,10 z"/></marker></defs>
+                  <rect class="dg-box dg-box--grey" x="278" y="12" width="404" height="46" rx="10"/><text class="dg-heading" x="480" y="35">Human goal · supervision · intervention</text>
+                  <path class="dg-arrow" d="M480 60 V88" marker-end="url(#dg-robot-head)"/>
+                  <rect class="dg-box dg-box--blue" x="17" y="96" width="158" height="92" rx="12"/><text class="dg-title" x="96" y="126">Sensors</text><text x="96" y="152">camera · force</text><text x="96" y="171">range · joints</text>
+                  <rect class="dg-box dg-box--violet" x="209" y="96" width="158" height="92" rx="12"/><text class="dg-title" x="288" y="126">Perception</text><text x="288" y="152">estimate state</text><text x="288" y="171">and uncertainty</text>
+                  <rect class="dg-box dg-box--amber" x="401" y="96" width="158" height="92" rx="12"/><text class="dg-title" x="480" y="126">Planning</text><text x="480" y="152">choose route</text><text x="480" y="171">or action sequence</text>
+                  <rect class="dg-box dg-box--pink" x="593" y="96" width="158" height="92" rx="12"/><text class="dg-title" x="672" y="126">Control</text><text x="672" y="152">convert plan to</text><text x="672" y="171">motor commands</text>
+                  <rect class="dg-box dg-box--green" x="785" y="96" width="158" height="92" rx="12"/><text class="dg-title" x="864" y="126">Actuators</text><text x="864" y="152">move · grasp</text><text x="864" y="171">change world</text>
+                  <path class="dg-arrow" d="M179 142 H204" marker-end="url(#dg-robot-head)"/>
+                  <path class="dg-arrow" d="M371 142 H396" marker-end="url(#dg-robot-head)"/>
+                  <path class="dg-arrow" d="M563 142 H588" marker-end="url(#dg-robot-head)"/>
+                  <path class="dg-arrow" d="M755 142 H780" marker-end="url(#dg-robot-head)"/>
+                  <path class="dg-arrow" d="M864 192 C864 266 96 266 96 196" marker-end="url(#dg-robot-head)"/>
+                  <text class="dg-caption" x="480" y="296">physical consequences produce new, noisy measurements</text>
                 </svg>
-                <img src="../img/material/vapaarobotti-kahdeksantoistakulmio-16629cc8.png" alt="A simple mobile robot trajectory from an earlier course robotics activity" style="max-width:100%;height:auto">
                 <p>This embodiment creates several gaps. The <b>reality gap</b> separates simulation from physical deployment. The <b>semantic gap</b> separates sensor values from meaningful objects and situations. The <b>control gap</b> separates a planned motion from what imperfect hardware actually does. Robust robots repeatedly estimate, act, measure the consequence, and correct. Autonomy is therefore usually layered: low-level controllers stabilize motion, planners choose actions, and people provide goals, supervise exceptions, or share control.</p>
+                <figure class="viz" data-viz="drift">
+                  <figcaption class="viz__caption">
+                    Six robots receive the same perfect commands: drive one side, turn left by 20&deg;, eighteen
+                    times per lap, which should bring them back to the red start after every lap. Each side comes
+                    out a little too long or too short (wheel slip) and each turn is a little off. Without feedback
+                    a robot knows only the commands it gave, so every heading error rotates all the sides after it
+                    and the misses add up, lap after lap. With a position fix, from a landmark, a beacon or a camera,
+                    the robot measures where it really is and aims for the corner where it should be: this is the
+                    estimate&ndash;act&ndash;measure&ndash;correct loop of the text.
+                  </figcaption>
+                </figure>
                 <h3 class="material-heading">Perception and state estimation</h3>
                 <p>Raw sensors do not deliver a ready-made symbolic world. A camera produces arrays of intensity values; lidar produces distances; an inertial measurement unit produces accelerations and rotation rates. Perception detects objects, surfaces, people, and free space. <b>State estimation</b> combines uncertain measurements over time. For a mobile robot, localization estimates where the robot is; mapping estimates the environment; <b>simultaneous localization and mapping</b> (SLAM) tackles both together.</p>
                 <p>Combining sensors can make estimates more robust. GPS may drift or disappear indoors, cameras may fail in darkness, and wheel odometry accumulates error when wheels slip. Sensor fusion uses the different error characteristics of several measurements. The result is still an estimate with uncertainty, not ground truth. A planner should behave differently when localization is precise than when several locations remain plausible.</p>

@@ -306,3 +306,74 @@
   .hanoi-disc--medium { fill: var(--hanoi-medium); }
   .hanoi-disc--large { fill: var(--hanoi-large); }
 }
+
+// --- Flow diagrams --------------------------------------------------------------------------------
+// Boxes and arrows drawn inline in the text (Weeks 4 to 6). Every arrow is a path of its own: a
+// marker-end only marks the last piece of a path, so one path with several pieces had one arrowhead.
+:root {
+  --dg-blue-fill: #e9f3fb;
+  --dg-blue-line: #2878a5;
+  --dg-violet-fill: #eee9f8;
+  --dg-violet-line: #674397;
+  --dg-amber-fill: #fff3d9;
+  --dg-amber-line: #b47d16;
+  --dg-pink-fill: #f8eaf1;
+  --dg-pink-line: #a24c79;
+  --dg-green-fill: #e9f5e8;
+  --dg-green-line: #43834a;
+  --dg-grey-fill: #f5f5f5;
+  --dg-grey-line: #8a94a6;
+  --dg-arrow: #64748b;
+}
+
+.dg {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 1.5rem auto 1.75rem;
+
+  text {
+    font-size: 14px;
+    text-anchor: middle;
+    dominant-baseline: middle;
+    fill: var(--text);
+  }
+
+  .dg-title {
+    font-size: 18px;
+    font-weight: 700;
+    fill: var(--ink);
+  }
+
+  .dg-heading {
+    font-size: 16px;
+    font-weight: 650;
+    fill: var(--ink);
+  }
+
+  .dg-caption {
+    font-size: 15px;
+    fill: var(--muted);
+  }
+
+  .dg-box {
+    stroke-width: 1.5;
+  }
+
+  @each $color in "blue", "violet", "amber", "pink", "green", "grey" {
+    .dg-box--#{$color} {
+      fill: var(--dg-#{$color}-fill);
+      stroke: var(--dg-#{$color}-line);
+    }
+  }
+
+  .dg-arrow {
+    fill: none;
+    stroke: var(--dg-arrow);
+    stroke-width: 2.5;
+  }
+
+  .dg-arrowhead {
+    fill: var(--dg-arrow);
+  }
+}
