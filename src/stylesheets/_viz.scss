@@ -534,6 +534,20 @@
     color: var(--ink);
     background-color: var(--primary-soft);
   }
+
+  // Column headers that are formulas (q · k) keep their lower-case letters.
+  thead th.is-math {
+    font-size: .75rem;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
+  // A row of totals.
+  tfoot td {
+    font-weight: 700;
+    color: var(--ink);
+    border-top: 2px solid var(--line-strong);
+  }
 }
 
 // Wide figures scroll sideways on small screens instead of shrinking their text.
@@ -749,13 +763,17 @@
     }
   }
 
-  &__label {
-    font-size: 11px;
-    font-weight: 650;
-    fill: var(--ink);
-    paint-order: stroke;
-    stroke: #fff;
-    stroke-width: 3px;
+  // The weight of each word, written below it (attention.js); the largest one stands out.
+  &__weight {
+    font-size: 12px;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    fill: var(--muted);
+
+    &.is-largest {
+      font-weight: 750;
+      fill: var(--primary-strong);
+    }
   }
 }
 

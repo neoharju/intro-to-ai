@@ -348,8 +348,11 @@
 	    The same word gets the same query, key and value vectors in both sentences, so it starts from the same
 	    static embedding; the attention weights <code>softmax(QK<sup>T</sup> / &radic;d<sub>k</sub>)</code> and
 	    therefore the output depend on the other words. With the causal mask, scores for later tokens are set to
-	    &minus;&infin; before the softmax, so the weight matrix becomes lower triangular. The vectors are small
-	    toy examples chosen by hand to show the mechanism, not taken from a trained model.
+	    &minus;&infin; before the softmax, so the weight matrix becomes lower triangular. The table follows one
+	    query row step by step, from the dot products to the weighted sum of the values. The vectors are small
+	    toy examples chosen by hand to show the mechanism, not taken from a trained model, and they include no
+	    positional information: that is why the two copies of &ldquo;the&rdquo; get identical rows in the
+	    bidirectional matrix, the order-blindness that positional encodings remove.
 	  </figcaption>
 	</figure>
 

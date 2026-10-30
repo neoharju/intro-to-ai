@@ -2,7 +2,9 @@ import { D_K, SENTENCES, WORDS, attention } from './attention-core';
 import { COLORS, el, fmt, frame, segmented, sequential, svg } from './lib';
 
 const ARC_W = 640;
-const ARC_H = 150;
+const ARC_H = 172;
+// Baseline of the words; each word's weight is written below it.
+const BASE_Y = 128;
 
 export default function mountAttention(figure) {
   const { body } = frame(figure, 'Self-attention weights, step by step');
@@ -78,19 +80,12 @@ export default function mountAttention(figure) {
     const n = words.length;
     const gap = ARC_W / n;
     const cx = i => gap * (i + 0.5);
-    const baseY = ARC_H - 22;
+    const baseY = BASE_Y;
     // Height of the apex above the start of an arc; the control point is twice as high.
-    const arcHeight = distance => Math.min(ARC_H - 52, 22 + distance * 0.26);
+    const arcHeight = distance => Math.min(baseY - 30, 22 + distance * 0.26);
+    const largest = Math.max(...row.weights);
 
     arcs.replaceChildren();
-
-    // Only the three largest weights get a number; the table below lists all of them.
-    const labelled = new Set(row.weights
-      .map((w, j) => [w, j])
-      .filter(([w]) => w > 0)
-      .sort((a, b) => b[0] - a[0])
-      .slice(0, 3)
-      .map(([, j]) => j));
 
     row.weights.forEach((w, j) => {
       if (w <= 0) {
@@ -116,22 +111,27 @@ export default function mountAttention(figure) {
         }));
       }
 
-      if (labelled.has(j)) {
-        const lx = j === selected ? x1 : (x1 + x2) / 2;
-        const ly = j === selected ? baseY - 58 : baseY - 14 - arcHeight(Math.abs(x2 - x1)) - 5;
-
-        arcs.append(svg('text', { x: lx, y: ly, class: 'vz-arcs__label' }, fmt(w, 2)));
-      }
     });
 
+    // Every word with the weight that the selected word gives it (none for masked words). Equal weights
+    // read as equal, which labels on the arcs could not show where arcs overlap.
     words.forEach((word, i) => {
       const masked = causal && i > selected;
+      const w = row.weights[i];
 
       arcs.append(svg('text', {
         x: cx(i),
         y: baseY,
         class: `vz-arcs__word${i === selected ? ' is-selected' : ''}${masked ? ' is-masked' : ''}`,
       }, word));
+
+      if (!masked) {
+        arcs.append(svg('text', {
+          x: cx(i),
+          y: baseY + 22,
+          class: `vz-arcs__weight${w === largest ? ' is-largest' : ''}`,
+        }, fmt(w, 2)));
+      }
     });
   }
 
@@ -225,23 +225,34 @@ export default function mountAttention(figure) {
     plane.append(svg('circle', { cx: px(ox), cy: py(oy), r: 3, fill: COLORS.ink }));
   }
 
+  // One row per key: the dot product with the query, scaled, turned into a weight by the softmax of
+  // the row, and the weight times the key's value. The last row adds them up: the weights sum to 1 and
+  // the weighted values sum to the output.
   function renderSteps(words, row) {
     const query = WORDS[words[selected]];
-    const vec = v => `(${v.map(x => fmt(x, 1)).join(', ')})`;
+    const vec = (v, digits = 1) => `(${v.map(x => fmt(x, digits)).join(', ')})`;
+    const mathHeader = text => el('th', { class: 'is-math' }, text);
 
     steps.replaceChildren(el('table', { class: 'vz-table' },
       el('thead', {}, el('tr', {},
-        el('th', {}, 'Key'), el('th', {}, `q · k`), el('th', {}, `÷ √${D_K}`), el('th', {}, 'Weight'), el('th', {}, 'Value v'))),
+        el('th', {}, 'Key'), mathHeader('q · k'), mathHeader(`÷ √${D_K}`), el('th', {}, 'Weight (softmax)'),
+        mathHeader('value v'), mathHeader('weight × v'))),
       el('tbody', {}, words.map((word, j) => {
         const masked = row.scores[j] === -Infinity;
+        const value = WORDS[word].v;
 
         return el('tr', { class: masked ? 'is-muted' : undefined },
           el('td', {}, word),
           el('td', {}, masked ? 'masked' : fmt(row.raw[j], 2)),
           el('td', {}, masked ? '−∞' : fmt(row.scores[j], 2)),
           el('td', {}, fmt(row.weights[j], 3)),
-          el('td', {}, vec(WORDS[word].v)));
-      }))),
+          el('td', {}, vec(value)),
+          el('td', {}, masked ? '–' : vec(value.map(x => row.weights[j] * x), 3)));
+      })),
+      el('tfoot', {}, el('tr', {},
+        el('td', {}, 'Sum'), el('td', {}), el('td', {}),
+        el('td', {}, fmt(row.weights.reduce((a, b) => a + b, 0), 3)), el('td', {}),
+        el('td', {}, `${vec(row.output, 3)} = output`)))),
     el('p', { class: 'vz-note' },
       `Query q = ${vec(query.q)} for “${words[selected]}”. Each word has the same toy vectors in both sentences (chosen by hand, not taken from a trained model), so only the context changes the result.`));
   }
