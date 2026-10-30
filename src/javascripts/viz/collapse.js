@@ -4,6 +4,7 @@ import {
 
 const CATEGORIES = 20;
 const SAMPLE_SIZES = [25, 50, 100, 200, 500, 1000];
+const REAL_SHARES = [0, 0.05, 0.1, 0.25, 0.5];
 const MAX_GENERATIONS = 200;
 
 // A long-tailed distribution over 20 categories (Zipf-like, p_k proportional to 1 / k^1.2).
@@ -14,30 +15,38 @@ function original() {
   return weights.map(w => w / total);
 }
 
-// One generation: draw n samples from the current model and fit the next model to them, here simply
-// the observed frequencies (the maximum-likelihood estimate). A category that gets no samples has
-// probability 0 from then on.
-export function nextGeneration(model, n, random = Math.random) {
+// Adds n samples drawn from the distribution dist to counts.
+function sample(dist, n, counts, random) {
   const cumulative = [];
   let sum = 0;
 
-  model.forEach(p => {
+  dist.forEach(p => {
     sum += p;
     cumulative.push(sum);
   });
-
-  const counts = new Array(model.length).fill(0);
 
   for (let i = 0; i < n; i++) {
     const r = random() * sum;
     let k = cumulative.findIndex(c => r < c);
 
     if (k < 0) {
-      k = model.length - 1;
+      k = dist.length - 1;
     }
 
     counts[k] += 1;
   }
+}
+
+// One generation: draw n samples and fit the next model to them, here simply the observed frequencies
+// (the maximum-likelihood estimate). The samples come from the current model, except for a share of
+// fresh real data drawn from the original distribution. Without real data, a category that gets no
+// samples has probability 0 from then on.
+export function nextGeneration(model, n, random = Math.random, real = null, share = 0) {
+  const fresh = real ? Math.round(n * share) : 0;
+  const counts = new Array(model.length).fill(0);
+
+  sample(model, n - fresh, counts, random);
+  sample(real || model, fresh, counts, random);
 
   return counts.map(c => c / n);
 }
@@ -48,6 +57,7 @@ export default function mountCollapse(figure) {
   let model = truth.slice();
   let generation = 0;
   let sizeIndex = 2;
+  let shareIndex = 0;
   let history;
 
   const stage = el('div', { class: 'vz-stage', style: 'background:#fff' });
@@ -59,7 +69,7 @@ export default function mountCollapse(figure) {
     onResize: () => draw(),
   });
 
-  const stats = { generation: stat('Generation'), alive: stat('Categories left'), distance: stat('Distance from the original') };
+  const stats = { generation: stat('Generation'), alive: stat('Categories left'), distance: stat('Total variation distance') };
   const chart = lineChart(null, {
     series: [{ name: 'categories left', color: COLORS.violet }],
     height: 140,
@@ -71,21 +81,32 @@ export default function mountCollapse(figure) {
     label: 'Line chart of the number of categories that still have a positive probability, by generation.',
   });
 
+  // A run ends after MAX_GENERATIONS, or earlier when one category has all the probability and no real
+  // data comes in, because then nothing can change any more.
+  const finished = () => generation >= MAX_GENERATIONS || (REAL_SHARES[shareIndex] === 0 && model.includes(1));
+
   const loop = createLoop(figure, (() => {
     let budget = 0;
 
     return dt => {
       budget += dt / 1000 * 6;
 
-      while (budget >= 1 && generation < MAX_GENERATIONS) {
+      while (budget >= 1 && !finished()) {
         budget -= 1;
         step();
       }
 
       draw();
-      return generation < MAX_GENERATIONS;
+      return !finished();
     };
   })());
+
+  // Run after the end of a run starts a new one (it used to do nothing).
+  loop.onChange(running => {
+    if (running && finished()) {
+      reset();
+    }
+  });
 
   const sizeControl = slider({
     label: 'Samples per generation',
@@ -97,8 +118,18 @@ export default function mountCollapse(figure) {
     width: '8rem',
   });
 
+  const shareControl = slider({
+    label: 'Fresh real data',
+    min: 0,
+    max: REAL_SHARES.length - 1,
+    value: shareIndex,
+    format: i => `${Math.round(REAL_SHARES[i] * 100)} %`,
+    onInput: i => { shareIndex = i; reset(); },
+    width: '7rem',
+  });
+
   body.append(
-    el('div', { class: 'vz-controls' }, sizeControl.node),
+    el('div', { class: 'vz-controls' }, sizeControl.node, shareControl.node),
     stage,
     legend([
       { color: COLORS.blue, label: 'Current model' },
@@ -114,7 +145,7 @@ export default function mountCollapse(figure) {
   );
 
   function step() {
-    model = nextGeneration(model, SAMPLE_SIZES[sizeIndex]);
+    model = nextGeneration(model, SAMPLE_SIZES[sizeIndex], Math.random, truth, REAL_SHARES[shareIndex]);
     generation += 1;
     history.xs.push(generation);
     history.ys.push(model.filter(p => p > 0).length);

@@ -584,7 +584,14 @@
 						category that gets no samples is gone for good, so the tails of the original distribution disappear
 						first, as Shumailov et al. describe in
 						<a href="https://doi.org/10.1038/s41586-024-07566-y" target="_blank" rel="noopener">Nature 631 (2024)</a>.
-						Larger samples slow the loss down but do not stop it.
+						Larger samples slow the loss down but do not stop it. The total variation distance is the largest
+						difference between the probabilities that the model and the original give to any set of categories:
+						0 when they are identical, 1 when they do not overlap. With fresh real data in every generation, lost
+						categories can come back and the model fluctuates around the original instead of collapsing.
+						Shumailov et al. found that keeping 10&nbsp;% of the original data slowed the degradation of their
+						language models, and
+						<a href="https://arxiv.org/abs/2404.01413" target="_blank" rel="noopener">Gerstgrasser et al. (2024)</a>
+						that adding synthetic data to the real data, instead of replacing the real data, avoids collapse.
 					</figcaption>
 				</figure>
 
