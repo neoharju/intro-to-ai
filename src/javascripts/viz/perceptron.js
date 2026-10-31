@@ -1,20 +1,31 @@
 import {
   CLASS_COLORS, COLORS, button, createCanvas, createLoop, createRandom, el, fmt, frame, legend, marker,
-  playButton, segmented, stat, withAlpha,
+  segmented, stat, withAlpha,
 } from './lib';
 
 const RANGE = 1.2;
 const MAX_EPOCHS = 30;
 
+// Points closer than this would draw on top of each other (a marker is about 0.08 wide in these units).
+const MIN_GAP = 0.1;
+
 // Labels are -1 and +1, as in the perceptron rule.
 export function makeData(kind, margin = 0.08, count = 36) {
-  const random = createRandom(kind === 'xor' ? 17 : 8);
+  // The seeds give well-spread points: 18 per class and convergence in epoch 6 (separable).
+  const random = createRandom(kind === 'xor' ? 17 : 116);
   const points = [];
+  const add = point => {
+    if (points.every(other => Math.hypot(other.x - point.x, other.y - point.y) >= MIN_GAP)) {
+      points.push(point);
+    }
+  };
 
   if (kind === 'xor') {
     [[-0.55, -0.55, -1], [0.55, 0.55, -1], [-0.55, 0.55, 1], [0.55, -0.55, 1]].forEach(([cx, cy, label]) => {
-      for (let i = 0; i < 8; i++) {
-        points.push({ x: cx + 0.16 * random.normal(), y: cy + 0.16 * random.normal(), label });
+      const goal = points.length + 8;
+
+      while (points.length < goal) {
+        add({ x: cx + 0.16 * random.normal(), y: cy + 0.16 * random.normal(), label });
       }
     });
   } else {
@@ -25,7 +36,7 @@ export function makeData(kind, margin = 0.08, count = 36) {
       const side = x + 0.6 * y - 0.1;
 
       if (Math.abs(side) > margin * Math.hypot(1, 0.6)) {
-        points.push({ x, y, label: side > 0 ? 1 : -1 });
+        add({ x, y, label: side > 0 ? 1 : -1 });
       }
     }
   }
@@ -81,6 +92,34 @@ export default function mountPerceptron(figure) {
     return !done;
   });
 
+  // When a run has ended (converged, or MAX_EPOCHS on XOR), Step and Epoch have nothing left to do and
+  // are disabled, and Play becomes "Play again", which starts over from w = 0.
+  const stepButton = button('Step', () => { loop.stop(); step(); draw(); }, { ariaLabel: 'Process the next example' });
+  const epochButton = button('Epoch', () => {
+    loop.stop();
+    const target = epoch + 1;
+
+    while (!done && epoch < target) {
+      step();
+    }
+
+    draw();
+  }, { ariaLabel: 'Process a whole pass over the examples' });
+  const playNode = button('Play', () => {
+    if (loop.isRunning()) {
+      loop.stop();
+      return;
+    }
+
+    if (done) {
+      reset();
+    }
+
+    loop.start();
+  }, { primary: true });
+
+  loop.onChange(() => updateControls());
+
   body.append(
     el('div', { class: 'vz-controls' },
       segmented([
@@ -100,18 +139,9 @@ export default function mountPerceptron(figure) {
         barStage)),
     el('div', { class: 'vz-controls' },
       el('div', { class: 'vz-group' },
-        button('Step', () => { loop.stop(); step(); draw(); }, { ariaLabel: 'Process the next example' }),
-        button('Epoch', () => {
-          loop.stop();
-          const target = epoch + 1;
-
-          while (!done && epoch < target) {
-            step();
-          }
-
-          draw();
-        }, { ariaLabel: 'Process a whole pass over the examples' }),
-        playButton(loop),
+        stepButton,
+        epochButton,
+        playNode,
         button('Reset', () => { loop.stop(); reset(); })))
   );
 
@@ -294,11 +324,28 @@ export default function mountPerceptron(figure) {
     }
 
     if (done && mistakes[mistakes.length - 1] === 0) {
-      status.textContent = `Converged: a whole epoch without mistakes (epoch ${epoch}). Every training point is on the correct side.`;
+      status.textContent = `Converged: a whole epoch without mistakes (epoch ${epoch}). Every training point is on the correct side. Play again starts over from w = (0, 0).`;
     } else if (done) {
-      status.textContent = `Stopped after ${MAX_EPOCHS} epochs with ${mistakes[mistakes.length - 1]} mistakes in the last one. No straight line separates these classes, so the rule never settles.`;
+      status.textContent = `Stopped after ${MAX_EPOCHS} epochs with ${mistakes[mistakes.length - 1]} mistakes in the last one. No straight line separates these classes, so the rule never settles. Play again starts over from w = (0, 0).`;
     } else {
       status.textContent = '';
+    }
+
+    updateControls();
+  }
+
+  function updateControls() {
+    const running = loop.isRunning();
+    const focused = document.activeElement;
+
+    stepButton.disabled = done;
+    epochButton.disabled = done;
+    playNode.textContent = running ? 'Pause' : done ? 'Play again' : 'Play';
+    playNode.setAttribute('aria-pressed', String(running));
+
+    // A keyboard user who just finished the run with Step or Epoch keeps the focus inside the figure.
+    if (done && (focused === stepButton || focused === epochButton)) {
+      playNode.focus({ preventScroll: true });
     }
   }
 
