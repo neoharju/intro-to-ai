@@ -319,6 +319,39 @@
   }
 }
 
+// Text that changes while a figure runs, in a box that keeps one height: the children overlap, and
+// invisible copies of the longest texts ([data-sizer]) set the height. Without it, the figure and the
+// page below it jump whenever the text gets a line longer or shorter.
+.vz-reserve {
+  display: grid;
+
+  > * {
+    grid-area: 1 / 1;
+    margin: 0;
+  }
+
+  > [data-sizer] {
+    visibility: hidden;
+  }
+
+  > [hidden] {
+    display: none;
+  }
+}
+
+// Three stats in a row, and a stat that takes a whole row (for a long value such as a vector).
+.vz-stats--3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.vz-stat--wide {
+  grid-column: 1 / -1;
+
+  > b {
+    white-space: nowrap;
+  }
+}
+
 .vz-math {
   font-family: var(--font-mono);
   font-size: .8125rem;

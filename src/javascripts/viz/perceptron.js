@@ -6,6 +6,12 @@ import {
 const RANGE = 1.2;
 const MAX_EPOCHS = 30;
 
+// The longest texts the panel can show (every number at its widest), which reserve its height.
+const LONGEST_UPDATE = 'x = (−0.00, −0.00), y = −1: w·x + b = −00.00, predicted +1. Mistake, so w ← w + y·x = '
+  + '(−00.00, −00.00) − (−0.00, −0.00) = (−00.00, −00.00) and b ← b + y = −00.';
+const LONGEST_RESULT = `Stopped after ${MAX_EPOCHS} epochs with 00 mistakes in the last one. No straight line separates `
+  + 'these classes, so the rule never settles. Play again starts over from w = (0, 0).';
+
 // Points closer than this would draw on top of each other (a marker is about 0.08 wide in these units).
 const MIN_GAP = 0.1;
 
@@ -79,9 +85,23 @@ export default function mountPerceptron(figure) {
 
   const barStage = el('div', { class: 'vz-stage', style: 'margin-top:.75rem;padding:.25rem .4rem' });
   const bars = createCanvas(barStage, { aspect: 0.25, minHeight: 110, maxHeight: 140, label: 'Column chart of the number of mistakes in each epoch.', onResize: () => drawBars() });
-  const explanation = el('p', { class: 'vz-math', style: 'margin:0', 'aria-live': 'polite' });
-  const status = el('p', { class: 'vz-narration', style: 'margin:.5rem 0 0' });
-  const stats = { epoch: stat('Epoch'), mistakes: stat('Mistakes this epoch'), weights: stat('w'), bias: stat('b') };
+  // The panel shows the last update while a run goes on and the result when it has ended, in a box that
+  // always has the height of the longest message: invisible copies of the longest texts reserve it.
+  // Otherwise the panel would grow and shrink with every step during Play, and the figure and the page
+  // below it would jump up and down.
+  const heading = el('h5', {}, 'Last update');
+  const explanation = el('p', { class: 'vz-math', 'aria-live': 'polite' });
+  const status = el('p', { class: 'vz-narration', role: 'status', hidden: true });
+  const message = el('div', { class: 'vz-reserve' },
+    el('p', { class: 'vz-math', 'aria-hidden': 'true', 'data-sizer': '' }, LONGEST_UPDATE),
+    el('p', { class: 'vz-narration', 'aria-hidden': 'true', 'data-sizer': '' }, LONGEST_RESULT),
+    explanation,
+    status);
+  // Fixed labels (a changing one would wrap onto one line or two). Epoch, mistakes and b share a row;
+  // w gets a row of its own, so that "(−0.41, −0.59)" fits on one line at every text size.
+  const stats = { epoch: stat('Epoch'), mistakes: stat('Mistakes in this epoch'), bias: stat('b'), weights: stat('w') };
+
+  stats.weights.node.classList.add('vz-stat--wide');
 
   const loop = createLoop(figure, () => {
     for (let i = 0; i < 2 && !done; i++) {
@@ -134,8 +154,8 @@ export default function mountPerceptron(figure) {
           { color: COLORS.ink, label: 'Decision line w·x + b = 0, arrow = w' },
         ])),
       el('div', {},
-        el('div', { class: 'vz-panel' }, el('h5', {}, 'Last update'), explanation, status),
-        el('div', { class: 'vz-stats' }, Object.values(stats).map(s => s.node)),
+        el('div', { class: 'vz-panel' }, heading, message),
+        el('div', { class: 'vz-stats vz-stats--3' }, Object.values(stats).map(s => s.node)),
         barStage)),
     el('div', { class: 'vz-controls' },
       el('div', { class: 'vz-group' },
@@ -301,14 +321,8 @@ export default function mountPerceptron(figure) {
 
   function describe() {
     stats.epoch.set(String(epoch + (index > 0 && !done ? 1 : 0)));
-    // Between epochs, show the count of the epoch that just ended.
-    if (index === 0 && mistakes.length) {
-      stats.mistakes.setLabel(`Mistakes in epoch ${mistakes.length}`);
-      stats.mistakes.set(String(mistakes[mistakes.length - 1]));
-    } else {
-      stats.mistakes.setLabel('Mistakes this epoch so far');
-      stats.mistakes.set(String(mistakesThisEpoch));
-    }
+    // Between epochs, the count of the epoch that just ended; during an epoch, the count so far.
+    stats.mistakes.set(String(index === 0 && mistakes.length ? mistakes[mistakes.length - 1] : mistakesThisEpoch));
     stats.weights.set(vec(w));
     stats.bias.set(fmt(b, 0));
 
@@ -330,6 +344,10 @@ export default function mountPerceptron(figure) {
     } else {
       status.textContent = '';
     }
+
+    heading.textContent = done ? 'Result' : 'Last update';
+    explanation.hidden = done;
+    status.hidden = !done;
 
     updateControls();
   }
