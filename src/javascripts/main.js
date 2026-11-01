@@ -16,6 +16,7 @@ import mountHero from './hero';
 import mountThemeMenu from './theme-menu';
 import mountFontSizeMenu from './font-size-menu';
 import mountZen from './zen';
+import mountSimplify, { extract as extractSimple } from './simplify';
 
 // The page modules use the jQuery globals, as they did when jQuery came from a CDN.
 window.$ = window.jQuery = $;
@@ -57,4 +58,7 @@ $(() => {
   mountThemeMenu();
   mountFontSizeMenu();
   mountZen();
+  mountSimplify();
+  // For scripts/simple.mjs --extract.
+  window.IntroAI = Object.assign(window.IntroAI || {}, { simple: { extract: extractSimple } });
 });

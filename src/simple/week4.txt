@@ -1,0 +1,202 @@
+# Week 4 in simplified English (about 80% ASD-STE100 Issue 9). See scripts/simple.mjs.
+== eece2619
+Bring these to <b>your exercise session this week</b>: <a href="../week3/#exercises">Week 3 exercises</a>
+
+== 6b14f9e8
+Bring the <a href="#exercises">exercises</a> of this week to your exercise session in <a href="../week5/">Week 5</a>.
+
+== 36150153
+Objectives (when you complete the course, you ...)
+
+== fe25104d
+can explain the perceptron. You can also write the perceptron algorithm for a simple binary classification problem
+
+== 064f0d6d
+can describe multilayer perceptrons and the forward pass (forward propagation)
+
+== d44b19df
+can describe backpropagation. Backpropagation is the method that gives the gradients for optimization
+
+== 5d6f96ca
+can explain learned representations and word embeddings at the level of concepts
+
+== 69dac595
+A neural network is a model. The model learns its parameters from examples. We make a neural network from a sequence of simple transformations. Thus, the network can learn useful intermediate representations. A person does not have to design each feature by hand.
+
+== 3f625e9f
+A perceptron receives an input vector <i>x</i>. It multiplies each input by a learned weight. Then it adds a bias and applies a threshold. In short, it makes its prediction from <span class="math">w^\top x + b</span>. During training, the weights change when the prediction is wrong. A perceptron can learn a linear decision boundary (a straight line or a flat plane). But it cannot represent every classification problem.
+
+== f17204ba
+Example: the inputs are <span class="math">(1, 2)</span>, the weights are <span class="math">(0.7, -0.2)</span> and the bias is 0.1. The weighted sum is <span class="math">0.7 \times 1 - 0.2 \times 2 + 0.1 = 0.4</span>. The result is positive, so a step activation gives class 1. The weights set the position and the direction of the separating line. The bias moves the line, but it does not change the direction of the line.
+
+== 9661313b
+When the classes are linearly separable, the perceptron learning rule converges (it stops at a solution). The perceptron cannot solve XOR. No single straight line can put the two blue points on one side and the two orange points on the other side. This is a limit of what the model can represent. More training time does not solve it.
+
+== 4f466150
+The perceptron predicts +1 when <span class="math">w \cdot x + b &gt; 0</span>. Otherwise, it predicts −1. It goes through the examples in a fixed sequence. After each mistake, it changes the weights with <span class="math">w \leftarrow w + y\,x</span> and the bias with <span class="math">b \leftarrow b + y</span>. On linearly separable data, the mistakes stop after a finite number of updates. On XOR, the mistakes never stop.
+
+== df1ab4c9
+A multilayer perceptron has an input layer, one or more hidden layers and an output layer. The neurons are in these layers. Each layer transforms the representation from the layer before it. The width of a layer is its number of units: more units can represent more patterns. The depth is the number of layers: with more layers, the model can make complex transformations from simple ones.
+
+== 2320c0e8
+A <b>forward pass</b> applies these transformations, from the input to the prediction. In each layer, the main calculation is a linear transformation. An activation function follows it:
+
+== d3cdcf40
+Nonlinear activation functions are necessary. Without them, many layers on top of each other still give only a linear model. Many networks use ReLU, because it is simple and it works well in many cases. Sigmoid changes values to the range from zero to one. Tanh changes values to the range from minus one to one. The activation function has an effect on how easily the network trains. It also has an effect on the types of decision boundaries that the network can learn.
+
+== 78a25808
+Backpropagation multiplies by the derivative of the activation function. The derivative of the step function is zero at all points except 0, where it has no value. Thus, it gives no gradient for learning. The derivative of the sigmoid is <span class="math">\sigma'(z) = \sigma(z)\bigl(1 - \sigma(z)\bigr)</span>. Its maximum value is 0.25. The derivative of tanh is <span class="math">1 - \tanh^2 z</span>. Its maximum value is 1. The derivative of ReLU is 0 for negative inputs and 1 for positive inputs.
+
+== 2210e569
+Training starts with a loss function. The loss function measures the difference between the predictions and the target values. Backpropagation uses the chain rule. It calculates how much each parameter added to the loss. Then an optimizer uses these gradients to change the parameters. For this course, the important idea is that each part has one task:
+the forward pass makes a prediction, the loss measures the error of the prediction, backpropagation gives the gradients, and the optimizer changes the model.
+
+== 936adb67
+Good performance on the training data is not sufficient. We use separate validation data and test data. With them, we find if the network generalizes to new examples (works well on data that it did not see). Too much model capacity or too much training can cause overfitting. Regularization, a correct model size and early stopping can decrease this problem.
+
+== ea6a9d6d
+This network has one hidden layer. It trains in your browser. With one hidden unit, the network can draw only one boundary, so it cannot fit XOR. With two or more hidden units, it can fit XOR. Try the other data sets and activation functions. Also show the lines where each hidden unit changes its sign: they show how the hidden layer makes the boundary. The colour of the background is the predicted probability of class 1.
+
+== 6b6980c8
+An embedding shows a discrete item (for example, a word) as a vector of learned numbers. Items that occur in similar contexts usually get similar vectors. Thus, an embedding replaces an arbitrary identifier with a representation where distance and direction can show useful relations. We use the same idea for text tokens, images, users, products and many other types of data.
+
+== 1c4829da
+Neural networks learn representations in layers. They combine linear transformations and nonlinear activation functions. Training changes their parameters with gradients. Embeddings use representation learning for discrete items, for example words. They also prepare you for attention and Transformers in Week 5.
+
+== be5c5cff
+<b>Open the TensorFlow Playground:</b><br> Go to <a href="https://playground.tensorflow.org" target="_blank" rel="noopener">TensorFlow Playground</a> in your web browser.
+
+== 7723dd3f
+Start with the default dataset (two circles) and the default network settings.
+
+== 37263333
+Use one hidden layer with one neuron to classify the points.
+
+== cc51dcf2
+Look at the decision boundary. Look at how well the network does its task.
+
+== 39eccfcc
+Look at the changes in the decision boundary. Look at how well the network classifies the data.
+
+== ec1a4bf5
+How does the performance change when there are more neurons?
+
+== 6cfd9ac7
+Compare the performance with the previous network, which has only one hidden layer. How do more layers change the learning?
+
+== b04b7a2e
+<b>Results:</b><br> Keep a screenshot of each configuration (one neuron, three neurons, two layers). For each change, write 2-3 sentences: how did it change the decision boundary and the model performance?
+
+== f0f6905f
+After the basic playground exercise, change to a more difficult dataset, for example <b>Spirals</b>. The tasks below show how these settings change what the network can learn: the architecture, the activation function, the learning rate and regularization.
+
+== 3dded4da
+<b>Task 1: Examine Different Datasets</b>
+
+== 0a3ce334
+Change the dataset to "Spirals" with the dropdown menu.
+
+== f77acf4a
+Try different network architectures, until one of them classifies the data correctly:
+
+== 70f12213
+Increase the number of neurons and layers in small steps, until the network classifies the spirals correctly.
+
+== 54ca139a
+What is the minimum number of layers and neurons that classify the spirals accurately?
+
+== e7a5c44b
+<b>Task 2: Change the Activation Function and the Learning Rate</b>
+
+== 29f24b12
+Change the activation function between "Tanh" (the default of the Playground) and "ReLU". Look at how this changes the ability of the network to learn.
+
+== f1d31a1e
+Then move the learning rate slider. Look at how different learning rates (for example 0.01, 0.1 and 3) change the training speed and the model accuracy.
+
+== f61f4028
+<b>Task 3: Try Regularization</b>
+
+== e68337dd
+Add L2 regularization to your network. Look at how it changes the decision boundary and how it prevents overfitting.
+
+== 051cd810
+Increase the regularization strength. Look at the effects on training.
+
+== 91cb643b
+<b>Results:</b><br> Keep screenshots of your experiments with the "Spirals" dataset and the different network configurations. Write 2-3 sentences: how did the activation function, the learning rate and regularization change the performance of the network?
+
+== 3fffff7b
+Now you train a perceptron on a computer, not on paper. We use <code>MLPClassifier</code> from scikit-learn. One call to <code>.fit()</code> does the full training loop for you: the forward pass, the loss, the backward pass and the weight update. These are the same parts that you read about. The library only connects them for you.
+
+== cef69f4c
+Use the MNIST digit data. The code loads MNIST with <code>sklearn.datasets.fetch_openml("mnist_784")</code>. You can also use <code>mnist-x.data</code>/<code>mnist-y.data</code> from <a href="../files/tests/Perceptron.zip">Perceptron.zip</a>. These are 6,000 images, and their pixels are already 0 or 1, so do not divide by 255. If you use these files, divide them into a training set and a test set:
+
+== 410f6991
+Run the code above with no changes. Write down the test accuracy.
+
+== b2713ef4
+Change <code>hidden_layer_sizes=(40,)</code> to <code>(10,)</code>. Then change it to <code>(100, 50)</code> (two hidden layers). Run the code again each time and write down the accuracy.
+
+== 9d599743
+Change <code>max_iter=8</code> to <code>50</code>. Keep <code>hidden_layer_sizes=(40,)</code>. Run the code again.
+
+== 9d40c33e
+Write 3–4 sentences. Which change helped most? Which change helped least, or made the result worse? Is this what you expected about network capacity and training time?
+
+== 6de0beef
+With <code>solver="sgd"</code>, each of the 8 iterations (<code>max_iter</code>) is an <b>epoch</b>. An epoch is one pass over the full training set. The code uses mini-batches of 200 images (the default <code>batch_size</code>). For each mini-batch, the network does the steps from the lecture: a forward pass, a loss calculation, a backward pass and a weight update with gradient descent. There are 60,000 training images, so there are 300 weight updates in each epoch. This is more than the perceptron from the start of this week, because the training rule is different. <code>MLPClassifier</code> makes a differentiable loss (cross-entropy) as small as possible. It uses backpropagation to calculate how each weight must change, also the weights of the hidden layer. The perceptron learning rule can train only one layer of weights.
+
+== 80cc5f01
+Start from the Keras MNIST script in the <a href="https://www.tensorflow.org/tutorials/quickstart/beginner" target="_blank" rel="noopener">beginner quickstart</a> of TensorFlow. It uses the model below. Do not change the model architecture, the training loop or the dataset. You change only one word:
+
+== d92475d6
+Train and evaluate the model three times: with <code>activation='relu'</code> (as in the quickstart), with <code>'tanh'</code> and with <code>'sigmoid'</code>. Keep all other settings the same.
+
+== a86c24e2
+For each run, write down the final test accuracy. Also write down after how many epochs the accuracy becomes stable (it does not increase much from one epoch to the next).
+
+== 62c315d8
+Write 4–5 sentences. In your runs, which activation trained fastest, and which gave the best accuracy? The lecture explained that sigmoid can have <i>vanishing gradients</i> in deeper networks (the gradients become very small). Does your result with 1 hidden layer agree with this? Or is the network too small to show the effect?
+
+== c57b96bd
+You do not have to train a word-embedding model yourself to examine one. You can download very large pretrained models. This exercise needs only three lines of setup:
+
+== c5542950
+Run the code above. You get a ranked list of the words whose vectors are nearest to "glass". Write down the first 5 words.
+
+== 54bf119b
+Try a minimum of 4 more words. Select one word with more than one meaning (for example "bank", "bat" or "crane"). Also select one very specific word that people do not use frequently.
+
+== ee863db1
+For the word with more than one meaning: do the neighbours show one meaning, more than one meaning, or a mixture that is not clear? Why do you think that this occurs? Remember that the model trained on raw text, and no person labelled which meaning the text uses.
+
+== a4eef9bc
+<code>model.similarity("cat", "dog")</code> gives one number between −1 and 1. This number is the cosine similarity between the vectors of the two words. Calculate it for 3 word pairs that you select (some pairs that you think are similar, and some that you think are not). Write down the numbers and what you expected.
+
+== c72d22de
+Bonus · not part of the course
+
+== 82c3319b
+This section is optional extra material. It is <b>not part of the course requirements</b>: you do not need it for the exercises or the exam.
+
+== 960e1b0c
+<code>MLPClassifier</code> and Keras do the training loop for you, so you do not see it. Here is the full loop, for the XOR problem, which a single perceptron cannot solve. The network has two inputs, a hidden layer with four <span class="math">\tanh</span> units, a sigmoid output and the cross-entropy loss. The backward pass applies the chain rule to one layer after the other, from the loss back to the first weights.
+
+== ad258e93
+Look carefully at the line <code>d_out = (p - y) / len(X)</code>. When the output is a sigmoid and the loss is cross-entropy, the derivative of the loss with respect to the logit of the output is only <span class="math">p - y</span>: the prediction minus the target. All other lines are matrix calculus. A framework such as PyTorch does this matrix calculus for you with automatic differentiation.
+
+== dac84dc2
+Do two experiments with the code above. First, change the seed to 0. Now the network stops on a plateau (a flat area of the loss), and for two of the four inputs it predicts about 0.5. (In our runs, 19 of 20 seeds solved XOR.) Gradient descent finds <i>a</i> low point, but not always the best low point. Second, give each weight the start value 0.5, not a random number. Now all hidden units calculate the same value and get the same gradient. Thus, they stay the same at all times. The network then works as if it has only one hidden unit, and it cannot solve XOR. A random start breaks this symmetry. The scale of the random start values is also important (Xavier or He initialization). A good scale prevents that the signals in deep networks become too small or too large.
+
+== 6ca8e0f3
+A network with one hidden layer can approximate any continuous function on a bounded region as accurately as you want, if it has sufficient hidden units. Cybenko (1989) proved this for sigmoids. Leshno, Lin, Pinkus and Schocken (1993) proved it for each continuous activation that is not a polynomial. People often say that this theorem means "neural networks can learn anything". This is not correct. The theorem does not tell you <b>how many</b> units are necessary (possibly an extremely large number). It does not tell you if <b>gradient descent</b> will find the weights. It also does not tell you how well the result <b>generalizes</b> from a finite training set. In practice, depth is part of the answer: a deep network can represent some functions with few units, but a shallow network needs exponentially many units for them.
+
+== 9cc86c18
+3Blue1Brown, <a href="https://www.3blue1brown.com/lessons/neural-networks/" target="_blank" rel="noopener"><i>But what is a neural network?</i></a>, and the next chapters about gradient descent and backpropagation.
+
+== 7d0dc37b
+Andrej Karpathy, <a href="https://karpathy.ai/zero-to-hero.html" target="_blank" rel="noopener"><i>Neural Networks: Zero to Hero</i></a>: video lectures. They build backpropagation (micrograd) and at the end a GPT, with no existing code.
+
+== 644d2df4
+Michael Nielsen, <a href="http://neuralnetworksanddeeplearning.com/" target="_blank" rel="noopener"><i>Neural Networks and Deep Learning</i></a>: a free online book. Chapter 2 shows how to calculate backpropagation, one step at a time.

@@ -1,0 +1,930 @@
+# Week 1 in simplified English (about 80% ASD-STE100 Issue 9). See scripts/simple.mjs.
+== 8130abed
+<b>There are no exercise deadlines this week.</b>
+
+== cd1c4ff3
+Bring the <a href="#exercises">exercises</a> of this week to your exercise session in <a href="../week2/">Week 2</a>.
+
+== 36150153
+Objectives (when you complete the course, you ...)
+
+== 3b90770d
+can tell the basic philosophical problems of AI (why it is difficult to define AI and consciousness, acting or thinking, the Turing test)
+
+== ae7eed4e
+can tell the difference between realistic and unrealistic AI in science fiction
+
+== 53dd12db
+can describe the difference between "Good Old Fashioned AI" (GOFAI) and modern methods of AI
+
+== 64518682
+know the main developments in the history of AI
+
+== dc6b3a40
+can explain the idea of artificial general intelligence (AGI) and tell the difference between AGI and narrow AI
+
+== 1df72a35
+can compare symbolic GOFAI with statistical and learning-based AI, with real systems as examples
+
+== f7787e0a
+can explain the disagreement between plans-as-programs and situated action
+
+== efe1e666
+can describe the proposal of Russell for provably beneficial AI, and why uncertainty about preferences is important
+
+== 8a299694
+can write a problem as a graph and use breadth-first search and depth-first search on it
+
+== 9820706b
+can explain informed search and implement A* search
+
+== 5eadd8ec
+can write a simple game (for example tic-tac-toe) as a game tree
+
+== ac2121e2
+can explain and implement the minimax algorithm and alpha-beta pruning with a depth limit
+
+== c53b400b
+can design a good heuristic evaluation function for a game (for example chess)
+
+== 10dd8996
+There is no one sentence that all people accept as the definition of artificial intelligence. AI is a field of research and engineering. Its limits move when technologies become familiar. Search, optical character recognition and speech recognition were typical AI problems at one time. When they became reliable, people started to think of them as usual computing infrastructure. The name for this is sometimes the <b>AI effect</b>.
+
+== 0f346091
+Thus, it is useful to keep two types of definition separate. An <b>operational definition</b> tells us which systems are in a technical or regulatory scope. A <b>philosophical definition</b> asks what intelligence, understanding or mind really are. The first type can guide engineering and governance, and we do not have to answer the second question for this.
+
+== 58362849
+The updated <a href="https://oecd.ai/en/ai-publications/explanatory-memorandum-on-the-updated-definition-of-an-ai-system">OECD definition</a> and the <a href="https://eur-lex.europa.eu/eli/reg/2024/1689/oj">EU AI Act</a> describe an AI system like this. It is a machine-based system. It operates with different levels of autonomy, and it can adapt after deployment. It has explicit or implicit objectives. From its inputs, it infers how to make outputs, for example predictions, content, recommendations or decisions. These outputs can have an effect on physical or virtual environments.
+
+== a8d8eede
+The important words are <b>machine-based</b>, <b>objectives</b>, <b>inference</b>, <b>outputs</b> and <b>influence</b>. The definition does not require that the system is similar to a human, that it is conscious, or that it uses one specific technique, for example machine learning.
+
+== 9c537d38
+An AI <b>model</b> is a mathematical structure that changes inputs into outputs. People program it, or it learns. An AI <b>system</b> contains the model and also interfaces, data flows, tools, rules, monitoring, people and a context of use. For example, a language model alone is not a clinical triage system. The triage system also contains the user interface, the patient data, the prompts, the retrieval tools, the procedures to send a case to a higher level, and human responsibility. This difference is important. Capabilities come partly from models. But results and accountability come from systems in use.
+
+== 8dc908cd
+What must an AI system do so that we can call it intelligent? Must it <b>think like a person</b>? Or is it sufficient that it <b>behaves successfully</b>? Must we compare it with humans, who sometimes make mistakes, or with a standard of rationality?
+
+== f1f248a7
+Russell and Norvig put the methods of AI into groups by two differences:
+
+== 94ab36b5
+<b>Thinking or acting:</b> thinking is about the processes in the system and how it gets to a conclusion. Acting is about the behaviour that we can observe and about what the system does.
+
+== 5247a689
+<b>Human or rational standards:</b> a human standard compares the system with how people really think or behave. A rational standard asks whether the reasoning of the system is correct, or whether we can expect its actions to reach its objectives.
+
+== 6442026c
+When we combine these two differences, we get four views. These are <b>not four types of AI system</b>. They are four methods to define the goal of AI research and to decide which evidence shows success.
+
+== 79fc3d2d
+<b>Question:</b> does the system solve problems in a way that is similar to human thinking?
+
+== 8f088298
+This method studies the process, not only the answer. A person and a computer can both solve the same puzzle correctly, but with very different steps. A cognitive model tries to copy parts of how people really think, also their response times and their typical mistakes.
+
+== 87f312e7
+<b>Example:</b> a model of human memory predicts that people remember frequent words more easily than rare words. Researchers compare its predictions with experiments with people.
+
+== 91d3b765
+<b>Typical evidence:</b> psychological experiments, observations of how humans solve problems, and cognitive models.
+
+== cdfb210e
+<b>Question:</b> does the system reason correctly from the information that it has?
+
+== f73c6dad
+Formal logic gives rules to check whether conclusions follow from premises. In deductive reasoning, if the premises are true and the reasoning is valid, the conclusion must also be true.
+
+== 8dfb7db7
+<b>Example:</b> all mammals are warm-blooded; a whale is a mammal; thus, a whale is warm-blooded. The conclusion follows from the two premises.
+
+== 829652a7
+Correct reasoning alone is not sufficient. A premise can be wrong. Relevant facts can be missing. Or the system possibly does not have the time to examine all possibilities.
+
+== 487f0e82
+<b>Typical evidence:</b> formal logic, and proofs that conclusions follow from the given premises.
+
+== a9ff0b1a
+<b>Question:</b> does the system behave in a way that is similar to human behaviour?
+
+== 83156ed6
+Here, the focus is the behaviour that we can observe. The system does not have to use the same internal processes as a person. It must make behaviour that is sufficiently similar to human behaviour.
+
+== f26b532d
+<b>Example:</b> in the Turing test, a human interrogator sends written messages to a human and to a machine. The interrogator cannot see them. From their answers, the interrogator tries to find which is the human and which is the machine.
+
+== d04cf104
+Human-like behaviour is not always the best behaviour. People make errors, use shortcuts and sometimes do not act consistently. To be similar to a human and to do a task well are different goals.
+
+== 900753c6
+<b>Typical evidence:</b> the Turing test, and studies that compare the behaviour of humans and machines.
+
+== 02d47aec
+<b>Question:</b> does the system select actions that we can expect to reach its objective, with what it knows and with the resources that it has?
+
+== 2e68f411
+An <b>agent</b> gets information from an environment and acts in that environment. A <b>performance measure</b> specifies what a good result is.
+
+== e9f6f311
+<b>Example:</b> a robot vacuum uses its sensors to decide where to move. Its performance measure can give a reward for a clean floor, and also look at the time, the energy use and the prevention of collisions. The robot does not have to clean in the same way as a human.
+
+== a6f97041
+Rationality does not mean that the agent always succeeds or has perfect information. A sensible action can have a bad result because of an unexpected event. The question is whether the choice was reasonable with the information and the resources that the agent had at that time.
+
+== a6fc031d
+<b>Typical evidence:</b> how well the system does a task, in relation to a given objective and in specified conditions.
+
+== d88e2d7c
+Think of a navigation app that finds a route through a city:
+
+== 54f4c242
+<b>Thinking humanly:</b> does it plan the route with processes that are similar to human planning?
+
+== b72cad2c
+<b>Thinking rationally:</b> do its conclusions follow correctly from the information and the rules that it uses?
+
+== 3cf4ede1
+<b>Acting humanly:</b> are its route choices similar to the choices of a person?
+
+== eea61aac
+<b>Acting rationally:</b> can we expect its route to reach the given objective, for example to arrive quickly and not pay tolls?
+
+== da96a080
+The app can find a very good route, but not plan like a person. Also, it can reason correctly from its map, but propose a bad route because the map is old. <b>Similarity to humans, correct reasoning and successful action are different things.</b>
+
+== 0ee12316
+Russell and Norvig use the <b>rational-agent view</b> as a framework for much of AI. An agent gets information from an environment, and it selects actions by a performance measure. It has limited information, computation and time. This view is useful to design and evaluate systems. But it is <b>not a full theory of human intelligence</b>. Which action is good also depends on how we define the objective and on what the performance measure contains.
+
+== 7def125f
+<b>Reference:</b> Stuart Russell and Peter Norvig, <i>Artificial Intelligence: A Modern Approach</i>, 4th edition, Section 1.1.
+
+== 53e94ca9
+<b>What is an AI system?</b><br>This is a question about the operational or legal scope. The OECD definition and the EU AI Act answer it. They do not define a mind or measure intelligence.
+
+== 5cd349f9
+<b>What do we mean by intelligence?</b><br>This is a question about concepts and measurement. Different theories put the most importance on different things: to reach goals, to reason, to learn efficiently or to adapt.
+
+== fb76b964
+<b>Which evidence lets us call a system AGI?</b><br>This is a question about a threshold and a classification. There is no test that all people agree on. Thus, the proposed frameworks make different aspects measurable.
+
+== 5acb2b7b
+These answers do not compete. They complete each other. A system can be in a legal definition of AI, but not be very intelligent. A general-purpose model is not automatically AGI.
+
+== 22fa6af7
+Term
+
+== d874a42c
+Useful meaning
+
+== 047d5c03
+Example or limit
+
+== 84847339
+Strong capability in a limited task or domain.
+
+== f2baaa48
+A chess engine, a spam filter or a classifier of medical images can be better than humans, but they cannot do many different things.
+
+== ca3a2a96
+A model that can do many different tasks or support many downstream applications.
+
+== 0e0a6207
+This is a category in the EU AI Act. It does not mean general intelligence.
+
+== 5d875771
+A research concept that people do not agree on: wide, high-level ability in many tasks and contexts.
+
+== 66b3d042
+There is no scientific test or legal definition that people agree on.
+
+== 277658a2
+AGI is not one more legal category. It is a claim about how wide and how high the intelligence of a system is, and people do not agree on it. Different frameworks make that claim measurable in different ways. Thus, read the aspects below as a comparison of proposals. They are not a checklist that people agree on and that a system passes or fails.
+
+== 47380adc
+Reaching goals in many environments
+
+== ef0ffa80
+An intelligent agent reaches goals in many different environments, not only in one task that is defined before.
+
+== 6d48292e
+Breadth or generality
+
+== 7d90daec
+How many different types of tasks and domains can the system work with?
+
+== 78cb9c81
+Depth or performance
+
+== 8c1a7926
+How well does the system work in that range: emerging, competent, expert, virtuoso or superhuman?
+
+== 1a7e8263
+Generalization to new tasks
+
+== 77e24d28
+Can the system find how to solve really new tasks? Or does it only repeat skills that it got in training?
+
+== c6fd35fd
+<a href="https://arxiv.org/abs/1911.01547">Chollet (2019)</a>; made measurable in ARC-AGI
+
+== da8c4a29
+Efficiency of learning new skills
+
+== 9511a6c7
+How efficiently does the system learn a new skill? This includes its priors, its earlier experience and how difficult the generalization is.
+
+== 8c8591b7
+Adaptive measurement
+
+== b48f0aa5
+Can a test change for different agents, levels of ability and time budgets, and continue to make its estimate better?
+
+== 7b183f29
+How independently can the system act? This has an effect on deployment and risk. But evaluate it separately from capability.
+
+== 3d7665bd
+<b>AGI is not the same as consciousness:</b> when a system can do many tasks, this does not show that it has subjective experience.
+
+== 64a51781
+<b>AGI is not the same as autonomy:</b> a capable model can have little independent control, and a simple system can operate autonomously.
+
+== 100fc2c3
+<b>AGI is not the same as superintelligence:</b> generality is about breadth. Superintelligence is about performance that is much better than human performance.
+
+== 4fcc4911
+<b>AGI does not have to copy human cognition:</b> different mechanisms can give similar performance.
+
+== 8509e793
+No framework above gives a full test. A benchmark takes a sample of behaviour in specified conditions. It does not measure a full mind. High scores can come from contamination of the training data, prompt design, access to tools or much scaffolding. When you evaluate a claim of AGI, ask these questions:
+
+== eed8699d
+<b>Breadth:</b> are the tasks really different, or are they small variations of one family of tasks?
+
+== e9aa3040
+<b>Novelty:</b> were the test problems unavailable during training? Do they need new abstractions?
+
+== 08fe9747
+<b>Efficiency:</b> how much data, computation, prior knowledge and human guidance were necessary?
+
+== 011ad826
+<b>Transfer:</b> does the ability continue when the representation, the domain or the objective changes?
+
+== 334d2a8d
+<b>Reliability:</b> is the performance consistent, or does it come from some demonstrations that were successful by chance?
+
+== 8b90b278
+<b>Scaffolding:</b> which part comes from the model, and which part comes from prompts, retrieval, tools or human operators?
+
+== 6f6d01a2
+<b>Autonomy:</b> does the report give independent action separately from capability?
+
+== ca39e6e7
+AI developed together with computer science. The work of Alan Turing connected the idea of mechanical computation with questions about intelligent behaviour. John McCarthy, Marvin Minsky, Nathaniel Rochester and Claude Shannon used the term <b>artificial intelligence</b> in their 1955 proposal for the Dartmouth summer research project. The project occurred in <b>1956</b>. Its idea was this: we can describe parts of learning and intelligence so precisely that a machine can simulate them.
+
+== 5d4c98f9
+Games, theorem proving and puzzles were the first test areas, because we can specify their states, legal moves and goals explicitly. Search and planning gave important progress. This includes methods that are related to A* search and alpha-beta pruning, which we study in this course. This success in limited settings made people optimistic about much wider machine intelligence. But it was much more difficult to go from a well-defined problem to an open world that changes.
+
+== 9bd44df4
+<b>GOFAI</b> is the classical symbolic method. It writes knowledge as explicit symbols, facts and rules. Then it uses these representations with logical inference, search or planning. For example, an expert system can combine rules that it got from specialists to find a recommendation. The difficulty is not only to execute the rules. Somebody must find the relevant knowledge, encode it and keep it up to date.
+
+== 925aad3f
+The earlier course material used the term <b>modern AI</b> for methods that can work with information that is uncertain, not complete or has noise. Probabilistic models show degrees of uncertainty, and they update beliefs when new evidence comes. Machine learning estimates patterns or model parameters from data. Deep learning also learns useful internal representations. These developments are related. But <b>reasoning under uncertainty and learning from data are different capabilities</b>. An expert can specify a probabilistic model, and a learned model does not have to show uncertainty explicitly.
+
+== 5825ed69
+Probabilistic and learning-based methods
+
+== 053594d7
+How do we show knowledge?
+
+== ddc60918
+Explicit symbols, facts, relations and rules.
+
+== aed84f46
+Probability distributions, statistical models or learned representations.
+
+== 8546d95a
+Where does knowledge come from?
+
+== 3facb6e0
+Mainly from people who encode a domain and its rules.
+
+== c83e0050
+From the assumptions of experts, from data, or from both.
+
+== dcd641b2
+How do we get conclusions?
+
+== a49aada0
+Inference, search and planning on explicit representations.
+
+== 3150c9ed
+Probabilistic inference, or predictions from learned models.
+
+== 18ca73ec
+What works well?
+
+== d6a281d0
+Clearly specified constraints, structured problems and reasoning steps that we can examine.
+
+== 32c49611
+Observations with noise, pattern recognition, and tasks where it is not practical to write all rules.
+
+== 093e00f5
+What can go wrong?
+
+== fec971d3
+The system breaks easily (brittleness), knowledge is missing, maintenance is expensive, and search spaces are large.
+
+== c03255c7
+Data that is biased or not sufficient, distribution shift, reliability that is not certain, and explanations that are difficult.
+
+== 9ee34e3c
+<b>Observed facts:</b> we do not know the sender; the message is about a lottery; it asks for an urgent money transfer.
+
+== eb38cb8d
+<b>Rule 1:</b> IF we do not know the sender AND the message asks for money urgently, THEN mark the message as suspicious.
+
+== 2035facf
+<b>Rule 2:</b> IF a suspicious message is about a lottery, THEN classify it as spam.
+
+== a8edf4dc
+<b>Inference:</b> Rule 1 gives <i>suspicious</i>. Then Rule 2 gives <i>spam</i>. We can examine each step.
+
+== fed1d60c
+<b>Limit:</b> “You won a prize”, or new words that criminals use, can get past the rules, until somebody updates the knowledge base.
+
+== a0a8ceb2
+A learned classifier does the same task differently. It estimates patterns from labelled messages. A probabilistic classifier can estimate the probability of spam from the words that it sees. The symbolic method depends on how much its rules cover. The learned method depends on the quality of its data, and on whether the learned patterns transfer to new messages.
+
+== b80d2e31
+This comparison shows general tendencies. It does not show two periods that exclude each other. Neural learning existed already in the first decades of AI. Symbolic methods are still useful today. Systems can combine learned perception with explicit rules, search or planning. “Modern” does not mean that a system understands the world, or that it always generalizes reliably.
+
+== 28fc2fe7
+GOFAI was not one algorithm, and it was not only a set of failures. It gave impressive demonstrations and useful systems that people used. Its typical problem was this: knowledge that was correct in a carefully limited domain could break easily (become brittle) when the domain, the words or the context changed.
+
+== 9875c469
+What it did
+
+== 59898c7b
+What it teaches us
+
+== fcc6ab70
+Newell, Simon and Shaw used heuristic search to prove theorems from <i>Principia Mathematica</i>.
+
+== b6782382
+We can describe reasoning as a selective search through a very large space of possibilities.
+
+== 9e46cbf4
+The program of Winograd answered questions and followed instructions in natural language, in a simulated world of blocks.
+
+== 699916f3
+Language, planning and reference can look very intelligent when the world is small and the model of it is complete.
+
+== 0ad3d23f
+The mobile robot of SRI combined perception, a world model and symbolic planning. It moved through rooms and moved objects.
+
+== d27ec32c
+We can divide a high-level goal into actions. But this worked only in a simplified environment, and with perception that was slow and carefully engineered.
+
+== 9d018f4a
+A rule-based expert system recommended antibiotics for bacterial infections. It showed uncertainty with certainty factors.
+
+== 477a6f3f
+We can encode the knowledge of specialists, and explanations can refer to rules. But it is expensive to get, validate and maintain the knowledge.
+
+== b9056f46
+DEC used thousands of rules to configure orders for VAX computer systems.
+
+== 1767ac0f
+GOFAI could make much commercial value in a stable domain. But it also showed the cost to maintain a large set of rules.
+
+== 61c15d23
+Many systems today combine methods. Learned perception or language models give judgments. Search, programs, tools, rules or constraints organize behaviour with many steps. People often call this family <b>neuro-symbolic AI</b>, but the term covers some different architectures.
+
+== d3cbe332
+<a href="https://youtu.be/7bsEN8mwUB8" target="_blank" rel="noopener"><b>Shakey the Robot: the first AI-based mobile robot</b></a> (SRI, approximately 6 minutes). Look at how sensing, a world model and planning are connected.
+
+== a1034311
+<a href="https://youtu.be/_S3m0V_ZF_Q" target="_blank" rel="noopener"><b>The Computer Chronicles: Artificial Intelligence</b></a> (1984). Very useful parts are Nils Nilsson at approximately 6:30 and 21:10, and Tom Kehler at approximately 16:40. Listen for the confidence in knowledge engineering, and for the warning of Nilsson about brittleness, context and common sense.
+
+== 24354f7c
+Newell and Simon (1976), <a href="https://doi.org/10.1145/360018.360022"><i>Computer Science as Empirical Inquiry: Symbols and Search</i></a>: the physical symbol system hypothesis.
+
+== a3220d12
+An <b>AI winter</b> is a period when there is less funding, less commercial investment and less confidence in AI, because results did not agree with the expectations. It does not mean that research stopped. The dates are different in different reports and countries. But people usually find two general periods.
+
+== a5547ecc
+The first demonstrations made people say that general machine intelligence was near. But in practice, the programs had problems with real-world language, with perception and with search spaces that became very large very quickly. Computing resources and available data were limited. Criticism of simple perceptrons also decreased the confidence in neural-network research. But the limits of those models did not prove that all neural networks were not capable. The <b>1973 Lighthill Report</b> criticized the progress in the UK. Changes in the funding priorities in the UK and the US helped to cause a more general loss of support.
+
+== 2dfe7d93
+The commercial growth of <b>expert systems</b> made people optimistic again. Some systems were useful in limited domains. But it was expensive to get and maintain their knowledge, and they often had problems in situations that they did not know. The returns were less than expected. Also, the special market for <b>Lisp machines</b> collapsed, because general-purpose computers could compete with them. These problems decreased investment. These problems are about the limits of specific technologies and business expectations. They do not mean that all expert systems failed, or that symbolic reasoning became useless.
+
+== e08c0ef5
+From the late 1980s and through the 1990s, probabilistic reasoning and statistical machine learning became more important. Later, larger datasets, better algorithms and more computing power helped neural networks to return as <b>deep learning</b>. After this, large pretrained models made reuse possible in many tasks and modalities. These developments overlap. They are not one invention that suddenly stopped a winter.
+
+== b349a5e7
+Success on a limited task does not show general intelligence. Ask these questions: what does a system show? In which conditions does it work? Which resources does it need? Do the claims say more than the evidence shows? The history of AI connects directly to our philosophical questions: successful behaviour alone does not answer questions about understanding, consciousness or the nature of human skill.
+
+== 648f6272
+<b>Connection to the course:</b> Week 1 introduces search and games. Week 2 continues with reasoning under uncertainty, with probability and Bayesian methods. Later weeks look at learning and neural networks. The aim is to understand what each method gives, and how we can combine the methods. For more historical context, see Russell and Norvig, <a href="https://aima.cs.berkeley.edu/4th-ed/pdfs/newchap01.pdf">the introduction to <i>Artificial Intelligence: A Modern Approach</i></a>.
+
+== b4f802f5
+Philosophy helps to keep separate the questions that people easily mix. <b>Behaviour</b> asks what a system can do. <b>Mechanism</b> asks how the system makes that behaviour. <b>Understanding</b> asks whether its symbols or outputs have a meaning for the system. <b>Phenomenology</b> asks whether the system has subjective experience. Evidence for one question does not automatically answer the other questions.
+
+== 295a6565
+In <i>Computing Machinery and Intelligence</i> (1950), Alan Turing proposed an <b>imitation game</b>. A human interrogator sends written messages to hidden participants. The interrogator tries to find which participant is a human and which is a machine. The step of Turing was about method. He did not first define an invisible internal property with the name "thinking". He examined language performance that we can observe. When a machine passes this test, this is important evidence of ability in conversation. But it does not explain the mechanism alone, it does not show consciousness, and it does not prove that the machine thinks in the same way as humans.
+
+== b0b97cf4
+John Searle's thought experiment <a href="https://iep.utm.edu/chinese-room-argument/">Chinese Room</a> asks us to think of a person who does not understand Chinese. The person follows a rulebook that tells how to change Chinese symbols into other Chinese symbols. For people outside the room, the answers can look fluent and correct. Searle says that formal manipulation of symbols (<b>syntax</b>) alone is not sufficient for meaning (<b>semantics</b>). The argument is against the claim that a system understands when it runs the correct program. It does not show that AI systems cannot be useful or cannot behave intelligently. There are some replies. The systems reply: the full system of person, rulebook and room understands, also if the person does not. The robot reply: the symbols get their meaning when the program is connected to the world through sensors and motors. The brain-simulator reply: a program that simulates the neuron firings of a person whose first language is Chinese understands.
+
+== fb574783
+Hubert Dreyfus criticized a picture of intelligence that was usual in much early symbolic AI. In this picture, the world is first written as explicit facts. Then cognition applies formal rules to those facts. Then action comes from the representation that this gives. His criticism was not only that computers were too slow. It was this: intelligent activity in daily life depends on a background of skills of the body, habits, social practices and sensitivity to context. Usually, nobody writes this background as a full list of facts and rules.
+
+== 08a1e616
+This argument uses phenomenology, mainly Heidegger and Merleau-Ponty. Usually, we are not observers at a distance who make a full internal description of the world. We are already part of situations that have a meaning. We see a door as something to open. We see a sentence as something that asks for a reply. We see a traffic scene that changes as a reason to go more slowly. Dreyfus gave the name <b>absorbed or embodied coping</b> to this practical engagement that is directed at action.
+
+== de6f1e81
+<b>Knowing-that</b> is knowledge of propositions. Often, we can say it explicitly: we know that the braking distance increases on an icy road. <b>Knowing-how</b> is skilled performance: we feel that the tyres lose traction, and we make the correct adjustment before we complete a conscious calculation. This difference is not between reason and emotion. It also does not mean that experts never reflect. It means that good performance is more than following explicit instructions.
+
+== 8ce81c06
+Stuart and Hubert Dreyfus proposed this: usually, learners start with rules that do not depend on context, and they move to perception and action that depend more and more on the situation. The model is a philosophical and educational description. It is not a law that each learner follows in the same way.
+
+== 8e9c4786
+How the learner sees the situation
+
+== a80d31eb
+Typical type of action
+
+== 7469d67d
+Recognizes features that do not depend on context, which an instructor taught.
+
+== 9d9b515e
+Follows explicit rules.
+
+== 2623895a
+Starts to see signals in situations that occur again.
+
+== e1d28e0f
+Combines rules with examples from experience.
+
+== 038b7a4f
+Selects what is important from many possible features.
+
+== cb6051ac
+Plans on purpose and accepts responsibility for choices.
+
+== 9dc3675e
+Sees the situation more as one whole.
+
+== 81a414de
+Sees what needs attention, but still thinks carefully about the action.
+
+== 3bb620ed
+The learner immediately sees the situation as possibilities for action that have a meaning.
+
+== d6f75d60
+Usually responds fluently and by intuition, but can still reflect when necessary.
+
+== 03f7472c
+Think of how people learn to drive. A novice can apply separate rules about speed, mirrors and distance. An experienced driver sees a wet road, the posture of a pedestrian, a hidden junction and the rhythm of the traffic as one situation with a meaning. The driver does not get the correct response by a conscious list of each fact. Experience has changed what the driver sees and how the situation asks for action.
+
+== 10ca466c
+Dreyfus was correct about two things. Rule systems that people write by hand break easily, and they do not scale well to open environments. Also, it is difficult to specify before what is relevant. But his strongest predictions about what machines can never do became weaker because of systems that learn patterns and representations from data. Systems for chess, vision, speech and language got levels of performance that the earlier symbolic programs did not get.
+
+== dd28f6bd
+But success without rules written by hand does not remove the philosophical problem. A learned model can be very capable, and questions can still remain. These questions are about grounding, experience of the body, social practices, robust transfer, and whether machine ability is the same type of skill as human expertise. Neural learning changes the engineering assumption. It does not automatically show understanding or real involvement in a world that has a meaning.
+
+== 34250bd1
+The description of intelligence by Herbert Simon is less naive than the picture of a rational calculator that knows everything. Humans and machines have limited time, information and computational resources. Thus, they search selectively, use heuristics and often <b>satisfice</b>: they find a sufficient option, not the best option of all. In this view, we can explain intelligent behaviour with internal representations of a problem space and with procedures that search it. A plan is a representation that can guide action in conditions of <b>bounded rationality</b>.
+
+== 2c8999b7
+Lucy Suchman's <i>Plans and Situated Actions</i> (1987) did not agree that this useful engineering model is a general theory of human behaviour. She studied people who had problems with an expert help system for a photocopier. She showed that the meaning of an instruction depends on three things: where the person is in the activity, what the machine has done, and how the participants interpret each other. Usually, human action is not the execution of a full script that the person made before. People make it moment by moment, through physical interaction with material and social conditions.
+
+== 4828dbd8
+A traveller can make this plan: "take the 8:10 train, change at Tampere, arrive at 10:02." The plan shows the wanted route and helps coordination. But a cancelled train, an announcement that is not clear, the advice of another traveller and the layout of the station decide what occurs next. For Suchman, the plan is a <b>resource for situated action</b>. It is not the cause of each step, and it is not a full description of each step.
+
+== df369f56
+Vera and Simon (1993) replied that symbolic architectures can perceive signals from the environment, change plans and make action reactively. Situated action does not logically require that we stop using representations. But the deeper point of Suchman is still true: formal models can miss how actions get their meaning through real interaction. The debate is about whether the explanation is sufficient. It is not only about whether plans or symbols exist.
+
+== d2a8176c
+This debate is similar to questions about AI agents today. A language-model agent can make a plan, call tools and plan again after feedback. This can be effective. But it does not prove that its representations contain the practical and social understanding that a human uses to see what is important. On the other side, when we say that action is situated, this does not explain how an artificial system must remember goals, predict results or coordinate long sequences of actions. Robust intelligence possibly needs both representations and a continuous connection to the environment.
+
+== fa85ec23
+Suchman (1987), <a href="https://doi.org/10.1017/CBO9780511620727"><i>Plans and Situated Actions</i></a>: the main criticism of plans as full scripts for action.
+
+== b42f3ee6
+Vera and Simon (1993), <a href="https://doi.org/10.1207/s15516709cog1701_2"><i>Situated Action: A Symbolic Interpretation</i></a>, together with <a href="https://doi.org/10.1207/s15516709cog1701_5">the response of Suchman</a>: the debate about whether situated action requires that we stop using symbolic descriptions.
+
+== 69abcc98
+The standard rational-agent model assumes that we know the objective: select the actions that we expect to give the highest value of a specified performance measure. Stuart Russell says that this assumption becomes dangerous when systems become more capable. A designer can specify a proxy, and not what people really value. Then a system that is sufficiently capable can reach the given objective in a way that nobody intended. The alignment problem is not that the machine does not obey. It is that the machine optimizes the wrong objective too well.
+
+== 14561d30
+The programme of Russell for <b>provably beneficial AI</b> changes the formal relation between humans and machines. The machine must not think that it knows its objective perfectly. It must keep uncertainty about human preferences, and it must use human behaviour as evidence about them. In simplified formal models, this can give the machine reasons to ask questions, to observe, to let humans decide, to accept correction and to let humans switch it off. The reason: human intervention can show that its current model of the objective is wrong. <b>Cooperative inverse reinforcement learning</b> is a model where the human and the machine are participants in a cooperative game. The machine does not know the reward of this game perfectly.
+
+== 36f762b1
+"Provably" does not mean that AI systems today are guaranteed to be good for humanity. Guarantees are true only in relation to a formal model and its assumptions. Human behaviour is not consistent. Preferences change, and other people can manipulate them. People disagree. The choices that we observe can come from force or from limited opportunity. And what people prefer is not automatically what is morally right. These difficulties connect technical alignment to philosophy, social choice, politics and the design of institutions.
+
+== 0f6a5cef
+<a href="https://www.youtube.com/watch?v=_H87qqT8pdY" target="_blank" rel="noopener">Stuart Russell, <i>Turing Lecture: Provably Beneficial AI</i></a> (Alan Turing Institute, 2020).
+
+== 7c01afbd
+In this course, we use the word <b>AI</b> for the study and construction of machine-based systems that do these things: they perceive or get information; they infer or learn; and they act or make outputs to reach objectives. This definition is wide, so it includes search, probabilistic reasoning, machine learning, neural networks, language models, agents and robotics. On purpose, it does not say whether these systems have consciousness or an understanding like human understanding.
+
+== ce0db92c
+Remember these differences during all of the course:
+
+== 68cbcffc
+an <b>AI model</b> is not the same as an <b>AI system in use</b>;
+
+== ae666e6a
+<b>general-purpose</b> does not automatically mean <b>general intelligence</b>;
+
+== 3103c1d5
+successful <b>performance</b> alone does not answer questions about <b>understanding</b>;
+
+== 79d19551
+<b>autonomy</b> is not the same as <b>consciousness</b>;
+
+== df676c4b
+explicit <b>rules</b> are useful, but they possibly do not contain all of human <b>skill</b>.
+
+== 6d59c2b6
+The links to the references below are at the places where we introduce their ideas. The short notes tell what each source gives. They also help you to tell the difference between primary texts and later frameworks or regulation.
+
+== 400c86e3
+OECD (2024), <a href="https://oecd.ai/en/ai-publications/explanatory-memorandum-on-the-updated-definition-of-an-ai-system">Explanatory memorandum on the updated definition of an AI system</a>: the operational definition that this section uses.
+
+== d907fe04
+European Union (2024), <a href="https://eur-lex.europa.eu/eli/reg/2024/1689/oj">Artificial Intelligence Act, Regulation (EU) 2024/1689</a>: the legal definitions of AI systems and of general-purpose AI models.
+
+== 6dd882b1
+Legg and Hutter (2007), <a href="https://arxiv.org/abs/0712.3329"><i>Universal Intelligence: A Definition of Machine Intelligence</i></a>: a formal description of how an agent reaches goals in many different environments.
+
+== 22c01fb7
+Chollet (2019), <a href="https://arxiv.org/abs/1911.01547"><i>On the Measure of Intelligence</i></a>: intelligence as the efficiency of learning skills, in relation to priors and experience.
+
+== 906002b8
+Hernández-Orallo and Dowe (2010), <a href="https://doi.org/10.1016/j.artint.2010.09.006"><i>Measuring Universal Intelligence: Towards an Anytime Intelligence Test</i></a>: adaptive tests for different agents, levels of ability and time budgets.
+
+== 4206a821
+Morris et al. (2024), <a href="https://proceedings.mlr.press/v235/morris24b.html"><i>Levels of AGI for Operationalizing Progress on the Path to AGI</i></a>: a position paper that keeps breadth, performance and autonomy in deployment separate.
+
+== ce02b9e9
+Dreyfus and Dreyfus (1980), <a href="https://apps.dtic.mil/sti/citations/ADA084551"><i>A Five-Stage Model of the Mental Activities Involved in Directed Skill Acquisition</i></a>: the first version of the model. Its stages are novice, competence, proficiency, expertise and mastery.
+
+== cf3dbc34
+Dreyfus and Dreyfus (1986), <i>Mind over Machine: The Power of Human Intuition and Expertise in the Era of the Computer</i>: the five stages that the table above uses.
+
+== dab0155d
+In your first exercise, you look at AI research today. Find a scientific article about AI from the last years. Select one that you can mostly understand. Try to find approximately the problem statement, the method and the conclusions.
+
+== b44a2aad
+Good places to start your search are, for example, the proceedings of the <a href="https://www.aaai.org">AAAI</a>, <a href="https://www.ijcai.org">IJCAI</a> and <a href="https://www.eurai.org/ecai">ECAI</a> conferences. You can also use magazine-style publications, which can be less technical and are for a wider audience, for example <a href="https://aaai.org/ai-magazine/">AI Magazine</a>. But try not to use articles that are too polemic and superficial. The idea is to look at <i>academic</i> AI, and to ignore the nonsense that we see on social media...
+
+== 43567f3b
+Read all of the article and answer these questions:
+
+== 8d97bcb1
+Is the topic related to the topics of this course?
+
+== f606b7f6
+In general, what impression of modern AI research does the article give? Think about the history and philosophy of AI that we discussed above.
+
+== 3c1eff56
+Which studies are necessary to understand the article in detail?
+
+== 5226ed6d
+Bonus question: for the article that you selected, how relevant is the ''Terminator'' scenario, where AI becomes self-conscious and turns against humankind?
+
+== 155e2bf7
+When you solve the exercise above, you get one point (1p). Some exercises need more work, and they can give you two points (2p). The heading of the exercise shows this, as above.
+
+== 142df931
+You give your solutions to ''pencil-and-paper'' exercises, such as this one, at the exercise sessions. At the start of the session, a sheet goes around. Make sure that you mark your completed exercises on it.
+
+== 09e64c31
+Programming exercises have a package that you can download. It contains starter code and local tests. Download the package, implement your solution and run the tests on your computer. We also mark programming exercises at the exercise session.
+
+== 38cdda2b
+Now we stop the philosophical discussion and start practical work. We go to our first technical topic: search and problem-solving.
+
+== 58fda626
+We can write many problems as search problems. To specify the search space and to select a good search algorithm often needs careful thinking. This is an important skill for an AI developer.
+
+== 9edd6c3f
+Basic algorithms to go through (traverse) trees and networks are part of the prerequisites of the course. You must already know breadth-first search, depth-first search and best-first search (with its special case, the A* algorithm). If you forgot the details immediately after the exam, do not worry: we look at them again below.
+
+== b488df60
+To solve AI problems by search, we must first write the problem in a specific way.
+
+== 342bec99
+The important concepts are the set of allowed <b>states</b> (the name of this set is the <b>search space</b>) and the <b>transitions</b> between the states. Sometimes, different transitions have different <b>costs</b>. An example is a network of trams or of flights, where the distances between two stops or airports are different. Sometimes we measure the cost in kilometres, sometimes in hours and minutes, and sometimes in other resources.
+
+== df4c5852
+A <b>state transition diagram</b> is a diagram where each allowed state is a node. The allowed transitions between the states are edges that connect the nodes.
+
+== 3c4997fa
+The classic Wolf, Goat and Cabbage puzzle shows the idea of the state transition diagram. In the puzzle, a farmer has (for a strange reason) a wolf, a goat and a cabbage. The farmer moves them across a river in a small boat. The boat can carry only one item at a time. But the farmer cannot leave the wolf alone with the goat, because then the wolf eats the goat. For the same reason, the farmer cannot leave the goat alone with the cabbage.
+
+== d0a22c93
+You can first try to solve the puzzle only by thinking. It can take some time before you find the solution!
+
+== 4a55d446
+We can show each state by telling on which side (bank) of the river the farmer (f), the wolf (w), the goat (g) and the cabbage (c) are. The vertical bar is the river. The letters on its left are on the left bank, and the letters on its right are on the right bank. For example, the state
+
+== e10cb24d
+means that the farmer is on the right bank of the river with the wolf and the goat, and the cabbage is on the left bank. (The boat is always on the side of the farmer, so the notation does not show it.) At the start, the farmer is on the left bank with all the items to move. The goal is to get all of them on the right bank:
+
+== 0a115451
+Then the state transition diagram contains, for example, these states and edges:
+
+== 23860acb
+The label of each edge tells what the farmer takes across. We can undo each move, so we can follow the edges in the two directions.
+
+== b1851394
+From the initial state on the left, the first move must be to take the goat to the right bank. Each other move leaves the wolf alone with the goat, or the goat alone with the cabbage. In the state wc|fg, the farmer is with the goat on the right bank. From there, we can go back to the initial state (each transition goes in the two directions). Or the farmer can leave the goat on the right bank and go to the left bank with an empty boat.
+
+== 0c8a38eb
+Now you can complete the state transition diagram yourself. It contains only 10 states. Make sure that you draw each different state only one time. When you have the diagram, it is very easy to solve the puzzle.
+
+== 5cd86b52
+The important point is this. It can be boring and slow to make the state transition diagram, but it is a routine operation. The search procedure is also fully automatic. Thus, we can solve the problem without our own intelligence. But this technique can solve puzzles and problems that most of us think need ''intelligence''. It is probably easier to solve small puzzles, such as the Wolf, Goat and Cabbage puzzle, by hand than to write a computer program for them. But the real power of the AI method becomes clear in large problems, where our human intelligence cannot examine all possible options.
+
+== 6a5c296a
+First, try the puzzle yourself. Select who goes in the boat with the farmer. Each new state that you get to is added to the diagram below the river. The page refuses a move that leaves the wolf with the goat, or the goat with the cabbage, because such a state is not part of the search space. Then push <b>Solve with BFS</b>. You see how the breadth-first search of the next section visits the states in order (the numbers) with its queue, <code>node_list</code>, and you can follow the path that it finds.
+
+== 12ec0086
+Before we discuss more advanced search algorithms, for example A*, we define a general template for search algorithms.
+
+== aad45730
+In the pseudo-code above, <code>node_list</code> contains the nodes to visit. The order in which <code>node_list.first()</code> takes nodes from the list sets the behaviour of the search. A queue (first in, first out) gives <b>breadth-first search (BFS)</b>. A stack (last in, first out) gives <b>depth-first search (DFS)</b>.
+
+== f740af77
+In BFS, the operation that adds a node to the list (queue) is <i>enqueue</i>. The operation that removes the node that was added first is <i>dequeue</i>.
+
+== 2335c282
+In DFS, the operation that adds a node to the list (stack) is <i>push</i>. The operation that removes the node that was added last is <i>pop</i>.
+
+== 647bd81f
+The test <code>goal_node</code> tells whether the search found the goal node (the target node). Sometimes the problem is only to go through all of the network (or tree) in a specific order, and there is no goal node. Then <code>goal_node</code> always gives <code>False</code>.
+
+== 57d83ef9
+You possibly saw different versions of search algorithms, and you ask why this version is not exactly the same. Many students learned the recursive version of DFS, which is very simple and elegant.
+
+== 4e12f293
+This difference is not very important. Here, we wanted to use the same template for all search methods. Both versions are depth-first. The recursive version of DFS also uses a stack (the call stack) to keep the state of the search. But the order in which they visit the nodes can be different. Our version pushes all neighbours of a node at the same time, and then it pops the neighbour that it pushed last. The recursive version visits the neighbours in the order of the list. In the exercises, use the template above.
+
+== ed657a10
+It is easy to see that BFS always gives the path with the smallest number of transitions to a goal node. If node A is nearer to the start node than node B, the search expands node A before node B. You can think of BFS as a <i>frontier</i> of nodes that moves out from the start node gradually. It expands all nodes at a specific number of steps from the start before it moves one more step.
+
+== 3d9e489b
+DFS does not guarantee that it finds the shortest path. But in some cases, this is not important. In such a case, why can DFS be a better choice than BFS?
+
+== 4d8b032a
+This is a simple exercise to make sure that you understand BFS and DFS.
+
+== 7622fbc0
+For each case, show the contents of the node list (queue or stack) at each step of the search. So that all students get the same result, we agree to add nodes to the list in alphabetical order.
+
+== e485314d
+<img width="30%" src="../img/exercises/ex1/Drawing-9537dcb8.png" align="right"> Look at the (cute) network on the right.
+
+== 43c1069f
+Simulate (with pencil and paper) breadth-first search from node A, when the goal node is H.
+
+== 6e2aa031
+Do the same with depth-first search.
+
+== 3a2a2578
+In the philosophical discussion above, search algorithms possibly did not look like very interesting AI methods. But the next two exercises show that they can solve tasks that, as most of us agree, need intelligence.
+
+== c59a649f
+Now we play. Solve the well-known puzzle <a href="https://www.britannica.com/topic/Tower-of-Hanoi">Towers of Hanoi</a>. The puzzle has three pegs and three discs: one large disc, one medium disc and one small disc. (There can be any number of discs, but three is sufficient for the pencil-and-paper exercise.)
+
+== 398f4f4a
+In the initial state, the three discs are on the first peg (on the left). The goal is to move the discs to the third peg. You can move only one disc at a time. You must not put a larger disc on a smaller disc.
+
+== b0387951
+This picture shows the initial state and the goal state:
+
+== 44406ce8
+Draw a network diagram. Its nodes are all the states that you can get to from the initial state. Its edges are the allowed transitions (moves) between the states.
+
+== 3fade3bd
+Simulate breadth-first search in the state space. <b>Note:</b> you do not have to give the contents of the queue at each step. It is sufficient to give the order in which the search visits the states.
+
+== 7ed2c135
+Compare the search methods on two points: <i>a)</i> the length of the path that each algorithm finds, and <i>b)</i> the number of states that the search visits. <b>Note:</b> the path length and the number of visited states are different things.
+
+== f48b2d44
+Does the result depend on the order in which you add the neighbours of each node to the list?
+
+== abbd77c0
+A bonus exercise: try to find the symmetry in the state diagram, and make the result general for <i>n &gt; 3</i> discs.
+
+== a801469f
+Good. Up to now, we remembered BFS and DFS again, and we used them to solve some interesting applications. Now we go to the next level with stronger methods: best-first search and the A* algorithm. (We do <b>not</b> use an abbreviation for best-first search, so that you do not confuse it with breadth-first search.)
+
+== d23d8b46
+Often, different transitions in the state space have different costs. For example, a task can take from a few seconds to many hours. Or the distance between two tram stops can be from a hundred metres to half a kilometre. Thus, it is not sufficient to count only the <i>number</i> of transitions.
+
+== 5fed07b9
+To include different costs, we can use <b>best-first search</b>. In it, the node list is in the order of a given criterion. For example, we can always expand first the path with the smallest total cost from the start node. The name of this method is <b>Dijkstra's algorithm</b>. In the special case where all transitions have the same cost, Dijkstra's algorithm is the same as BFS.
+
+== 6ad152d6
+The general template of the search algorithm above is still correct. But now we can add the same node to the node list many times: one time for each path that gets to it, each time with the cost of that path. The list is in the order of the path cost. If no transition has a negative cost, a node is reached by a cheapest path the first time that the search takes it from the list (line 6). Thus, the visited check on lines 8 and 9 can safely skip the later copies of the node, which are more expensive. Do not remove this check. Without it, the search can expand the same nodes again and again. If the network has cycles and the search cannot get to the goal, the search never stops.
+
+== 915df7d6
+Thus, with this one change, we still use the same template for the search algorithm. Remember: BFS uses a queue to keep the nodes, and DFS uses a stack. In best-first search, the data structure that keeps the nodes is a <b>priority queue</b>. When we add nodes to the priority queue on line 12, we give them a cost or a value. The queue uses this cost or value to put the nodes in order. (The queue can be a min-priority queue or a max-priority queue. This depends on the application, and on whether the aim is to make the value as small or as large as possible.)
+
+== 9cbdf1b9
+Use the <a href="https://qiao.github.io/PathFinding.js/visual/">PathFinding applet</a> for some time with BFS or with Dijkstra's algorithm. You will quickly see a problem: the search spreads equally in all directions. It does not prefer the direction of the goal.
+
+== 9f30158d
+This is not a surprise, because the selection of the next node to expand does not use the goal. But sometimes we have a method to measure, also approximately, which nodes are nearer to the goal. Then we can use it to guide the search. This saves much work, because the search does not have to examine paths that are not promising. This is the idea of <b>informed search</b>.
+
+== 7ea13095
+Informed search needs a <b>heuristic</b>. A heuristic gives each node an estimate of the remaining cost from the node to the goal. For example, this can be the distance between the node and the goal in a straight line (that is, the Euclidean or geodesic distance).
+
+== aa32a400
+We can use the heuristic as the criterion for the order of the nodes in the (min-)priority queue. Then the search always expands the nodes that look nearest to the goal, as the heuristic shows. But this can send the search in a wrong direction, because it does not include the cost of the path up to now. To get a balanced search that includes both the cost up to now and the estimated remaining cost, put the (min-)priority queue in the order of
+
+== a651b889
+Here, <code>cost</code> is the value of the node when we add it to the priority queue. <code>h(node)</code> is the heuristic value, that is, an estimate of the remaining cost from <code>node</code> to the goal. This is <b>A* search</b>. If you try it on the <a href="https://qiao.github.io/PathFinding.js/visual/">PathFinding applet</a>, you will immediately see that it is much better than the other, uninformed search methods.
+
+== 947e3cf3
+A* is guaranteed to find a cheapest path only if the heuristic is <b>admissible</b>. This means that it never gives an estimate that is larger than the real remaining cost to the goal. If the estimate is too large, A* can give a path that is not the cheapest. Our template skips nodes that the search visited before. Thus, the heuristic must also be <b>consistent</b>: for each node <span class="math">n</span> and each of its neighbours <span class="math">m</span>, <span class="math">h(n) \le c(n, m) + h(m)</span>. Here, <span class="math">c(n, m)</span> is the cost of the transition from <span class="math">n</span> to <span class="math">m</span>. Then a node is reached by a cheapest path the first time that the search takes it from the priority queue, as in Dijkstra's algorithm. (A consistent heuristic whose value at the goal is 0 is always admissible.) The straight-line distance satisfies the two conditions, because no route can be shorter than the straight line between its end points. With <span class="math">h(\text{node}) = 0</span> for all nodes, A* is the same as Dijkstra's algorithm.
+
+== 431c8f32
+Each step takes the next node from <code>node_list</code>, as in the template above. This is a queue (BFS), a stack (DFS), or a priority queue in the order of the path cost (Dijkstra), of the heuristic <code>h</code> (greedy best-first) or of <code>cost + h</code> (A*). Here, <code>h</code> is the Manhattan distance to the goal. Its estimate is never too large, because each move costs a minimum of 1. The neighbours are added in this order: up, right, down, left. Drag S and G, draw walls or mud, and push <b>Compare all</b>. Then you see how many nodes each method visits and what its path costs.
+
+== 981bdd3c
+Next, we study a classic AI problem: games. To make it clear, we look at the simplest case: games for two players with perfect information, for example tic-tac-toe and chess.
+
+== 3a420a65
+Maxine and Minnie like games very much, mainly games for two persons with perfect information, for example tic-tac-toe or chess.
+
+== c06d4ac1
+One day, they played tic-tac-toe. Maxine (her friends call her Max) played with X. Minnie (her friends call her Min) had the Os. This was the situation:
+
+== 413fbfdc
+Max (X) moves next
+
+== e113a15b
+It was the turn of Max. She looked at the board and thought about her next move. Suddenly, she put her face in her hands, without hope. She looked much like Garry Kasparov when he played against Deep Blue in 1997.
+
+== da7d970a
+Yes, Min almost had three Os on the top row. But Max could easily stop that plan. So why did Max have no hope?
+
+== 164c041c
+To analyse games and optimal strategies, we introduce the concept of a <b>game tree</b>. A game tree is similar to a search tree. (Remember: also study the lecture slides, not only this material. Some topics are possibly only in one of them.) The nodes of the game tree are the different states of the game. The "children" of each node N are the possible states that we can get to from the state of N. In board games, the state of the game is the board position and which player moves next.
+
+== e8bc6d46
+For example, look at the game tree below. It does not start at the root of the game. It starts in the middle of the game, because the full tree is much too large to show. <br> <img width="80%" src="../img/diagrams/tictactoe-tree-905ef5b4.png"> <br> The game continues from the board position in the root node, with the number (1) at the top. It is the turn of Min to put an O in one of the three empty cells. The nodes (2)--(4) show the board positions after each of the three choices. In the next step, each node has two possible choices for Max to put an X. Thus, the tree branches again.
+
+== 6462a3b8
+The game stops when a player gets a row of three, or when there are no more empty cells. From the start position above, the game always ends with a row of three.
+
+== 55228987
+Now look at the nodes (5)--(10) on the second layer from the bottom. In the nodes (7) and (9), the game is finished, and Max wins with three X's in a row. In the other nodes, (5), (6), (8) and (10), the game is also almost finished, because Min must only put her O in the one remaining cell to win. Thus, the end result, or the <b>value</b> of the game, is known in each node on the second layer from the bottom. For the nodes where Max wins, we say that the value is +1. For the nodes where Min wins, we say that the value is -1.
+
+== 34c12e07
+Now look at the next layer of nodes in the direction of the root, the nodes (2)--(4). This is more interesting. The two children of (2), the nodes (5) and (6), both give a win for Min. Thus, we can give the value -1 to node (2) also. For node (3), the left child (7) gives a win for Max, +1. But the right child (8) gives a win for Min, -1. But it is the turn of Max, and of course she selects the left child. Thus, each time that we get to the state in node (3), Max wins. Thus, we can give the value +1 to node (3).
+
+== 8df53976
+The same is true for node (4). Max can select where to put her X, so she can always make sure that she wins. Thus, we give the value +1 to node (4).
+
+== e9568f40
+Up to now, we found these values. The value of node (2) is -1: if we get to such a board position, Min can make sure that she wins. For the nodes (3) and (4), the opposite is true: their value is +1, so Max can be sure to win, if she plays her own turns well.
+
+== fe8cf3aa
+Last, Min is an experienced player, so she can get to the same conclusion. Thus, she has only one real option: she gives Max a small, mischievous smile and plays the O in the middle of the board.
+
+== 0d433e56
+The diagram below shows the value of each node, and the optimal play from the turn of Min in the root node. <br> <img width="80%" src="../img/diagrams/tictactoe-values-71fdd825.png">
+
+== 7f576e97
+The value of the root node is the <b>value of the game</b>. It tells us who wins (and by how much, if the result is not only a win or a loss). Max wins if the value of the game is +1. Min wins if the value is -1. If the value is 0, the game ends in a draw. This is all based on the assumption that both players select what is best for them.
+
+== be7d85d5
+We can also find the optimal play from the values of the nodes. At a <b>Min node</b> (a node where it is the turn of Min), the optimal choices are the children with the smallest value. At a <b>Max node</b> (where it is the turn of Max), the optimal choices are the children with the largest value.
+
+== 07caca45
+We can use this concept of the value of the game to make an algorithm with optimal play. In theory, it works for each deterministic, two-person, zero-sum game with perfect information. (Zero-sum means that the gain of one player is the loss of the other player.) For a given state of the game, the algorithm calculates the values of the children of that state. It selects the child with the largest value if it is the turn of Max, and the child with the smallest value if it is the turn of Min.
+
+== 18576df3
+We can implement the algorithm with the simple recursive functions below, one for Max nodes and one for Min nodes. The name of this algorithm is the <b>Minimax algorithm</b> (see <a href="https://en.wikipedia.org/wiki/Minimax">Wikipedia: Minimax</a>).
+
+== 4acdeddb
+Now we go back to the tic-tac-toe game from the start of this section. To make the number of possible end games smaller, we can see that Max must put an X on the top row. If she does not, she loses immediately:
+
+== e070bbf6
+Min (O) moves next; the X that Max just played is highlighted
+
+== 0f641536
+Now it is the turn of Min to play an O. Use the Minimax algorithm to find the value of this state of the game, and the values of the other states in the game tree that has the position above as its root.
+
+== 30ebf9a9
+As we said above, the Minimax algorithm can give optimal play in each deterministic, two-player, zero-sum game with perfect information. Examples of such games are tic-tac-toe, connect four, chess, Go, etc. (Rock-paper-scissors is not in this class of games, because each player has information that the other player cannot see. Monopoly and backgammon are also not in this class, because they are not deterministic.) So, is this all for this topic? Can we stop now?
+
+== 63cafa5e
+In theory, yes, but in practice, no. In many games, the game tree is much too large to examine fully. For example, in chess the average branching factor (the average number of children, or available moves, for each node) is approximately 35. Thus, to examine all possible situations only two moves ahead, we must visit approximately <span class="math">35 \times 35 = 1225</span> nodes. This is probably not your favourite pencil-and-paper homework... To look three moves ahead, we must visit <span class="math">35^3 = 42\,875</span> nodes. For four moves, it is <span class="math">35^4 = 1\,500\,625</span> nodes. For ten moves, it is <span class="math">35^{10} = 2\,758\,547\,353\,515\,625</span> nodes (that is approximately 2.8 quadrillion).
+
+== 699ace8d
+In Go, the estimate of the average branching factor is approximately 250. Thus, Minimax is not possible for Go.
+
+== 522b0049
+Next, we learn some more methods that help us with very large game trees. These methods were very important when the computer Deep Blue of IBM won against the world chess champion, Garry Kasparov, in 1997.
+
+== aff3d05b
+If we can examine only a small part of the game tree, we need a method to stop the minimax recursion before it gets to an end node (a node where the game is finished and we know the winner). For this, we use a <b>heuristic evaluation function</b>. Its input is a board position, with the information about which player moves next. It gives a score that is an estimate of the probable result of the game from that board position.
+
+== 339216e1
+For example, good heuristics for chess usually count the material (the pieces), with a weight for each type. Usually, people think that the queen has approximately two times the value of a rook, three times the value of a knight or a bishop, and nine times the value of a pawn. Of course, the king has a larger value than all other pieces together, because when you lose it, you lose the game. Also, it is an advantage to occupy strategically important positions, for example near the middle of the board.
+
+== 37065549
+The minimax algorithm above needs only small changes to make a <b>depth-limited</b> version. This version gives the heuristic value at all nodes at a given depth limit.
+
+== ef1a5c0c
+Another very important step in game AI is <a href="https://en.wikipedia.org/wiki/Alpha%E2%80%93beta_pruning">alpha-beta pruning</a>. Some researchers, for example John McCarthy, proposed it independently in and around 1960. For small game trees, you can use it without the heuristic evaluation method. For large trees, you can combine the two methods. This combination is a powerful method, and it was the most important method in game AI for decades.
+
+== 604a0911
+The tic-tac-toe game tree that we discussed above is a good example of the idea of alpha-beta pruning. Scroll up and look carefully at the image of the root node, so that you remember it.
+
+== bb8c623b
+Now simulate the Minimax algorithm at the point where it has calculated the value of the left child node, -1, and given it back to the <code>min_value</code> function. The next step is to call <code>max_value</code> to calculate the value of the middle child. But stop! The left child guarantees a win for Minnie. Thus, it is not important how the game ends if she selects a different move. When the algorithm finds a child node with the best possible result for the player who moves next, it can make a choice immediately. It does not have to calculate the values of all the other child nodes.
+
+== 93776bd8
+To implement this in a similar way as the Minimax algorithm, we must make small changes in the <code>min_value</code> and <code>max_value</code> functions. It is not as easy as it looks to understand the connection between these changes and the principle in the pruning example above. Thus, study this topic carefully, and do the examples and exercises carefully.
+
+== a397e007
+Remember this important point: the algorithm updates the <code>alpha</code> value only at the Max nodes, and the <code>beta</code> value only at the Min nodes. It gives the updated values as arguments down to the children, but not up to the parent node that called it. (In programming words, the arguments are passed <i>as values</i>, not <i>as references</i>.)
+
+== 02dcecb2
+This is the meaning of <code>alpha</code> and <code>beta</code>. Look at the moves that the algorithm examined up to now on the path from the root to the current node. From these moves, <code>alpha</code> is the highest value that Max can already guarantee, and <code>beta</code> is the lowest value that Min can already guarantee. Only values that are strictly between <code>alpha</code> and <code>beta</code> can still change the choice at the root. This interval becomes smaller during the algorithm. When <code>alpha ≥ beta</code>, one of the players can get the same result or a better result if the game does not go to the current node. Thus, if we examine this node more, the result cannot change, and we can stop the processing of the node. In that case, the value that the node gives is not always its exact value. It is only a bound (a lower bound at a Max node and an upper bound at a Min node). But the parent node needs only this bound.
+
+== d9a14898
+When the recursion starts at the root node, we use the minimum value of the game as <code>alpha</code> and the maximum value as <code>beta</code>. For example, in tic-tac-toe and chess, the result is a win, a draw or a loss (values 1, 0 and -1). Thus, we use <code>alpha = -1</code> and <code>beta = 1</code>. If we do not know the range of possible values before, we start with <code>alpha = -∞</code> and <code>beta = ∞</code>.
+
+== 180fd3d1
+To really understand the beauty of alpha-beta pruning, it is useful to do some examples. This is one more tic-tac-toe example. <br> <img width="80%" src="../img/diagrams/tictactoe-alphabeta-e8cb918f.png"> <br>
+
+== d4aac2e9
+Simulate the algorithm, and make sure that it really prunes the two grey branches. Thus, it is not fully correct to show their minimax values, because the algorithm never calculates them.
+
+== e0d10203
+Remember: the Max nodes (for example the root node) update only the <code>alpha</code> value, and they give it down to the next child node. Make sure that you get to a situation where <code>alpha=0</code> and <code>beta=-1</code> in a Min node. You must get to such a situation two times.
+
+== ec6ca86f
+The steps follow the <code>max_value</code> and <code>min_value</code> pseudocode above. They start with <code>alpha = -∞</code> and <code>beta = +∞</code> at the root. A value with the mark ≥ or ≤ is only a bound: the node stopped early, or its value comes from a child that stopped early. The algorithm did not look at the grey leaf values yet. With <b>Best child first</b>, each node examines its best child first, and the algorithm prunes more of the tree.
+
+== 5fa78877
+Maxine wants to play again: the best of three games! Minnie agrees. After some time, they get to this position:
+
+== 8157c5e5
+Min (O) moves next
+
+== 3542bb99
+It is again the turn of Min to play an O. Use alpha-beta pruning to find the value of this state of the game, and the values of the other states in the game tree that has the position above as its root. Start the recursion with the call <code>min_value(root, -1, 1)</code>, where <code>root</code> is the board position above.
+
+== 3e072e60
+What is the value of the game, and which moves are optimal?
+
+== 364b7b7b
+The order of the children of each node from left to right is the order in which the loop on lines 3--6 processes them. This order is arbitrary. But it can have a large effect on which branches the algorithm prunes.
+
+== 1007e9da
+In the <code>AlphaBeta</code> folder, run the local tests with:
+
+== 4e17bcfc
+As a bonus question, think about how to put the child nodes in order, so that the algorithm prunes as much as possible.
+
+== d0b89514
+Now we know the concepts and ideas of the Minimax algorithm and of alpha-beta pruning sufficiently well to start to program. We will implement a tic-tac-toe bot.
+
+== 4a51e4f5
+Download the starter package <a href="../files/tests/AlphaBeta.zip">AlphaBeta.zip</a> and unzip it. Open the <code>AlphaBeta</code> folder in VS Code (or in a different editor). The package contains starter code in <code>src/</code> and local tests in <code>test/</code>.
+
+== c42504fa
+First, implement the basic framework for the game: a data structure (class) for board positions, the functions that check whether a player has a row of three, and a function that gives the list of children for a given board position.
+
+== ecc1fd84
+Then implement the Minimax algorithm as the pseudo-code above shows. For each given board position, the algorithm must give the value of the game: -1, 0 or 1.
+
+== 8d2d5a8c
+Use the previous step, and change the program so that it also gives the optimal move for the player who moves next (of course, this player is an input). To do this, keep a record of the child node that gives the highest value in a Max node (or the lowest value in a Min node).
+
+== 23dd7000
+At this stage, you can test the solution: use it to solve the pencil-and-paper exercises above.
+
+== 1b26083e
+As the last step of this exercise, change the algorithm to implement alpha-beta pruning, as the pseudo-code above shows. To see whether the algorithm becomes faster, measure how long it runs (or how many recursive function calls it makes) with and without alpha-beta pruning. To go back to the usual Minimax, only make line 6 with the test <code>alpha &gt;= beta</code> a comment.
+
+== 6c30a7a8
+<b>This is a bonus exercise.</b> The Games section above is about zero-sum games, for example tic-tac-toe. Many real interactions are different: the two players can both get an advantage when they cooperate, or both lose when they cheat.
+
+== 8f64be63
+Play the interactive guide <a href="https://ncase.me/trust/" target="_blank" rel="noopener">The Evolution of Trust</a> by Nicky Case (approximately 30 minutes). It is a short demo of the iterated Prisoner's Dilemma. It shows how trust and cooperation can develop, or collapse. Only play it and enjoy the demo. You do not have to give anything.
+
+== 5a8c3410
+This is the end of Week 1. Now you must know what AI is, how to solve problems by search (also with A*), and how to play games with minimax and alpha-beta pruning.

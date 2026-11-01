@@ -1,0 +1,1016 @@
+# Week 3 in simplified English (about 80% ASD-STE100 Issue 9). See scripts/simple.mjs.
+== 22a5a7d2
+Bring these to <b>your exercise session this week</b>: <a href="../week2/#exercises">Week 2 exercises</a>
+
+== 4d170945
+Bring the <a href="#exercises">exercises</a> of this week to your exercise session in <a href="../week4/">Week 4</a>.
+
+== 7b1faf48
+The Kaggle competition: Customer Churn is separate, and it does not give weekly points. You can continue to send submissions until the last lecture (Fr 11/12).
+
+== 36150153
+Objectives (when you complete the course, you ...)
+
+== 455cb866
+can show a problem-solving situation as a Bayesian network
+
+== 1b9bf692
+can use an approximate (Monte Carlo) technique for inference in a Bayesian network
+
+== 35cd5760
+can tell the difference between unsupervised and supervised machine learning situations
+
+== c05ca9e0
+can explain linear models for regression and classification
+
+== aa828c7f
+can implement a nearest-neighbor classifier
+
+== 55330fb8
+can calculate information gain and use it to select a split in a decision tree
+
+== f5f8a091
+can describe the idea of ensembles (bagging, random forests, boosting)
+
+== f44cc794
+can use naive Bayes as a classical classifier (for example for handwritten digits)
+
+== 5e012d6e
+As we said above, the naive Bayes model is a type of Bayesian network. Its graph structure has the class variable as the root, and the class variable is the only "parent" of all the feature variables.
+
+== cc87cb4f
+Bayesian networks are a family of models. They are part of a more general category: <a href="https://en.wikipedia.org/wiki/Graphical_model">(probabilistic) graphical models</a>. Graphical models are a modelling "language" for probabilistic models. They are powerful mainly for two reasons: i) they can show domains with many variables and complex dependencies in a compact form, and ii) there are efficient inference procedures that use the structure of the models.
+
+== cfdd3fd0
+A Bayesian network shows a joint distribution over some random variables. The Bayesian network can need much fewer numerical parameters than the number of elementary events in the domain. This depends on the complexity of the network, that is, on the number and the positions of the edges in the graph.
+
+== 0c281e26
+The structure of the network is a graph. Each random variable is a node. A set of directed edges between the nodes shows the structure of the dependencies. The graph must be a <strong>directed acyclic graph</strong> (DAG). This means that you cannot start from a node, follow a path in the direction of the edges, and get back to the same node.
+
+== b6c11fcc
+This is an example of a DAG:
+
+== 10a4981e
+The random variables in the model are X, Y, Z and Å. (If you are not from Scandinavia: in Finland, we call the last letter the "Swedish O"; see <a href="https://en.wikipedia.org/wiki/%C3%85">Wikipedia:Å</a>. In our alphabet, it comes after X, Y and Z, which is convenient.) The edges show <strong>direct</strong> dependency. Thus, when there is <i>no</i> edge between two variables, the variables are conditionally independent, given some (possibly empty) set of other variables. The details of this are a little too complex to discuss here, so we do not look at them. For now, remember only that the edges show the structure of the dependencies in the domain.
+
+== 9d96824e
+A Bayesian network has the structure (the DAG), and it also has a set of parameters for the conditional distributions of the variables. These parameters have the form <span class="math">P(V = v \mid \mathrm{Pa}_V = \mathrm{pa}_V)</span>. Here, <span class="math">V</span> is a random variable, <span class="math">v</span> is a value, and <span class="math">\mathrm{Pa}_V</span> is the set of <strong>parents</strong> of the node <span class="math">V</span> in the graph: that is, the nodes that have an edge to <span class="math">V</span>. For example, in the DAG above, <span class="math">\mathrm{Pa}_Z = \{X, Y\}</span>, and <span class="math">\mathrm{Pa}_Y = \emptyset</span>, because the node Y has no parents.
+
+== 0ce260bd
+When the variables are categorical (that is, their values are in a finite set), we can give the conditional distributions as <strong>conditional probability tables</strong> (CPTs). A CPT for the variable V contains the distribution of V for each possible combination of the values of the parents of V. We call these combinations <strong>parent configurations</strong>. For example, if all variables in the example network above are binary, the parent configurations of Z are (X=0, Y=0), (X=0, Y=1), (X=1, Y=0), (X=1, Y=1). Thus, the CPT of Z has four rows, and each row contains a conditional distribution for Z. This is a real example:
+
+== 46cd7f55
+For example, if <span class="math">X = 1</span> and <span class="math">Y = 0</span>, the conditional probability of <span class="math">Z = 1</span> is <span class="math">P(Z = 1 \mid X = 1, Y = 0) = 0.5</span>, and so on.
+
+== e077759e
+For a variable that has no parents in the network, the CPT is only one distribution, and it has only one row. For variables that have many parents, the CPT can easily become very, very large.
+
+== 37b2ff2b
+To make this concrete, we use one example in all of this section: the car Bayesian network from the lecture. This is its structure:
+
+== 59a38141
+The abbreviations of the variables in the model are their first letters:
+
+== 9066a59c
+These are the CPTs:
+
+== c81c0600
+For example, the car starts (<span class="math">S = 1</span>) with the probability 0.99 if the ignition works (<span class="math">I = 1</span>) and there is gasoline in the tank (<span class="math">G = 1</span>). (Thus, it is not a Tesla.) If there is a problem with the ignition <i>or</i> with the gasoline, the car is sure not to start. That is, <span class="math">P(S = 1 \mid I = i, G = g) = 0.0</span> for all combinations <span class="math">(i, g)</span> other than <span class="math">(1, 1)</span>.
+
+== 545a6e84
+The structure (the DAG) and the parameters in the CPTs are the parts of a Bayesian network. Next, we discuss how they show a joint distribution, and how we can use them for inference about the domain.
+
+== 34c0c62b
+A probabilistic model is only a joint distribution over the random variables in the domain. The joint distribution gives the probability of each elementary event. An elementary event is the same as a joint assignment of values to all random variables. In the car domain, six bits define an elementary event: B, R, I, G, S, M. For example, the event 1, 1, 1, 1, 1, 1 is a good day: the battery works, you listen to good music, the car starts because you remembered to fill the tank yesterday, and you get to the lecture on time.
+
+== 2cef41de
+To get the joint probability of an elementary event, multiply the conditional probabilities of the form <span class="math">P(V = v \mid \mathrm{Pa}_V = \mathrm{pa}_V)</span>. Remember that <span class="math">\mathrm{Pa}_V</span> is the set of parents of <span class="math">V</span>. Thus, in the car domain, the product has this form:
+
+== c1db3946
+Here, <span class="math">b, r, i, g, s</span> and <span class="math">m</span> are the values of the random variables. The name of the formula above is a <strong>factorization</strong> of the joint probability.
+
+== 3219a0b9
+To make the events easier to read, we do not use the long notation, for example B=1,R=1,I=1,G=1,S=1,M=1, or the shorter notation, for example 1,1,1,1,1,1, for events in the car domain. We use a different label for the values of each random variable. For the variable Battery, we write the good case (the battery works) as <span class="math">B</span> and the bad case as <span class="math">\neg B</span>. In the same way, for Radio, we write the good case (music plays) as <span class="math">R</span>, and the bad case as <span class="math">\neg R</span>, and so on.
+
+== 434cff4e
+This notation is not fully correct, because we also use the first letters, B, R, etc., for the variables. But we think that the meaning is sufficiently clear.
+
+== d9d6dc6d
+The probability of a good day with the car is
+
+== 11204e63
+Look carefully at the form of the terms. Make sure that you can select the correct values from the CPTs above for this calculation.
+
+== b188f9c4
+On some days, everything is good, but the radio does not work. We write this as <span class="math">\neg R</span>. We get the probability of the elementary event where all is good but the radio does not work in the same way. The result is:
+
+== 405480da
+Put the numbers from the CPTs in the correct places, and make sure that you get the same result. Remember that <span class="math">\neg R</span> means <span class="math">R = 0</span> (see the hint above).
+
+== 1fd39d1a
+You possibly ask why we need the CPTs: it looks like much work to find all the numbers (parameters) in the CPTs. If the probabilities of the elementary events are the end result, why do we not try to find them directly? The answer: sometimes, the CPTs save very much work. In the car example, the CPTs contain <span class="math">2 + 4 + 4 + 2 + 8 + 4 = 24</span> numbers. Half of them are redundant, because the numbers on each row must always add up to one. Thus, we must really select only 12 numbers. But the number of elementary events is <span class="math">2^6 = 64</span>. Thus, we must find 63 parameters (we can get the last one when we subtract the others from 1.0). This shows how Bayesian networks can give a <b>compact representation</b> of probabilistic models.
+
+== 78d7a46d
+A compact representation of probabilistic models is only one of the two main advantages of Bayesian networks. The other advantage is efficient inference. Here, we discuss what we mean by inference. But to learn the <i>efficient</i> inference algorithms, you must study more than this course.
+
+== da1def3c
+In the examples above, we used Bayes' rule and other methods of probability calculus to calculate posterior probabilities of the type P(state | observations). We can do the same with Bayesian networks. In the car example, we can for example calculate <span class="math">P(\text{battery dead} \mid \text{radio doesn't work, car won't move})</span>, or <span class="math">P(\neg B \mid \neg R, \neg M)</span>, to find what is wrong with our car.
+
+== 265d6459
+Now we start the work. First, we write the conditional probability as the ratio of two probabilities:
+
+== e65fef1a
+To get these probabilities, we must use the marginalization rule. We used it before to write the difficult denominator as a sum of two terms. Here, the sum has many terms, not only two, but the basic principle is the same. The numerator becomes:
+
+== 325a874f
+Here, <span class="math">\omega \in (\neg B, \neg R, \neg M)</span> is the set of elementary events that are part of the event <span class="math">(\neg B, \neg R, \neg M)</span>.
+
+== 0f618a53
+Now we can get the probability of each of the eight elementary events above. We use the factorization into a product of conditional probabilities, and we put the correct values from the CPTs into the product. Look at the first event:
+
+== b4cfd783
+The result is zero. Can you see why this is logical? (Remember the meaning of <span class="math">\neg B</span> and <span class="math">I</span>. Can they occur at the same time?)
+
+== 13c8b917
+We can also calculate the denominator in the formula for our posterior probability, <span class="math">P(\neg R, \neg M)</span>, with the same technique. It is a sum of 16 terms, because there are four variables that we must sum over when we write the event as a sum of elementary events. If we work hard and do the calculation, we get the answer that we need.
+
+== 60ad31cb
+We call this method the <strong>brute-force</strong> method. Its advantage is that it always gives exactly the correct answer. When a computer does the calculations, we do not have to write and calculate large sums by hand, which is boring. But in domains that are larger than our small car example, the calculations become impossible, also for a computer. The problem is that the number of terms to calculate increases exponentially with the number of variables in the model. This is why the more advanced and efficient inference algorithms, which we mentioned some times, are so important. Another solution is <strong> approximate inference</strong>, which is our next topic.
+
+== 69180466
+For approximate inference, we must be able to generate (or sample) data from the joint distribution of a Bayesian network. The data is a set of <b>tuples</b>. Each tuple is a list with one value for each random variable in the domain. Thus, each tuple agrees one-to-one with an elementary event <span class="math">\omega</span>.
+
+== fa6e7a67
+The algorithm that generates tuples is quite simple. First, we select values for the variables that have no parents. We select them randomly, with the distribution in the CPT. For example, to select the value of the Battery variable in the car model, we use the distribution (0.1, 0.9). In the same way, we take the value of the variable Gas from the distribution (0.05, 0.95).
+
+== 65bc9906
+You possibly generated numbers with a pseudorandom number generator in your favourite programming language before. In Python, you possibly used <code>random.random()</code>, and in Java, <code>Math.random()</code>. These two functions give pseudorandom floating-point values in the range [0.0, 1.0). There are other functions that generate random integers, Booleans, etc.
+
+== 66a4ac92
+Some languages also have functions that generate categorical values (values in a finite set) from a given distribution. If your favourite language does not have such functions, it is easy to implement them with the functions that exist.
+
+== eeeeb613
+For binary variables, the method is this. The probability of zero in the distribution that you want to sample from is <span class="math">P(X = 0)</span>. Generate a random floating-point value <span class="math">r</span> with the functions above. If <span class="math">r &lt; P(X = 0)</span>, give the value 0. If not, give the value 1. A value that has a uniform distribution between 0 and 1 is less than <span class="math">P(X = 0)</span> with the probability <span class="math">P(X = 0)</span>. Thus, our method gives the value 0 with the probability <span class="math">P(X = 0)</span>, as it must.
+
+== 6fa069d6
+Below, we need only the binary case. But if you are interested: for categorical variables with more than two values, the method is similar. The method gives the value 0 if <span class="math">r</span> is less than <span class="math">P(X = 0)</span>. It gives the value 1 if <span class="math">r</span> is between <span class="math">P(X = 0)</span> and <span class="math">P(X = 0) + P(X = 1)</span>. In general, it gives the value <span class="math">x</span> if <span class="math">r</span> is between <span class="math">A = \sum_{i=0}^{x-1} P(X = i) = P(X = 0) + \dots + P(X = x - 1)</span> and <span class="math">A + P(X = x)</span>.
+
+== f98e4a36
+To select values for the other variables, we use an order where we always selected the value(s) of the parent(s) of a variable before the variable. Thus, after we select the value of Battery, we can go to the variable Radio. The configuration of the parents (for example Battery) sets the distribution from which we select the value of a child variable (for example Radio). If <span class="math">B = 1</span>, we take the value of <span class="math">R</span> from the distribution (0.1, 0.9). But if <span class="math">B = 0</span>, we take the value of <span class="math">R</span> from the distribution (1.0, 0.0), and the result is always <span class="math">R = 0</span>. No battery, no music.
+
+== 5845d643
+Note: before you select the value of Starts, you must select the values of both Ignition and Gas.
+
+== 965d145c
+This is pseudocode that generates n random tuples from a Bayesian network:
+
+== 6c206522
+In the pseudocode, <code>model</code> is an object that defines the Bayesian network model. For each variable <code>V</code>, it gives a set of parents (as a set of indices that select variables in the array <code>v</code>) and the CPTs. The selection operator <code>v[V.Pa]</code> gets from the array the elements that give the values of the parents of <code>V</code>. Line 5 uses them to select the correct row from the CPT of <code>V</code>. Note: here it is important to process the variables in an order where the parent values are in the array before the algorithm needs them to generate the children.
+
+== 4ef13d41
+The simplest method of approximate inference uses the tuples that we sample from a Bayesian network to estimate probabilities directly as relative frequencies. To estimate the probability of an event, we take a large number n of tuples, and we count in how many of them the event occurs. The number of occurrences divided by n is an estimate of the probability of the event.
+
+== 42775761
+Thus, we get
+
+== 873bb0fd
+To approximate conditional probabilities, we write them as ratios, <span class="math">P(A \mid B) = P(A, B) / P(B)</span>, and we use the same estimator for the numerator and for the denominator.
+
+== d8c43d41
+This is a very simple and general technique. It is part of the category of <strong>Monte Carlo</strong> techniques, because it uses chance to get the results. Its disadvantage is that the result is not exact. The variance that comes from the random process can sometimes make the probabilities quite inaccurate. But when the number of tuples is larger, the accuracy is better. In the limit <span class="math">n \to \infty</span>, the approximation converges to the exact value.
+
+== 8cdda26c
+The tuples come from the CPTs of the car network, as in <code>generate_tuples</code> above. For a conditional probability, only the tuples that agree with the evidence count in the denominator, as in the estimator above. The exact value is the brute-force sum over all 64 elementary events. Each run is different: this is the nature of Monte Carlo approximation.
+
+== 0d7538a7
+Above, we discussed how Bayesian networks give a compact representation of probabilistic models.
+
+== d5229682
+Look at a model with <span class="math">N = 4</span> variables. Each variable has <span class="math">k</span> possible values <span class="math">(0, 1, \dots, k - 1)</span>. How many different elementary events are there in the domain? This number minus one is the number of probabilities that we must find to specify the model fully. (For example, in the Car model above, with <span class="math">N = 6</span> and <span class="math">k = 2</span>, this number was 63.)
+
+== 6bfa49ea
+How many parameters must we define to specify the model with an "empty" Bayesian network, that is, a network with no edges?
+
+== 69566a92
+What is the maximum number of parameters that we must define in a Bayesian network in this domain (<span class="math">N</span> variables with <span class="math">k</span> values each)? Remember that the graph must be a DAG, that is, directed cycles are not allowed.
+
+== ed2b9ca8
+<i>Optional:</i> make the result general for all values of <span class="math">N</span>. It can help to remember the sum of a geometric series: <span class="math">1 + k + k^2 + \dots + k^{N-1} = \frac{k^N - 1}{k - 1}</span>, where <span class="math">k \neq 1</span>.
+
+== 2b2f116d
+These programming exercises have no starter package. Implement your solutions from the start.
+
+== 7c4432e2
+Implement an algorithm that generates data from the Car network above. Generate n tuples. Each tuple is a list of six bits (or Boolean values). Start with the value of B: it must be 1 (or <code>True</code>) with the probability 0.9. After you select the value of B, select the value of R. If B=0, then R=0 with the probability 1. If B=1, then R=0 with the probability 0.1. Continue in this way, with the probabilities from the CPTs, until you have a full tuple.
+
+== a47810a6
+Generate a sample of <span class="math">n = 100\,000</span> tuples. Use it to approximate these conditional probabilities:
+
+== fb9fe43f
+<strong>and (do not forget this part):</strong>
+
+== 05fb886f
+Give an interpretation of the probabilities above. Do they agree with your intuition? That is, are they logical?
+
+== 4d5642ee
+Think of this situation. You live in an area where an earthquake occurs on average every 111th day. Another problem is that, on average, a burglar breaks into your home one time each year. The two events are independent of each other, and they occur uniformly during the year (each day is the same as each other day).
+
+== 20b03abf
+If there is an earthquake, your home alarm starts with the probability 0.81. If a burglar breaks into your home, the alarm starts with the probability 0.92. If the two events occur at the same time, the alarm starts with the probability 0.97. If nothing special occurs, there is a false alarm with the probability 0.0095.
+
+== 43360771
+Now change the algorithm from the previous exercise, so that it can generate data for the variables <b>E</b>arthquake, <b>B</b>urglar and <b>A</b>larm. Generate a sample of <span class="math">n = 100\,000</span> tuples.
+
+== 9fa6f7f4
+In the tuples with <span class="math">A = 1</span>, which fraction has <span class="math">B = 1</span>?
+
+== 84b65c08
+In the tuples with <span class="math">A = 1</span> and <span class="math">E = 1</span>, which fraction has <span class="math">B = 1</span>?
+
+== 0d79d389
+<strong>and (do not forget these):</strong>
+
+== 69e960c1
+Give an interpretation of your answers to items 1 &amp; 2. Which probabilities do they approximate?
+
+== 8aaa22f1
+Do they agree with your intuition? That is, are they logical? Mainly: which fraction is larger, and why?
+
+== 7a9dd21d
+Do the experiment again some times, to see how much the results change only by chance. (This is the nature of the Monte Carlo approximation.) Try different values of <span class="math">n</span>. How do they change the variability?
+
+== b4540342
+Weeks 1 and 2 were about search and reasoning under uncertainty. The section above continued with Bayesian networks. The rest of this week is about <b>classical machine learning</b>: algorithms that improve when they fit a model to labelled examples. Then they make predictions on new examples.
+
+== fd12112b
+We start with what a supervised learning problem is. Then we study linear models, nearest neighbours, decision trees, ensembles, and naive Bayes as a classical classifier. This week also has a course <b>Kaggle competition</b> on customer churn. It is a contest with a public leaderboard, not one of the usual exercises. It opens after logistic regression, when you have a model that you can send.
+
+== f1b71d13
+<b>Machine learning</b> is the scientific study of algorithms that improve automatically from experience.
+
+== cbdd44de
+During the Second World War, Alan Turing worked to decrypt messages that the German military encoded with the Enigma machine. To decipher these messages, it was necessary to test a very large number of possibilities. This task was difficult for humans, but machines could do it quite quickly. (The machines against Enigma, the Bombes, were electromechanical devices, not computers. The first programmable electronic computer, Colossus, was used from 1944 against a different German cipher, Lorenz.) But we cannot solve all problems that are difficult for humans efficiently with a programmed algorithm. For <b>NP-hard problems</b>, nobody knows an algorithm that solves each instance in polynomial time. Such an algorithm does not exist unless P = NP, which is a famous open question. On their most difficult instances, all known exact methods need exponential time. No computer can do miracles to get past this limit. But clever algorithms and heuristics can still solve many practical instances, exactly or approximately.
+
+== c4a4d3ef
+There is also an interesting class of problems that humans solve easily, but that are very difficult to write as a computer program. Examples are:
+
+== f058efc8
+Translate text from one language to a different language;
+
+== 1f3969fe
+Find diseases from symptoms (diagnosis);
+
+== 71d3fd44
+Compare two documents on the internet to find which one is more relevant to a search query;
+
+== 35e89561
+Find what an image shows;
+
+== f135fa1e
+Estimate the sale price of a property.
+
+== 1142509b
+These problems have some common properties:
+
+== 05a7efca
+<b>Function Representation:</b> often, we can write the solutions as a function that maps inputs (also called <i>samples</i>) to outputs (also called <i>targets</i>). For example, we can map patients to diagnoses, and documents to relevance scores.
+
+== c8a8abcb
+<b>No Perfect Solution:</b> these problems usually do not have one ideal solution. For example, professional translators can make different translations of the same text, and both can be correct. Also, doctors sometimes make an incorrect diagnosis, and people can interpret an image differently.
+
+== 141d7c34
+<b>Labeled Examples:</b> often, we have many examples of correct solutions (for example, translations of sentences into a different language, or images with labels). If we need examples of incorrect solutions, it is usually easy to make them.
+
+== 99a24597
+In machine learning, the function that maps objects to predictions is a <b>model</b>. The set of labelled examples is the <b>training dataset</b> (or <b>training set</b>). A training dataset contains:
+
+== 5d93d6e2
+<b>Objects:</b> for example, images from the internet, medical histories of patients, or data about what users do in a service;
+
+== ea27e205
+<b>Labels (or targets):</b> for example, captions for images, diagnoses, or information about the behaviour of users. These are the outputs that the model learns to predict.
+
+== 6dbcf788
+The tasks above are examples of <b>supervised learning</b> problems, because we know the correct answers (targets) for each object in the training dataset before the training. We put supervised learning tasks into groups by the type of the set <span class="math">Y</span>, which contains all possible answers (targets):
+
+== af21f92e
+<b>Regression (<span class="math">Y = \mathbb{R}</span> or <span class="math">Y = \mathbb{R}^M</span>):</b> in regression tasks, the target values are continuous. Examples are to predict the duration of a car-sharing trip, to estimate the demand for a specific product on a given day, or to forecast the weather in a city (for example temperature, humidity and pressure as a vector of continuous values).
+
+== 98925ea7
+<b>Binary Classification (<span class="math">Y = \{0, 1\}</span>):</b> in binary classification, we predict one of two possible results. Examples: will a user click on an advertisement? Will a client pay back a loan on time? Will a student pass the exams? Will a patient get a specific condition? Is there a banana in an image?
+
+== a667ec77
+<b>Multiclass Classification (<span class="math">Y = \{1, \dots, K\}</span>):</b> multiclass classification puts each object into one of <span class="math">K</span> possible classes. For example, it puts scientific articles into subject domains such as mathematics, biology or psychology.
+
+== 92ef8f62
+<b>Multilabel Classification (<span class="math">Y = \{0, 1\}^K</span>):</b> in multilabel classification, an object can be in more than one class at the same time. For example, we give tags to a restaurant, and more than one tag (for example "Italian" and "Vegetarian") can be correct at the same time.
+
+== 5779b8aa
+<b>Ranking:</b> in ranking tasks, we put objects in order by relevance or by a different metric for comparison. The training labels are often relevance grades from a finite, ordered set (for example <span class="math">Y = \{0, 1, 2, 3, 4\}</span>). But the output is an order of the objects. A usual example is the ranking of the results of a search engine, where the documents are in the order of their relevance to a query. Important: the relevance score has a meaning only when we compare two documents. It has no meaning as an absolute value.
+
+== 03f6bda6
+More complex types of output are also possible. For example:
+
+== 50e53d74
+<b>Image Segmentation:</b> predict to which object, or type of object, each pixel in an image belongs.
+
+== 19caa071
+<b>Machine Translation:</b> make sentences (or full texts) in one language as translations of an input text in a different language.
+
+== eda3b878
+<b>Generative Modeling:</b> make new realistic objects, from nothing or from existing data. Examples are to make the resolution of images better, or to put Snapchat or Instagram filters on faces.
+
+== 85400385
+A smaller set of problems is <b>unsupervised learning</b>. Here, we have only the data. We do not know the target labels, or they do not exist. In these cases, the goal is not always to find the "correct" answers. A classic example is <b>clustering</b>. It puts objects into groups by properties that they share, but that we do not know before (and, in the ideal case, that we can interpret). For example, it puts the documents in a digital library into groups by topic, or it puts news articles into groups by the main stories.
+
+== 9b629356
+In <b>self-supervised learning</b>, the targets come from the data itself. For example, we hide a word in a sentence and train the model to predict it. This is how the large language models and other foundation models of Week 5 are pretrained on very large amounts of text without labels. Last, in <b>reinforcement learning</b>, an agent learns by trial and error from rewards, not from correct answers. We look at it again in Week 6.
+
+== 7008bce2
+Find the type of each of these tasks. When possible, try to put them into more specific subcategories of machine learning tasks.
+
+== 17c5f3b8
+Predict the exchange rate of the euro to the dollar for the next day.
+
+== 6928ec42
+Text stylization: translate informal text into bureaucratic language. For example: <i>“Pippin and Merry were kidnapped!”</i> ↦ <i>“Citizens Took, Peregrin Paladinovich, born 2990, and Brandybuck, Meriadoc Saradokovich, born 2982, were kidnapped by unidentified individuals.”</i>
+
+== 266ed586
+Find cats in an image.
+
+== abd3024b
+Train a robotic cat to jump onto a table from each possible position.
+
+== 529750f9
+Find sets of products that people frequently buy together in a supermarket.
+
+== f941dd66
+In ranking, the training labels often come from an ordered finite set (<span class="math">Y = \{1, \dots, K\}</span>). At first, it looks like we can do ranking as classification (with <span class="math">K</span> classes) or as regression. Why is this not correct?
+
+== 44204bc3
+A classic example of a multiclass classification problem is the recognition of handwritten digits. Each input is a small bitmap image of a digit. The task is to put it into one of the ten classes <span class="math">0, 1, \dots, 9</span>.
+
+== bf67b1bd
+In the <a href="http://yann.lecun.com/exdb/mnist/" target="_blank" rel="noopener">MNIST</a> dataset, each image is 28 × 28 pixels. We can make the image into a flat feature vector with a length of 784. Each element is the value of one pixel (for example, black or white in a binarized version of the data).
+
+== eeb15950
+<i>Figure:</i> samples of handwritten digits from the MNIST dataset, which many people use. Humans decided the correct labels. The labels are above each image. Some labels are not certain (for example, the second image from the left can look more like a 4 than a 7).
+
+== 74fdc5c0
+A <b>model</b> is a framework or a representation that describes the world. For example, the idea "the Earth is flat" is a model, and it is not as bad as it looks. This model is often useful for things at the scale of one city, where we can ignore the curvature of the Earth. But if we try to calculate the shortest route from Paris to Los Angeles, the flat-Earth model gives incorrect results, which do not agree with the data that we have. In such cases, we must replace it with a more accurate model, for example "the Earth is round" or "the Earth is an ellipsoid". This depends on the precision that we need and on the limits of our measurement tools.
+
+== 775ee91e
+For example, a very precise model, such as "the Earth is similar to a geoid with surface irregularities for the mountain ranges", is very good for some applications. But for most practical tasks, this level of detail can be too complex, and it can need too much computation.
+
+== 06cff275
+This week, we look mainly at <b>predictive models</b>. Their aim is to find the relation between the feature representation <span class="math">x</span> of an object and its target <span class="math">y</span>. We can write these models as <span class="math">y = f(x)</span>. Sometimes, we also use <b>data models</b>, for example when we describe a feature with a normal distribution.
+
+== 31d67516
+We often select predictive models from a <b>parametric family</b> <span class="math">y = f_w(x)</span>. Here, <span class="math">w</span> is the set of parameters that we optimize with data.
+
+== 9ef87664
+It is also very important to select a good learning algorithm, not only a model. A <b>learning algorithm</b> is a procedure that changes a training dataset into a trained model. Later, we will see that people use gradient-based methods very much to train many different models. These methods are a large class of optimization techniques. Thus, in some cases it is difficult to select the best one.
+
+== c883c7e6
+Look at a binary classification task for points in a two-dimensional space, where we use a linear model. The metric for the evaluation is <b>accuracy</b>, which is the proportion of correct predictions. As the learning algorithm, we can use gradient descent:
+
+== 95b7341a
+Here, <span class="math">\alpha</span> is the step size of the optimization. This coefficient has an effect on the speed and the stability of the algorithm. Different values of <span class="math">\alpha</span> give different learning algorithms, and these can give different results:
+
+== bf38127c
+If <span class="math">\alpha</span> is too small, the descent moves very slowly. After a reasonable number of steps, it can still be far from the optimum.
+
+== 41ec744e
+If <span class="math">\alpha</span> is too large, the algorithm can go past the optimum ("overshoot") and oscillate around it, and never converge. Or it can even diverge: it moves farther away from the optimum at each step.
+
+== 1a71c25f
+We see that it is very important to select both the model and the learning algorithm correctly.
+
+== 0504170d
+Now we must find the optimal decision boundary <span class="math">y = w_1 x + w_0</span> for the training dataset. The parameters <span class="math">w_1</span> and <span class="math">w_0</span> are adjustable (trainable) parameters of the model. The learning algorithm finds them from the dataset. But there is a problem: the <b>accuracy</b> metric is not differentiable. To solve this, we must use a differentiable function <span class="math">L(X, y, w)</span>. When we make this function as small as possible, this is approximately the same as optimizing the accuracy. The name of this function is <b>loss function</b>, or only <b>loss</b>.
+
+== f661464d
+Possibly, it looks like we said that machine learning is more difficult than it is. For each machine learning task, we can make a "perfect" model: it only memorizes all of the training dataset with its labels. Such a model can get perfect results on each metric, but it is almost useless. The real goal is to find patterns in the data that let the model generalize, so that it makes accurate predictions on data that it did not see before.
+
+== e6a41261
+An important property is the <b>generalization ability</b> of the model. It shows how well the model learns patterns that are also true outside the training dataset, and how reliable its predictions on new data are. To protect against bad generalization, we usually divide the dataset into three parts: the <b>training set</b>, the <b>validation set</b> and the <b>test set</b>. We use the training set to train the models. We use the validation set to compare models and to tune their settings (hyperparameters). We use the test set only one time at the end, to estimate how well the selected model works on new data. If we use the test set to select between models, its error is not an unbiased estimate any more: the estimate is less than the real error. When there is little data, cross-validation on the training data can replace the separate validation set.
+
+== 76725c96
+This method helps to tell the difference between models that only overfit the training data and models that generalize well. A model that generalizes has found patterns in the data that have a meaning, and it can make useful predictions for objects that it never saw.
+
+== bbc1d497
+For example, look at three regression models that were trained on the same synthetic dataset with one feature. The yellow points are the training dataset. Here, we assume that there is a "true" relation (the dashed line), and that noise changes it (for example measurement errors or the effect of other factors).
+
+== 91be653e
+The linear model on the left is not sufficient. It does what it can, but it approximates the relation badly, mainly for small and large values of <span class="math">x</span>. On the right, we see a model that "memorized" all of the training dataset (to calculate the value of this function, we must know the coordinates of all the original points). It does not model the real dependency. The model in the middle does not go through the training data points, but it approximates the true dependency quite well.
+
+== 47056e25
+A model that fits the data too much is <b>overfitted</b>.
+
+== bcd8ed8d
+When the complexity of the model increases, the error on the training dataset decreases. In many cases, a very complex model behaves like a model that "memorized all of the training dataset", but it does not generalize. The patterns that it learns are too specific to the training data. The three graphs show this behaviour:
+
+== 94ecc813
+The linear function on the left is very simple, but it approximates the true relation only roughly.
+
+== 54479d59
+On the right, we see a very complex function. It fits the training data points perfectly, but it is clearly too strange to show a natural dependency.
+
+== 4dc22e50
+We get the best generalization with a model that is not too simple and not too complex, as in the graph in the middle.
+
+== 275ddc36
+Think that you have a set of objects <span class="math">X</span>, and you want to give a value to each object. For example, you have a set of bank card transactions, and you want to find which of these transactions were fraud. You divide all transactions into two classes: correct transactions get the label 0, and fraudulent transactions get the label 1. This gives a basic classification problem.
+
+== d20150b7
+Now look at a different situation. You have data from a geological survey, and you want to estimate the potential of different deposits. Here, your model can estimate the expected yearly profit of a mine from the geological data. This is an example of a regression problem. The numbers that we want to give to the objects of our set are sometimes called <b>targets</b>.
+
+== 2537a684
+Thus, we can write classification and regression tasks as the task to find a mapping from the set of objects <span class="math">X</span> to the set of possible targets.
+
+== 03a92753
+<b>Classification:</b> <span class="math">X \to \{1, \dots, K\}</span>, where <span class="math">1, \dots, K</span> are the class labels.
+
+== 91eb54cc
+Of course, it has no meaning to give random numbers to objects. We want to find fraudulent transactions quickly, or decide where to build a mine. For this, we need a criterion of quality. The goal is to find the mapping that best approximates the true relation between the objects and their targets. But what "best" means is a difficult question. We will discuss it again many times.
+
+== 53025df9
+For now, there is a simpler question: <i>in which set of mappings do we search for the best one?</i> There are very many possible mappings. But we can make the task simpler: we agree to search only in a family of functions with parameters that we define before. This section is about the simplest such family: linear functions of the form
+
+== 374404a4
+Here, <span class="math">y</span> is the target variable, <span class="math">(x_1, \dots, x_D)</span> is the feature vector of an object in the dataset, and <span class="math">w_1, \dots, w_D, w_0</span> are the parameters of the model.
+
+== 37aa1025
+People often call the vector <span class="math">w = (w_1, \dots, w_D)</span> the <b>weight vector</b>, because the prediction of the model is a weighted sum of the features of the object. The term <span class="math">w_0</span> is the <b>bias</b> or <b>intercept</b>. In a shorter form, we can write a linear model as:
+
+== 665194e2
+Here, <span class="math">\langle x, w \rangle</span> is the dot product of the feature vector <span class="math">x</span> and the weight vector <span class="math">w</span>.
+
+== 1706a25c
+Now we have selected a family of functions in which we search for a solution. This makes the task much simpler. We do not have to find an abstract mapping. We only search for a specific vector <span class="math">(w_0, w_1, \dots, w_D) \in \mathbb{R}^{D+1}</span>.
+
+== 9db2bbe8
+<b>Note:</b> before you can use a linear model, each object must be a vector of numerical features <span class="math">(x_1, \dots, x_D)</span>. Of course, you cannot give raw data, such as text or graphs, directly to a linear model. You must first make numerical features from these types of data. A model is linear if it is linear in these numerical features.
+
+== 9d9506d5
+Now we analyse how such a model works when <span class="math">D = 1</span>, that is, when our objects are different only in one numerical feature. Then our linear model has a very simple form:
+
+== be3d13b8
+In a regression task, we want to approximate the target value <span class="math">y</span> as a linear function of the variable <span class="math">x</span>. But what does linearity mean in a classification task?
+
+== dbda959d
+Look at the example of fraudulent transactions. We think that we know exactly one numerical variable: the amount of the transaction. For binary classification (correct transactions or possibly fraudulent transactions), we search for a decision rule: where the value of the function is positive, we predict one class, and where it is negative, we predict the other class. In our example, the simplest rule is a threshold amount: when a transaction is larger than this amount, we flag it as suspicious.
+
+== 99459f9b
+In higher dimensions, we have a hyperplane, not a line, with a similar meaning.
+
+== d1bbc821
+Linear models are simple, and they also have some other advantages. For example, it is quite easy to see how specific features change the prediction. If a weight <span class="math">w_i</span> is positive, an increase of the <span class="math">i</span>-th feature will:
+
+== 49e55029
+increase the target value in regression tasks;
+
+== dc1a9cdc
+move the classification decision in the direction of one of the classes in classification tasks.
+
+== 9439b227
+The size of the weights also has a clear meaning, if the features have comparable scales (for example, when they are standardized). When the absolute value of the weight <span class="math">w_i</span> is larger, the <span class="math">i</span>-th feature is more "important" for the final prediction. Because we can interpret them, linear models are very useful in industrial applications where errors can have serious results. For example, when human lives depend on the decisions of the model, it is very important to understand how the model makes decisions and which principles it follows.
+
+== 8f9b62d4
+But we cannot interpret all machine learning methods equally well. For example, it is much more difficult to understand the behaviour of artificial neural networks or of gradient boosting models.
+
+== 93930f69
+Linear models have advantages, but for some reasons, do not trust their weights without thinking:
+
+== 5613f636
+<b>Limited Function Class:</b> linear models are a small class of functions. They work well on small datasets and simple tasks. But for more complex problems, you possibly must make additional features that are complex functions of the original features. The name of this process is <b>feature engineering</b>. Feature engineering can make the model better. But if you depend too much on artificial features, the model can become more difficult to interpret. This depends on the judgment of the expert who makes the features.
+
+== 0aaeda1c
+<b>Multicollinearity:</b> if features are approximately linearly dependent, the coefficients of the linear model can lose their physical meaning.
+
+== 6ef109ff
+<b>Scale Dependency:</b> be careful with statements such as "this coefficient is small, so this feature is not important". Possibly, the coefficient is small only because the scale of the feature is large. Also, a weak dependency can become very important in specific situations. Use data to support these conclusions, for example with statistical tests.
+
+== 66ed3440
+<b>Data Sensitivity:</b> the specific values of the weights can change with the training dataset. But when the dataset becomes larger, the weights gradually converge to the weights of the "best" linear model, which we can make with infinite data.
+
+== 95511a51
+Now we discuss the task of classification. First, we look at binary classification with two classes. It is easy to make this general for classification with <span class="math">K</span> classes.
+
+== 45f95fc4
+Here, our targets <span class="math">y</span> tell whether an object is in the positive class or in the negative class. We write them with the set <span class="math">\{-1, 1\}</span>. (In this section, we use this convention for the classes. In practice, you will often see labels such as <span class="math">\{0, 1\}</span>.) The feature vectors <span class="math">x</span> are still elements of <span class="math">\mathbb{R}^D</span>.
+
+== 7ac85c15
+The goal is to train a linear model so that the hyperplane of the model separates the objects of one class from the objects of the other class as well as possible.
+
+== 16bba666
+In this section, the names of the classes are 0 and 1.
+
+== 3989412f
+Logistic regression comes from the idea that classification is a task to predict probabilities. A good example is to predict clicks on the internet (for example on advertisements or search results). When a training log contains a click, this does not guarantee that a user will click on the object again in exactly the same conditions. Each object has a "clickability": the true probability of a click on that object. We think of each click in the training examples as one result of this random variable. We assume that, in the limit, the proportion of positive examples in all examples at each point converges to this probability.
+
+== f684174f
+The problem is that a probability is always a value between 0 and 1. There is no easy method to train a linear model so that its output always satisfies this constraint. To solve this, we can train the linear model to predict a value that is related to the probability but has no limits, in the range <span class="math">(-\infty, \infty)</span>. Then we change the output of the model into a probability. This value is the <b>logit</b> (or log-odds): the logarithm of the ratio of the probability of a positive event to the probability of a negative event:
+
+== 17a76805
+If the output of the model is <span class="math">\log\bigl(p / (1 - p)\bigr)</span>, it is easy to calculate the probability that we want:
+
+== 3a801d1d
+When we solve for <span class="math">p</span>, we get:
+
+== 986f46db
+The function on the right side is the <b>sigmoid function</b>. Its definition is:
+
+== 0e891a78
+Now we have the probability of the positive class. How do we go from it to a prediction of the class? For a linear classifier, the predicted class is the sign of the score. In logistic regression, all predictions are positive, in the range from 0 to 1. So, what do we do?
+
+== 85a2e922
+An intuitive method, which is not always correct, is to use a threshold of <span class="math">0.5</span>. A more accurate method is to select this threshold separately for the trained regression model. For this, we optimize the metric that we want on a separate validation dataset (not on the test set, which we keep for the final evaluation). For example, you can change the threshold so that the proportion of positive and negative classes is near to the real-world distribution.
+
+== aaad5f67
+Note: the name of this method is <b>logistic regression</b>, not logistic classification, because it predicts real numbers (logits), not discrete classes.
+
+== a89a5579
+Two numerical features, classes 0 and 1. The model is <span class="math">p = \sigma(\langle w, x \rangle + w_0)</span>. Gradient descent trains it on the mean log-loss (cross-entropy). The shading shows <span class="math">p</span>. The line is where <span class="math">p</span> is equal to the threshold <span class="math">t</span>, that is, where the logit <span class="math">\langle w, x \rangle + w_0</span> is equal to <span class="math">\log\bigl(t / (1 - t)\bigr)</span>. When you move the threshold, the model does not change. Only the set of predictions that count as class 1 changes. Here, we measure the accuracy on the points that you see. In practice, we select the threshold on a validation set.
+
+== bc643dc4
+We can think of a linear model as a neural network with one layer. Thus, deep learning now uses again many techniques that people first developed for linear models. Also, the basic methods for regression, classification and optimization are almost the same.
+
+== 0e958cb6
+People still use linear models very much in practice, for example as baselines and where interpretability is important. Thus, it is still very useful and relevant to understand their components and how we make them.
+
+== feaf94a1
+On a machine that folds plastic film, you can change the temperature between 130°C and 185°C. To examine how the temperature changes the fold thickness, we collect a dataset of 12 values of temperature and thickness. See the plot for the details.
+
+== 338bd2b3
+The notes above write a linear model with one feature as <span class="math">y = w_1 x_1 + w_0</span>. People often write the same model as <span class="math">y = \beta_0 + \beta_1 x</span>, with the intercept <span class="math">\beta_0</span> and the slope <span class="math">\beta_1</span>. The additional parameter <span class="math">\hat\sigma</span> is the residual standard deviation: the usual distance of the points from the fitted line. It is not a weight of the line.
+
+== 07515d11
+<b>Find the correct parameter estimates:</b> from the figure, find the correct estimates for the parameters in the linear regression model (β̂₀ and β̂₁ are the coefficients of the model, and σ̂ is the residual standard deviation):
+
+== 60cb962f
+Logistic regression predicts a probability between 0 and 1. The course competition below asks for the same type of output.
+
+== 75fec3b3
+This is a <b>course competition</b> on a platform with the name <a href="https://www.kaggle.com/" target="_blank" rel="noopener">Kaggle</a>. Kaggle is a website where people train machine learning models on shared datasets and compete on a public leaderboard. Large companies also publish their own prediction tasks there, and the teams that win get real prize money. For example, Zillow offered $1.2 million for a better model of home values, and the Heritage Health Prize (2011–2013) offered a grand prize of $3 million. It is also a good place to practise and develop your machine learning skills, also outside this course.
+
+== 87cd0502
+<b>Join the competition here:</b><br> <a class="btn btn-primary" href="https://www.kaggle.com/t/9994c5320ff74f72b036c626a5ecbd33" target="_blank" rel="noopener">Kaggle: Customer Churn</a>
+
+== c4bdc781
+The problem is customer churn for a telecom company. If we can find that a customer will probably leave, we can try to keep the customer with a special offer. On the data page, <code>train.csv</code> has feature columns and the target <code>Churn</code>. <code>test.csv</code> has the same features without the target. You send predicted churn <i>probabilities</i> for each row of <code>test.csv</code>. An example file is <code>sample_submission.csv</code>.
+
+== 10e7ffc7
+Your first valid submission (for example logistic regression from the baseline notebook) already gives two points. After that, think of it as a contest: try a tree, and later this week an ensemble, and see whether you go up on the leaderboard. We show the final results in class.
+
+== e88178d6
+Train a model on <code>train.csv</code>. For each row in <code>test.csv</code>, give the probability that the customer will leave (churn). The file must contain two columns with the names <code>id</code> and <code>Churn</code>. The values of <code>Churn</code> must be probabilities between zero and one.
+
+== f6342ef7
+<code>train.csv</code>: the feature columns and the target column <code>Churn</code>
+
+== 27244ab9
+<code>test.csv</code>: the same feature columns without the target
+
+== 7e57d581
+<code>sample_submission.csv</code>: the format that your submission must have
+
+== 6c69961e
+Open the <a href="https://colab.research.google.com/drive/1hGpBZBmPSfoRkrc5CbDpDA-zE5ZWPIZi?usp=sharing" target="_blank" rel="noopener">baseline notebook</a>. It has instructions and a simple starter model.
+
+== 2bdca90a
+Examine the data, check the class balance, and make a clean validation scheme.
+
+== 8eb06ee5
+Start with logistic regression (you just learned it). Later this week, you can try a tree or an ensemble and send a new submission.
+
+== 2d323778
+Export the predicted probabilities for <code>test.csv</code> in exactly the format below, and send them on Kaggle.
+
+== 39ab689e
+Kaggle gives a score to each submission with ROC AUC on a hidden split. The public leaderboard shows a part of the test set. The private ranking becomes visible after the deadline. We look at the private ranking in class.
+
+== 68ef54dc
+On this dataset, the leaderboard saturates quickly: the difference between some participants can be only approximately 0.001. This is normal. Think of the competition as a study exercise. What you learn is more important than the last decimal.
+
+== b79d12b3
+Two points: join the Kaggle competition and send a valid solution.
+
+== e5bd016e
+Five points: be in the top 5 of the private leaderboard, and give a presentation of 2 minutes about your solution in class. If no person in the top 5 wants to give a presentation, places 6–10 get the opportunity, and so on.
+
+== 09cdf343
+You can continue to send submissions until the last lecture of the course.
+
+== 2167bcf5
+This saying describes the main idea of metric methods well: "Tell me who your friends are, and I'll tell you who you are." Algorithms in this class have almost no training phase. They only keep all of the training dataset. During prediction, they find objects that are similar to the target object.
+
+== de8ee7c6
+The name of this process is <b>lazy learning</b>, because there is no real training. Metric models are also non-parametric, because they do not make explicit assumptions about the global laws of the data. For example:
+
+== 97ddaf81
+Linear regression assumes that the real relation is linear (with unknown coefficients that we find from the dataset).
+
+== c60708b7
+Linear binary classification assumes that there is a hyperplane that separates the classes quite well.
+
+== ef053159
+Metric methods are different: they are <b>local</b>. They assume that we can find the properties of an object when we look at its neighbours.
+
+== 3dc9aaac
+These properties can be very useful for complex datasets where we cannot make a global model. But because of lazy learning, a simple implementation that compares each new object with each stored object becomes slow for large datasets. In practice, indexes for approximate nearest-neighbour search, for example HNSW graphs, make search over millions or even billions of objects fast. Also with this limit, these algorithms are simple to understand, quite accurate and very easy to interpret. Thus, people often use them as a baseline in many tasks.
+
+== 21075c3a
+In this section, we discuss one of the best known metric algorithms: the <b>k-nearest neighbors (KNN)</b> method. This method is mainly about engineering, because it has no training phase. Today, people use KNN as a classifier mostly as a simple baseline. But nearest-neighbour search itself is used in very many places: in recommendation systems, in vector databases, and to find documents for large language models (retrieval-augmented generation). Other methods also use many techniques of this algorithm.
+
+== fc2d8d7e
+For example, the <b>nearest neighbor search</b> algorithms, which are a necessary part of the method, have much wider applications. Also, KNN is a very simple algorithm that is easy to interpret. Thus, it is useful to study it. We look at its advantages, disadvantages, areas of application and possible generalizations in more detail.
+
+== 38aca9c5
+The <b>nearest neighbor</b> (NN) classifier is one of the simplest possible classifiers. In the training stage (if we can use this name), it only keeps all the training data. When it gets a new instance, <span class="math">x^{(\text{test})}</span>, we find the training data point <span class="math">x^{(\text{NN})}</span> that is nearest to <span class="math">x^{(\text{test})}</span>. We give its class label <span class="math">y^{(\text{NN})}</span> as the predicted class label. The diagram below shows an example (panels a and b).
+
+== a45d8c38
+The k-nearest neighbor (k-NN) classifier has a very similar idea. But it does not use only the one nearest point. It finds the k nearest training data points, and it selects the majority class among them as the predicted label. Panel c of the diagram above shows this.
+
+== 5d13c6ad
+An interesting question for the NN classifier (and for other things) is the definition of <i>distance</i> or <i>similarity</i> between instances. In the illustration above, we assumed, without saying it, that we use the Euclidean distance. But this is not always reasonable or even possible: for example, the input x can be a string of characters (possibly with different lengths). Below are the other possible metrics. We do not look at them in detail. But it is important to know that the Euclidean distance is the most usual option, but not the only option.
+
+== e3ca0707
+Now we give a more formal description of the algorithm. First, we look at the task of multi-class classification.
+
+== ac497cfb
+We have a training dataset <span class="math">X = \{(x_i, y_i)\}_{i=1}^{N}</span>, where <span class="math">x_i \in X</span> and <span class="math">y_i \in Y = \{1, \dots, C\}</span>. Also, there is a symmetric distance function <span class="math">\rho\colon X \times X \to [0, +\infty)</span>. We want to classify a new object <span class="math">u</span>. For this, we find in the training dataset the <span class="math">k</span> nearest neighbours of <span class="math">u</span> by the distance <span class="math">\rho</span>:
+
+== 7c866488
+The class label of the object <span class="math">x_{u(i)}</span> is <span class="math">y_{u(i)}</span>. Then the class of the new object <span class="math">u</span> is the most frequent class among the objects in <span class="math">X_k(u)</span>:
+
+== 7761fdc7
+This formula can look frightening at first, but it is quite simple. For each class label <span class="math">y \in Y</span>, we count the neighbours of <span class="math">u</span> with that label: we add up, over all neighbours, the indicators of the events where the label of the neighbour is equal to <span class="math">y</span>.
+
+== 8cc913f5
+With this algorithm, we can also estimate class probabilities. For this, we only calculate the frequencies of the classes among the neighbours:
+
+== 4508f309
+This function has the properties of a probability (it is not negative, it is additive, and it is not more than 1). But it is only a heuristic.
+
+== 2a5bdfed
+The KNN algorithm has no formal training phase, but it can easily overfit. You can see this yourself when you use a small number of neighbours (for example one or two). This gives very complex boundaries between the classes. The reason is that the parameters of the algorithm are really all of the training dataset, which can be quite large. Thus, the algorithm can easily adapt too much to the specific data that it has.
+
+== b68d6b41
+Drag the query point <span class="math">u</span> (or select the plot and use the arrow keys). Lines connect it to its <span class="math">k</span> nearest training points. The outline shows the distance of the <span class="math">k</span>-th neighbour: a circle for the Euclidean distance and a diamond for the Manhattan distance. The prediction is the majority class, formula (2) above. If there is a tie, the class of the nearest of the tied neighbours wins. With <span class="math">k = 1</span>, the regions follow each point. This is the overfitting that we described above.
+
+== 25c766ac
+At the link below, you can examine an interactive example of how the KNN algorithm works:
+
+== f17483bd
+The KNN algorithm is not efficient for tasks with large datasets, but it has many real-world applications. These are some examples:
+
+== 4de44b15
+<b>Recommender Systems:</b> the task "propose something similar to what the user likes" is a natural task for KNN. Today, people often use more advanced algorithms, but KNN is still a strong baseline.
+
+== a5336b6e
+<b>Finding Semantically Similar Documents:</b> if the vector representations of documents are near to each other, their topics are probably similar.
+
+== 6ccdb64d
+<b>Anomaly Detection and Outlier Identification:</b> KNN keeps all of the training dataset. Thus, it can easily find how similar a target object is to the data that it saw.
+
+== 09c6af19
+<b>Credit Scoring:</b> persons with similar salaries, jobs and credit histories must not have very different ratings. Thus, KNN is a good solution for this task.
+
+== 1f7e9078
+In this section, we look at a different family of machine learning models: <b>decision trees</b>.
+
+== e8fb88cd
+A decision tree predicts the value of a target variable with a sequence of simple decision rules (the name of these rules is predicates). This process is a little similar to the natural way in which humans make decisions.
+
+== 7294d91e
+Decision trees do not generalize very well, but their predictions need little computation. Thus, people often use decision trees as parts of <b>ensembles</b>: models that make predictions from the combined outputs of many models. We discuss ensembles later this week.
+
+== fa17932f
+We start with a small example. The image below shows a tree for a classification task with five classes:
+
+== a365c651
+In this example, the objects have two features with real values: <span class="math">X</span> and <span class="math">Y</span>. To decide in which class an object is, we go through the tree from the root to a leaf.
+
+== 7ef478dc
+Each node in the tree contains a <b>predicate</b>. If the predicate is true for the current example of the dataset, we go to the right child. If it is not true, we go to the left child. In this example, all predicates are simple checks of a feature value against a threshold:
+
+== f375cd1b
+The leaves of the tree contain predictions (for example class labels). When we get to a leaf, the object gets the prediction in that leaf.
+
+== 8fa2421c
+The image below shows how the tree makes decision boundaries (on the right side of the image):
+
+== 050883fb
+Each predicate divides the current part of the feature space into two parts. In the first step, the split by <span class="math">[x \ge x_1]</span> divides all of the plane into two regions. At the next level, the region where <span class="math">x &lt; x_1</span> (the left branch, where the predicate is not true) is divided again into two parts by the second feature, <span class="math">[y \ge y_1]</span>. This gives the regions 1 and 2. The same process occurs for the right branch of the tree, and so on, until we get to the leaf nodes. This gives five regions in the feature space. Each object in the dataset is in one of these five regions, and the region sets its class.
+
+== 4a1774f8
+This example shows that decision trees make a piecewise-constant approximation of the target dependency. Below is an example of the decision surface of a tree with depth 4. It was trained on data from the Ames Housing Dataset. In this dataset, we selected two features: the width of the front of the lot (<code>Lot_Frontage</code>) and the area of the lot (<code>Lot_Area</code>). The task was to predict the price of the property.
+
+== b5d08e1a
+To make the visualization clearer, we removed the data points with <code>Lot_Frontage &gt; 150</code> and <code>Lot_Area &gt; 20000</code> before we made the tree. The decision surface shows that each rectangular region predicts the same price:
+
+== 8fa9c045
+Those figures show a <i>finished</i> tree: the predicates and the regions are already selected. Training is the process that selects them. At each node, we see only the training examples that are in that region. We must select a predicate that divides this subset into child regions whose labels are more homogeneous than before. For the real-valued features <span class="math">X</span> and <span class="math">Y</span> above, the possible predicates are threshold tests <span class="math">[x_j \le t]</span>, which always make two children. When a feature has only a few named values, a natural predicate is an equality test <span class="math">A = v</span>, with one child for each value. In both cases, we need a score that tells how useful a possible split is.
+
+== 591deacc
+A standard score, which the ID3 algorithm uses, is <b>information gain</b>: how much a predicate decreases the mix of labels in the current region (Mitchell, <i>Machine Learning</i>, Chapter 3, which follows Quinlan). The tree grows <b>top-down</b>. At each node, we evaluate the attributes that we did not use yet. We keep the predicate with the highest score, and we never go back to change an earlier choice. A branch becomes a leaf in these cases: all its examples have the same label (the region is <b>pure</b>); there are no unused attributes; or no training examples go along that branch. (We use a categorical attribute a maximum of one time on a path from the root, because after the split on it, all examples below have the same value. We can split a numerical feature again at a different threshold: the tree above tests <span class="math">x</span> at <span class="math">x_1</span> and again at <span class="math">x_2</span>.)
+
+== 90bbbc22
+Entropy is a number that tells “how mixed are the labels in this region?” For a set <span class="math">S</span> of examples with a yes/no label, <span class="math">p</span> is the fraction of positive examples. Then
+
+== ab60a2be
+We use <span class="math">0 \cdot \log 0 = 0</span>. Then:
+
+== f1b1a702
+If the region is pure (<span class="math">p = 1</span> or <span class="math">p = 0</span>), <span class="math">\operatorname{Entropy}(S) = 0</span>: we already know the label of the leaf.
+
+== dc21dd1a
+If the two classes are equally frequent (<span class="math">p = 1/2</span>), <span class="math">\operatorname{Entropy}(S) = 1</span>.
+
+== 877f0165
+In all other cases, the entropy is strictly between 0 and 1.
+
+== d6c10b28
+For example, four training examples got to a node. Three have the label Yes and one has the label No. Then <span class="math">p = 3/4</span> and
+
+== 69aa9063
+In information theory, this is the average number of bits that are necessary to encode the class of an example that we take uniformly from <span class="math">S</span>. If the target has more than two classes, we add a term <span class="math">-p_i \log_2 p_i</span> for each class.
+
+== d9eb7fc1
+<b>Information gain</b> is the expected decrease of entropy after we apply a predicate on the attribute <span class="math">A</span>. <span class="math">\operatorname{Values}(A)</span> are the possible values of <span class="math">A</span>, and <span class="math">S_v</span> are the examples for which <span class="math">A = v</span> (one child region for each value; for a numerical threshold, there are only two values, true and false). Then
+
+== 5054e62d
+The first term is the entropy of the current region. The sum is the entropy after the split: each child has a weight that is the number of examples that it gets. A large gain means that the child regions are much purer than the parent. At the current node, ID3 puts the unused attribute with the <b>largest information gain</b>.
+
+== c328945a
+We continue with the four examples at a node. A discrete attribute <code>Color</code> is Red or Blue, with two examples of each. The two Red examples are Yes (entropy 0). Blue has one Yes and one No (entropy 1). Then
+
+== 0e0617fc
+A test on <code>Color</code> gives approximately 0.311 bits: it is easier to give labels to the child regions than to the mixed parent region of four points. The same calculation is correct for a threshold predicate <span class="math">[x_j \le t]</span>. Only the definition of the two subsets <span class="math">S_v</span> changes.
+
+== b4647520
+Drag the threshold <span class="math">t</span> (or use the arrow keys). The violet curve is the gain of each possible threshold. It changes only when <span class="math">t</span> goes past a point. On the entropy curve, the weighted entropy after the split is on the straight line between the two children. Thus, the gain (the violet segment) is the distance between that line and the curve. The curve bends down, so the gain is never negative.
+
+== 11d2c3e0
+In the exercise, you use this on a small categorical dataset (weather attributes, Yes/No label), and you select the predicate at the <b>root</b>: the first split of all the training set.
+
+== 8966d42e
+The algorithm builds a decision tree one split at a time. At each step, it must decide on which attribute to split next. The standard method is to prefer the attribute that decreases the <b>entropy</b> most, that is, the attribute with the highest <b>information gain</b>. Now we calculate this by hand on a small, famous dataset: do we play tennis today, with this weather?
+
+== ef164cf6
+Remember the entropy of a binary variable with a fraction <span class="math">p</span> of positive examples:
+
+== 45a87076
+and the information gain when we split a set <span class="math">S</span> on the attribute <span class="math">A</span>, which has the values <span class="math">v \in \operatorname{Values}(A)</span>:
+
+== a4f25818
+Calculate <span class="math">\operatorname{Entropy}(S)</span> for the full dataset of 14 days above (9 "Yes", 5 "No").
+
+== 1741ca53
+Split on <code>Outlook</code>: <code>Sunny</code> (2 Yes, 3 No), <code>Overcast</code> (4 Yes, 0 No), <code>Rain</code> (3 Yes, 2 No). Calculate the entropy of each subset. Then calculate <span class="math">\operatorname{Gain}(S, \text{Outlook})</span>.
+
+== 398d785b
+Do the same for the other three attributes. <code>Temperature</code>: <code>Hot</code> (2 Yes, 2 No), <code>Mild</code> (4 Yes, 2 No), <code>Cool</code> (3 Yes, 1 No). <code>Humidity</code>: <code>High</code> (3 Yes, 4 No), <code>Normal</code> (6 Yes, 1 No). <code>Wind</code>: <code>Weak</code> (6 Yes, 2 No), <code>Strong</code> (3 Yes, 3 No). Calculate <span class="math">\operatorname{Gain}(S, \text{Temperature})</span>, <span class="math">\operatorname{Gain}(S, \text{Humidity})</span> and <span class="math">\operatorname{Gain}(S, \text{Wind})</span>.
+
+== f925d24d
+Which attribute has the highest information gain? That attribute becomes the <b>root</b> of the decision tree. Does this agree with your intuition about which weather information is the most important when you decide to play tennis?
+
+== 2737ce38
+<i>Bonus:</i> each <code>Overcast</code> day in the table is "Yes" (entropy 0). What does this mean for how the tree-building algorithm must treat that branch? Must it split more?
+
+== d76ca362
+Think that you have some models that were trained on your data. Can we make a procedure that uses all these models and gets better performance on test data than each model alone?
+
+== d3496bc6
+Yes. In this section, we explain how.
+
+== 749463b8
+This is the idea of <b>bagging</b> (bootstrap aggregation). The training dataset contains <span class="math">n</span> objects. We take <span class="math">n</span> random examples from it with replacement, and we make a new dataset <span class="math">X_1</span> from them. Thus, some elements of the original dataset are possibly not in <span class="math">X_1</span>, and other elements can be in it many times. With an algorithm <span class="math">b</span>, we train a model <span class="math">b_1(x) = b(x, X_1)</span> on this dataset.
+
+== 20d21dc3
+We repeat this procedure: we make a second dataset <span class="math">X_2</span> from <span class="math">n</span> examples with replacement, and we train a different model <span class="math">b_2(x) = b(x, X_2)</span>. When we repeat the process <span class="math">k</span> times, we get <span class="math">k</span> models that were trained on <span class="math">k</span> datasets.
+
+== 8fd174e5
+To make a prediction for a new object, we calculate the average of the predictions of all models:
+
+== a264b15c
+The name of the process that makes subsets by sampling with replacement is <b>bootstrapping</b>. People often call the models <span class="math">b_1(x), \dots, b_k(x)</span> <b>base algorithms</b> (but "base models" is possibly a more accurate term). The model <span class="math">a(x)</span> is the <b>ensemble</b> of these base models.
+
+== 452817a2
+Our target dependency <span class="math">f(x)</span> has this definition:
+
+== b8587d2f
+with added normal noise <span class="math">\epsilon \sim \mathcal{N}(0, 9)</span> (mean 0, variance 9). This is an example of a sample from such data:
+
+== f2e61fbc
+Now we examine how the predictions of decision trees with depth 7, and of bagging over such trees, depend on the training dataset. We train decision trees 100 times on different random samples of size 20. Also, we use bagging with 10 decision trees with depth 7 as base models, and we train it 100 times on random samples of size 20 too.
+
+== 12d9a8af
+When we show the predictions of the trained models for all 100 iterations, we get a result similar to this:
+
+== f13bcd7c
+The predictions of bagging change less from one training set to the next than the predictions of one tree. On average, the two are near to each other. But the mean prediction of bagging is a little flatter at the peaks. The reason: each bootstrap sample contains only approximately 63&nbsp;% of the different training points (approximately 13 of the 20). Thus, each of its trees is fitted to less data.
+
+== bbfc2aa3
+To measure this, we can calculate the bias and the variance of single trees and of bagging as a function of the maximum depth of the tree. Here, it is the average over 300 training sets for each depth:
+
+== 22836c93
+Bagging decreases the variance, but by a factor of approximately 1.6, not 10. Ten <i>uncorrelated</i> trees, each with the variance <span class="math">\sigma^2</span>, give an average with the variance <span class="math">\sigma^2 / 10</span> (the dashed line). But the trees of one bagging ensemble are far from uncorrelated. Their bootstrap samples come from the same 20 points, so they share most of their data and its noise. Here, two trees of the same ensemble have a correlation of approximately <span class="math">\rho = 0.45</span>. The variance of an average of <span class="math">B</span> such trees is <span class="math">\rho\sigma^2 + (1 - \rho)\,\sigma^2 / B</span> (see below). This is never less than <span class="math">\rho\sigma^2</span>, also when we add many trees. At the same time, the bias increases a little. But for deep trees, the total error (bias<sup>2</sup> plus variance) still decreases by approximately a quarter, from approximately 15 to 12.
+
+== 43969e9e
+The example shows the limit of bagging. Models that are trained on overlapping bootstrap samples of the same data are correlated. The average removes only the part of the variance in which they are different. But the models do not have to be strictly independent: it helps when we make the models more different from each other. When we apply this idea to decision trees, we get the <b>Random Forest</b>.
+
+== a37cd503
+To make an ensemble with a decision tree as the base algorithm, do this procedure:
+
+== e9ab10d2
+To make the <span class="math">i</span>-th tree:
+
+== 358b9343
+As in standard bagging, take a random subset <span class="math">X_i</span> with replacement from the training dataset <span class="math">X</span>. It has the same size as <span class="math">X</span>.
+
+== b4f1ba13
+During training, at each node of the tree, select <span class="math">n &lt; N</span> random features (<span class="math">N</span> is the total number of features). Then find the optimal split among these features. Breiman's random forest algorithm introduced this random selection of features at each node. It helps to decrease the correlation between the trees. (The earlier <b>random subspace method</b> of Ho selected one random subset of features for each full tree.)
+
+== d2737e1f
+To make predictions with the ensemble on a test object:
+
+== e216bb0a
+For regression, calculate the average of the predictions of all trees.
+
+== f65e9eb6
+For classification, select the most frequent class (majority vote).
+
+== 498e0fd1
+<b>Profit.</b> You made a <b>Random Forest</b>. It combines bagging with a random selection of features at each split.
+
+== 52bb5b00
+The error of a model (the part that we can change) has two parts: bias and variance. Bagging decreases the variance, but it does not decrease the bias. (With a small training set, it can even increase the bias a little, as in the example above.) Thus, for a random forest with low bias, the trees in the ensemble must also have low bias.
+
+== 33c49099
+Shallow trees have few parameters. Thus, they can find only high-level statistics of the training subset. These statistics are similar in all subsets, but they do not describe the target dependency in detail. Thus, the predictions on test objects are stable but not accurate (low variance, high bias).
+
+== 631e9153
+Deep trees are different: they can memorize the training subset in detail. Thus, the predictions on test objects change much with the training subset, but on average they are near to the true value (high variance, low bias).
+== aa24fe04
+<b>Conclusion:</b> use deep trees.
+
+== b445f361
+When we limit the number of features for the training of each tree, we also control the quality of the random forest. When we use more features, the correlation between the trees is higher, and the ensemble gives less benefit. When we use fewer features, each tree becomes weaker.
+
+== 2972fc2a
+<b>Practical Recommendation:</b> for classification, use the square root of the total number of features. For regression, use one-third of the features.
+
+== f2854fa3
+We showed before that more base algorithms in the ensemble decrease the variance, but do not change the bias. But the trees are trained on overlapping data, so they are correlated. Thus, the variance cannot decrease without limit. If each tree has the variance <span class="math">\sigma^2</span>, and the correlation between two trees is <span class="math">\rho</span>, the variance of the average of <span class="math">B</span> trees is <span class="math">\rho\sigma^2 + (1 - \rho)\,\sigma^2 / B</span>. When <span class="math">B</span> increases, this goes to <span class="math">\rho\sigma^2</span>, not to zero. More trees do not cause overfitting. They only need more computation. We recommend that you make a plot of the error as a function of the number of trees, and that you limit the size of the forest when the error stops decreasing much.
+
+== 6fe98aae
+Another practical limit is the run time of the ensemble. But we can make and use random forests in parallel. This decreases the computation time when there are many processors. But the number of processors is probably much smaller than the number of trees, and the trees are usually deep. Thus, a large random forest can need more time than we want. Then it can be a good option to use fewer trees, and to lose a little accuracy.
+
+== 2a78586b
+<b>Boosting</b> is an ensemble method. Like the methods above, it makes many base algorithms from the same family and combines them into a stronger model. The important difference is the training process:
+
+== e5b11dbb
+In <b>bagging</b> and <b>random forests</b>, the base algorithms are trained independently and in parallel.
+
+== b1c64677
+In <b>boosting</b>, the base algorithms are trained one after the other.
+
+== 3ec0b3c6
+In boosting, each new base algorithm is trained to decrease the total error of all the algorithms before it. Thus, the final ensemble usually has lower bias than each base algorithm alone (the variance can also decrease).
+
+== ae8e806c
+The main goal of boosting is to decrease the bias. Thus, people often select base algorithms with high bias and low variance. For example, if the base classifiers are decision trees, they must usually be shallow. AdaBoost often uses stumps with one split. Gradient boosting libraries use a few levels by default, for example 3 in scikit-learn and 6 in XGBoost and CatBoost.
+
+== 099edb5e
+Another important reason to select models with high bias as base algorithms is that they train faster. This is very important for training one after the other, because it can need much computation if each iteration trains a complex model.
+
+== 2dd68663
+Now, the form of boosting that people use most in practice is <b>gradient boosting</b>. A separate section discusses it in detail.
+
+== 0aae3bcd
+Random forests are powerful, and it is quite easy to understand and implement them. But in practical applications, they are often worse than gradient boosting. Thus, gradient boosting has become the usual solution for tabular data. In domains with homogeneous data types, for example images or text, neural networks are the best.
+
+== e6dc94ba
+<b>Stacking</b> is an ensemble algorithm with important differences from the methods above:
+
+== 2155f48f
+It can use algorithms of different types, not only from one fixed family. For example, the base algorithms can include k-nearest neighbours and linear regression.
+
+== 32ca69f9
+A trained meta-model combines the outputs of the base algorithms. It does not use a simple aggregation method, such as a sum or an average.
+
+== f61ef6c1
+The training process for stacking has some steps:
+
+== 82968437
+Divide the full dataset into a training set and a test set.
+
+== 2acbc788
+Divide the training set into <span class="math">n</span> folds. Process these folds in a similar way as in cross-validation:
+
+== 235e92e2
+This method makes sure that all of the training set is used, and that a model that did not see the object during training predicts each meta-feature. If not, the meta-model learns from overfitted predictions, and it trusts the most overfitted base algorithms too much.
+
+== d6564b46
+In each iteration, use <span class="math">(n - 1)</span> folds to train the base algorithms. Use the remaining fold for predictions (to calculate the meta-features).
+
+== 76d3db75
+Train the meta-model on the calculated meta-features. For some tasks, the meta-model can also use features from the original dataset as input.
+
+== 169dd49e
+To make meta-features on the test set, you can train the base algorithms on all of the training set. In this case, overfitting does not occur.
+
+== 5599f2c4
+If there is a large amount of data, you can divide the training set into two parts that do not overlap. Use one part to train the base algorithms. Use the other part to make predictions and to train the meta-model. When you use such a simple split and not cross-validation on the training data, the name is sometimes <b>blending</b>. If there is very much data, you can also divide the test set into two parts: the test set and a validation set. Use the validation set to tune the hyperparameters of the models.
+
+== 74d97a76
+For bias and variance, stacking has no direct interpretation, because it does not explicitly make one of the two parts of the error smaller. A good stacking model only decreases the total error. This does not mean that both the bias and the variance decrease, because one of them can increase while their sum decreases.
+
+== cfc0cf47
+<a href="https://towardsdatascience.com/ensemble-methods-bagging-boosting-and-stacking-c9214a10a205" target="_blank" rel="noopener"> Blog post about ensemble methods by Joseph Rocca </a>
+
+== 341b82e6
+<a href="https://medium.com/@stevenyu530_73989/stacking-and-blending-intuitive-explanation-of-advanced-ensemble-methods-46b295da413c" target="_blank" rel="noopener"> Blog post about stacking and blending by Steven Yu </a>
+
+== 36649b1e
+You already know the naive Bayes classifier from the spam filter problem in Week 2. Here, we see how we can use the same idea for the recognition of handwritten digits from the MNIST dataset above. In the spam filter application, the class variable was binary (spam/ham), and the feature variables were the words in the message. In the digit recognition application, the class variable has ten different values (0,...,9). The feature variables are the 28 × 28 = 784 pixel values (binary black/white) in the bitmap images. We keep the pixel values in one vector. We use the value <span class="math">X_j = 1</span> to show that the <span class="math">j</span>th pixel is white. Because it is convenient, we use the value <span class="math">X_j = -1</span> for black.
+
+== a62c6da6
+Here too, we assume that the feature variables are independent of each other, given the class. In the training stage, the algorithm estimates the conditional probability that each pixel is white, for each class <span class="math">i = 0, \dots, 9</span> and each pixel. As in the spam filter, we can estimate these probabilities as empirical frequencies:
+
+== c7820cbf
+Here, <span class="math">\#\{X_j = 1, \text{Class} = i\}</span> is the number of training instances of class <span class="math">i</span> where the <span class="math">j</span>th pixel is white. <span class="math">\#\{\text{Class} = i\}</span> is the total number of instances of class <span class="math">i</span>.
+
+== 753b9b6d
+This pseudocode implements the estimator:
+
+== 432877f3
+The estimated values are kept as the array <code>cpt</code> in a <code>model</code> object. The array <code>prior</code> keeps the estimates of the probabilities <span class="math">P(\text{Class} = i)</span> for all <span class="math">i = 0, \dots, 9</span>.
+
+== 06f89baf
+For a new image with the pixel values <span class="math">x_0, \dots, x_{783}</span> (for example –1, –1, –1, 1, … if the first three pixels are black and the fourth pixel is white, etc.), the classifier calculates the joint probability
+
+== b52874de
+for all <span class="math">i = 0, \dots, 9</span>. The sum of these probabilities over the ten class values, <span class="math">Z</span>, is the difficult denominator in Bayes' rule. Thus, we get the posterior probabilities when we divide the joint probabilities above by <span class="math">Z</span>:
+
+== da87f2ff
+Below is pseudocode that calculates the posterior probabilities.
+
+== f87b20a0
+Note: the pixels can have only one of two possible values (white or black). Thus, the probability that a pixel is black is one minus the probability that it is white (line 8 in the pseudocode).
+
+== f9afdefa
+To get a classifier that gives one class value, and not the full posterior probability, we can select the <b>maximum a posteriori</b> class value, that is, the most probable class.
+
+== c098569c
+There are two practical details. First, if pixel j is never white in the training images of class i, the estimate <code>model.cpt[i,j]</code> is zero. Then one white pixel at that position makes the posterior of class i zero, also when the rest of the image is a very good match. If this occurs for all classes, Z = 0, and line 11 divides by zero. The usual solution is <b>Laplace (add-one) smoothing</b>, <span class="math">\frac{\#\{X_j = 1, \text{class} = i\} + 1}{\#\{\text{class} = i\} + 2}</span>, which never gives exactly 0 or 1. (In the spam filter of Week 2, we used a small lower bound for the same purpose.) Second, a product of 784 probabilities can underflow to zero in floating point. Thus, implementations add the logarithms of the probabilities, and they calculate the posterior from these sums.
+
+== 5cac2124
+This week was about classical methods for tabular prediction: linear models, nearest neighbours, decision trees, naive Bayes and ensembles (bagging, boosting, random forests, stacking). Bias and variance explain why single trees overfit and why ensembles help.
+
+== 07141f1f
+Next week is about neural networks.
+
+== dfbb47ae
+This section is optional extra material for interested readers, and it is useful for the Kaggle competition. It is <b>not part of the course requirements</b>: you do not need it for the exercises or the exam.
+
+== e35e1d90
+In the churn data, most customers stay. If 90% stay, the model "nobody churns" is 90% accurate, but it is fully useless. This is why the competition uses the <b>area under the ROC curve</b> (ROC AUC) as the score. The ROC curve shows the true-positive rate against the false-positive rate, while the threshold moves from 1 down to 0. The area under it has a simple meaning:
+
+== e1b3ad1b
+A tie counts as one half. A model that ranks perfectly gets 1. Random guesses get 0.5. The "nobody churns" model, which gives the same score to all customers, also gets 0.5. You can calculate it when you compare all pairs:
+
+== 76669002
+On all data, it gives the same number as <code>sklearn.metrics.roc_auc_score</code>, but more slowly. The definition shows something useful for the competition: only the <i>order</i> of your scores is important. If you put them through a sigmoid or a different increasing function, the AUC does not change. Thus, to get a better AUC, you need a better ranking of the customers, not better-calibrated probabilities.
+
+== 3f32223f
+Boosting, which we described above, trains its trees one after the other. For the squared error, the method is short. Start from the mean. Fit each new tree to the <b>residuals</b>: the part that the ensemble still gets wrong. The residuals are the negative gradient of the squared error with respect to the predictions. This is where the name comes from.
+
+== 5f794823
+We used the <span class="math">x \sin x</span> data of the bagging example (noise with the variance 9, 150 training points and 50 test points). One run gave a test error of 21 after 1 round, 10.9 after 10 rounds and 9.2 after 100 rounds. This is near to the noise level of 9, and no model can be better than that. After 1000 rounds, the training error was 0.00, and the test error had increased again to 16.5. A random forest does not overfit when you add trees, but boosting <b>can overfit</b>. This is why libraries stop early on a validation set.
+
+== 74168788
+A validation score is honest only if the model could not see the validation data. These are usual leaks:
+
+== f318b70c
+<b>Preprocessing on all the data.</b> If you fit a scaler, an encoder or a feature selector before you split the data, information from the validation rows goes into training. Put the preprocessing in a pipeline, so that it is fitted only on each training fold.
+
+== c6c1d99b
+<b>Features that know the answer.</b> In churn data, a column such as "contract end date" or "number of calls to the cancellation line" possibly has a value only because the customer left.
+
+== abb7a8cb
+<b>Time.</b> When the data has an order in time, validate on rows that are later than the rows that you train on. The real use will be the same.
+
+== d0e54f58
+<b>Tuning on the public leaderboard.</b> The public leaderboard is a small sample of the test set. If you send variants until the public score increases, you overfit it. The private ranking decides.
+
+== 869710fd
+James, Witten, Hastie, Tibshirani and Taylor, <a href="https://www.statlearning.com/" target="_blank" rel="noopener"><i>An Introduction to Statistical Learning</i></a>: the easiest textbook about the methods of this week. You can download it free, and it has labs in Python.
+
+== 25c49fff
+Hastie, Tibshirani and Friedman (2009), <i>The Elements of Statistical Learning</i>, 2nd edition, Springer: the same topics with more mathematics. The authors give the PDF free.
+
+== fe272cd2
+scikit-learn, <a href="https://scikit-learn.org/stable/common_pitfalls.html" target="_blank" rel="noopener"><i>Common pitfalls and recommended practices</i></a>: data leakage, and how pipelines prevent it.
