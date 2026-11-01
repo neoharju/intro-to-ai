@@ -1,0 +1,543 @@
+# Week 6 in simplified English (about 80% ASD-STE100 Issue 9). See scripts/simple.mjs.
+== ffaa098f
+Bring these to <b>your exercise session this week</b>: <a href="../week5/#exercises">Week 5 exercises</a>
+
+== eb0fb33a
+Bring the <a href="#exercises">exercises</a> of this week to your exercise session in <a href="../week7/">Week 7</a>.
+
+== 36150153
+Objectives (when you complete the course, you ...)
+
+== b23f157f
+can explain what an agent is. You can also explain the idea of bounded rationality
+
+== cf5bed67
+can describe learning agents and agentic frameworks
+
+== ae9b788b
+can explain reinforcement learning and multi-agent systems at the level of concepts
+
+== 12655c74
+can discuss alignment at the level of concepts
+
+== 7afffc79
+An <b>agent</b> is a system that perceives an environment and does actions in it. This definition includes a thermostat, a chess program, a delivery robot and an LLM that selects tools. The important change is this: the system does not only predict an answer. It selects an action, and the results of the action change what occurs next. Thus, an agent works in a loop: it observes, it updates an internal state, it selects an action and it observes the result.
+
+== b4357eb2
+A <b>rational agent</b> selects the action that it expects to give the best result, as its performance measure defines it. It uses what it perceived and what it knows. Rational does not mean that the agent knows everything or that it is morally good. A route planner can be rational when it selects a road that is blocked later: it used the information that it had. Rationality also does not mean unlimited computation. Real agents have deadlines, finite memory, models that are not complete and limited energy. <b>Bounded rationality</b> asks which good actions are possible within these limits.
+
+== a9b6286e
+Thus, the performance measure is an important design decision, not only an administrative task. If a delivery system gets a reward only for speed, it can drive dangerously. If a chatbot gets a reward for engagement, it can make an unhelpful conversation longer. Proxy measures are useful, because goals such as “help the user” are difficult to calculate. But when you optimize a proxy, the system can show behaviour that you did not intend. This is the start of the alignment problem: how can the behaviour that comes from an objective stay consistent with human intentions and limits?
+
+== 6017489c
+Before you select an algorithm for an agent, specify the task. A useful checklist is <b>PEAS</b>: <b>P</b>erformance measure, <b>E</b>nvironment, <b>A</b>ctuators and <b>S</b>ensors. An example is an autonomous delivery robot on a campus. Its performance measure can combine successful deliveries, travel time, energy use, comfort of pedestrians near it and prevention of collisions. Its environment includes paths, doors, lifts, people, weather and other vehicles. Its actuators include wheels, brakes, a lock on the compartment, lights and possibly speech. Its sensors can include cameras, lidar, wheel encoders, GPS, inertial sensors and signals from the delivery compartment.
+
+== 756247a3
+PEAS shows assumptions that are otherwise easy to hide. “Deliver quickly” is not a sufficient objective. How do we count failed deliveries? How much delay is acceptable near pedestrians? Who can open the compartment? In the same way, a research assistant that uses tools needs more than a language model. Its environment includes documents, databases, websites, user instructions and the policies of the institution. Its actuators can include search, creation of files, execution of code and messages. Its sensors include prompts, tool outputs, permissions and error messages.
+
+== 1688874b
+Task environments are different in some dimensions, and these dimensions have a large effect on the architecture. An environment is <b>fully observable</b> when the agent can get all of the state that is relevant for its decision. It is <b>partially observable</b> when the observations are not complete or have noise. It is <b>deterministic</b> when an action and a state set the next state. It is <b>stochastic</b> when more than one outcome is possible. In an <b>episodic</b> task, one decision has no effect on later cases. In a <b>sequential</b> task, the current action changes the choices in the future. Environments can also be static or dynamic, discrete or continuous, known or unknown at the start, and single-agent or multi-agent.
+
+== 089af899
+Chess is fully observable and discrete, but it is adversarial and sequential. Driving is partially observable, stochastic, continuous, dynamic and multi-agent. People often treat document classification as episodic and static. An LLM agent that works on a live software repository is sequential and partially observable: a file can change between two observations, tools can fail, and another developer can change the same code. When we know these properties, we do not use a solution for a clean puzzle in a real environment that changes.
+
+== 83a10fc3
+A language model changes a context into probable tokens. An agentic system puts such a model in a loop with memory, tools, an action policy, observations and stop conditions. The model can propose an action. The system around it validates the action and executes it. A call to an API is not intelligent by itself. It increases what the system can change. Thus, the system needs more permissions control, monitoring and recovery.
+
+== 6b65dd20
+A <b>simple reflex agent</b> uses condition–action rules: if the temperature is low, turn on the heating. It is fast, but it fails when the current observation does not show everything that is relevant. A <b>model-based agent</b> keeps an internal state, for example an estimate of where a robot is. It updates this state when new observations come. A <b>goal-based agent</b> evaluates actions by whether they reach a wanted state. It often uses search or planning. A <b>utility-based agent</b> compares trade-offs between outcomes, for example speed, safety, energy and comfort. A <b>learning agent</b> changes its behaviour from data or experience. Real systems usually combine these ideas. They do not fit in only one class.
+
+== 0f97c576
+In which state am I probably?
+
+== a2066728
+Which future outcome is better?
+
+== ab5a5092
+How must behaviour change with experience?
+
+== c25121cd
+Needs correct feedback and safe exploration
+
+== 1ae243ad
+Modern LLM agents often use a repeated <b>plan–act–observe</b> cycle. The model gets a goal and the current context. It proposes a tool call. It gets the result of the tool. It continues until it gives an answer or until a stop rule applies. Useful components are a tool registry, working memory, longer-term retrieval, a planner and an evaluator. Reliability comes from good engineering of the full loop: typed tool interfaces, least-privilege permissions, limits on time and cost, validation of outputs, logging, and human approval for important actions.
+
+== d9dfe1d6
+An LLM has a finite context window. It does not have a permanent memory of its own history. Thus, agent systems use different types of memory. <b>Working memory</b> keeps the current goal, intermediate results and recent observations. <b>Episodic memory</b> keeps previous trajectories or results of tasks. <b>Semantic memory</b> finds facts and documents, often with embeddings. <b>Procedural memory</b> is in instructions, tools, code or learned policies. More memory is not always better. Retrieved information that is not relevant can distract the model. Old information can disagree with the current environment. Stored material can contain sensitive data.
+
+== 2b571d3b
+Planning also has different forms. A model can make a full plan before it acts. It can change between one reasoning step and one tool call (the ReAct pattern of Yao et al., 2023). It can make several possible plans and compare them. Or it can use a separate evaluator, which decides if the progress is sufficient. A long plan can become old after the first unexpected observation. But an agent that only reacts can lose the global goal. Effective systems often combine a rough plan with frequent new planning.
+
+== 98042fd3
+A tool changes a generated symbol into an action outside the model. Thus, the interface of a tool must specify the necessary arguments, the valid types, the possible errors, the side effects and the permissions. To read a calendar and to delete an event must not have the same authority. A robust execution layer validates the arguments. It asks for confirmation when it is difficult to reverse the results. It records what occurred, and it gives back structured observations. The model can write fluently, but the tool layer decides what the system can really change.
+
+== 4480cdac
+When an agent fails, the cause is often the loop, not only the language generation. The model can select the wrong tool, or use a correct tool with incorrect arguments. It can read a result incorrectly, or repeat an action without end. It can stop before it verifies the success, or continue after it reached the goal. Retrieved documents or web pages can also contain instructions that disagree with the goal of the user. This is a type of prompt injection. The observation is text. Thus, the model possibly cannot see the difference between trusted system instructions and content that is not trusted, unless the architecture makes this difference clear.
+
+== a8f0c977
+Searches when a calculation is necessary
+
+== 498f3a3a
+API arguments with an incorrect format
+
+== 3ce88782
+Sends or deletes with no confirmation
+
+== d557c679
+Repeats the same call that fails
+
+== 6a1c4bfe
+Limits on steps, time and cost
+
+== 0dd9855e
+Says that it was successful but does not check the result
+
+== f47fe4ae
+Web content changes the goal of the agent
+
+== eae748ef
+In supervised learning, each training example usually gives a target answer. In <b>reinforcement learning (RL)</b>, an agent interacts with an environment. At time <span class="math">t</span>, it observes the state <span class="math">s_t</span> and selects the action <span class="math">a_t</span>. It gets the reward <span class="math">r_{t+1}</span> and moves to a new state <span class="math">s_{t+1}</span>. A <b>policy</b> specifies how the agent selects actions. The objective is usually not the next reward. It is the expected <b>return</b>: the sum of the future rewards. The return is often discounted, so that rewards far in the future count less. With a discount factor <span class="math">\gamma</span> between 0 and 1, the return from time <span class="math">t</span> is
+
+== 12fd73cc
+The main difficulty is that results come later. A chess move does not get a label immediately that says whether it was good. Its value can become clear many moves later. RL must give credit to the correct steps along a trajectory. In a <b>Markov decision process</b>, we assume that the state contains the information that is necessary to predict the distributions of the next state and the reward. This abstraction is powerful. But real observations are often partial, so memory or an estimate of a belief state becomes necessary.
+
+== 51de70ef
+We can describe a finite Markov decision process with states, actions, transition probabilities, rewards and a discount factor. The transition model gives the probability of each next state after an action. The reward model gives immediate numerical feedback. The discount factor sets how important future rewards are. A <b>policy</b> maps a state (or a history of observations) to a distribution over actions. Learning tries to find a policy with a high expected return. Planning calculates a policy when a sufficiently accurate model of the environment is already known.
+
+== f494905d
+The Markov assumption does not mean that history is never important. It means that the selected state representation contains a summary of the relevant history. The physical location of a delivery robot is not sufficient if the battery level, the payload, the direction of the traffic and the current reservation also change what occurs next. If important information is hidden, the agent can keep a <b>belief state</b>: a probability distribution over the possible real states. This connects RL to the probabilistic reasoning from earlier in the course.
+
+== cf783a41
+<b>Value functions</b> estimate the long-term return. The action-value function <span class="math">Q(s, a)</span> asks this question: if I do action <span class="math">a</span> in state <span class="math">s</span> and then continue with a policy, how much return can I expect? Q-learning moves an estimate toward the observed reward plus the best estimated value of the next state. In words: <b>new estimate ← old estimate + learning rate × (better target − old estimate)</b>. In symbols, with the learning rate <span class="math">\alpha</span> and the discount factor <span class="math">\gamma</span>:
+
+== c926155d
+The “better target” has two parts: the reward that the agent just observed, and the estimated value of the best action <span class="math">a'</span> in the next state <span class="math">s'</span>. This is the Bellman idea: the value of a decision is the immediate result plus the value of what becomes possible after it. With many updates, the information about rewards far away moves back through the states that the agent visited before. Q-learning is <b>model-free</b>, because it does not first estimate the full transition model.
+
+== e87e4632
+<b>Model-based RL</b> is different. It learns or uses a model of how the environment changes, and then it plans with that model. It can need less data, because imagined experience adds to the real interaction. But the planner can use errors in the model. <b>Policy-gradient</b> methods optimize a parameterized policy directly. This is useful for continuous actions. <b>Actor–critic</b> methods combine an actor, which selects actions, and a critic, which estimates the value. These families are technically different, but they solve the same main problem: how to make sequential decisions better from evaluative feedback.
+
+== f2c3556b
+The discount factor controls the weight of future rewards. The learning rate controls how quickly new evidence replaces old estimates. Deep RL uses neural networks to approximate values or policies for large state spaces. But the training can be unstable and can need very much data.
+
+== e65e4f04
+The agent is one step from the goal. A move to the right gives the reward 10 and ends the episode. The current estimate is <span class="math">Q(s, \text{right}) = 2</span>, and the learning rate is <span class="math">\alpha = 0.5</span>. The episode ends, so there is no future value to add. Thus, the target is 10, the prediction error is <span class="math">10 - 2 = 8</span>, and the new estimate is <span class="math">2 + 0.5 \times 8 = 6</span>. The estimate moves half of the distance to the result that the agent just observed.
+
+== c63e7892
+Now look at an earlier state. A move to the right gives the immediate reward 0. It goes to the state whose best estimated action has the value 6. With the discount factor <span class="math">\gamma = 0.9</span>, the target is <span class="math">0 + 0.9 \times 6 = 5.4</span>. The old estimate was 1, and the learning rate is still 0.5. Thus, the new estimate is <span class="math">1 + 0.5 \times (5.4 - 1) = 3.2</span>. In this way, the information about the goal moves back one transition at a time. With much experience, the agent finds which actions only look good and which actions reliably give a long-term reward.
+
+== 917e6920
+The current expected return for the selected action
+
+== ee189ae8
+The reward that the agent observed after the action
+
+== 38f5fa56
+The discounted value that is available next
+
+== 83f52c7d
+The immediate reward plus the estimated future value
+
+== 8bb09f65
+The target minus the current estimate
+
+== 90bd5be5
+The old value plus the learning rate times the error
+
+== 793733bc
+The agent starts at the bottom left. The goal gives +10 and the pit gives −10. Both end the episode. All other moves give 0. Each move updates one Q-value with the rule above. The learning rate starts at 0.5 and the discount at 0.9, as in the worked example. With the probability ε, the agent selects a random action. Otherwise it selects the best known action. Look at how the information about the goal moves back, one transition at a time.
+
+== f0af15a0
+Clear comparison of actions; good for discrete actions
+
+== 3ec55442
+Difficult for large continuous action spaces
+
+== be311edf
+Works with stochastic and continuous policies
+
+== d9e6d17d
+The gradient estimates can have a high variance
+
+== 10d9de3b
+The critic can make the policy learning more efficient
+
+== 7fe855fc
+Two connected learners can become unstable
+
+== b5d22d93
+Can plan and use experience again efficiently
+
+== fe10c02e
+The planning can use errors in the model
+
+== f5f21391
+The difference between <b>on-policy</b> and <b>off-policy</b> learning is also important. An on-policy method evaluates and improves the same policy that makes the current behaviour. An off-policy method can learn about one target policy from experience that a different behaviour policy made. Q-learning is off-policy: the exploring behaviour can do a random action, but the update uses the estimated value of the best next action. This makes experience replay and learning from logged data possible. But the difference between the policy that makes the data and the policy that the agent learns can also cause instability.
+
+== 896644d1
+When a neural network replaces a Q-table, the agent can generalize across observations with many dimensions. But the update is not simple any more: you do not change only one independent entry in a table. A change that improves one state can change the predictions for many other states. Observations that come one after the other are correlated. The target also changes while the network learns. Rare successful trajectories can disappear among many usual failures. Common techniques are experience replay, target networks that update slowly, normalized observations, scaled rewards and parallel environments.
+
+== d06a05fa
+Sample efficiency is important. Famous results in game playing can need millions or billions of simulated interactions. A physical robot cannot safely repeat so much trial and error. <b>Offline RL</b> learns from a dataset that already exists. <b>Imitation learning</b> starts from demonstrations. <b>Model-based learning</b> makes imagined transitions. <b>Curriculum learning</b> gives more difficult situations gradually. Each method decreases some cost. But each method also adds assumptions: about how much of the situations the data covers, about how accurate the model is, or about how good the demonstrator is.
+
+== b6fa03bc
+The evaluation must keep the training return separate from real capability. A policy can memorize a fixed level. It can use a bug in an emulator. It can depend on one exact camera angle. Or it can fail after a small change in the dynamics. A strong evaluation uses initial states that the agent did not see before, changed environments, several random seeds, explicit safety measures and comparisons with simple baselines. The question is not only whether the reward increased. It is also which behaviour gave that reward, and whether that behaviour transfers to other situations.
+
+== 791fe1ee
+An agent has an <b>exploration–exploitation dilemma</b>. It can use the action that it thinks is best now. Or it can try other actions, which can teach it something new. An <span class="math">\varepsilon</span>-greedy policy usually selects the best known action, but sometimes it explores randomly. If the agent explores too little, it keeps its early mistakes. If it explores too much, its performance is not consistent. In real systems, random exploration can be unsafe. Thus, learning can start in simulation, from logged data or with explicit safety constraints.
+
+== e3afa07c
+The reward is not the same as the true goal. An example: a cleaning robot gets points when it detects dirt. It can then decide not to complete the job, so that it can continue to detect dirt. This is <b>reward hacking</b>: the agent finds a behaviour that gets a high score, but the behaviour is not what the designer intended. Good design combines reward shaping with constraints, evaluation in different situations, monitoring for distribution shift and the possibility to stop or correct the behaviour.
+
+== 20290736
+Reinforcement learning is also part of the development of language models. After pretraining, people can compare different responses. A reward model learns to predict these preferences. Then the language model is optimized to give responses that get a higher predicted reward. The usual name for this family of methods is <b>reinforcement learning from human feedback</b> (RLHF). Related methods optimize directly from pairs of preferences (direct preference optimization, DPO), or use feedback that an AI makes (reinforcement learning from AI feedback, RLAIF).
+
+== 018d92a2
+There is a real connection to an RL agent that has a body, but do not make it larger than it is. In a usual conversation, a deployed language model usually does not update its parameters after each response of the user. Most of the reinforcement learning occurred during training. But a tool-using agent does execute a sequential policy at deployment time: it observes results, it changes its next action and it can keep information in external memory. Thus, alignment at training time and agency at deployment time are different layers of the system.
+
+== c0ee784e
+Human preferences are also a proxy that is not perfect. Annotators can disagree. Reward models can be wrong with high confidence outside their training distribution. When you optimize an average preference, you can suppress the correct needs of minorities. Because of these problems, we need different types of evaluation, estimates of uncertainty, red-team tests and limits on actions. A larger reward model is not sufficient. Week 7 discusses the larger questions of ethics and governance. Here, the engineering lesson is this: you must interpret feedback in relation to the task and to the people that it affects.
+
+== 3a536e02
+When several agents share an environment, the result for each agent depends on the other agents. The interactions can be cooperative, competitive or mixed. People in traffic coordinate without explicit agreement. Bidders in an auction compete. A team of robots can divide the tasks. From the view of one learner, the environment is non-stationary (it changes over time), because the other agents also change their policies.
+
+== 60f0f383
+Game theory gives concepts such as best response and equilibrium. Multi-agent RL studies how agents can learn policies through interaction. Communication can help agents to coordinate. But messages can be incomplete, strategic or deceptive. When each agent is capable alone, the system of agents is not automatically effective together. Problems can occur: congestion, free riding (an agent gets the benefit but does not do its part), duplicated work, and chains of incorrect assumptions. Thus, the evaluation must examine the results of the full system: fairness, robustness, use of resources and how failures spread. The score of each agent is not sufficient.
+
+== c37a9564
+In a <b>cooperative</b> task, agents share a team reward. But it is still difficult to give credit: the action of which agent caused the success? In a <b>competitive</b> task, when one agent improves, the challenge for the other agents changes. Mixed settings have both. An example is traffic: all drivers want to prevent collisions, but they compete for space and time. Centralized training can use information about all agents. Decentralized execution gives each agent only its local observations.
+
+== f98a8c0d
+Communication is an action that has costs and results. Agents must decide what to communicate, to which agent and when. A message can decrease uncertainty, coordinate roles that complete each other, or make common knowledge. But it can also use bandwidth or show the strategy to others. In teams of LLM agents, you can give the roles “researcher”, “critic” and “writer”. This can help the team to cover more of the task. But it can also cause duplicated work. It can also make the same incorrect idea stronger, when all agents use similar models and sources.
+
+== 8639c98c
+<b>Emergence</b> means that patterns of the full system come from local interactions. Nobody programmed these patterns as a global plan. Flocking can come from simple rules of separation, alignment and cohesion. Congestion can occur when each driver tries to make the travel time as short as possible. Emergence is not automatically intelligent or good. Thus, multi-agent evaluation needs counterfactual tests, groups with different compositions, failures of communication, and measurement of the results of the group, not only the results of each agent.
+
+== a2b54b3f
+Craig Reynolds' boids (1987): each boid sees only its neighbours in the view radius. It combines three rules: separation, alignment and cohesion. No rule tells the group to make a flock. Set a rule to 0 to see what that rule adds. Polarization is the length of the average heading vector. It is 1 when all boids fly in the same direction. It is near 0 when their directions are random.
+
+== b33feaa8
+A robot closes the agent loop in the physical world. Sensors change light, force, sound, distance or joint position into measurements. Actuators make motion. Perception estimates the state that is relevant. Planning selects a route or a sequence of actions. Control changes that plan into motor commands. All of these stages have uncertainty. A wheel slips, something blocks a camera, an object moves, or the environment is different from the training environment.
+
+== 69534063
+Because the robot has a physical body, there are some gaps. The <b>reality gap</b> is between simulation and physical deployment. The <b>semantic gap</b> is between sensor values and objects and situations that have a meaning. The <b>control gap</b> is between a planned motion and what the hardware, which is not perfect, really does. A robust robot does these steps again and again: it estimates, it acts, it measures the result and it corrects. Thus, autonomy usually has layers. Low-level controllers keep the motion stable. Planners select actions. People give goals, supervise exceptions or share the control.
+
+== c0442507
+Six robots get the same perfect commands: drive one side, then turn left by 20°. They do this eighteen times for each lap, so after each lap they must come back to the red start. But each side is a little too long or too short (the wheels slip), and each turn has a small error. Without feedback, a robot knows only the commands that it gave. Thus, each error in the heading turns all the sides after it, and the errors add up, lap after lap. With a position fix (from a landmark, a beacon or a camera), the robot measures where it really is. Then it moves to the corner where it must be. This is the estimate–act–measure–correct loop of the text.
+
+== 36bdbf44
+Raw sensors do not give a symbolic world that is ready to use. A camera gives arrays of intensity values. Lidar gives distances. An inertial measurement unit gives accelerations and rates of rotation. Perception detects objects, surfaces, people and free space. <b>State estimation</b> combines measurements that have uncertainty over time. For a mobile robot, localization estimates where the robot is, and mapping estimates the environment. <b>Simultaneous localization and mapping</b> (SLAM) does the two tasks together.
+
+== 6f079e0f
+When you combine sensors, the estimates can become more robust. GPS can drift, or it can stop indoors. Cameras can fail in darkness. Wheel odometry collects more and more error when the wheels slip. Sensor fusion uses the fact that different measurements have different types of errors. The result is still an estimate with uncertainty. It is not the real truth. A planner must behave differently when the localization is precise and when several locations are still possible.
+
+== de7a6d8f
+Planning occurs at more than one level. A task planner can decide to get a parcel before it goes to the recipient. A motion planner finds a trajectory through configuration space with no collisions. A local planner reacts to obstacles that are near. A controller continuously changes a wanted trajectory into motor commands and corrects deviations. These layers operate at different timescales. Strategic plans can update every few seconds. Balance control can update hundreds of times each second.
+
+== 3eb71842
+Classical search is still important here. A* can plan paths on a map. Sampling-based methods, for example rapidly exploring random trees, can work with robot configurations that have many dimensions. Model-predictive control optimizes a short future horizon again and again, and it plans again after new measurements. Learned components can improve perception, predict dynamics or propose actions. But geometric constraints and feedback control still give a useful structure.
+
+== 9148b12d
+Physical interaction is slow and expensive, and sometimes it is dangerous. Thus, robots often learn or get tests in simulation. But a policy can use details of the simulator that are not true in the real world. <b>Domain randomization</b> changes textures, lighting, friction, mass, delays and sensor noise during training. Thus, the policy cannot depend on the details of one simulated world. If the policy works in many variations, the real world is possibly only one more variation. <b>System identification</b> is a different method: it tries to make the simulator the same as the physical system. Fine-tuning in the real world and careful validation are still necessary.
+
+== 1ff6d992
+Full autonomy is not always the most useful objective. In <b>shared autonomy</b>, a person gives the intention and the robot helps to do the task. A wheelchair can find which doorway the user wants, and the user keeps the authority. A surgical training system can guide a movement, but the learner still does the action. If the help is too weak, it gives little benefit. If the help is too strong, it can hide errors and stop the development of skills. Thus, the design question is not only “human or robot?”. It is this: how must we divide initiative, information and control over time?
+
+== d0bbce87
+Robots also make the risks real and immediate. You can check an incorrect sentence from an LLM before you use it. An incorrect movement of a robot can cause harm immediately. Safe deployment needs redundant sensors, careful operating limits, collision avoidance, emergency stops, tests and a clear division of responsibility. Human supervision must be able to act: if a supervisor cannot understand or stop the system, the supervision has no real meaning.
+
+== a925f74e
+The board, or the history of observations
+
+== 763ff5e9
+A map and sensors with noise
+
+== a441dd68
+Move, stop, manipulate objects
+
+== 3975f139
+The same words (environment, observation, action, policy, objective and feedback) connect all three. But their engineering requirements are different, because tools, other agents and physical bodies cause different types of results. When you analyse an agent, ask these questions: What can it observe? What can it change? Which objective does it really optimize? How does it learn or plan? Where can uncertainty come in? Who can intervene? These questions give more information than the question whether the system is “autonomous”.
+
+== d2cb29ed
+Agency is a relation between a system and an environment. Reinforcement learning is one method to improve actions from their results. Agentic frameworks connect models to tools and memory. Robotics puts the loop in the physical world, which has uncertainty. The capability depends on the full loop. Safe and intended behaviour depends on objectives, constraints, monitoring and human authority.
+
+== 317ae90d
+Before we can build an agent, we must describe its job precisely. The classic method of Russell and Norvig is <b>PEAS</b>: <b>P</b>erformance measure (what is a good result), <b>E</b>nvironment (the world where the agent operates), <b>A</b>ctuators (how the agent acts on the world) and <b>S</b>ensors (how the agent perceives the world).
+
+== d94e2041
+This is a worked example: the PEAS description of a robot vacuum cleaner.
+
+== 5adb61b5
+How much dirt it cleans, how much energy it uses, how much noise it makes, how much time it needs
+
+== d5e1282e
+A room (or a house) with a floor, furniture, dirt and stairs
+
+== 472eca28
+Wheels (for steering and driving), brushes, vacuum suction
+
+== ee3c520f
+When we have PEAS, we can also classify the <i>environment</i> itself in six of the standard dimensions. (We do not use the seventh dimension, known or unknown, from the overview above.)
+
+== b27c185c
+<b>Fully or partially observable</b>: can the sensors of the agent see the full state of the environment at each step?
+
+== 201ce733
+<b>Deterministic or stochastic</b>: does the next state depend only on the current state and the action of the agent? Or is there uncertainty or randomness?
+
+== b674c193
+<b>Episodic or sequential</b>: is each pair of percept and action independent of the other pairs? Or do earlier actions have an effect on later actions?
+
+== 23aab675
+<b>Static or dynamic</b>: can the environment change while the agent thinks about its decision?
+
+== 38ec2f17
+<b>Discrete or continuous</b>: is there a finite number of different states and actions, or a continuum?
+
+== ab74228e
+<b>Single-agent or multi-agent</b>: is our agent alone in the environment? Or are there other agents (cooperative or competitive)?
+
+== 1833b52d
+The vacuum cleaner above is: partially observable (it cannot see the dirt in the next room); stochastic (bumps and slips occur); sequential (it is important where it cleaned before); dynamic (people walk through and make new dirt); continuous (the robot moves on wheels on the floor; only a simplified model, for example the two-square vacuum world of Russell and Norvig, is discrete); and single-agent (usually).
+
+== 7678232d
+Now do it yourself. For each of the three tasks below, <i>(a)</i> write a PEAS description in a table like the table above, and <i>(b)</i> classify the environment in all six dimensions. Give one sentence that explains each choice:
+
+== 7814598a
+An autonomous drone that delivers parcels across a city.
+
+== 122f522d
+An agent that plays poker at an online table against human opponents.
+
+== 48558f33
+A customer-service chatbot that answers questions on the website of a shop.
+
+== 8e93767e
+<i>Bonus (no extra points, only for fun):</i> select a job or a hobby of your own and write its PEAS description. Is it more difficult or easier to specify than you expected?
+
+== db5f5dba
+A <b>learning agent</b> improves its behaviour from experience. It does not only follow a fixed rule. We will train a real learning agent. You do not have to derive the theory: the algorithm is already correctly implemented for you. Follow the official <a href="https://gymnasium.farama.org/introduction/train_agent/" target="_blank" rel="noopener">"Training an Agent"</a> tutorial of Gymnasium (the Blackjack environment).
+
+== 14dbfcfa
+The main training loop (it is already given):
+
+== d0dbc4be
+The hyperparameters of the agent are at the top of the script: <code>learning_rate</code>, <code>n_episodes</code>, <code>start_epsilon</code>, <code>epsilon_decay</code>, <code>final_epsilon</code>.
+
+== c980d42a
+Run the full script of the tutorial with no changes. (It has built-in plots of the learning curve: the episode reward and the episode length over time.)
+
+== 1dfaba14
+Change <code>learning_rate</code> to a much smaller value (for example <code>0.001</code>) and to a much larger value (for example <code>0.5</code>). Run the script again with each value and compare the learning curves.
+
+== 88de85ec
+Decrease <code>n_episodes</code> to a small number (for example <code>1000</code>; the default of the tutorial is much larger). Does the agent still learn a good policy?
+
+== 57904851
+Write 4–5 sentences: what did you see at the two extremes of the learning rate? Does a larger learning rate always mean faster learning? Connect this to something similar that you saw in this course (for example the trade-off with the learning rate in gradient descent for logistic regression).
+
+== 0cd78a9c
+It uses the Q-learning update rule. It changes the estimated value of the (state, action) pair that you just did. It uses the reward that you got plus the best value that you think you can get from this point. You do not have to derive this rule for this exercise. Only look at how the behaviour of the agent changes when you change the parameters. These parameters control how quickly or how carefully it learns and explores.
+
+== 171fc8d9
+We discussed agentic frameworks as concepts. Now we build one that you can run. <code>smolagents</code> is a small agent library from Hugging Face. (It calls itself "a barebones library for agents".) You need only three lines to run your first agent:
+
+== f645d824
+<i>Setup note: for this you need a free Hugging Face account and an access token (hf.co/settings/tokens). You do not have to pay: a free account has sufficient inference credit for this exercise.</i>
+
+== 65947bd7
+<i>Safety note: a <code>CodeAgent</code> writes Python code and runs it on your computer. smolagents limits what that code can import, but its local executor is not a security sandbox. Do not give the agent web tools (for example with <code>add_base_tools=True</code>, which adds web search and the visit of web pages), unless it runs in a container or with <code>executor_type="docker"</code>. The reason: text on a web page can tell the model to write harmful code. Keep your token in the <code>HF_TOKEN</code> environment variable, not in your code.</i>
+
+== c3c32f97
+Install with <code>pip install smolagents</code>, get a free HF token and run the code above. Read the trace that it prints. The agent shows its reasoning (its "Thoughts") and the code that it decides to run.
+
+== b7ae82bb
+Add your own tool. This is a Python function with the decorator <code>@tool</code> that does a simple task, for example to convert a temperature between Celsius and Fahrenheit, or to count the vowels in a string:
+
+== e9220c95
+Ask the agent a question that needs your tool, and a question that does not need it. Use the printed trace to make sure that it calls your tool only when the tool is really relevant.
+
+== 0aa58048
+Write 3–4 sentences: describe in your own words the loop of the agent. How did it decide when to use your tool and when to answer directly?
+
+== df41b558
+We can think of robotics as a Grand Challenge in AI. It needs almost all parts of AI, for example
+
+== 07b36a3b
+reasoning (logical and probabilistic)
+
+== cb265c37
+And of course, machine learning, deep learning and other techniques to develop the items above are also important to make better robots for more general purposes.
+
+== ab1853ff
+We do not go deeper into robotics in this course. We think that to learn robotics, you must really do robotics. In the same way, it is useless to learn programming if you do not really program.
+
+== 21834b7c
+We want to tell you some things that we think are important about robotics. First, many robots are already in daily use. Our favourite example is the dishwasher. The first models were invented in approximately 1850. A dishwasher is a robot, because it has sensors that sense its real-world environment (the temperature and the flow of the water, how many dishes there are and how dirty they are, etc.). It also has actuators that let it change its environment (it heats the water, releases the detergent, splashes the water, etc.). With this definition, a radiator thermostat is also a robot, and we agree with that!
+
+== 1092c7d4
+There is one more thing to know about robotics. It is more difficult to explain in words, and it is the reason why we do not try to go deeper into robotics in this course. In short: it is very difficult to operate in the real world. Sensors are never perfect, and they fail frequently. Thus, it is very difficult to know the state of the system, for example where the robot is in relation to the objects around it. The actuators, for example the motors that move the robot, are also not perfect. When the robot tries to move its hand, or to roll forward on its wheels, by exactly 10 cm, it really moves 9 or 11 cm.
+
+== 13ec9d9d
+Because of this second problem, robust robotics solutions often need work at a very different level. This level is often “lower” in some sense than in other types of AI applications. Those applications only have to work with simulated environments or static data, not with the real world, which is not clean or predictable.
+
+== c78bea6d
+If you can work with real robots, we recommend that you do it. In earlier versions of the course, we did robotics with LEGO Mindstorms robots. But our robots are now so old technically that it is very difficult and frustrating to program them. But you can program new LEGO hubs, for example the hubs in the SPIKE Prime and MINDSTORMS Robot Inventor sets, in Python, for example with the open-source <a href="https://pybricks.com/">Pybricks</a> firmware. <a href="https://www.raspberrypi.org/">Raspberry Pi</a> also looks like a good alternative. If you can try one of these, and build and program robots, we think that you will understand what we try to say here!
+
+== 51c7e84e
+Now we go to the last large topic of the course: <a href="../week7/">Ethics and Trustworthy AI</a> in Week 7.
+
+== d1b44eb4
+The next three exercises (Calling Bullshit, The Great AI Debate, and EU AI Act: Case Study) use the material of <a href="../week7/">Week 7</a>. Read that material before you start. We discuss these exercises at the exercise session of Week 7, together with the agent exercises above.
+
+== bd0d17b1
+Sayash Kapoor and Arvind Narayanan wrote the blog post <a href="https://aisnakeoil.substack.com/p/eighteen-pitfalls-to-beware-of-in">Eighteen pitfalls to beware of in AI journalism</a>. In it, they show problems that occur again and again when the press writes about AI. You can find a list of these problems (pitfalls) <a href="https://www.cs.princeton.edu/~sayashk/ai-hype/ai-reporting-pitfalls.pdf">here</a>.
+
+== da0b031f
+Find three examples of news stories about AI. Try to find stories that have as many of the pitfalls as possible. You get bonus points if the stories come from respected sources, for example MIT Tech Review, the Atlantic, or (we challenge you!) the University of Helsinki.
+
+== 55966146
+For each story, propose how to correct it as well as possible.
+
+== f9bc6984
+Ethics is not only a set of standards of right and wrong. It is also the process that people use to discuss and improve these standards, usually in a dialogue between the stakeholders (<a href="https://www.scu.edu/ethics/ethics-resources/ethical-decision-making/what-is-ethics/">see here</a>).
+
+== a63f0a6c
+Thus, now we "do ethics"!
+
+== aa6cadb8
+Select one of these topics for discussion:
+
+== e91eb2df
+AI-generated art is now a popular topic. People use systems such as DALL-E, Imagen and Stable Diffusion to make very good artwork. In these cases, who (or what) must get the intellectual property rights?
+
+== 240545ec
+AI has a larger and larger effect on the real world. Until recently, most AI researchers did not think about these problems. People did not expect them to think about the effects of their work on society. Now, some AI conferences require a broader impact statement or a checklist. The most important example is the <a href="https://nips.cc/">NeurIPS</a> conference (see <a href="https://arxiv.org/abs/2111.01705">this study</a>). The statement or checklist asks the authors of research articles to think about the effects of their work. Some people say that this can cause censorship, and that political ideology can then interfere with academic freedom. Other people say that science cannot continue to act as if it is separate from the real world.
+
+== 132cb8b2
+Your task is to have a debate about the topic that you selected (one of the two topics above). You can debate with your alter ego: you take two opposite opinions about the topic yourself. It is better if you ask another student, or a different person, to take the role of the opponent.
+
+== fb03507f
+Record your dialogue. Write a summary of a minimum of ten (10) arguments and counter-arguments. Put them in alternating order, for example:
+
+== dd602c50
+— <i>I think X</i>
+
+== 9ef37ab8
+— <i>No, X is wrong because of Y</i>
+
+== 46d9cebf
+— <i>Possibly, but there is also Z...</i>
+
+== 27b2e078
+Thus, you and your opponent each make a minimum of five points. (And no, an insult such as "you're a f**king idiot" is <b>not</b> an argument.)
+
+== fb059b2f
+<i>Hint:</i> Always be polite and respectful.
+
+== b07d8c58
+<i>Hint 2:</i> If you do not have an opponent in real life, you can try social media, for example X (its old name is Twitter)... But remember the first hint.
+
+== c784a0d9
+Look at the case of the US drugstore chain “Rite Aid”. This is a summary in simple words of what the FTC says (FTC US, 2023). Rite Aid used facial recognition technology that is based on artificial intelligence. Its purpose was to identify customers who possibly stole from the shop (shoplifting) or did other problematic things. But the complaint says that the company did not do sufficient things to prevent harm to customers. Thus, employees accused customers of wrong actions, but the customers had done nothing wrong. The reason was that the facial recognition technology incorrectly flagged these customers as a match for a person who was identified earlier as a shoplifter or other troublemaker. The company did not tell the customers that it used the technology in its shops, and it told employees not to give this information. The complaint says that the employees acted on these false positive alerts. They followed customers in the shops, searched them, told them to leave, called the police to confront or remove them, and accused them in public of shoplifting or other wrong actions, sometimes in front of friends or family. Also, the FTC says that the actions of Rite Aid had a larger effect on people of color than on other people.
+
+== 2c08f4c5
+The Guardian writes this (summary in simple words): Rite Aid had a contract with two private vendors, whose names are not given. Rite Aid made, or told these companies to make, a database of “persons of interest”. The database had images of the persons and other personal information that identifies them. The settlement says that the quality of these images was often low. The images came from the CCTV cameras of Rite Aid, from the facial recognition cameras or from the mobile phones of employees.
+
+== 0a70ed28
+How can the obligations of the EU AI Act for high-risk systems possibly prevent this problem? Write an essay of 1 page that describes the solution.
+
+== 6b56bd30
+We use your feedback to develop this course.
+
+== dafbfb83
+Send the feedback anonymously through Norppa, the feedback system of the university.
+
+== ae1bb67c
+This section is optional extra material for interested readers. It is outside the course: it is <b>not part of the course requirements</b>, and you do not need it for the exercises or the exam. It continues from the agent loop of this page and from the Ollama exercise of Week 5. All of this runs on your own computer, and you are responsible for the risk. Thus, read the security checklist before you give tools to an agent.
+
+== 6bee0752
+A multi-agent LLM system is a set of model calls that have different roles, instructions or tools. These calls give work to each other. The Anthropic guide <i>Building effective agents</i> (2024) describes the usual patterns, from fixed workflows to open-ended agents:
+
+== 0e19e864
+<b>Prompt chaining</b>: a fixed sequence of calls. Code does checks between the calls (make an outline, check the outline, write).
+
+== 6a651436
+<b>Routing</b>: the first call classifies the request. Then it sends the request to a specialized prompt, or to a smaller or larger model.
+
+== bd9c2423
+<b>Parallelization</b>: independent parts run at the same time. Or several attempts do the same task, and then they vote.
+
+== 84746386
+<b>Orchestrator–workers</b>: one model divides the task at run time. It gives the parts to workers and combines their results.
+
+== ab8d2184
+<b>Evaluator–optimizer</b>: one model writes. Another model gives a critique against clear criteria. The loop repeats until the critic approves (see the second listing below).
+
+== ba7aa850
+In <b>multi-agent debate</b> (Du et al., ICML 2024), several copies of a model answer the same question. They read the answers of the other copies and change their own answers, for a few rounds. On the benchmarks of the authors, this improved both reasoning and factual accuracy, in comparison with one model.
+
+== 9ad5e70e
+But more agents also mean more calls, more cost and more possible failures. Cemri et al. (2025) annotated execution traces of popular multi-agent frameworks. They found 14 failure modes in three groups. The first group is errors in the system design (agents ignore their role or the task). The second group is misalignment between agents (they keep information from other agents, ignore the input of other agents or move away from the task). The third group is weak verification (they stop too early or check nothing). Also, the text above tells you that agents that use the same model have the same blind spots. A good rule is this: start with one agent and good tools. Add agents only when a measurement shows that they help.
+
+== 46175673
+Two open protocols connect the parts. The <b>Model Context Protocol</b> (MCP, Anthropic, 2024) gives a standard method for an application to give tools and data to a model. For example, an MCP server makes a calendar or a database available, and each agent that uses MCP can use it. <b>Agent2Agent</b> (A2A, Google, 2025) lets agents from different vendors give tasks to each other. Both are now open projects of the Linux Foundation.
+
+== cdd80335
+The memory for the weights of a model is approximately the number of parameters, multiplied by the bits for each weight, divided by eight. An example: a model with 8 billion parameters needs approximately 16&nbsp;GB at 16 bits. At the 4-bit quantization that Ollama uses by default, it needs only approximately 5&nbsp;GB. Long conversations also need the KV cache (see the bonus of Week 5). For a model with the shape of Llama&nbsp;3&nbsp;8B, this is 128&nbsp;KiB for each token, thus 1&nbsp;GiB for 8192 tokens. If all of this fits in the memory of a GPU, or in the unified memory of a Mac with Apple silicon, the model answers quickly. If it does not fit, the model runs on the CPU, more slowly.
+
+== 2ed466d0
+The Ollama server that you installed in Week 5 also gives an API at <code>http://localhost:11434</code>. It has an endpoint under <code>/v1</code> that is compatible with OpenAI. The <code>llama-server</code> of llama.cpp and LM Studio give the same type of endpoint. Code that uses this interface works in the same way when the model runs on your laptop or in the cloud. For agents, select a model that was trained for tool calling (the model library of Ollama marks these models with the tag <i>tools</i>), for example <code>ollama pull qwen3:8b</code> (approximately 5&nbsp;GB). Small models with 1 to 4 billion parameters can call simple tools, but they make more mistakes in tasks with many steps. A tip for the exercise above: the free tier of Hugging Face has only a small inference credit each month (US$&nbsp;0.10 when we wrote this). But smolagents can also use a local model through a server that is compatible with OpenAI.
+
+== 7320c05d
+Frameworks hide the loop of the tool-agent diagram on this page. Here you see the full loop: the model proposes tool calls, and the code validates and executes them. This agent can read the Markdown notes in one folder and nothing more. Install the client with <code>pip install openai</code>, pull a model, put some <code>.md</code> files in a folder with the name <code>notes</code>, and run the script.
+
+== 274ca10e
+All the defences of the text are in this script. The tool layer decides what can occur, not the model: <code>read_note</code> resolves the path and refuses all paths outside the folder, also tricks with <code>../</code> and symbolic links. Unknown tools and incorrect arguments become error messages that the model can read and correct. The step budget stops an agent that repeats without end. We did a test against a scripted server that asked for <code>../secret.md</code>, for a tool with the name <code>delete_everything</code>, and with arguments that were not JSON. The script refused all three.
+
+== 238e63ab
+A second role changes this into the evaluator–optimizer pattern. Add this to the same file:
+
+== 3f7a9b91
+The writer and the critic are the same model with different instructions. Thus, they have the same blind spots. A stronger setup gives the critic a different model. Or, where it is possible, it replaces the critic with a check in code, for example a run of tests.
+
+== 91aa5449
+<b>Keep the model server local.</b> By default, Ollama listens only on <code>127.0.0.1:11434</code>, and it has no authentication: each person who can get to the port can use your models. Do not set <code>OLLAMA_HOST=0.0.0.0</code>, and do not forward the port on a network that you do not control.
+
+== 1bc12f8f
+<b>Least privilege.</b> Give each tool the smallest power that works: read-only before write, one folder and not the full disk, no shell. Run agents that execute code in a container or a virtual machine. It must have no network access and only a copy of the files that the agent needs.
+
+== e53b1af0
+<b>Do not trust anything that the agent reads.</b> Web pages, e-mails, documents and tool results can contain instructions (prompt injection). Simon Willison uses the name <i>lethal trifecta</i> for the combination of three things: access to private data, contact with content that is not trusted, and a method to communicate outside. An attacker can trick an agent that has all three, so that it sends your data to the attacker. Remove a minimum of one of the three.
+
+== 0701a76a
+<b>Humans approve important actions.</b> Before the agent sends, deletes, pays or publishes, it must wait for your confirmation. Budgets for steps, time and tokens stop loops that do not end. A log of each tool call shows what occurred.
+
+== 79d10480
+<b>Keep secrets where the agent cannot get them.</b> Put API keys in environment variables. Never put them in prompts or in files that the agent can read. Give agents their own accounts with limited rights.
+
+== 6ae10105
+<b>Be careful with the supply chain.</b> Download models, agent plugins and MCP servers only from sources that you trust. Use the safetensors and GGUF formats when possible. They were designed to keep weights without executable code. Do not use checkpoints that are based on pickle (<code>.pt</code>, <code>.bin</code>) when possible, because they can run any code when you load them. An MCP server is a program that runs with your permissions.
+
+== 86358b06
+<b>A study partner for this course.</b> Make an index of your notes with an embedding model (Week 5). Let one agent ask you questions, and let a critic check each question against the notes. Count how frequently the critic finds an incorrect question.
+
+== 349281f1
+<b>Agent against Q-learning.</b> Change the gridworld of this page into a text environment with the tools <i>look</i> and <i>move</i>. Compare the success rate and the number of steps of an LLM agent with the success rate and the number of steps of tabular Q-learning.
+
+== ccaf407f
+<b>One agent or many agents: measure it.</b> Write 20 tasks with known answers. Compare one agent, a pair of writer and critic, and a debate of three agents, for accuracy, tokens and time. Then “multi-agent helps” is not a belief any more but a result.
+
+== ac2c66d6
+<b>A digest of papers.</b> A tool gets new arXiv abstracts about a topic. The agent writes a summary each week, with links. A second pass checks each claim against its abstract. The agent reads text that is not trusted, so do not give it other tools.
+
+== 058f8987
+<b>Home automation with a human in the loop.</b> Home Assistant has an official Ollama integration that uses a local model as a conversation agent. For this, other devices on your home network must be able to get to Ollama. Thus, let only the Home Assistant machine through the firewall. Start with read-only access to the sensors, and confirm each action yourself.
+
+== f9c7101d
+Anthropic (2024), <a href="https://www.anthropic.com/research/building-effective-agents" target="_blank" rel="noopener"><i>Building effective agents</i></a>: workflows and agents, and when to use each.
+
+== 5a6b7328
+Yao et al. (2023), <a href="https://arxiv.org/abs/2210.03629" target="_blank" rel="noopener"><i>ReAct: Synergizing Reasoning and Acting in Language Models</i></a>: the reason–act loop that most LLM agents use.
+
+== 8f4cd9f0
+The documentation of the <a href="https://modelcontextprotocol.io" target="_blank" rel="noopener">Model Context Protocol</a> and of <a href="https://docs.ollama.com" target="_blank" rel="noopener">Ollama</a> (see the FAQ of Ollama about network access).
