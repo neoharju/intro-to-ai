@@ -43,6 +43,25 @@ Compared with the original `gh-pages` branch (commit `b9dedeb`):
 - **Zen mode:** the material without the navigation bar, page header, lecture and deadline boxes and footer
   (the lotus button or the Z key; Z or Esc leaves it).
 
+## Simplified English
+
+Every week can have a second version of its text in simplified English (about 80% ASD-STE100 Issue 9),
+for students whose first language is not English. The "Simplified English" switch in the page header
+swaps it in and back, block by block (`src/javascripts/simplify.js`); formulas, code, figures and
+headings stay as they are. The text is written in `src/simple/weekN.txt`, one entry per paragraph, list
+item, table cell or caption, keyed by a fingerprint of the original text, and compiled into
+`weekN/simple.json`. A week with a simplified version has `<meta name="introai-simple" content="simple.json">`
+in its head.
+
+```bash
+npm run simple                      # compile src/simple/*.txt
+npm run simple -- --extract week3   # the blocks of a page and their fingerprints, to write from
+npm run simple -- --check           # stale entries, and lost formulas, links, code or numbers
+```
+
+`--extract` and `--check` need Playwright. When the text of a page changes, `--check` lists the entries
+whose original no longer exists; until they are updated, those blocks show their original text.
+
 ## Preview locally
 
 GitHub Pages publishes this branch as it is. The pages are plain HTML (`index.html`, `week1/` to `week7/`
