@@ -475,3 +475,81 @@ Andrej Karpathy, <a href="https://karpathy.ai/zero-to-hero.html" target="_blank"
 
 == 644d2df4
 Michael Nielsen, <a href="http://neuralnetworksanddeeplearning.com/" target="_blank" rel="noopener"><i>Neural Networks and Deep Learning</i></a>: a free online book. Chapter 2 shows how to calculate backpropagation, one step at a time.
+
+== efaf35d5
+Extra · not part of the course
+
+== a11b4a68
+This section is optional extra material for readers with an interest in algorithms and performance engineering. It is <b>not part of the course requirements</b>: you do not need it for the exercises or the exam.
+
+== 1597246b
+The core material describes what each method calculates. This section asks what the calculation costs. How do time and memory increase with the size of the data and of the model? Why can the same arithmetic run ten or a hundred times faster when we arrange it differently? We count <b>multiply–accumulate operations</b> (MACs) and bytes. One MAC is two floating-point operations (FLOPs). Notation: <span class="math">N</span> training examples, mini-batches of <span class="math">B</span> examples, <span class="math">P</span> parameters and <span class="math">E</span> epochs.
+
+== 16a5f11c
+A dense layer with <span class="math">n</span> inputs and <span class="math">m</span> outputs has <span class="math">mn + m</span> parameters. For one example, it needs <span class="math">mn</span> MACs. For a mini-batch, the inputs are the rows of a matrix <span class="math">X</span>, and the full batch is one matrix product:
+
+== 6c6993cc
+When we add all layers, a forward pass costs about one MAC for each weight and each example, or <span class="math">2P</span> FLOPs. The backward pass costs about two times as much, because each layer calculates two products of the same size. These are the gradient for its input, <span class="math">G W</span>, and the gradient for its weights, <span class="math">G^\top X</span>. Here <span class="math">G</span> contains the derivatives of the loss with respect to <span class="math">Z</span>. Thus, one training step costs about <span class="math">6P</span> FLOPs for each example, and the full training costs
+
+== 789d1ebf
+The batch size is not in the formula. It changes the number of updates (<span class="math">N/B</span> in each epoch) and how efficiently the hardware works. It does not change the quantity of arithmetic. The digit network of the core material has <span class="math">P = 31{,}810</span>. Thus, one training step costs about <span class="math">6P \approx 191{,}000</span> FLOPs for each image. The 8 epochs over the 6,400 training images of the exercise need about <span class="math">9.8 \cdot 10^{9}</span> FLOPs. One modern CPU core with vector instructions can do approximately <span class="math">10^{11}</span> FLOPs each second. An example is 3 GHz × 2 fused multiply–add units × 8 single-precision lanes × 2 FLOPs. Thus, the arithmetic alone takes about 0.1 seconds. Real code takes more time: small matrices, memory traffic and the Python interpreter add overhead. Performance engineering decreases this difference.
+
+== 6a12dab0
+<b>Memory.</b> Training keeps four types of numbers. These are the <span class="math">P</span> parameters, their <span class="math">P</span> gradients, the state of the optimizer and the <b>activations</b> of each layer. The optimizer state is zero for plain SGD, <span class="math">P</span> for momentum and <span class="math">2P</span> for Adam. The backward pass needs the activations: <span class="math">B \sum_\ell n_\ell</span> values for the layer widths <span class="math">n_\ell</span>, with the input. Prediction needs only the parameters and the activations of the current layer. In the digit network, the parameters use 127 KB as 32-bit floats. This is small enough to stay in the cache of a CPU core. The activations of a batch of 200 images use 0.67 MB.
+
+== 415fce31
+<b>Performance: select the number format.</b> The 70,000 MNIST images use 439 MB as 64-bit floats, which <code>fetch_openml</code> gives. As 32-bit floats they use 220 MB, and as bytes 55 MB. Thus, the exercise changes them with <code>astype("float32")</code>. This halves the memory traffic, and each vector instruction holds two times as many numbers (8, not 4, in a 256-bit AVX2 register). Neural networks rarely need 64-bit precision. GPUs go further: they train with 16-bit formats (see the checklist below).
+
+== 392639e9
+A processor can calculate only as fast as it gets the data. The <b>arithmetic intensity</b> of a calculation is the number of FLOPs for each byte that it moves to or from memory. A matrix–vector product, with one example at a time, uses each weight one time: 2 FLOPs for each weight. With 16-bit weights, this is about 1 FLOP for each byte. A mini-batch of <span class="math">B</span> examples uses each weight <span class="math">B</span> times, so the intensity increases with <span class="math">B</span>. The <b>roofline model</b> changes this into a speed limit:
+
+== 85dac47b
+On the example device of the figure, a layer of width 4096 gets 1% of the peak at batch size 1. At batch size 16 it gets 16%, and at 128 the full peak. Below the ridge point (here 100 FLOP for each byte), a calculation is <b>memory-bound</b>. Then faster arithmetic does not help. Only less data movement helps. Above the ridge point, the calculation is <b>compute-bound</b>. Matrix libraries (BLAS on CPUs, cuBLAS on NVIDIA GPUs) get near the peak. They divide the matrices into tiles that stay in the registers and caches while the library uses them again. You can see the effect on a laptop:
+
+== a311b84e
+The two versions do the same <span class="math">8.6 \cdot 10^{9}</span> FLOPs. The loop reads the 64 MiB weight matrix from memory 256 times, 16 GiB in total. The single product reads it about one time, and it uses each tile again from the cache. On the 4-core machine that we used to test this page, the single product was 7 to 10 times faster. On a GPU, the difference is larger. Mini-batches are useful for statistical reasons, as the core material explains. They also make neural networks fast on real hardware.
+
+== e7129f8a
+A perceptron prediction costs <span class="math">O(d)</span> for <span class="math">d</span> inputs. Thus, one epoch costs <span class="math">O(Nd)</span> time, and <span class="math">O(d)</span> memory in addition to the data. How many epochs are necessary? The convergence theorem (Novikoff, 1962) gives the answer from the geometry of the data. Use the labels −1 and +1, and a constant input 1 for the bias. Let each input have <span class="math">\lVert x \rVert \le R</span>. Let a unit vector <span class="math">u</span> separate the classes with the margin <span class="math">\gamma</span>: <span class="math">y\, u \cdot x \ge \gamma</span> for each example. Then the perceptron makes a maximum of
+
+== d421e47f
+Each epoch before convergence has one or more mistakes. Thus, training takes a maximum of <span class="math">(R/\gamma)^2 + 1</span> epochs and <span class="math">O\bigl(Nd\,(R/\gamma)^2\bigr)</span> time. When the classes are separable but almost touch, the margin is small, and training can need many epochs. For XOR, there is no margin, and the bound gives no information.
+
+== 0746c528
+<b>Performance: vectorize the independent work.</b> Each perceptron update changes the weights that the next example uses. Thus, the loop over the examples must go in sequence. Only the dot product in each step can use vector instructions. A mini-batch gradient step is different: all <span class="math">B</span> examples use the same weights, so one matrix product gives all their gradients. When you must use a loop in sequence, run it as compiled code (C++, Numba or <code>jax.lax.scan</code>), not in the Python interpreter. In the interpreter, each iteration costs much more than its arithmetic.
+
+== 86398d92
+A convolutional layer has <span class="math">C_\text{in}</span> input channels and <span class="math">C_\text{out}</span> filters of size <span class="math">k \times k</span>. It calculates <span class="math">H_\text{out} W_\text{out} C_\text{out}</span> outputs, and each output needs <span class="math">k^2 C_\text{in}</span> MACs:
+
+== 245b1dbb
+The 16 RGB filters of size 3 × 3 in the core material have 448 parameters. On a 32 × 32 image with padding 1, they do <span class="math">32 \cdot 32 \cdot 16 \cdot 27 = 442{,}368</span> MACs. This is about 1,000 for each parameter. A dense layer uses each weight only one time for each example. This high arithmetic intensity is one reason why CNNs run well on GPUs. But the cost moves to the memory. One 224 × 224 feature map with 64 channels has 3.2 million values, 12.8 MB as 32-bit floats. Thus, a batch of 32 images needs 411 MB for this one layer, and the network keeps all of it for the backward pass.
+
+== 81f74e57
+<b>Performance: one operation, different algorithms.</b> Libraries implement a convolution in different ways. <i>im2col</i> copies each patch into a column of a matrix and then uses a fast matrix product. But the copied input needs about <span class="math">k^2</span> times more memory (Chellapilla et al., 2006). Winograd's minimal filtering calculates a 2 × 2 block of outputs of a 3 × 3 filter with 16 multiplications, not 36: 2.25 times fewer (Lavin and Gray, 2016). Methods with the FFT are good for large filters. On NVIDIA GPUs, cuDNN selects one of these algorithms for each layer shape. In PyTorch, <code>torch.backends.cudnn.benchmark = True</code> lets cuDNN measure the time of each algorithm one time and keep the fastest. The memory layout is also important. "Channels last" (NHWC) keeps the channels of one pixel next to each other. This is good for vector instructions and tensor cores.
+
+== 1cff97da
+An embedding lookup copies one row of the table: <span class="math">O(d)</span> for each token. A one-hot vector times the table gives the same result, but it costs <span class="math">O(Vd)</span>. The table can be the largest part of a model, for example in recommender systems. The backward pass changes only the rows of the tokens in the batch. To find the nearest neighbours of one vector among <span class="math">V</span> vectors costs <span class="math">O(Vd)</span>. Normalize the table one time. Then one matrix–vector product gives all cosine similarities. For millions of vectors, approximate nearest-neighbour indexes such as HNSW (Malkov and Yashunin, 2020) are much faster, but a little less accurate. Vector databases use these indexes.
+
+== 44df6543
+A recurrent step <span class="math">h_t = \tanh(W_x x_t + W_h h_{t-1} + b)</span> costs <span class="math">d_h (d_x + d_h)</span> MACs. Thus, a sequence of length <span class="math">T</span> costs <span class="math">O\bigl(T d_h (d_x + d_h)\bigr)</span> time. Training keeps all <span class="math">T</span> hidden states: <span class="math">O(T d_h)</span> memory for each sequence. <b>Performance:</b> the steps cannot run in parallel, because step <span class="math">t</span> needs <span class="math">h_{t-1}</span>. Only the sequences of a batch can run in parallel. Attention in Week 5 removes this dependency and processes all positions at the same time. But it must compare each pair of positions: <span class="math">O(T^2)</span> parallel work, not <span class="math">T</span> steps in sequence.
+
+== 7d60e116
+<b>Measure first.</b> Profile before you optimize: <code>cProfile</code> or py-spy for Python, <code>torch.profiler</code> for PyTorch, Nsight Systems for NVIDIA GPUs. Frequently, the slow part is not where you expect it.
+
+== ab2779c9
+<b>Find the limit.</b> Compare the FLOP/s that you get with the peak. Also compare the bytes per second that you get with the memory bandwidth. A memory-bound calculation needs less data movement, not faster arithmetic.
+
+== fef15ffe
+<b>Use smaller number formats.</b> On CPUs, use 32-bit floats, not 64-bit floats. On GPUs, mixed precision calculates with 16-bit formats on tensor cores and adds the results in 32 bits (Micikevicius et al., 2018). bfloat16 has the same exponent range as 32-bit floats. float16 needs loss scaling, so that small gradients do not become zero.
+
+== 752f145f
+<b>Use good shapes.</b> Tensor cores work best when the matrix dimensions are multiples of 8 for 16-bit numbers. Larger multiples frequently help more.
+
+== 6d8c138c
+<b>Keep the device busy.</b> While the current batch trains, load and preprocess the next batches in background workers. A GPU that waits for data shows low utilization.
+
+== 4a72769a
+<b>Use more computation to save memory.</b> Gradient checkpointing keeps the activations of only some layers. It calculates the other activations again during the backward pass. It keeps about <span class="math">\sqrt{L}</span> layers, not <span class="math">L</span>, and it needs about one more forward pass (Chen et al., 2016).
+
+== 797aec02
+<b>Fuse small operations.</b> A chain of element-wise operations is memory-bound when each operation reads and writes a full tensor. Compilers such as <code>torch.compile</code> and XLA fuse them into one pass.

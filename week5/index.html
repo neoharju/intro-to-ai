@@ -1832,6 +1832,202 @@ print(output[1].round(3))    # bank's output:  [0.683 0.097]</code></pre>
           </ul>
         </section>
 
+        <section class="bonus" aria-label="Extra material">
+          <p class="bonus__badge">Extra &middot; outside the course</p>
+          <h1 class="material-heading" id="transformer-cost">Extra: what a Transformer costs, and how to make it cheaper</h1>
+          <p class="bonus__note">
+            This section is optional extra material for readers who are interested in algorithms and performance
+            engineering. It is <b>not part of the course requirements</b>: you do not need it for the exercises or the
+            exam.
+          </p>
+
+          <p>
+            The Efficiency section above says that self-attention costs <span class="math">O(n^2)</span> in the sequence
+            length <span class="math">n</span>. This section counts the whole cost of a Transformer layer, shows when the
+            quadratic part matters, and connects the numbers to the hardware limits of the
+            <a href="../week4/#cost-roofline">roofline model in Week 4</a>. Notation: <span class="math">n</span> tokens,
+            model width <span class="math">d</span>, <span class="math">h</span> attention heads and
+            <span class="math">N</span> parameters; one MAC (multiply–accumulate) is two FLOPs.
+          </p>
+
+          <h2 class="material-heading" id="transformer-cost-layer">Where the time goes in one layer</h2>
+
+          <table class="table">
+            <caption>The cost of one Transformer layer for a sequence of n tokens (feed-forward width 4d)</caption>
+            <thead><tr><th scope="col">Part</th><th scope="col">MACs</th><th scope="col">Grows with</th></tr></thead>
+            <tbody>
+              <tr><td>Projections to queries, keys, values and the output</td><td><span class="math">4 n d^2</span></td><td>length &times; width&sup2;</td></tr>
+              <tr><td>Attention scores <span class="math">QK^\top</span>, all heads</td><td><span class="math">n^2 d</span></td><td>length&sup2; &times; width</td></tr>
+              <tr><td>Weighted sum of the values</td><td><span class="math">n^2 d</span></td><td>length&sup2; &times; width</td></tr>
+              <tr><td>Feed-forward network</td><td><span class="math">8 n d^2</span></td><td>length &times; width&sup2;</td></tr>
+              <tr><td>Layer total</td><td><span class="math">12 n d^2 + 2 n^2 d</span></td><td></td></tr>
+            </tbody>
+          </table>
+
+          <p>
+            Splitting the width into <span class="math">h</span> heads does not change the count:
+            <span class="math">h</span> heads of size <span class="math">d/h</span> cost
+            <span class="math">h \cdot n^2 \cdot d/h = n^2 d</span>. The quadratic part is larger than the rest only when
+          </p>
+
+          <div class="math math--key">
+            2 n^2 d > 12 n d^2 \iff n > 6d,
+          </div>
+
+          <p>
+            that is, for a model of width 4096, for sequences longer than 24,576 tokens. A decoder's causal mask makes
+            half of the scores unnecessary, and optimized kernels skip them, which moves the limit to
+            <span class="math">12d</span>. For shorter contexts the dense matrix products dominate. This is why the
+            <span class="math">6ND</span> rule of the bonus above, which counts only the parameters
+            (<span class="math">12 d^2</span> per layer), predicts training costs well: a layer of width 4096 has about
+            <span class="math">12 \cdot 4096^2 \approx 2 \cdot 10^8</span> parameters, and 32 such layers plus the token
+            embeddings give the 6.7 billion parameters of Llama&nbsp;2&nbsp;7B.
+          </p>
+
+          <p>
+            <b>Memory for the scores.</b> A straightforward implementation stores the
+            <span class="math">n \times n</span> attention weights of every head. For <span class="math">n = 8192</span>
+            tokens and 32 heads in 16-bit numbers, this is <span class="math">32 \cdot 8192^2 \cdot 2</span> bytes, or
+            4 GiB for one layer of one sequence, and training would keep this for every layer.
+          </p>
+
+          <h2 class="material-heading" id="transformer-cost-flash">FlashAttention: the same result with less memory traffic</h2>
+
+          <p>
+            In this straightforward form, the time of attention goes mostly to memory traffic: the GPU writes the score
+            matrix to its main memory, reads it back for the softmax, writes the weights and reads them again for the
+            weighted sum. <b>FlashAttention</b> (Dao et al., 2022) computes exactly the same result in tiles that fit in
+            the fast on-chip memory and never stores the full <span class="math">n \times n</span> matrix: the extra
+            memory becomes <span class="math">O(n)</span>, and the backward pass recomputes the tiles instead of storing
+            them. The arithmetic is still <span class="math">O(n^2 d)</span>, but the memory traffic falls, and so does
+            the time: in the paper, training GPT-2 with sequences of 1,024 tokens became about three times faster.
+          </p>
+
+          <p>
+            The key is the <b>online softmax</b> (Milakov and Gimelshein, 2018). A softmax needs the maximum and the sum
+            over all the scores, but both can be updated one block at a time: keep a running maximum and a running sum,
+            and rescale the partial results whenever the maximum grows. It is the maximum subtraction of the bonus code,
+            done in pieces. Run this after the bonus code:
+          </p>
+
+          <pre class="sh_python code-highlight"><code>def streaming_attention(q, K, V, block=2):
+    """Attention for one query that reads the keys and values one block at a time."""
+    m, s = -np.inf, 0.0                     # running maximum, running sum of exp(score - m)
+    acc = np.zeros(V.shape[1])              # running weighted sum of the values
+    for i in range(0, len(K), block):
+        scores = K[i:i + block] @ q / np.sqrt(len(q))
+        m_new = max(m, scores.max())
+        p = np.exp(scores - m_new)
+        rescale = np.exp(m - m_new)         # the earlier terms used the old maximum
+        s = s * rescale + p.sum()
+        acc = acc * rescale + p @ V[i:i + block]
+        m = m_new
+    return acc / s
+
+print(streaming_attention(Q[1], K, V).round(3))   # bank's output again: [0.683 0.097]</code></pre>
+
+          <p>
+            The function holds the scores of one block at a time, yet it returns the same output for "bank" as the full
+            computation, for every block size. A GPU kernel does the same with blocks of queries, keys and values in
+            on-chip memory.
+          </p>
+
+          <h2 class="material-heading" id="transformer-cost-decoding">Generation: compute-bound prefill, memory-bound decoding</h2>
+
+          <p>
+            Text generation has two phases with very different costs. The <b>prefill</b> processes the
+            <span class="math">n</span> tokens of the prompt together: matrix–matrix products with a high arithmetic
+            intensity, so it is compute-bound. <b>Decoding</b> then produces one token at a time. Each step multiplies one
+            token vector by every weight matrix: matrix–vector products at about 1 FLOP per byte with 16-bit weights, at
+            the far left of the roofline. Every weight is read from memory once per generated token, so the memory
+            bandwidth sets an upper limit:
+          </p>
+
+          <div class="math math--key">
+            \text{tokens per second} \le \frac{\text{memory bandwidth}}{\text{bytes read per token}} \approx
+            \frac{\text{memory bandwidth}}{\text{model size in bytes}}.
+          </div>
+
+          <p>
+            A 7-billion-parameter model in 16-bit numbers is 14 GB, so a GPU with 1 TB/s of memory bandwidth generates at
+            most about 71 tokens per second for one conversation, and the KV cache of the bonus (2 GiB at 4096 tokens)
+            adds to the bytes read. Quantized to 4 bits, the same model is 3.5 GB, and the limit rises to about 285 tokens
+            per second. On a laptop with 100 GB/s and a 4 GB model, the limit is 25 tokens per second: compare it with
+            the <i>eval rate</i> that <code>ollama run</code> prints with the <code>--verbose</code> option in the Ollama
+            exercise.
+          </p>
+
+          <p>
+            <b>Time with and without the KV cache.</b> Without a cache, step <span class="math">t</span> runs the whole
+            prefix again: <span class="math">O(t\,d^2 + t^2 d)</span> per layer, so <span class="math">n</span> tokens cost
+            <span class="math">O(n^2 d^2 + n^3 d)</span>. With the cache, each step computes the projections of one token,
+            <span class="math">O(d^2)</span>, and attends to <span class="math">t</span> cached keys,
+            <span class="math">O(t\,d)</span>: <span class="math">O(n d^2 + n^2 d)</span> in total. The cache trades the
+            memory computed in the bonus for a factor of about <span class="math">n</span> in time.
+          </p>
+
+          <p>
+            <b>Performance: share the weight reads.</b> A server that decodes many conversations at once reads each weight
+            once for all of them, so the throughput grows almost in proportion to the batch until the computation becomes
+            compute-bound, while the time per token of each user hardly changes. Serving systems such as vLLM add new
+            requests to the running batch at every step and store the KV caches in fixed-size pages, so that little
+            memory is wasted (Kwon et al., 2023). <b>Speculative decoding</b> attacks the same limit from the other side: a
+            small draft model proposes several tokens, and the large model checks all of them in one pass, which is
+            compute-bound like a prefill. This produces several tokens per read of the large model's weights, with exactly
+            the same output distribution (Leviathan et al., 2023).
+          </p>
+
+          <h2 class="material-heading" id="transformer-cost-training">Training: memory first, then time</h2>
+
+          <p>
+            Training with Adam in mixed precision keeps about 16 bytes per parameter: the 16-bit weights and gradients
+            (2 + 2 bytes), a 32-bit master copy of the weights (4) and Adam's two moment estimates (4 + 4) (Rajbhandari et
+            al., 2020). A 7-billion-parameter model therefore needs about 112 GB before any activations, more than one
+            80 GB GPU holds. The usual remedies combine three ideas from these two weeks: shard the parameters, gradients
+            and optimizer states across GPUs (ZeRO, or FSDP in PyTorch), recompute activations instead of storing them
+            (<a href="../week4/#cost-checklist">gradient checkpointing</a>), and accumulate gradients over micro-batches
+            (the training section above).
+          </p>
+
+          <p>
+            The time follows from the <span class="math">6ND</span> rule. Llama&nbsp;2&nbsp;7B was trained on 2 trillion
+            tokens: <span class="math">6 \cdot 7 \cdot 10^9 \cdot 2 \cdot 10^{12} = 8.4 \cdot 10^{22}</span> FLOPs. An A100
+            GPU peaks at 312 TFLOP/s in bfloat16, and well-tuned large training runs reach roughly 30 to 50% of the peak, a
+            measure called <b>model FLOPs utilization</b> (Chowdhery et al., 2022). With 40%, the estimate is
+            <span class="math">8.4 \cdot 10^{22} / (0.4 \cdot 312 \cdot 10^{12})</span> seconds, about 187,000 GPU-hours,
+            close to the 184,320 GPU-hours that Meta reports for this model (Touvron et al., 2023).
+          </p>
+
+          <p>
+            <b>Performance: details that pay.</b> Train in bfloat16 on tensor cores. Use fused attention kernels such as
+            FlashAttention. Pack several short documents into one sequence instead of padding them: padding wastes work
+            in proportion to its length in the feed-forward layers and quadratically in attention. Keep matrix dimensions
+            friendly: nanoGPT, which you meet in the exercises above, pads GPT-2's vocabulary of 50,257 tokens to 50,304,
+            a multiple of 64, "for efficiency".
+          </p>
+
+          <h2 class="material-heading" id="transformer-cost-reading">Further reading</h2>
+
+          <ul>
+            <li>Dao et al. (2022), <a href="https://arxiv.org/abs/2205.14135" target="_blank" rel="noopener"><i>FlashAttention:
+              fast and memory-efficient exact attention with IO-awareness</i></a>.</li>
+            <li>Milakov and Gimelshein (2018), <a href="https://arxiv.org/abs/1805.02867" target="_blank" rel="noopener"><i>Online
+              normalizer calculation for softmax</i></a>.</li>
+            <li>Pope et al. (2022), <a href="https://arxiv.org/abs/2211.05102" target="_blank" rel="noopener"><i>Efficiently
+              scaling Transformer inference</i></a>: prefill, decoding, memory and latency.</li>
+            <li>Kwon et al. (2023), <a href="https://arxiv.org/abs/2309.06180" target="_blank" rel="noopener"><i>Efficient
+              memory management for large language model serving with PagedAttention</i></a>.</li>
+            <li>Leviathan, Kalman and Matias (2023), <a href="https://arxiv.org/abs/2211.17192" target="_blank" rel="noopener"><i>Fast
+              inference from Transformers via speculative decoding</i></a>.</li>
+            <li>Rajbhandari et al. (2020), <a href="https://arxiv.org/abs/1910.02054" target="_blank" rel="noopener"><i>ZeRO:
+              memory optimizations toward training trillion parameter models</i></a>.</li>
+            <li>Chowdhery et al. (2022), <a href="https://arxiv.org/abs/2204.02311" target="_blank" rel="noopener"><i>PaLM:
+              scaling language modeling with Pathways</i></a>, which defines model FLOPs utilization.</li>
+            <li>Touvron et al. (2023), <a href="https://arxiv.org/abs/2307.09288" target="_blank" rel="noopener"><i>Llama 2:
+              open foundation and fine-tuned chat models</i></a>, with the training compute of each model.</li>
+          </ul>
+        </section>
+
         <nav class="page-nav" aria-label="Previous and next page">
           <a class="page-nav__link page-nav__link--prev" href="../week4/" rel="prev">
             <span class="page-nav__arrow" aria-hidden="true"></span>
