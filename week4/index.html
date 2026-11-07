@@ -157,6 +157,11 @@
                       gradients for optimization
                     <li>can explain learned representations and word embeddings
                       at a conceptual level
+                    <li>can explain the brain analogy, its limitations and key historical developments
+                    <li>can distinguish epochs, mini-batches and optimizer updates
+                    <li>can explain validation, overfitting and basic regularization
+                    <li>can compare dense, convolutional and recurrent architectures conceptually
+                    <li>can explain the encoder, code and decoder of an autoencoder
                 </ul>
               </td>
               </tr>
@@ -167,21 +172,236 @@
         </div>
 
         <!-- Teaching content: Episodes 7 and 8 -->
-        <h1 class="material-heading">From perceptrons to multilayer networks</h1>
+        <h1 class="material-heading" id="week4-roadmap">Neural networks: from a decision boundary to learned representations</h1>
 
         <p>
-          Neural networks are models whose parameters are learned from examples. They are built by composing simple
-          transformations. This makes it possible to learn useful intermediate representations instead of requiring
-          every feature to be designed by hand.
+          A neural network is a parameterized function built by composing simpler functions. Training changes its
+          parameters so that its outputs become useful for a task. The central questions this week are: <b>what can a
+          network represent, how can its parameters be learned, and how do we know that it has learned something useful
+          beyond the training examples?</b> We will follow one example, recognizing handwritten digits, and use small
+          numerical examples to make the computations visible.
         </p>
 
-        <h2 class="material-heading">The perceptron</h2>
+        <p>
+          The word <i>neuron</i> is a mathematical analogy, not a claim that these models reproduce a biological brain. A
+          network's architecture, training objective and data determine what it can learn. Large parameter counts alone do
+          not explain intelligence, understanding or reliable behaviour.
+        </p>
+
+        <div class="hint">
+          <div class="hint__header">
+            <i class="fa-regular fa-clock hint__icon"></i>Two lectures, 180 minutes of teaching
+          </div>
+          <div class="hint__body">
+            <p>
+              Each lecture contains approximately 90 minutes of teaching and activities, with the remaining time in the
+              scheduled slot available for a break. The short activities below are for discussion, not additional graded
+              exercises.
+            </p>
+            <table class="table">
+              <caption>Suggested progression for Episodes 7 and 8</caption>
+              <thead><tr><th scope="col">Lecture</th><th scope="col">Topic and activity</th><th scope="col">Minutes</th></tr></thead>
+              <tbody>
+                <tr><td rowspan="6">Episode 7: how a network computes and learns</td><td>History and the biological-neuron analogy</td><td>15</td></tr>
+                <tr><td>Inputs, weights, bias and one perceptron update</td><td>15</td></tr>
+                <tr><td>XOR and the purpose of hidden layers</td><td>15</td></tr>
+                <tr><td>Forward propagation, shapes and activation functions</td><td>20</td></tr>
+                <tr><td>Loss, gradients and a worked backpropagation example</td><td>20</td></tr>
+                <tr><td>Trace the training loop and discuss misconceptions</td><td>5</td></tr>
+                <tr><td rowspan="5">Episode 8: making learned representations useful</td><td>Retrieval practice, mini-batches and optimization</td><td>15</td></tr>
+                <tr><td>Generalization, data splits and a Playground investigation</td><td>25</td></tr>
+                <tr><td>Images and convolutional networks</td><td>20</td></tr>
+                <tr><td>Embeddings, sequence order and the bridge to attention</td><td>20</td></tr>
+                <tr><td>Autoencoders and synthesis</td><td>10</td></tr>
+              </tbody>
+            </table>
+            <p>
+              Core material covers the explanations and worked examples. Expandable answers support self-study.
+              Additional reading and the optional architecture details provide depth without requiring every paragraph
+              to be presented in class.
+            </p>
+          </div>
+        </div>
+
+        <h1 class="material-heading" id="episode7">Episode 7: from perceptrons to learning</h1>
+
+        <h2 class="material-heading" id="neural-history">Historical context: an old idea, several different research traditions</h2>
 
         <p>
-          A perceptron receives an input vector <i>x</i>, multiplies each input by a learned weight, adds a bias, and
-          applies a threshold. In compact form, it predicts from <span class="math">w^\top x + b</span>. During
-          training, the weights are adjusted when the prediction is wrong. A perceptron can learn a linear decision
-          boundary, but it cannot represent every classification problem.
+          Neural networks did not begin with today's large language models. They emerged from attempts to connect
+          mathematical models of computation, learning and nervous systems. The history includes logical threshold units,
+          trainable classifiers, associative memories, self-organizing maps and deep representation learning. These
+          traditions overlap; they are not a simple sequence in which each new model replaces everything before it.
+        </p>
+
+        <table class="table">
+          <caption>Selected milestones in neural computation</caption>
+          <thead><tr><th scope="col">Period</th><th scope="col">Contribution</th><th scope="col">Why it matters here</th></tr></thead>
+          <tbody>
+            <tr><td>1943</td><td>McCulloch and Pitts: a logical model of neural activity</td><td>Showed how networks of simplified threshold units could implement logical operations. These units did not learn weights from examples.</td></tr>
+            <tr><td>1949</td><td>Hebb: activity-dependent changes in connections</td><td>Helped establish the idea that learning could involve changes in connection strengths. Hebbian learning is different from supervised error correction.</td></tr>
+            <tr><td>1958</td><td>Rosenblatt: the perceptron</td><td>Combined a classifier with a learning procedure that adjusts weights from labelled examples.</td></tr>
+            <tr><td>Late 1960s–1970s</td><td>Limitations and reduced enthusiasm</td><td>Limited models, computing resources and unmet expectations constrained progress. Minsky and Papert's <i>Perceptrons</i> (1969) analyzed important limitations; it did not prove that all neural networks were incapable of useful computation.</td></tr>
+            <tr><td>1970 / 1976</td><td>Seppo Linnainmaa: reverse accumulation of derivatives</td><td>His University of Helsinki thesis and subsequent paper provided an important foundation for reverse-mode automatic differentiation. This was a general computational method, not originally a neural-network training demonstration.</td></tr>
+            <tr><td>1982</td><td>Hopfield networks and Kohonen's self-organizing maps</td><td>Illustrated different uses of networks: recovering stored patterns and organizing data by similarity.</td></tr>
+            <tr><td>1986</td><td>Rumelhart, Hinton and Williams: learning representations by backpropagating errors</td><td>A landmark demonstration and exposition of learning hidden representations with propagated gradients, building on earlier derivative and learning research.</td></tr>
+            <tr><td>1990s–2000s</td><td>Continued development despite changing research fashions</td><td>Convolutional networks, recurrent models and other neural methods continued to develop. Neural-network research never disappeared completely.</td></tr>
+            <tr><td>2012 onward</td><td>Deep learning becomes highly effective at scale</td><td>AlexNet's ImageNet result exemplified the combination of learned representations, large datasets and GPU computation. Later architectures, including Transformers, expanded the range of applications.</td></tr>
+            <tr><td>2024</td><td>Physics Nobel Prize to John Hopfield and Geoffrey Hinton</td><td>Recognized foundational contributions enabling machine learning with artificial neural networks, including connections to statistical physics.</td></tr>
+          </tbody>
+        </table>
+
+        <p>
+          <b>Historical caution:</b> it is misleading to date a single “AI winter” to 1960 or attribute a whole research
+          downturn to one book. AI funding and neural-network interest changed at different times and for several
+          reasons. It is also misleading to credit one person or one paper with every part of backpropagation:
+          reverse-mode differentiation, its application to learning and its popularization have distinct histories.
+        </p>
+
+        <p>
+          <b>Sources and further reading:</b>
+          <a href="https://doi.org/10.1007/BF02478259" target="_blank" rel="noopener">McCulloch &amp; Pitts (1943)</a>;
+          Hebb (1949), <i>The Organization of Behavior</i>;
+          <a href="https://doi.org/10.1037/h0042519" target="_blank" rel="noopener">Rosenblatt (1958)</a>;
+          <a href="https://doi.org/10.1007/BF01931367" target="_blank" rel="noopener">Linnainmaa (1976)</a>, which cites
+          his 1970 Helsinki thesis;
+          <a href="https://doi.org/10.1073/pnas.79.8.2554" target="_blank" rel="noopener">Hopfield (1982)</a>;
+          <a href="https://doi.org/10.1007/BF00337288" target="_blank" rel="noopener">Kohonen (1982)</a>;
+          <a href="https://doi.org/10.1038/323533a0" target="_blank" rel="noopener">Rumelhart, Hinton &amp; Williams (1986)</a>;
+          <a href="https://www.nobelprize.org/prizes/physics/2024/press-release/" target="_blank" rel="noopener">the 2024 Nobel announcement</a>.
+          The broader narrative is developed in Goodfellow, Bengio and Courville (2016), Chapter 1.
+        </p>
+
+        <h2 class="material-heading" id="brain-analogy">The brain analogy: copy an organizing idea, not a whole brain</h2>
+
+        <p>
+          The useful analogy is that many connected units can produce complex behaviour, and changing their connections
+          can change that behaviour. A biological neuron is a living cell with dendrites, a cell body and an axon. Signals
+          arriving through synapses affect its activity; many neurons transmit action potentials along the axon and
+          communicate chemically at synapses. The artificial unit keeps only a small part of this picture: inputs,
+          adjustable connection weights, an aggregation and an output function.
+        </p>
+
+        <svg class="dg" viewBox="0 0 960 330" role="img" aria-label="Conceptual comparison. Left, a schematic biological neuron: dendrites lead into the cell body, and the axon leads to synapses with other cells. Right, an artificial unit: inputs x1, x2 and x3 are multiplied by the weights w1, w2 and w3, summed with a bias and passed through an activation function to the output y-hat. The matching colours mark the parts that correspond.">
+          <defs><marker id="dg-unit-head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrowhead" d="M0,0 L10,5 L0,10 z"/></marker></defs>
+          <text class="dg-heading" x="235" y="24">Biological neuron (schematic)</text>
+          <path class="dg-curve dg-curve--blue" d="M58 84 L150 132 L188 156 M150 132 L128 74 M44 178 H182 M58 268 L150 220 L188 196 M150 220 L124 278"/>
+          <circle class="dg-ink--amber" cx="58" cy="84" r="6"/><circle class="dg-ink--amber" cx="128" cy="74" r="6"/>
+          <circle class="dg-ink--amber" cx="44" cy="178" r="6"/><circle class="dg-ink--amber" cx="58" cy="268" r="6"/>
+          <circle class="dg-ink--amber" cx="124" cy="278" r="6"/>
+          <ellipse class="dg-box dg-box--violet" cx="230" cy="176" rx="48" ry="38"/>
+          <path class="dg-curve dg-curve--green" d="M278 176 H372 L416 130 M372 176 L416 222"/>
+          <circle class="dg-ink--amber" cx="422" cy="125" r="7"/><circle class="dg-ink--amber" cx="422" cy="227" r="7"/>
+          <text class="dg-large" x="110" y="48">dendrites</text>
+          <text class="dg-large" x="230" y="238">cell body</text>
+          <text class="dg-large" x="322" y="158">axon</text>
+          <text class="dg-large" x="422" y="258">synapses</text>
+          <text class="dg-small" x="235" y="306">a living cell, drawn as a few lines</text>
+          <path class="dg-guide" d="M478 46 V304"/>
+          <text class="dg-heading" x="725" y="24">Artificial unit (mathematical model)</text>
+          <path class="dg-arrow" d="M584 110 L683 152" marker-end="url(#dg-unit-head)"/>
+          <path class="dg-arrow" d="M586 176 H682" marker-end="url(#dg-unit-head)"/>
+          <path class="dg-arrow" d="M584 242 L683 200" marker-end="url(#dg-unit-head)"/>
+          <text class="dg-math dg-large" x="628" y="112">w<tspan class="dg-sub" dy="5">1</tspan></text>
+          <text class="dg-math dg-large" x="634" y="162">w<tspan class="dg-sub" dy="5">2</tspan></text>
+          <text class="dg-math dg-large" x="628" y="244">w<tspan class="dg-sub" dy="5">3</tspan></text>
+          <circle class="dg-box dg-box--blue" cx="560" cy="100" r="25"/><text class="dg-math dg-xlarge" x="557" y="98">x<tspan class="dg-sub" dy="6">1</tspan></text>
+          <circle class="dg-box dg-box--blue" cx="560" cy="176" r="25"/><text class="dg-math dg-xlarge" x="557" y="174">x<tspan class="dg-sub" dy="6">2</tspan></text>
+          <circle class="dg-box dg-box--blue" cx="560" cy="252" r="25"/><text class="dg-math dg-xlarge" x="557" y="250">x<tspan class="dg-sub" dy="6">3</tspan></text>
+          <rect class="dg-box dg-box--violet" x="690" y="130" width="130" height="92" rx="12"/>
+          <text class="dg-math dg-large" x="755" y="160">w · x + b</text>
+          <text class="dg-math dg-large" x="755" y="192">φ(z)</text>
+          <path class="dg-arrow" d="M822 176 H866" marker-end="url(#dg-unit-head)"/>
+          <circle class="dg-box dg-box--green" cx="898" cy="176" r="26"/><text class="dg-math dg-xlarge" x="898" y="176">ŷ</text>
+          <text class="dg-small" x="725" y="306">numbers and functions, not a living cell</text>
+        </svg>
+
+        <table class="table">
+          <caption>What the analogy captures, and what it leaves out</caption>
+          <thead><tr><th scope="col">Biological idea</th><th scope="col">Mathematical counterpart</th><th scope="col">Limit of the analogy</th></tr></thead>
+          <tbody>
+            <tr><td>Signals from other cells</td><td>Inputs <span class="math">x</span></td><td>A numeric feature vector omits most neural signalling dynamics and its bodily context.</td></tr>
+            <tr><td>Synaptic influence</td><td>Weights <span class="math">w</span></td><td>A single scalar weight simplifies a complex, changing biological connection.</td></tr>
+            <tr><td>Integration and generation of activity</td><td>Weighted sum, bias and activation</td><td>A biological cell does much more than a static sum followed by one threshold.</td></tr>
+            <tr><td>Activity passed to other cells</td><td>Output becomes another unit's input</td><td>Many artificial networks use continuous activations, not timed biological spikes.</td></tr>
+            <tr><td>Plasticity and learning</td><td>Parameter changes during training</td><td>Ordinary backpropagation is not established as the exact mechanism used by brains.</td></tr>
+          </tbody>
+        </table>
+
+        <p>
+          Brains contain extensive recurrent connections, many cell types and interactions over multiple timescales.
+          Artificial networks may be feedforward, recurrent, probabilistic or spiking. Consequently, “natural networks are
+          binary while artificial networks are continuous” and “artificial networks have no feedback” are not universal
+          distinctions. A spike is an event, but firing rates, spike timing and other biological variables also carry
+          information.
+        </p>
+
+        <p>
+          <b>Connection to computation:</b> parallel, adaptive neural computation contrasts with the simple picture of a
+          sequential instruction-following program, but it does not establish that neural networks compute functions
+          outside the Turing-computable class. Most networks in this course run as numerical programs on conventional
+          digital hardware. Brain inspiration also supplies no automatic evidence of consciousness or human-like
+          understanding.
+        </p>
+
+        <p>
+          <b>Biology reference:</b> the US National Institute of Neurological Disorders and Stroke,
+          <a href="https://www.ninds.nih.gov/publications/know-your-brain-brain-basics" target="_blank" rel="noopener">Know Your Brain</a>.
+          The comparison diagram here is a conceptual teaching schematic, not an anatomical or mechanistic model.
+        </p>
+
+        <details>
+          <summary>Historical extension: associative memory and self-organizing maps</summary>
+          <p>
+            A Hopfield network provides an example of recurrent dynamics: its evolving state can retrieve a stored
+            pattern from a partial or corrupted cue. Under suitable conditions, an energy function helps analyze
+            convergence; this does not mean every cue retrieves the intended memory. A Boltzmann machine uses stochastic
+            units in an energy-based probabilistic model. A self-organizing map uses a different idea: a winning
+            prototype and neighbouring prototypes move toward an input, organizing a grid by similarity. These examples
+            show why neural computation encompasses more than supervised feedforward classification. They provide
+            context, not additional implementation requirements this week.
+          </p>
+        </details>
+
+        <h2 class="material-heading" id="inputs">What does the network actually receive?</h2>
+
+        <p>
+          A handwritten digit image might contain 28 by 28 grayscale pixels. A fully connected network can receive it as
+          a vector of 784 numbers. A pixel value is a measurement, not an instruction such as “this is the upper loop of an
+          eight.” The model must learn which combinations of measurements are useful. A training example pairs an input
+          <span class="math">x</span> with a target <span class="math">y</span>, such as the digit label 8.
+        </p>
+
+        <p>
+          A training dataset contains many such pairs. At prediction time the model receives a new image without the
+          correct label. Its parameters must therefore encode a rule that works across variations in handwriting,
+          thickness and position, rather than a lookup table for images it has already seen. Features such as pixel scale
+          and image resolution must be consistent between training and later use.
+        </p>
+
+        <p>
+          <b>Preprocessing:</b> MNIST pixels usually range from 0 to 255. Dividing by 255 maps them to the interval
+          <span class="math">[0, 1]</span>. For other numeric features, standardization may help optimization. Fit any
+          data-dependent preprocessing on the training split only. The input representation and preprocessing are part of
+          the model pipeline.
+        </p>
+
+        <h2 class="material-heading" id="perceptron">The perceptron as an adjustable decision boundary</h2>
+
+        <p>
+          A perceptron computes a weighted sum <span class="math">z</span> and adds a bias. We use the convention that the
+          prediction is 1 if <span class="math">z \ge 0</span> and 0 otherwise:
+        </p>
+
+        <div class="math">
+          z = w_1 x_1 + \dots + w_d x_d + b = w \cdot x + b, \qquad
+          \hat{y} = \begin{cases} 1 & \text{if } z \ge 0, \\ 0 & \text{otherwise.} \end{cases}
+        </div>
+
+        <p>
+          Each weight controls how one input contributes to the score. The bias is an adjustable offset. The
+          classification boundary consists of inputs for which <span class="math">z = 0</span>: a line in two dimensions,
+          a plane in three, and a hyperplane in higher dimensions.
         </p>
 
         <svg class="dg" viewBox="0 0 900 300" role="img" aria-label="A perceptron: the inputs x1, x2 and x3 are multiplied by the weights w1, w2 and w3 and summed with the bias b; an activation function turns the sum into the prediction y-hat.">
@@ -202,7 +422,54 @@
           <circle class="dg-box dg-box--green" cx="835" cy="150" r="34"/><text class="dg-title dg-math" x="835" y="150">ŷ</text>
         </svg>
 
-        <p>For example, with inputs <span class="math">(1, 2)</span>, weights <span class="math">(0.7, -0.2)</span>, and bias 0.1, the weighted sum is <span class="math">0.7 \times 1 - 0.2 \times 2 + 0.1 = 0.4</span>. A step activation produces class 1 because the result is positive. The weights determine the position and orientation of the separating line; the bias moves it without changing its orientation.</p>
+        <p>
+          <b>Worked prediction:</b> let <span class="math">x = (1, 2)</span>, <span class="math">w = (0.7, -0.2)</span> and
+          <span class="math">b = 0.1</span>. The score is <span class="math">0.7 \times 1 - 0.2 \times 2 + 0.1 = 0.4</span>,
+          so the output is 1. A negative weight does not make an input unimportant: it makes increasing that input lower
+          the score, holding other inputs fixed.
+        </p>
+
+        <p>
+          For two inputs, changing the weights changes the orientation and location of the line. Changing only the bias
+          shifts the boundary parallel to itself. The model learns these quantities from examples rather than asking a
+          programmer to draw the line by hand.
+        </p>
+
+        <h3 class="material-heading" id="perceptron-update">A concrete learning update</h3>
+
+        <p>
+          The generalized error-correction form makes the learning rule easy to remember. Using the same notation as the
+          lecture slides, the <b>perceptron learning rule</b> is
+        </p>
+
+        <div class="math math--key">
+          w' = w + \lambda\,(y - \hat{y})\,x, \qquad b' = b + \lambda\,(y - \hat{y})
+        </div>
+
+        <p>
+          Here <span class="math">w</span> is the current weight vector, <span class="math">w'</span> the updated vector,
+          <span class="math">x</span> the current input, <span class="math">y</span> the true label,
+          <span class="math">\hat{y}</span> the predicted label, and <span class="math">\lambda > 0</span> the learning
+          rate. Each component follows <span class="math">w_i' = w_i + \lambda\,(y - \hat{y})\,x_i</span>. A correct
+          prediction gives zero error, so no update. A mistake changes the parameters in the direction that supports the
+          target label.
+        </p>
+
+        <p>
+          Here we use labels 0 and 1, so the error term is −1, 0 or +1. The same written formula also works with labels −1
+          and +1, but an incorrect prediction then gives −2 or +2. Its step size therefore depends on the label convention
+          as well as <span class="math">\lambda</span>. The familiar signed-label update
+          <span class="math">w' = w + \alpha\, y\, x</span> on a mistake is equivalent when
+          <span class="math">\alpha = 2\lambda</span>.
+        </p>
+
+        <p>
+          Suppose the correct label for the example above is 0 and <span class="math">\lambda = 0.1</span>. The error term
+          is −1. The new weights are <span class="math">(0.6, -0.4)</span> and the new bias is 0. The score for that same
+          example becomes <span class="math">0.6 - 0.8 = -0.2</span>, which gives class 0. This fixes this example; it
+          does not guarantee that all other examples are now correct. Training revisits the dataset, allowing different
+          examples to influence the boundary.
+        </p>
 
         <svg class="dg" viewBox="0 0 900 330" role="img" aria-label="Two scatter plots. On the left a straight boundary has one blue point on the wrong side; on the right, after a weight update, the moved boundary separates the blue points from the orange ones.">
           <defs><marker id="dg-boundary-head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrowhead" d="M0,0 L10,5 L0,10 z"/></marker></defs>
@@ -228,11 +495,84 @@
           <text class="dg-large" x="745" y="312">2. the update moves the line</text>
           <circle class="dg-ring" cx="275" cy="165" r="19"/><text class="dg-small" x="275" y="132">misclassified</text>
           <path class="dg-arrow" d="M420 155 L532 155" marker-end="url(#dg-boundary-head)"/>
-          <text class="dg-math dg-large" x="476" y="133">w ← w + y·x</text>
+          <text class="dg-math dg-large" x="476" y="133">w′ = w + λ(y − ŷ)x</text>
         </svg>
 
-        <h3 class="material-heading">The limit of a single boundary</h3>
-        <p>The perceptron learning rule converges when the classes are linearly separable. It cannot solve XOR: no single straight line can place the two blue points on one side and the two orange points on the other. This is a representational limitation, not a failure to train long enough.</p>
+        <details>
+          <summary>Check your understanding: one more update</summary>
+          <p>
+            With <span class="math">w = (0, 0)</span>, <span class="math">b = -0.5</span>, <span class="math">x = (1, 1)</span>,
+            target 1 and <span class="math">\lambda = 0.5</span>, the initial score is −0.5 and the prediction is 0. The new
+            weights are <span class="math">(0.5, 0.5)</span>, the bias is 0 and the score becomes 1. Notice that the update
+            changes the bias as well as the weights.
+          </p>
+        </details>
+
+        <p>
+          <b>Reading:</b> Rosenblatt's <a href="https://doi.org/10.1037/h0042519" target="_blank" rel="noopener">original
+          perceptron paper (1958)</a> supplies historical context. The numerical examples here use a simplified modern
+          notation.
+        </p>
+
+        <details>
+          <summary>Worked example with −1/+1 labels, as in the lecture slides</summary>
+          <p>
+            Use <span class="math">\hat{y} = +1</span> when <span class="math">w \cdot x \ge 0</span> and −1 otherwise. For
+            this illustration only, omit the bias and start at <span class="math">w = (0, 0)</span>. The score is initially
+            zero for every input, so every input receives +1. This is a degenerate classifier, not a meaningful separating
+            line.
+          </p>
+          <ol>
+            <li>
+              For <span class="math">A = (-2.5, -1)</span> with target −1 and <span class="math">\lambda = 1</span>,
+              <span class="math">y - \hat{y} = -2</span>. Therefore
+              <span class="math">w' = (0, 0) + 1 \cdot (-2) \cdot (-2.5, -1) = (5, 2)</span>.
+            </li>
+            <li>
+              For <span class="math">B = (1, -2)</span> with target −1, the new score is <span class="math">5 - 4 = 1</span>,
+              so the prediction is again +1. Update to
+              <span class="math">w'' = (5, 2) + 1 \cdot (-2) \cdot (1, -2) = (3, 6)</span>.
+            </li>
+            <li>
+              For <span class="math">C = (-2, 1)</span> with target −1, the score is <span class="math">-6 + 6 = 0</span>,
+              giving +1. Keeping <span class="math">\lambda = 1</span> gives
+              <span class="math">w''' = (3, 6) + 1 \cdot (-2) \cdot (-2, 1) = (7, 4)</span>.
+            </li>
+          </ol>
+          <p>
+            Alternatively, starting again from <span class="math">(3, 6)</span> for that third update and choosing
+            <span class="math">\lambda = 0.5</span> gives <span class="math">(5, 5)</span>. These are two different
+            learning-rate choices, not the same update. For a general affine boundary, include the bias update above.
+            Equivalently, append a constant input 1 and treat the bias as its weight.
+          </p>
+          <p>
+            This is a perceptron error-correction rule, not a universal training formula for every neural network. In a
+            sigmoid output with binary cross-entropy, a single-example gradient update also has an error-times-input form
+            when <span class="math">\hat{y}</span> denotes a probability. Hidden layers additionally require the
+            derivatives calculated by backpropagation.
+          </p>
+        </details>
+
+        <h2 class="material-heading" id="xor">Why one neuron cannot solve XOR</h2>
+
+        <p>
+          The perceptron learning rule converges to a separator after finitely many errors when a finite dataset is
+          linearly separable and the usual assumptions of the convergence theorem hold. When the classes overlap or
+          require a nonlinear boundary, there may be no separating weights to find. More training cannot repair a
+          limitation of the model family.
+        </p>
+
+        <table class="table">
+          <caption>XOR is true when exactly one input is true</caption>
+          <thead><tr><th scope="col"><span class="math">x_1</span></th><th scope="col"><span class="math">x_2</span></th><th scope="col">Target</th></tr></thead>
+          <tbody>
+            <tr><td>0</td><td>0</td><td>0</td></tr>
+            <tr><td>0</td><td>1</td><td>1</td></tr>
+            <tr><td>1</td><td>0</td><td>1</td></tr>
+            <tr><td>1</td><td>1</td><td>0</td></tr>
+          </tbody>
+        </table>
+
         <svg class="dg" viewBox="0 0 520 360" role="img" aria-label="The XOR pattern: blue points at (0, 0) and (1, 1), orange points at (0, 1) and (1, 0). No single straight line separates them; two dashed lines do.">
           <path class="dg-axis" d="M90 290 H460 M90 290 V40"/>
           <line class="dg-boundary dg-boundary--faint" x1="100" y1="125" x2="275" y2="300"/>
@@ -245,32 +585,51 @@
           <text class="dg-large" x="270" y="338">XOR needs two boundaries; one straight line is not enough</text>
         </svg>
 
+        <p>
+          <b>Activity:</b> try drawing one line that separates the diagonal pairs. Then consider two hidden units:
+          <span class="math">h_1 = \operatorname{step}(x_1 + x_2 - 0.5)</span> and
+          <span class="math">h_2 = \operatorname{step}(x_1 + x_2 - 1.5)</span>. The first detects whether at least one input
+          is 1. The second detects whether both are 1. An output
+          <span class="math">\operatorname{step}(h_1 - 2h_2 - 0.5)</span> produces XOR.
+        </p>
+
+        <details>
+          <summary>Show the hidden representation</summary>
+          <p>
+            The four inputs become <span class="math">(0, 0)</span>, <span class="math">(1, 0)</span>,
+            <span class="math">(1, 0)</span> and <span class="math">(1, 1)</span>, respectively. The two positive examples
+            now share the hidden representation <span class="math">(1, 0)</span>, which the output can separate from the
+            negative examples. We hand-set these weights to demonstrate representational capacity. Training a network to
+            discover useful hidden features is a separate problem.
+          </p>
+        </details>
+
         <figure class="viz" data-viz="perceptron">
           <figcaption class="viz__caption">
-            The perceptron predicts +1 when <span class="math">w \cdot x + b > 0</span> and &minus;1 otherwise. It visits the
-            examples in a fixed order, and after each mistake updates <span class="math">w \leftarrow w + y\,x</span> and
-            <span class="math">b \leftarrow b + y</span>. On linearly separable data it stops making mistakes after a finite number
-            of updates; on XOR it never does.
+            The perceptron predicts +1 when <span class="math">w \cdot x + b \ge 0</span> and &minus;1 otherwise. It visits
+            the examples in a fixed order and, after each mistake, applies the learning rule above with
+            <span class="math">\lambda = 0.5</span>: with labels &minus;1 and +1 a mistake gives
+            <span class="math">y - \hat{y} = \pm 2</span>, so the update adds <span class="math">y\,x</span> to
+            <span class="math">w</span> and <span class="math">y</span> to <span class="math">b</span>. On linearly
+            separable data it stops making mistakes after a finite number of updates; on XOR it never does.
           </figcaption>
         </figure>
 
-        <h2 class="material-heading">Multilayer perceptrons</h2>
+        <h2 class="material-heading" id="mlp">Multilayer networks and forward propagation</h2>
 
         <p>
-          A multilayer perceptron combines neurons into an input layer, one or more hidden layers, and an output
-          layer. Each layer transforms the representation produced by the previous layer. Width gives a layer more
-          units with which to represent patterns, while depth allows the model to build more complex transformations
-          from simpler ones.
-        </p>
-
-        <p>
-          A <b>forward pass</b> applies these transformations from the input to the prediction. For a layer, the main
-          calculation is a linear transformation followed by an activation function:
+          A multilayer perceptron (MLP) alternates affine transformations and nonlinear activation functions. In layer
+          <span class="math">\ell</span>,
         </p>
 
         <div class="math math--key">
-          h = \operatorname{activation}(Wx + b)
+          z^{(\ell)} = W^{(\ell)} h^{(\ell-1)} + b^{(\ell)}, \qquad h^{(\ell)} = \varphi\bigl(z^{(\ell)}\bigr),
         </div>
+
+        <p>
+          with <span class="math">h^{(0)} = x</span>. Each hidden layer provides a representation for the next layer.
+          The output layer converts the final representation into the quantities required by the task.
+        </p>
 
         <svg class="dg" viewBox="0 0 960 350" role="img" aria-label="A multilayer perceptron: three inputs, two hidden layers with two units each, and one output; every unit is connected to every unit of the next layer.">
           <line class="dg-edge" x1="138" y1="85" x2="352" y2="65"/>
@@ -299,13 +658,54 @@
           <text class="dg-large" x="870" y="330">output</text>
         </svg>
 
-        <h2 class="material-heading">Why activation functions matter</h2>
+        <p>
+          <b>Keep track of dimensions:</b> a digit classifier with 784 inputs, 40 hidden units and 10 outputs has a first
+          weight matrix of shape <span class="math">40 \times 784</span>, a bias vector of length 40, a second matrix of
+          shape <span class="math">10 \times 40</span> and an output bias vector of length 10. It contains
+          <span class="math">784 \times 40 + 40 + 40 \times 10 + 10 = 31{,}810</span> trainable parameters. The input
+          layer stores data and does not add trainable weights of its own.
+        </p>
 
         <p>
-          Without nonlinear activation functions, stacking layers would still produce only a linear model. ReLU is
-          widely used because it is simple and works well in many settings. Sigmoid maps values between zero and one,
-          while tanh maps them between minus one and one. The activation function influences how easily the network
-          trains and what kinds of decision boundaries it can learn.
+          <b>Small forward pass:</b> let <span class="math">x = (1, 2)</span>, with first-layer weights
+          <span class="math">W_1</span> and bias <span class="math">b_1 = (0, -0.5)</span>. The pre-activations are
+          <span class="math">(-1, 1)</span>, and ReLU produces the hidden vector <span class="math">(0, 1)</span>:
+        </p>
+
+        <div class="math">
+          z = W_1 x + b_1 =
+          \begin{bmatrix} 1 & -1 \\ 0.5 & 0.5 \end{bmatrix} \begin{bmatrix} 1 \\ 2 \end{bmatrix}
+          + \begin{bmatrix} 0 \\ -0.5 \end{bmatrix}
+          = \begin{bmatrix} -1 \\ 1 \end{bmatrix}, \qquad
+          h = \operatorname{ReLU}(z) = \begin{bmatrix} 0 \\ 1 \end{bmatrix}
+        </div>
+
+        <p>
+          With output weights <span class="math">(2, -1)</span> and output bias 0.5, the output score is
+          <span class="math">2 \times 0 - 1 \times 1 + 0.5 = -0.5</span>. The sigmoid of that score is approximately
+          0.378. No learning occurred in this calculation: it is one evaluation using the current parameters.
+        </p>
+
+        <p>
+          Increasing <b>width</b> adds units within a layer. Increasing <b>depth</b> adds transformations that can reuse
+          earlier representations. Neither guarantees better test performance. Some functions admit much more compact
+          deep representations, but data, training stability and architecture still matter. Hidden units need not
+          correspond to concepts that are easy for humans to name.
+        </p>
+
+        <h2 class="material-heading" id="activations">Why nonlinear activations are essential</h2>
+
+        <p>
+          Two affine layers without a nonlinearity collapse into one:
+        </p>
+
+        <div class="math">
+          W_2 (W_1 x + b_1) + b_2 = (W_2 W_1)\, x + (W_2 b_1 + b_2)
+        </div>
+
+        <p>
+          Adding more such layers therefore does not overcome the perceptron's linear representational limitation. A
+          nonlinear activation changes the kinds of functions that the composition can express. The common choices are
         </p>
 
         <div class="math">
@@ -338,6 +738,17 @@
           <text class="dg-title" x="860" y="272">ReLU</text>
         </svg>
 
+        <table class="table">
+          <caption>Activation functions and their roles</caption>
+          <thead><tr><th scope="col">Function</th><th scope="col">Output</th><th scope="col">Important consideration</th></tr></thead>
+          <tbody>
+            <tr><td>Step</td><td>0 or 1</td><td>Useful for the perceptron example; its derivative is zero away from the discontinuity, so ordinary backpropagation cannot train it effectively.</td></tr>
+            <tr><td>Sigmoid</td><td>Between 0 and 1</td><td>Useful as a binary-classification output; large positive or negative inputs give small derivatives.</td></tr>
+            <tr><td>tanh</td><td>Between −1 and 1</td><td>Centred at zero, but also saturates for large-magnitude inputs.</td></tr>
+            <tr><td>ReLU</td><td><span class="math">\max(0, z)</span></td><td>Derivative 1 for positive inputs and 0 for negative inputs; a unit that remains negative can stop receiving useful updates.</td></tr>
+          </tbody>
+        </table>
+
         <figure class="viz" data-viz="activations">
           <figcaption class="viz__caption">
             Backpropagation multiplies by the derivative of the activation function. The step function's derivative
@@ -348,16 +759,63 @@
           </figcaption>
         </figure>
 
-        <h1 class="material-heading">Learning representations</h1>
+        <p>
+          Hidden activations and output functions need not be the same. A regression model may use an unrestricted
+          numeric output. Binary classification often uses a sigmoid. For ten mutually exclusive digit classes,
+          <b>softmax</b> converts ten scores, or logits, into nonnegative values summing to 1. A large softmax value can
+          still be wrong or poorly calibrated; it is not a guarantee of correctness.
+        </p>
 
-        <h2 class="material-heading">Training a neural network</h2>
+        <div class="math">
+          \operatorname{softmax}(z)_k = \frac{e^{z_k}}{\sum_{j=1}^{10} e^{z_j}}, \qquad k = 1, \dots, 10
+        </div>
+
+        <h2 class="material-heading" id="loss">What is the network trying to minimize?</h2>
 
         <p>
-          Training begins with a loss function that measures the difference between predictions and target values.
-          Backpropagation applies the chain rule to calculate how each parameter contributed to that loss. An
-          optimizer then uses the resulting gradients to update the parameters. For this course, the important idea
-          is the division of labour: the forward pass produces a prediction, the loss evaluates it, backpropagation
-          supplies gradients, and the optimizer updates the model.
+          A <b>loss function</b> measures how the output differs from the target. For a scalar regression example with
+          prediction <span class="math">\hat{y}</span> we can use <span class="math">L = \tfrac{1}{2}(\hat{y} - y)^2</span>.
+          For binary classification, cross-entropy penalizes low probability <span class="math">p</span> assigned to the
+          correct label:
+        </p>
+
+        <div class="math">
+          L = -\bigl[\, y \log p + (1 - y) \log (1 - p) \,\bigr]
+        </div>
+
+        <p>
+          For multiclass classification with one correct class, the corresponding loss is
+          <span class="math">-\log p_{\text{correct}}</span>.
+        </p>
+
+        <p>
+          If the correct class receives probability 0.8, the multiclass loss is approximately 0.223. At probability 0.2
+          it is approximately 1.609. This distinguishes two predictions even when both choose the same top-ranked class.
+          Accuracy counts correct classifications, while loss provides a graded learning signal. In practical libraries,
+          cross-entropy often accepts logits and combines the output transformation and logarithm in a numerically stable
+          operation.
+        </p>
+
+        <p>
+          The objective usually averages losses over examples, possibly with a regularization term. It is a design
+          choice. Poor labels or a poorly chosen objective can produce a model that optimizes the training task without
+          serving the intended real-world purpose.
+        </p>
+
+        <h2 class="material-heading" id="backprop">Backpropagation: calculating which changes would reduce loss</h2>
+
+        <p>
+          A gradient reports how sensitive the loss is to a small change in a parameter, with other parameters held
+          fixed. A positive derivative means increasing that parameter would locally increase the loss. Gradient descent
+          therefore makes an update in the opposite direction, with learning rate <span class="math">\eta</span>:
+        </p>
+
+        <div class="math math--key">
+          \theta \leftarrow \theta - \eta\, \nabla_\theta L
+        </div>
+
+        <p>
+          This is a local calculation, not a guarantee of the best possible network.
         </p>
 
         <svg class="dg" viewBox="0 0 940 250" role="img" aria-label="The training loop: a forward pass makes a prediction, the loss measures the error, backpropagation computes the gradients, the optimizer updates the parameters, and the next forward pass uses them.">
@@ -374,9 +832,113 @@
         </svg>
 
         <p>
-          Performance on the training data alone is not enough. We use separate validation and test data to evaluate
-          whether a network generalizes to new examples. Excessive model capacity or training can lead to overfitting.
-          Regularization, suitable model size, and early stopping can reduce this problem.
+          <b>Backpropagation</b> efficiently computes gradients by applying the chain rule through the computation graph.
+          It reuses intermediate results from the forward pass and propagates sensitivities backward. The
+          <b>optimizer</b> then uses the gradients to update parameters. Backpropagation and gradient descent are different
+          operations, even though both occur during training.
+        </p>
+
+        <h3 class="material-heading" id="backprop-example">A complete numerical backward pass</h3>
+
+        <p>
+          Consider a deliberately tiny network with one hidden unit: <span class="math">z = wx + b</span>,
+          <span class="math">h = \operatorname{ReLU}(z)</span>, prediction <span class="math">\hat{y} = vh + c</span> and
+          <span class="math">L = \tfrac{1}{2}(\hat{y} - y)^2</span>. Let <span class="math">x = 2</span>,
+          <span class="math">y = 1</span>, <span class="math">w = 0.5</span>, <span class="math">b = 0</span>,
+          <span class="math">v = 2</span> and <span class="math">c = 0</span>. The forward pass gives
+          <span class="math">z = 1</span>, <span class="math">h = 1</span>, prediction 2 and loss 0.5.
+        </p>
+
+        <svg class="dg" viewBox="0 0 900 214" role="img" aria-label="A scalar computation graph. Forward, from left to right: the input x = 2; z = wx + b = 1 with w = 0.5 and b = 0; h = ReLU(z) = 1; the prediction y-hat = vh + c = 2 with v = 2 and c = 0; the loss L = 0.5. Backward, from right to left: the derivative of the loss is 1 with respect to y-hat, 2 with respect to h and 2 with respect to z.">
+          <defs><marker id="dg-graph-head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrowhead" d="M0,0 L10,5 L0,10 z"/></marker></defs>
+          <text class="dg-small" x="255" y="22">w = 0.5, b = 0</text>
+          <text class="dg-small" x="635" y="22">v = 2, c = 0</text>
+          <rect class="dg-box dg-box--blue" x="15" y="40" width="130" height="70" rx="12"/>
+          <text class="dg-title" x="80" y="64">input</text><text class="dg-math dg-large" x="80" y="90">x = 2</text>
+          <path class="dg-arrow" d="M147 75 H181" marker-end="url(#dg-graph-head)"/>
+          <rect class="dg-box dg-box--violet" x="185" y="40" width="140" height="70" rx="12"/>
+          <text class="dg-math dg-large" x="255" y="64">z = wx + b</text><text class="dg-math dg-large" x="255" y="90">z = 1</text>
+          <path class="dg-arrow" d="M327 75 H361" marker-end="url(#dg-graph-head)"/>
+          <rect class="dg-box dg-box--amber" x="365" y="40" width="160" height="70" rx="12"/>
+          <text class="dg-math dg-large" x="445" y="64">h = ReLU(z)</text><text class="dg-math dg-large" x="445" y="90">h = 1</text>
+          <path class="dg-arrow" d="M527 75 H561" marker-end="url(#dg-graph-head)"/>
+          <rect class="dg-box dg-box--green" x="565" y="40" width="140" height="70" rx="12"/>
+          <text class="dg-math dg-large" x="635" y="64">ŷ = vh + c</text><text class="dg-math dg-large" x="635" y="90">ŷ = 2</text>
+          <path class="dg-arrow" d="M707 75 H741" marker-end="url(#dg-graph-head)"/>
+          <rect class="dg-box dg-box--pink" x="745" y="40" width="140" height="70" rx="12"/>
+          <text class="dg-math dg-large" x="815" y="64">L = ½(ŷ − y)²</text><text class="dg-math dg-large" x="815" y="90">L = 0.5</text>
+          <text class="dg-math dg-large" x="635" y="132">∂L/∂ŷ = 1</text>
+          <text class="dg-math dg-large" x="445" y="132">∂L/∂h = 2</text>
+          <text class="dg-math dg-large" x="255" y="132">∂L/∂z = 2</text>
+          <path class="dg-arrow" d="M880 158 H190" marker-end="url(#dg-graph-head)"/>
+          <text class="dg-small" x="450" y="190">Forward: values, from left to right. Backward: derivatives through the same graph, from right to left.</text>
+        </svg>
+
+        <table class="table">
+          <caption>Gradients from the chain rule, evaluated before any parameter update</caption>
+          <thead><tr><th scope="col">Quantity</th><th scope="col">Calculation</th><th scope="col">Value</th></tr></thead>
+          <tbody>
+            <tr><td>Output error derivative</td><td><span class="math">\partial L / \partial \hat{y} = \hat{y} - y</span></td><td>1</td></tr>
+            <tr><td>Output weight</td><td><span class="math">\partial L / \partial v = (\hat{y} - y)\, h</span></td><td>1</td></tr>
+            <tr><td>Output bias</td><td><span class="math">\partial L / \partial c = \hat{y} - y</span></td><td>1</td></tr>
+            <tr><td>Hidden pre-activation</td><td><span class="math">\partial L / \partial z = (\hat{y} - y)\, v \operatorname{ReLU}'(z)</span></td><td>2</td></tr>
+            <tr><td>Input weight</td><td><span class="math">\partial L / \partial w = (\partial L / \partial z)\, x</span></td><td>4</td></tr>
+            <tr><td>Hidden bias</td><td><span class="math">\partial L / \partial b = \partial L / \partial z</span></td><td>2</td></tr>
+          </tbody>
+        </table>
+
+        <p>
+          With learning rate 0.1, update all four parameters using these gradients: <span class="math">w = 0.1</span>,
+          <span class="math">b = -0.2</span>, <span class="math">v = 1.9</span> and <span class="math">c = -0.1</span>. A new
+          forward pass gives <span class="math">z = 0</span>, <span class="math">h = 0</span>, prediction −0.1 and loss
+          0.605. <b>The loss increased:</b> the first-order approximation did not justify so large a step, and the hidden
+          unit reached the ReLU boundary.
+        </p>
+
+        <p>
+          Repeat from the <em>original</em> parameters with learning rate 0.01 instead. We obtain
+          <span class="math">w = 0.46</span>, <span class="math">b = -0.02</span>, <span class="math">v = 1.99</span> and
+          <span class="math">c = -0.01</span>. Then <span class="math">h = 0.9</span>, prediction 1.781 and loss
+          approximately 0.305. A gradient gives a local direction; choosing a suitable step size is essential.
+        </p>
+
+        <details>
+          <summary>Activity: trace the backward pass without a library</summary>
+          <p>
+            First ask which derivative contains the input <span class="math">x</span> and why. Then ask what would happen
+            to the gradient of <span class="math">w</span> if <span class="math">z</span> were strictly negative. ReLU's
+            derivative would be zero there, so the gradient through this hidden unit would be zero. Finally ask why every
+            gradient must use the same pre-update parameters. Updating <span class="math">v</span> before computing the
+            derivative for <span class="math">w</span> would mix two different networks in one backward pass.
+          </p>
+        </details>
+
+        <p>
+          <b>Further explanation:</b>
+          <a href="https://d2l.ai/chapter_multilayer-perceptrons/backprop.html" target="_blank" rel="noopener">Dive into
+          Deep Learning: forward propagation and backpropagation</a>. Larger networks apply the same chain rule using
+          matrix operations and automatic differentiation.
+        </p>
+
+        <h2 class="material-heading" id="training-loop">Putting the training loop together</h2>
+
+        <pre class="sh_pseudo code-highlight"><code>initialize parameters to small, non-identical random values
+for each epoch:
+    shuffle the training examples
+    for each mini-batch:
+        compute predictions with a forward pass
+        compute the average loss
+        compute gradients with backpropagation
+        update parameters with the optimizer
+    evaluate on validation data without updating parameters
+select a checkpoint using validation results
+evaluate the selected model on the test set</code></pre>
+
+        <p>
+          Random initialization breaks symmetry. If all units in a hidden layer start identically and receive identical
+          updates, they may keep learning the same feature. Initialization schemes such as Xavier/Glorot and He
+          initialization choose scales to help signals and gradients remain useful across layers. A random seed improves
+          reproducibility, although some hardware and software operations can still vary.
         </p>
 
         <figure class="viz" data-viz="mlp">
@@ -388,13 +950,209 @@
           </figcaption>
         </figure>
 
-        <h2 class="material-heading">Embeddings</h2>
+        <p>
+          <b>Episode 7 checkpoint:</b> explain the role of each arrow in the training diagram. Which operation uses
+          labels? Which computes derivatives? Which changes weights? At ordinary inference time, a trained classifier
+          performs a forward pass without its training labels or a parameter update.
+        </p>
+
+        <h1 class="material-heading" id="episode8">Episode 8: training, generalization and representation learning</h1>
+
+        <h2 class="material-heading" id="optimization">Epochs, batches and optimizers</h2>
 
         <p>
-          An embedding represents a discrete item, such as a word, as a vector of learned numbers. Items used in
-          similar contexts tend to acquire similar vectors. Embeddings therefore replace arbitrary identifiers with
-          representations in which distance and direction can encode useful relationships. The same idea is used for
-          text tokens, images, users, products, and many other kinds of data.
+          An <b>epoch</b> is one pass over the training examples. A <b>mini-batch</b> is a group used to estimate a
+          gradient for one parameter update. With 6,000 training examples and batch size 100, one epoch normally contains
+          60 updates. Eight epochs contain about 480 updates, not eight. Training loss is often noisy because different
+          batches contain different examples.
+        </p>
+
+        <p>
+          Full-batch gradient descent uses the entire training set for one update. Single-example stochastic gradient
+          descent updates after every example. Mini-batches provide a practical compromise: efficient computation with a
+          noisy approximation to the full gradient. A larger batch changes the optimization dynamics and resource use; it
+          does not automatically give better generalization.
+        </p>
+
+        <p>
+          <b>Learning rate:</b> too small may make progress impractically slow; too large may overshoot or diverge, as the
+          worked example showed. A schedule changes it over time. Momentum accumulates information from previous
+          gradients. Adam maintains moving estimates of gradients and their squared values to adapt updates. No optimizer
+          removes the need to inspect the data, loss and validation behaviour.
+        </p>
+
+        <p>
+          <b>Training foundations moved earlier:</b> these concepts were previously introduced among Week 5's Transformer
+          details. They apply to ordinary networks too. Week 5 will build on them when discussing gradient accumulation,
+          learning-rate schedules and large-scale training.
+        </p>
+
+        <h2 class="material-heading" id="generalization">Learning the training set is not the same as learning the task</h2>
+
+        <p>
+          The <b>training set</b> supplies examples used to update parameters. The <b>validation set</b> supports choices
+          such as model size, learning rate and stopping time. The <b>test set</b> estimates the performance of the
+          selected pipeline. Repeatedly choosing architectures using test scores turns the test set into another
+          validation set and can make the reported result optimistic.
+        </p>
+
+        <p>
+          For digit recognition, keep all copies or augmentations of one original image within the same split. In other
+          applications, split by person, device or time when that matches the intended deployment. Randomly separating
+          adjacent sensor readings may leak almost identical observations across splits. A high test score on one
+          distribution does not establish robustness to a new camera or handwriting population.
+        </p>
+
+        <svg class="dg" viewBox="0 0 900 330" role="img" aria-label="Illustrative learning curves, not measurements: as training epochs increase, the training loss keeps falling, while the validation loss falls, reaches a minimum and then rises again. A dashed line at the validation minimum marks the checkpoint that early stopping selects.">
+          <path class="dg-axis" d="M100 30 V270 H760"/>
+          <text class="dg-small" x="100" y="16">loss</text>
+          <text class="dg-small" x="430" y="292">training epochs</text>
+          <path class="dg-guide" d="M333.6 52 V270"/>
+          <text class="dg-small" x="333.6" y="40">select this checkpoint (early stopping)</text>
+          <path class="dg-curve dg-curve--blue" d="M100.0 55.3 L116.0 82.6 L132.0 105.9 L148.0 125.8 L164.0 142.9 L180.0 157.5 L196.0 169.9 L212.0 180.6 L228.0 189.7 L244.0 197.5 L260.0 204.2 L276.0 209.9 L292.0 214.8 L308.0 219.0 L324.0 222.6 L340.0 225.6 L356.0 228.3 L372.0 230.5 L388.0 232.4 L404.0 234.0 L420.0 235.4 L436.0 236.6 L452.0 237.7 L468.0 238.5 L484.0 239.3 L500.0 239.9 L516.0 240.5 L532.0 240.9 L548.0 241.3 L564.0 241.7 L580.0 242.0 L596.0 242.2 L612.0 242.4 L628.0 242.6 L644.0 242.8 L660.0 242.9 L676.0 243.0 L692.0 243.1 L708.0 243.2 L724.0 243.3 L740.0 243.4"/>
+          <path class="dg-curve dg-curve--amber" d="M100.0 46.6 L116.0 72.9 L132.0 94.6 L148.0 112.4 L164.0 126.8 L180.0 138.6 L196.0 148.0 L212.0 155.5 L228.0 161.4 L244.0 166.0 L260.0 169.4 L276.0 171.9 L292.0 173.7 L308.0 174.7 L324.0 175.2 L340.0 175.3 L356.0 174.9 L372.0 174.3 L388.0 173.4 L404.0 172.2 L420.0 170.9 L436.0 169.4 L452.0 167.8 L468.0 166.0 L484.0 164.2 L500.0 162.3 L516.0 160.3 L532.0 158.3 L548.0 156.2 L564.0 154.1 L580.0 152.0 L596.0 149.8 L612.0 147.6 L628.0 145.4 L644.0 143.2 L660.0 141.0 L676.0 138.7 L692.0 136.5 L708.0 134.2 L724.0 131.9 L740.0 129.7"/>
+          <circle class="dg-ink--amber" cx="333.6" cy="175.3" r="6"/>
+          <text class="dg-large dg-start" x="752" y="243">training loss</text>
+          <text class="dg-large dg-start" x="752" y="130">validation loss</text>
+          <path class="dg-curve dg-curve--blue" d="M590 40 H616"/><text class="dg-small dg-start" x="624" y="40">training loss</text>
+          <path class="dg-curve dg-curve--amber" d="M590 62 H616"/><text class="dg-small dg-start" x="624" y="62">validation loss</text>
+          <text class="dg-small" x="215" y="252">both losses fall</text>
+          <text class="dg-small" x="540" y="200">validation loss rises: a warning sign of overfitting</text>
+          <text class="dg-small" x="430" y="316">Illustrative curves, not measurements from an experiment</text>
+        </svg>
+
+        <p>
+          These curves are illustrative, not measurements from an experiment. <b>Underfitting</b> means that the fitted
+          model cannot capture the relevant training patterns well. <b>Overfitting</b> occurs when training performance
+          improves without corresponding improvement on new data. Training loss decreasing while validation loss rises is
+          a useful warning sign, not a universal diagnostic.
+        </p>
+
+        <ul>
+          <li><b>L2 regularization</b> adds a penalty on squared weight magnitudes. Its strength is a hyperparameter.</li>
+          <li><b>Early stopping</b> chooses a checkpoint based on validation performance rather than the lowest training loss.</li>
+          <li><b>Dropout</b> randomly suppresses some activations during training. Prediction uses the corresponding
+            inference-time convention rather than randomly dropping units in the same way.</li>
+          <li><b>Data augmentation</b> creates plausible variations, such as small translations of digit images. A
+            transformation that changes the correct label is unsuitable.</li>
+        </ul>
+
+        <p>
+          Regularization does not guarantee improvement, and a bigger model is not automatically overfit. Compare learning
+          curves and repeat promising experiments across seeds. Report the data split, preprocessing and selection
+          procedure along with accuracy. See
+          <a href="https://www.deeplearningbook.org/contents/regularization.html" target="_blank" rel="noopener">Goodfellow,
+          Bengio and Courville, Chapter 7</a> for a more detailed treatment.
+        </p>
+
+        <h3 class="material-heading" id="playground-activity">A 10-minute visual investigation</h3>
+
+        <p>
+          Open <a href="https://playground.tensorflow.org/" target="_blank" rel="noopener">TensorFlow Playground</a>. Use
+          only the raw inputs <span class="math">x_1</span> and <span class="math">x_2</span> initially; engineered inputs
+          such as <span class="math">x_1^2</span> can make a nonlinear pattern separable without a hidden layer. Keep the
+          dataset, noise and split fixed. Compare a single unit, a hidden layer with several units and a deeper network.
+          Predict the boundary before training, then inspect it. This is preparation for the existing graded Playground
+          exercises below.
+        </p>
+
+        <p>
+          Next increase noise and compare training and test loss. Finally change just one of learning rate, activation or
+          regularization. Explain what changed in terms of representation, optimization or generalization. Do not claim a
+          universal “minimum network” for spirals from one run: initialization, learning rate, features and the accuracy
+          criterion affect the answer.
+        </p>
+
+        <h2 class="material-heading" id="cnn">Why images motivate convolutional networks</h2>
+
+        <p>
+          A fully connected layer treats every pixel position as a separate input connection. A small pattern, such as a
+          stroke corner, may occur in many positions. A <b>convolutional layer</b> uses the same learned filter at
+          different image locations. Local connectivity and shared weights encode a useful assumption: the same local
+          pattern can matter wherever it appears.
+        </p>
+
+        <p>
+          A filter multiplies a small image patch element by element and sums the results, usually adding a bias. For
+          the patch and the filter below, with zero bias, the result is <span class="math">1 - 4 = -3</span>:
+        </p>
+
+        <div class="math">
+          \text{patch} = \begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix}, \quad
+          \text{filter} = \begin{bmatrix} 1 & 0 \\ 0 & -1 \end{bmatrix}: \quad
+          1 \cdot 1 + 2 \cdot 0 + 3 \cdot 0 + 4 \cdot (-1) = -3
+        </div>
+
+        <p>
+          Sliding the filter over a larger image produces a feature map. This common deep-learning operation is
+          technically cross-correlation; software usually calls the layer a convolution.
+        </p>
+
+        <svg class="dg" viewBox="0 0 900 276" role="img" aria-label="A 3 by 3 filter slides across a 6 by 6 image. Each 3 by 3 patch of the image, combined with the same learned filter, gives one value of a 4 by 4 feature map; the highlighted patch gives the highlighted cell.">
+          <defs><marker id="dg-cnn-head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrowhead" d="M0,0 L10,5 L0,10 z"/></marker></defs>
+          <rect class="dg-box dg-box--blue" x="40" y="44" width="168" height="168"/>
+          <path class="dg-guide" d="M68 44 V212 M96 44 V212 M124 44 V212 M152 44 V212 M180 44 V212 M40 72 H208 M40 100 H208 M40 128 H208 M40 156 H208 M40 184 H208"/>
+          <rect class="dg-box dg-box--amber" x="96" y="72" width="84" height="84" style="fill-opacity:.75;stroke-width:3"/>
+          <text class="dg-large" x="124" y="234">image, 6 × 6</text>
+          <path class="dg-arrow" d="M212 114 H342" marker-end="url(#dg-cnn-head)"/>
+          <text class="dg-small" x="277" y="98">one 3 × 3 patch</text>
+          <rect class="dg-box dg-box--violet" x="350" y="72" width="96" height="96" rx="4"/>
+          <path class="dg-guide" d="M382 72 V168 M414 72 V168 M350 104 H446 M350 136 H446"/>
+          <text class="dg-large" x="398" y="190">the same learned filter</text>
+          <text class="dg-small" x="398" y="212">applied at every location</text>
+          <path class="dg-arrow" d="M450 114 L682 107" marker-end="url(#dg-cnn-head)"/>
+          <text class="dg-small" x="566" y="90">multiply element-wise, sum, add bias</text>
+          <rect class="dg-box dg-box--green" x="690" y="54" width="140" height="140"/>
+          <path class="dg-guide" d="M725 54 V194 M760 54 V194 M795 54 V194 M690 89 H830 M690 124 H830 M690 159 H830"/>
+          <rect class="dg-box dg-box--amber" x="760" y="89" width="35" height="35" style="fill-opacity:.75;stroke-width:3"/>
+          <text class="dg-large" x="760" y="216">feature map, 4 × 4</text>
+          <text class="dg-small" x="450" y="264">Stride 1 and no padding: each position of the patch gives one value of the feature map.</text>
+        </svg>
+
+        <p>
+          <b>Parameter comparison:</b> an RGB filter with height 3 and width 3 has
+          <span class="math">3 \times 3 \times 3 + 1 = 28</span> parameters including its bias. Sixteen such filters have
+          448 parameters, regardless of the number of locations at which they are applied. The feature maps can still be
+          large, so fewer parameters does not mean negligible computation or memory.
+        </p>
+
+        <p>
+          <b>Stride</b> controls how far the filter moves between locations. <b>Padding</b> adds a border to control
+          output size. Pooling summarizes local neighbourhoods and reduces spatial resolution, while strided convolutions
+          can also downsample. These operations can improve tolerance to small shifts, but a CNN is not automatically
+          invariant to every translation, rotation or change in viewpoint.
+        </p>
+
+        <p>
+          A typical digit CNN learns several feature maps, combines them in later layers and produces class scores. Early
+          filters may respond to simple strokes; later patterns can combine evidence from larger regions. This is an
+          architectural bias, not a guarantee that each hidden unit has a clean human interpretation.
+          <b>Connection to Week 5:</b> Vision Transformers use image patches and attention instead of relying on exactly
+          this local-filter design. Understanding CNNs makes the contrast meaningful.
+        </p>
+
+        <p>
+          <b>Reading:</b>
+          <a href="https://d2l.ai/chapter_convolutional-neural-networks/conv-layer.html" target="_blank" rel="noopener">Dive
+          into Deep Learning: convolutions for images</a> and
+          <a href="https://d2l.ai/chapter_convolutional-neural-networks/padding-and-strides.html" target="_blank" rel="noopener">padding
+          and stride</a>.
+        </p>
+
+        <h2 class="material-heading" id="embeddings">From discrete identifiers to learned embeddings</h2>
+
+        <p>
+          A word or token identifier is arbitrary. If “cat” has ID 12 and “dog” has ID 13, the neighbouring numbers do not
+          make their meanings similar. A one-hot encoding avoids that false ordering but uses one coordinate per
+          vocabulary item. An <b>embedding table</b> assigns each item a learned vector with a chosen dimension. Looking
+          up a token selects one row of that table.
+        </p>
+
+        <p>
+          A vocabulary of 10,000 tokens with 50-dimensional embeddings contains 500,000 embedding parameters. The training
+          task supplies the signal that moves those vectors. Context prediction, classification and recommendation can
+          therefore learn different notions of similarity. Vectors do not receive their meaning from their coordinate
+          names, and rotating the whole space can preserve its pairwise geometry.
         </p>
 
         <svg class="dg" viewBox="0 0 900 360" role="img" aria-label="Words used in similar contexts lie close together in an embedding space: animals, vehicles and fruits form three groups.">
@@ -411,15 +1169,165 @@
           <text class="dg-small" x="450" y="342">An illustrative two-dimensional projection of learned vectors</text>
         </svg>
 
-        <h2 class="material-heading">Summary</h2>
-
         <p>
-          Neural networks learn layered representations by combining linear transformations with nonlinear activation
-          functions. Training adjusts their parameters using gradients. Embeddings extend representation learning to
-          discrete items such as words and prepare the ground for attention and Transformers in Week 5.
+          For vectors <span class="math">u</span> and <span class="math">v</span>, cosine similarity is
         </p>
 
+        <div class="math">
+          \cos(u, v) = \frac{u \cdot v}{\lVert u \rVert\, \lVert v \rVert}.
+        </div>
 
+        <p>
+          For example, <span class="math">u = (1, 0)</span> and <span class="math">v = (1, 1)</span> have cosine similarity
+          <span class="math">1/\sqrt{2} \approx 0.707</span>. A value close to 1 indicates similar directions, not
+          necessarily that the words are interchangeable. Antonyms can share contexts and appear close together.
+          Similarity is learned association, not a universal measure of meaning.
+        </p>
+
+        <p>
+          Static embeddings assign “bank” one vector even when it refers to a river bank or a financial institution.
+          Contextual networks compute different representations for different occurrences. The drawing above is an
+          illustration of a projection, not measured evidence that semantic categories occupy tidy two-dimensional
+          clusters. Embeddings can also reflect biases or gaps in their training data.
+        </p>
+
+        <h2 class="material-heading" id="sequences">Why sequence order changes the problem</h2>
+
+        <p>
+          “The dog chased the child” and “The child chased the dog” contain the same words but describe different events.
+          Averaging static word embeddings loses this order. A recurrent neural network (RNN) processes a sequence by
+          repeatedly updating a hidden state:
+        </p>
+
+        <div class="math">
+          h_t = \tanh\bigl(W_x x_t + W_h h_{t-1} + b\bigr)
+        </div>
+
+        <p>
+          It shares parameters across positions, while the hidden state depends on the preceding inputs.
+        </p>
+
+        <p>
+          The state is a learned summary, not a perfect memory. Gradients through long sequences can become very small or
+          large, making long-range dependencies difficult to learn. Gated architectures such as LSTMs and GRUs address
+          parts of this problem, without eliminating every limitation. This is a conceptual introduction; implementing
+          the gates is not required this week.
+        </p>
+
+        <p>
+          <b>Bridge to attention:</b> rather than forcing every relevant detail through one recurrent state, attention
+          lets a representation combine information from selected positions. In <a href="../week5/">Week 5</a>,
+          query–key scores will determine those combinations. Transformers also require positional information because a
+          set of token vectors alone does not express sequence order. CNNs, RNNs and attention offer different
+          assumptions about how information should be combined; they are not merely progressively larger versions of the
+          same model.
+        </p>
+
+        <h2 class="material-heading" id="autoencoders">Autoencoders: learning without class labels</h2>
+
+        <p>
+          Representation learning need not predict a class. An <b>autoencoder</b> maps an input to a code with an
+          encoder, <span class="math">z = \operatorname{encoder}(x)</span>, then reconstructs it with a decoder,
+          <span class="math">\hat{x} = \operatorname{decoder}(z)</span>. The training target is derived from the input
+          rather than supplied as a digit category. A reconstruction loss measures the difference between the original
+          and reconstructed data.
+        </p>
+
+        <svg class="dg" viewBox="0 0 900 236" role="img" aria-label="An autoencoder: the encoder compresses an input image of 784 values into a code z of 16 values, and the decoder reconstructs 784 values from the code. The reconstruction loss compares the reconstruction with the original input, not with a class label.">
+          <defs><marker id="dg-ae-head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrowhead" d="M0,0 L10,5 L0,10 z"/></marker></defs>
+          <rect class="dg-box dg-box--blue" x="8" y="55" width="164" height="90" rx="12"/>
+          <text class="dg-title" x="90" y="86">input</text><text class="dg-large" x="90" y="114"><tspan class="dg-math">x</tspan>: 784 values</text>
+          <path class="dg-arrow" d="M174 100 H200" marker-end="url(#dg-ae-head)"/>
+          <path class="dg-box dg-box--violet" d="M206 45 L336 78 V122 L206 155 Z"/>
+          <text class="dg-title" x="268" y="100">encoder</text>
+          <path class="dg-arrow" d="M338 100 H384" marker-end="url(#dg-ae-head)"/>
+          <rect class="dg-box dg-box--amber" x="390" y="70" width="120" height="60" rx="10"/>
+          <text class="dg-title" x="450" y="90">code</text><text class="dg-large" x="450" y="114"><tspan class="dg-math">z</tspan>: 16 values</text>
+          <path class="dg-arrow" d="M512 100 H558" marker-end="url(#dg-ae-head)"/>
+          <path class="dg-box dg-box--violet" d="M564 78 L694 45 V155 L564 122 Z"/>
+          <text class="dg-title" x="632" y="100">decoder</text>
+          <path class="dg-arrow" d="M696 100 H722" marker-end="url(#dg-ae-head)"/>
+          <rect class="dg-box dg-box--green" x="728" y="55" width="164" height="90" rx="12"/>
+          <text class="dg-title" x="810" y="86">reconstruction</text><text class="dg-large" x="810" y="114"><tspan class="dg-math">x̂</tspan>: 784 values</text>
+          <path class="dg-arrow" d="M810 151 C810 196 90 196 90 151" style="stroke-dasharray:6 5" marker-start="url(#dg-ae-head)" marker-end="url(#dg-ae-head)"/>
+          <text class="dg-small" x="450" y="210">reconstruction loss: compare <tspan class="dg-math">x̂</tspan> with the input <tspan class="dg-math">x</tspan>, not with a class label</text>
+        </svg>
+
+        <p>
+          A bottleneck, denoising objective or another constraint can discourage trivial copying. For example, a
+          16-dimensional code must summarize a 784-dimensional image in a limited space. That code may retain stroke style
+          as well as digit identity because both help reconstruction. It need not be the best representation for
+          classification. A sufficiently flexible unconstrained network could instead learn an unhelpful identity
+          mapping.
+        </p>
+
+        <p>
+          A standard autoencoder is <b>not automatically a generator of realistic new images</b>. Random points in its code
+          space may decode poorly. Models such as variational autoencoders impose additional structure to support
+          sampling. We introduce the encoder–decoder and latent-code ideas here, before Week 5's generative models. The
+          existing graded autoencoder exercise remains in <a href="../week5/#exercises">Week 5</a>.
+        </p>
+
+        <p>
+          <b>Reading:</b>
+          <a href="https://www.deeplearningbook.org/contents/autoencoders.html" target="_blank" rel="noopener">Goodfellow,
+          Bengio and Courville, Chapter 14: Autoencoders</a>.
+        </p>
+
+        <h2 class="material-heading" id="week4-checkpoint">What you should be able to explain</h2>
+
+        <ol>
+          <li>Compute a perceptron prediction and one update, including the bias.</li>
+          <li>Explain XOR and how a hidden representation makes a new separation possible.</li>
+          <li>Trace one forward pass and distinguish logits, output activation and loss.</li>
+          <li>Use the chain rule in a tiny network and explain why learning rate matters.</li>
+          <li>Distinguish a mini-batch update from an epoch, and backpropagation from optimization.</li>
+          <li>Read learning curves and describe a leakage-free evaluation procedure.</li>
+          <li>Compare dense layers, local shared filters and recurrent state at a conceptual level.</li>
+          <li>Explain what an embedding and an autoencoder learn, and one limitation of each.</li>
+        </ol>
+
+        <p>
+          Parameters are learned weights and biases. Hyperparameters include layer sizes, learning rate and
+          regularization strength. Architecture determines a family of computations; training selects parameters within
+          that family. Strong training performance does not by itself establish generalization, semantic understanding or
+          trustworthy deployment.
+        </p>
+
+        <h2 class="material-heading" id="week4-reading">Further reading and visual explanations</h2>
+
+        <ul>
+          <li>
+            <b>Core visual companion:</b>
+            <a href="https://www.3blue1brown.com/topics/neural-networks" target="_blank" rel="noopener">3Blue1Brown's
+            neural-network series</a>. Use its network and gradient visualizations alongside the numerical calculations,
+            not as a replacement for them.
+          </li>
+          <li>
+            <b>MLPs and derivatives:</b> Zhang et al.,
+            <a href="https://d2l.ai/chapter_multilayer-perceptrons/index.html" target="_blank" rel="noopener">Dive into Deep
+            Learning, Multilayer Perceptrons</a>. The sections on forward/backward propagation and numerical stability
+            provide additional detail.
+          </li>
+          <li>
+            <b>Mathematical reference:</b> Goodfellow, Bengio and Courville (2016),
+            <a href="https://www.deeplearningbook.org/" target="_blank" rel="noopener">Deep Learning</a>, Chapters 6
+            (feedforward networks), 7 (regularization), 8 (optimization), 9 (CNNs), 10 (sequences) and 14
+            (autoencoders). These are optional reference chapters, not assigned reading in full.
+          </li>
+          <li>
+            <b>Implementation:</b>
+            <a href="https://scikit-learn.org/stable/modules/neural_networks_supervised.html" target="_blank" rel="noopener">scikit-learn's
+            supervised neural-network guide</a> explains scaling, solvers and the meaning of iterations.
+            <a href="https://www.tensorflow.org/tutorials/quickstart/beginner" target="_blank" rel="noopener">TensorFlow's
+            beginner quickstart</a> supports the activation exercise below.
+          </li>
+          <li>
+            <b>Word vectors:</b> Pennington, Socher and Manning (2014),
+            <a href="https://aclanthology.org/D14-1162/" target="_blank" rel="noopener">GloVe: Global Vectors for Word
+            Representation</a>, the model family used in the existing embedding exercise.
+          </li>
+        </ul>
 
 
 
