@@ -20,48 +20,323 @@ can describe backpropagation. Backpropagation is the method that gives the gradi
 == 5d6f96ca
 can explain learned representations and word embeddings at the level of concepts
 
-== 69dac595
-A neural network is a model. The model learns its parameters from examples. We make a neural network from a sequence of simple transformations. Thus, the network can learn useful intermediate representations. A person does not have to design each feature by hand.
+== f1cec889
+can explain the brain analogy and its limits. You can also explain the important steps in the history of neural networks
 
-== 3f625e9f
-A perceptron receives an input vector <i>x</i>. It multiplies each input by a learned weight. Then it adds a bias and applies a threshold. In short, it makes its prediction from <span class="math">w^\top x + b</span>. During training, the weights change when the prediction is wrong. A perceptron can learn a linear decision boundary (a straight line or a flat plane). But it cannot represent every classification problem.
+== 09e6f630
+can tell the difference between epochs, mini-batches and optimizer updates
 
-== f17204ba
-Example: the inputs are <span class="math">(1, 2)</span>, the weights are <span class="math">(0.7, -0.2)</span> and the bias is 0.1. The weighted sum is <span class="math">0.7 \times 1 - 0.2 \times 2 + 0.1 = 0.4</span>. The result is positive, so a step activation gives class 1. The weights set the position and the direction of the separating line. The bias moves the line, but it does not change the direction of the line.
+== 4297e277
+can explain validation, overfitting and simple regularization methods
 
-== 9661313b
-When the classes are linearly separable, the perceptron learning rule converges (it stops at a solution). The perceptron cannot solve XOR. No single straight line can put the two blue points on one side and the two orange points on the other side. This is a limit of what the model can represent. More training time does not solve it.
+== 8187ce78
+can compare dense, convolutional and recurrent architectures at the level of concepts
 
-== 4f466150
-The perceptron predicts +1 when <span class="math">w \cdot x + b &gt; 0</span>. Otherwise, it predicts −1. It goes through the examples in a fixed sequence. After each mistake, it changes the weights with <span class="math">w \leftarrow w + y\,x</span> and the bias with <span class="math">b \leftarrow b + y</span>. On linearly separable data, the mistakes stop after a finite number of updates. On XOR, the mistakes never stop.
+== 338ba898
+A neural network is a function with parameters. We make it from a sequence of simpler functions. Training changes the parameters, so that the outputs become useful for a task. This week has three important questions: <b>What can a network represent? How can it learn its parameters? How do we know that it learned something useful, also for examples that it did not see in training?</b> We use one example through the week: the recognition of handwritten digits. Small numerical examples show the calculations.
 
-== df1ab4c9
-A multilayer perceptron has an input layer, one or more hidden layers and an output layer. The neurons are in these layers. Each layer transforms the representation from the layer before it. The width of a layer is its number of units: more units can represent more patterns. The depth is the number of layers: with more layers, the model can make complex transformations from simple ones.
+== 80e18c69
+The word <i>neuron</i> is a mathematical analogy (a comparison). It does not mean that these models copy a biological brain. The architecture, the training objective and the data of a network set what it can learn. A large number of parameters alone does not explain intelligence, understanding or reliable behaviour.
 
-== 2320c0e8
-A <b>forward pass</b> applies these transformations, from the input to the prediction. In each layer, the main calculation is a linear transformation. An activation function follows it:
+== 325e8041
+Each lecture has approximately 90 minutes of teaching and activities. You can use the remaining time of the lecture slot for a break. The short activities below are for discussion. They are not more graded exercises.
 
-== d3cdcf40
-Nonlinear activation functions are necessary. Without them, many layers on top of each other still give only a linear model. Many networks use ReLU, because it is simple and it works well in many cases. Sigmoid changes values to the range from zero to one. Tanh changes values to the range from minus one to one. The activation function has an effect on how easily the network trains. It also has an effect on the types of decision boundaries that the network can learn.
+== d6403da6
+The core material has the explanations and the worked examples. The answers that you can open help you to study alone. The additional reading and the optional details about architectures give more depth. The lecture does not have to show each paragraph.
+
+== 25d1f6bf
+Neural networks did not start with the large language models of today. They started when researchers tried to connect mathematical models of computation, learning and nervous systems. The history includes logical threshold units, classifiers that can learn, associative memories, self-organizing maps and deep representation learning. These research traditions overlap. They are not a simple sequence where each new model replaces all the models before it.
+
+== 628ab1ae
+<b>Be careful with the history:</b> it is not correct to say that one “AI winter” started in 1960. It is also not correct to say that one book caused a full decrease in research. AI funding and the interest in neural networks changed at different times, for different reasons. Also, no single person or paper made all parts of backpropagation. Reverse-mode differentiation, its use for learning and its popularity each have a different history.
+
+== 2083e5d2
+The useful part of the analogy is this: many connected units can make complex behaviour, and a change of their connections can change this behaviour. A biological neuron is a living cell with dendrites, a cell body and an axon. Signals come in through synapses and change the activity of the cell. Many neurons send action potentials (electrical pulses) along the axon. At the synapses, they communicate with chemicals. The artificial unit keeps only a small part of this: inputs, connection weights that can change, a sum and an output function.
+
+== 08efb036
+Brains have many recurrent connections (connections that go back), many types of cells and interactions on many time scales. Artificial networks can be feedforward, recurrent, probabilistic or spiking. Thus, these two statements are not always true: “natural networks are binary, but artificial networks are continuous” and “artificial networks have no feedback”. A spike is an event. But the firing rate, the time of the spikes and other biological variables also carry information.
+
+== b1f8579b
+<b>Connection to computation:</b> neural computation is parallel, and it adapts. A simple program is different: it does one instruction after the other. But this difference does not show that neural networks can calculate functions that a Turing machine cannot calculate. Most networks in this course are numerical programs on usual digital hardware. Also, a design that comes from the brain is not automatically evidence of consciousness or human-like understanding.
+
+== b3d2fdb9
+<b>Biology reference:</b> the US National Institute of Neurological Disorders and Stroke, <a href="https://www.ninds.nih.gov/publications/know-your-brain-brain-basics" target="_blank" rel="noopener">Know Your Brain</a>. The comparison diagram on this page is a simple drawing for teaching concepts. It is not a correct model of the anatomy or of the mechanisms of the brain.
+
+== 6ce88ffa
+A Hopfield network is an example of recurrent dynamics. Its state changes over time, and it can find a stored pattern from a cue (a start pattern) that is partial or damaged. Under suitable conditions, an energy function helps to analyze convergence. But this does not mean that each cue finds the correct memory. A Boltzmann machine uses random (stochastic) units in a probabilistic model that is based on an energy. A self-organizing map uses a different idea. The prototype that wins, and the prototypes near it, move toward an input. Thus, the map puts similar inputs near each other on a grid. These examples show that neural computation is more than supervised feedforward classification. They give context. You do not have to implement them this week.
+
+== c381a5eb
+An image of a handwritten digit can have 28 by 28 grayscale pixels. A fully connected network can get it as a vector of 784 numbers. A pixel value is a measurement. It is not an instruction such as “this is the upper loop of an eight.” The model must learn which combinations of measurements are useful. A training example is a pair: an input <span class="math">x</span> and a target <span class="math">y</span>, for example the digit label 8.
+
+== e9533221
+A training dataset has many of these pairs. When the model makes a prediction, it gets a new image without the correct label. Thus, its parameters must contain a rule that works for different handwriting, line thickness and position. A table of the images that it saw before is not sufficient. Features such as the pixel scale and the image resolution must be the same in training and in later use.
+
+== 26e965f7
+<b>Preprocessing:</b> MNIST pixels usually have values from 0 to 255. Divide by 255 to change them to the interval <span class="math">[0, 1]</span>. For other numeric features, standardization (a change of each feature to mean 0 and standard deviation 1) can help the optimization. If the preprocessing uses values from the data, calculate these values only from the training split. The input representation and the preprocessing are parts of the model pipeline.
+
+== 42538003
+A perceptron calculates a weighted sum <span class="math">z</span> and adds a bias. We use this rule: the prediction is 1 if <span class="math">z \ge 0</span>, and 0 if not:
+
+== 69a673e9
+Each weight controls how much one input adds to the score. The bias is an offset that can change. The classification boundary is the set of inputs where <span class="math">z = 0</span>. In two dimensions it is a line, in three dimensions a plane, and in more dimensions a hyperplane.
+
+== 327f3258
+<b>Worked prediction:</b> let <span class="math">x = (1, 2)</span>, <span class="math">w = (0.7, -0.2)</span> and <span class="math">b = 0.1</span>. The score is <span class="math">0.7 \times 1 - 0.2 \times 2 + 0.1 = 0.4</span>, so the output is 1. A negative weight does not make an input unimportant. It means this: when the input increases and the other inputs stay the same, the score decreases.
+
+== 241620eb
+For two inputs, a change of the weights changes the direction and the position of the line. A change of only the bias moves the boundary parallel to itself. The model learns these values from examples. A programmer does not have to draw the line by hand.
+
+== 97094062
+The general form of the rule corrects errors, and it is easy to remember. With the notation of the lecture slides, the <b>perceptron learning rule</b> is
+
+== d3f7632f
+Here <span class="math">w</span> is the current weight vector and <span class="math">w'</span> is the new vector. <span class="math">x</span> is the current input, <span class="math">y</span> is the true label, <span class="math">\hat{y}</span> is the predicted label, and <span class="math">\lambda &gt; 0</span> is the learning rate. Each component changes with <span class="math">w_i' = w_i + \lambda\,(y - \hat{y})\,x_i</span>. When the prediction is correct, the error is zero, so there is no update. A mistake moves the parameters in the direction of the target label.
+
+== af3725cd
+Here we use the labels 0 and 1, so the error term is −1, 0 or +1. The same formula also works with the labels −1 and +1. But then an incorrect prediction gives −2 or +2. Thus, the step size depends on the label convention and on <span class="math">\lambda</span>. Many texts use the update <span class="math">w' = w + \alpha\, y\, x</span> after a mistake, with signed labels. This update is the same when <span class="math">\alpha = 2\lambda</span>.
+
+== 32f12d87
+Let the correct label for the example above be 0, and let <span class="math">\lambda = 0.1</span>. The error term is −1. The new weights are <span class="math">(0.6, -0.4)</span>, and the new bias is 0. The score for the same example is now <span class="math">0.6 - 0.8 = -0.2</span>, which gives class 0. This update corrects this example. But it does not make sure that all other examples are now correct. Training goes through the dataset again, so that different examples can change the boundary.
+
+== 526d749b
+Let <span class="math">w = (0, 0)</span>, <span class="math">b = -0.5</span> and <span class="math">x = (1, 1)</span>. Let the target be 1 and <span class="math">\lambda = 0.5</span>. The first score is −0.5, and the prediction is 0. The new weights are <span class="math">(0.5, 0.5)</span>, the bias is 0, and the score is now 1. Note that the update changes the bias and also the weights.
+
+== 3366ba4b
+<b>Reading:</b> the <a href="https://doi.org/10.1037/h0042519" target="_blank" rel="noopener">original perceptron paper (1958)</a> of Rosenblatt gives the historical context. The numerical examples on this page use a simpler, modern notation.
+
+== 783cf0cc
+Use <span class="math">\hat{y} = +1</span> when <span class="math">w \cdot x \ge 0</span>, and −1 if not. Only for this example, do not use a bias, and start at <span class="math">w = (0, 0)</span>. At the start, the score is zero for each input, so each input gets +1. This classifier is degenerate (it gives the same class to all inputs). It is not a useful separating line.
+
+== 000f4bfc
+For <span class="math">B = (1, -2)</span> with target −1, the new score is <span class="math">5 - 4 = 1</span>, so the prediction is +1 again. The update gives <span class="math">w'' = (5, 2) + 1 \cdot (-2) \cdot (1, -2) = (3, 6)</span>.
+
+== 83827250
+For <span class="math">C = (-2, 1)</span> with target −1, the score is <span class="math">-6 + 6 = 0</span>, so the prediction is +1. With <span class="math">\lambda = 1</span> again, the update gives <span class="math">w''' = (3, 6) + 1 \cdot (-2) \cdot (-2, 1) = (7, 4)</span>.
+
+== b3f0c516
+You can also start the third update from <span class="math">(3, 6)</span> again and use <span class="math">\lambda = 0.5</span>. This gives <span class="math">(5, 5)</span>. These are two different learning rates, not the same update. For a general affine boundary (a boundary that does not have to go through the origin), also use the bias update above. Another method gives the same result: add a constant input 1, and use the bias as its weight.
+
+== 34e339bf
+This rule corrects the errors of a perceptron. It is not a training formula for all neural networks. A sigmoid output with binary cross-entropy has a similar gradient update for one example: the error times the input, where <span class="math">\hat{y}</span> is a probability. Hidden layers also need the derivatives that backpropagation calculates.
+
+== bddbe2a4
+The perceptron learning rule converges: after a finite number of errors, it finds a line that separates the classes. This is true when a finite dataset is linearly separable and the usual assumptions of the convergence theorem are true. When the classes overlap, or when they need a nonlinear boundary, maybe no separating weights exist. More training cannot correct a limit of the model family.
+
+== c9b7b77b
+<b>Activity:</b> try to draw one line that separates the diagonal pairs. Then look at two hidden units: <span class="math">h_1 = \operatorname{step}(x_1 + x_2 - 0.5)</span> and <span class="math">h_2 = \operatorname{step}(x_1 + x_2 - 1.5)</span>. The first unit finds if one or two inputs are 1. The second unit finds if the two inputs are 1. The output <span class="math">\operatorname{step}(h_1 - 2h_2 - 0.5)</span> gives XOR.
+
+== cb617386
+The four inputs become <span class="math">(0, 0)</span>, <span class="math">(1, 0)</span>, <span class="math">(1, 0)</span> and <span class="math">(1, 1)</span>, in this sequence. The two positive examples now have the same hidden representation <span class="math">(1, 0)</span>. The output can separate it from the negative examples. We set these weights by hand, to show what the network can represent. It is a different problem to train a network so that it finds useful hidden features.
+
+== fb890b7a
+The perceptron predicts +1 when <span class="math">w \cdot x + b \ge 0</span>. If not, it predicts −1. It goes through the examples in a fixed sequence. After each mistake, it applies the learning rule above with <span class="math">\lambda = 0.5</span>. With the labels −1 and +1, a mistake gives <span class="math">y - \hat{y} = \pm 2</span>. Thus, the update adds <span class="math">y\,x</span> to <span class="math">w</span> and <span class="math">y</span> to <span class="math">b</span>. On linearly separable data, the mistakes stop after a finite number of updates. On XOR, the mistakes never stop.
+
+== ae08873d
+A multilayer perceptron (MLP) uses affine transformations and nonlinear activation functions, one after the other. In layer <span class="math">\ell</span>,
+
+== 4f64fde7
+with <span class="math">h^{(0)} = x</span>. Each hidden layer gives a representation to the next layer. The output layer changes the last representation into the values that the task needs.
+
+== ce441fc5
+<b>Know the dimensions:</b> a digit classifier has 784 inputs, 40 hidden units and 10 outputs. Its first weight matrix has the shape <span class="math">40 \times 784</span>, and its first bias vector has the length 40. The second matrix has the shape <span class="math">10 \times 40</span>, and the output bias vector has the length 10. Thus, the network has <span class="math">784 \times 40 + 40 + 40 \times 10 + 10 = 31{,}810</span> parameters that training can change. The input layer only holds the data. It does not add trainable weights.
+
+== 0af434d7
+<b>Small forward pass:</b> let <span class="math">x = (1, 2)</span>. The first layer has the weights <span class="math">W_1</span> and the bias <span class="math">b_1 = (0, -0.5)</span>. The pre-activations (the values before the activation function) are <span class="math">(-1, 1)</span>. ReLU gives the hidden vector <span class="math">(0, 1)</span>:
+
+== 7fe58194
+The output weights are <span class="math">(2, -1)</span> and the output bias is 0.5. Thus, the output score is <span class="math">2 \times 0 - 1 \times 1 + 0.5 = -0.5</span>. The sigmoid of this score is approximately 0.378. The network did not learn in this calculation. It is one evaluation with the current parameters.
+
+== 60e95a86
+More <b>width</b> adds units in a layer. More <b>depth</b> adds transformations, which can use the earlier representations again. Neither of them makes the test performance better for certain. A deep network can represent some functions much more compactly. But the data, the stability of the training and the architecture are also important. A hidden unit does not always show a concept that a person can easily name.
+
+== 9fedbcc0
+Two affine layers without a nonlinearity are equal to one affine layer:
+
+== 261ff94c
+Thus, more of these layers do not remove the linear limit of the perceptron. A nonlinear activation changes the types of functions that the layers together can express. The usual activation functions are
 
 == 78a25808
 Backpropagation multiplies by the derivative of the activation function. The derivative of the step function is zero at all points except 0, where it has no value. Thus, it gives no gradient for learning. The derivative of the sigmoid is <span class="math">\sigma'(z) = \sigma(z)\bigl(1 - \sigma(z)\bigr)</span>. Its maximum value is 0.25. The derivative of tanh is <span class="math">1 - \tanh^2 z</span>. Its maximum value is 1. The derivative of ReLU is 0 for negative inputs and 1 for positive inputs.
 
-== 2210e569
-Training starts with a loss function. The loss function measures the difference between the predictions and the target values. Backpropagation uses the chain rule. It calculates how much each parameter added to the loss. Then an optimizer uses these gradients to change the parameters. For this course, the important idea is that each part has one task:
-the forward pass makes a prediction, the loss measures the error of the prediction, backpropagation gives the gradients, and the optimizer changes the model.
+== e90e1863
+The hidden activations and the output function can be different. A regression model can use a numeric output with no limits. Binary classification frequently uses a sigmoid. Digits have ten classes, and only one class can be correct. For them, <b>softmax</b> changes ten scores (logits) into values that are not negative and that have the sum 1. A large softmax value can be wrong, or it can be poorly calibrated. It does not make sure that the prediction is correct.
 
-== 936adb67
-Good performance on the training data is not sufficient. We use separate validation data and test data. With them, we find if the network generalizes to new examples (works well on data that it did not see). Too much model capacity or too much training can cause overfitting. Regularization, a correct model size and early stopping can decrease this problem.
+== a3f82447
+A <b>loss function</b> measures the difference between the output and the target. For a regression example with one number as the prediction <span class="math">\hat{y}</span>, we can use <span class="math">L = \tfrac{1}{2}(\hat{y} - y)^2</span>. For binary classification, cross-entropy gives a large loss when the probability <span class="math">p</span> of the correct label is low:
+
+== 4381fc01
+If the correct class gets the probability 0.8, the multiclass loss is approximately 0.223. At the probability 0.2, it is approximately 1.609. Thus, the loss shows a difference between two predictions, also when they select the same top class. Accuracy counts the correct classifications. The loss gives a learning signal with many levels. In libraries, cross-entropy frequently accepts logits. It then does the output transformation and the logarithm in one operation that is numerically stable.
+
+== 2dc3c8a8
+The objective is usually the average loss over the examples, sometimes with a regularization term. The objective is a design decision. Bad labels or a bad objective can give a model that optimizes the training task, but does not help with the real-world purpose.
+
+== 163133c1
+A gradient shows how much the loss changes for a small change of a parameter, when the other parameters stay the same. A positive derivative means this: a small increase of the parameter increases the loss. Thus, gradient descent moves the parameter in the opposite direction, with the learning rate <span class="math">\eta</span>:
+
+== 949fc837
+This is a local calculation. It does not make sure that you get the best possible network.
+
+== 6d268115
+<b>Backpropagation</b> calculates the gradients efficiently. It applies the chain rule through the computation graph. It uses the intermediate results from the forward pass again, and it sends the sensitivities backward. Then the <b>optimizer</b> uses the gradients to change the parameters. Backpropagation and gradient descent are different operations, but both occur during training.
+
+== 93b504c6
+Look at a very small network with one hidden unit: <span class="math">z = wx + b</span>, <span class="math">h = \operatorname{ReLU}(z)</span>, the prediction <span class="math">\hat{y} = vh + c</span> and <span class="math">L = \tfrac{1}{2}(\hat{y} - y)^2</span>. Let <span class="math">x = 2</span>, <span class="math">y = 1</span>, <span class="math">w = 0.5</span>, <span class="math">b = 0</span>, <span class="math">v = 2</span> and <span class="math">c = 0</span>. The forward pass gives <span class="math">z = 1</span>, <span class="math">h = 1</span>, the prediction 2 and the loss 0.5.
+
+== 143c77b3
+With the learning rate 0.1, change all four parameters with these gradients: <span class="math">w = 0.1</span>, <span class="math">b = -0.2</span>, <span class="math">v = 1.9</span> and <span class="math">c = -0.1</span>. A new forward pass gives <span class="math">z = 0</span>, <span class="math">h = 0</span>, the prediction −0.1 and the loss 0.605. <b>The loss increased.</b> The gradient is a first-order (linear) approximation, and it is not correct for a step this large. Also, the hidden unit went to the ReLU boundary.
+
+== ce4446ee
+Do the update again from the <em>original</em> parameters, but with the learning rate 0.01. We get <span class="math">w = 0.46</span>, <span class="math">b = -0.02</span>, <span class="math">v = 1.99</span> and <span class="math">c = -0.01</span>. Then <span class="math">h = 0.9</span>, the prediction is 1.781 and the loss is approximately 0.305. A gradient gives a local direction. It is necessary to select a suitable step size.
+
+== b349311f
+First, find which derivative contains the input <span class="math">x</span>, and why. Then find what occurs to the gradient of <span class="math">w</span> if <span class="math">z</span> is negative. There, the derivative of ReLU is zero, so the gradient through this hidden unit is zero. At the end, find why all gradients must use the same parameters, from before the update. If you change <span class="math">v</span> before you calculate the derivative for <span class="math">w</span>, you mix two different networks in one backward pass.
+
+== 651cfaa7
+<b>More explanation:</b> <a href="https://d2l.ai/chapter_multilayer-perceptrons/backprop.html" target="_blank" rel="noopener">Dive into Deep Learning: forward propagation and backpropagation</a>. Larger networks apply the same chain rule with matrix operations and automatic differentiation.
+
+== c2edd9aa
+Random start values break the symmetry. If all units in a hidden layer start with the same values and get the same updates, they can continue to learn the same feature. Initialization methods such as Xavier/Glorot and He initialization select a scale for the start values. The scale helps the signals and the gradients to stay useful through all layers. A random seed makes it easier to get the same result again. But some hardware and software operations can still give small differences.
 
 == ea6a9d6d
 This network has one hidden layer. It trains in your browser. With one hidden unit, the network can draw only one boundary, so it cannot fit XOR. With two or more hidden units, it can fit XOR. Try the other data sets and activation functions. Also show the lines where each hidden unit changes its sign: they show how the hidden layer makes the boundary. The colour of the background is the predicted probability of class 1.
 
-== 6b6980c8
-An embedding shows a discrete item (for example, a word) as a vector of learned numbers. Items that occur in similar contexts usually get similar vectors. Thus, an embedding replaces an arbitrary identifier with a representation where distance and direction can show useful relations. We use the same idea for text tokens, images, users, products and many other types of data.
+== 1e2b1a0b
+<b>Episode 7 checkpoint:</b> explain the function of each arrow in the training diagram. Which operation uses labels? Which operation calculates derivatives? Which operation changes the weights? At usual inference time (when the model makes predictions), a trained classifier does a forward pass. It does not use training labels, and it does not change its parameters.
 
-== 1c4829da
-Neural networks learn representations in layers. They combine linear transformations and nonlinear activation functions. Training changes their parameters with gradients. Embeddings use representation learning for discrete items, for example words. They also prepare you for attention and Transformers in Week 5.
+== f4df032b
+An <b>epoch</b> is one pass through the training examples. A <b>mini-batch</b> is a group of examples. We use it to estimate the gradient for one parameter update. With 6,000 training examples and the batch size 100, one epoch usually has 60 updates. Eight epochs have approximately 480 updates, not eight. The training loss is frequently noisy, because different batches have different examples.
+
+== 70831713
+Full-batch gradient descent uses the full training set for one update. Stochastic gradient descent with single examples makes an update after each example. Mini-batches are a practical compromise: the computation is efficient, and the gradient is a noisy approximation of the full gradient. A larger batch changes how the optimization behaves and how many resources it uses. It does not automatically give better generalization.
+
+== c0b5f096
+<b>Learning rate:</b> if it is too small, the progress can be too slow for practical use. If it is too large, the steps can go past the minimum or diverge, as the worked example showed. A schedule changes the learning rate over time. Momentum collects information from the previous gradients. Adam keeps moving averages of the gradients and of their squares, and it adapts the updates with them. With all optimizers, you must still examine the data, the loss and the validation results.
+
+== ad9a3a6f
+<b>The training foundations are now earlier in the course:</b> before, Week 5 introduced these concepts together with the details of Transformers. But they also apply to usual networks. Week 5 uses them again for gradient accumulation, learning-rate schedules and training at a large scale.
+
+== 4c02dd1a
+The <b>training set</b> gives the examples that change the parameters. The <b>validation set</b> helps you to make decisions, for example about the model size, the learning rate and when to stop training. The <b>test set</b> estimates the performance of the pipeline that you selected. If you select architectures many times with the test scores, the test set becomes another validation set. Then the result that you report can be too optimistic.
+
+== 2c5d2439
+For digit recognition, keep all copies and augmentations of one original image in the same split. In other applications, split the data by person, by device or by time, when this agrees with the planned use. If you separate adjacent sensor readings at random, almost the same observations can go into different splits (leakage). A high test score on one distribution does not show robustness to a new camera. It also does not show robustness to the handwriting of a new group of people.
+
+== 22911ff8
+These curves are examples. They are not measurements from an experiment. <b>Underfitting</b> means that the model cannot learn the important patterns of the training data well. <b>Overfitting</b> occurs when the training performance becomes better, but the performance on new data does not. When the training loss decreases and the validation loss increases, this is a useful warning sign. But it is not a diagnosis that is always correct.
+
+== ffc1b3f1
+<b>L2 regularization</b> adds a penalty for the squares of the weights. Its strength is a hyperparameter.
+
+== 7a3efda5
+<b>Early stopping</b> selects a checkpoint (a saved state of the model) with the validation performance, not with the lowest training loss.
+
+== 22b75428
+<b>Dropout</b> sets some activations to zero at random during training. For predictions, the network uses the related inference-time rule. It does not remove units at random in the same way.
+
+== 35e90686
+<b>Data augmentation</b> makes realistic variations of the data, for example small shifts of digit images. Do not use a transformation that changes the correct label.
+
+== d0782ace
+Regularization does not always make the result better. A bigger model is not automatically overfit. Compare learning curves, and do good experiments again with different seeds. Report the data split, the preprocessing and the selection procedure together with the accuracy. For more details, see <a href="https://www.deeplearningbook.org/contents/regularization.html" target="_blank" rel="noopener">Goodfellow, Bengio and Courville, Chapter 7</a>.
+
+== 1d16f502
+Open <a href="https://playground.tensorflow.org/" target="_blank" rel="noopener">TensorFlow Playground</a>. At the start, use only the raw inputs <span class="math">x_1</span> and <span class="math">x_2</span>. Engineered inputs such as <span class="math">x_1^2</span> can make a nonlinear pattern separable without a hidden layer. Do not change the dataset, the noise and the split. Compare one unit, one hidden layer with some units, and a deeper network. Before training, predict the boundary. Then examine it. This activity prepares you for the graded Playground exercises below.
+
+== b48dd9ae
+Then increase the noise, and compare the training loss and the test loss. At the end, change only one of these: the learning rate, the activation or the regularization. Explain what changed: the representation, the optimization or the generalization. One run does not show a “minimum network” for spirals that is always correct. The initialization, the learning rate, the features and the accuracy criterion change the answer.
+
+== 8fb2fca4
+A fully connected layer uses a separate input connection for each pixel position. But a small pattern, for example the corner of a stroke, can occur in many positions. A <b>convolutional layer</b> uses the same learned filter at different locations in the image. Local connections and shared weights contain a useful assumption: the same local pattern can be important at all positions.
+
+== 990cf9b1
+A filter multiplies a small patch of the image element by element. Then it adds the results, and usually also a bias. For the patch and the filter below, with zero bias, the result is <span class="math">1 - 4 = -3</span>:
+
+== 35623948
+When the filter moves over a larger image, it makes a feature map. Technically, this usual deep-learning operation is cross-correlation. But software usually calls the layer a convolution.
+
+== 234bd0b4
+<b>Compare the parameters:</b> an RGB filter with the height 3 and the width 3 has <span class="math">3 \times 3 \times 3 + 1 = 28</span> parameters, with its bias. Sixteen of these filters have 448 parameters. This number does not change with the number of locations where you apply them. But the feature maps can still be large. Thus, fewer parameters does not mean very little computation or memory.
+
+== 8bc79cc5
+The <b>stride</b> controls the distance that the filter moves between two locations. <b>Padding</b> adds a border, to control the output size. Pooling makes a summary of each local area and decreases the spatial resolution. Convolutions with a stride larger than 1 can also decrease the resolution. These operations can make the network more tolerant of small shifts. But a CNN is not automatically invariant to all translations, rotations or changes of the viewpoint.
+
+== 1870c0ff
+A typical CNN for digits learns some feature maps, combines them in later layers and gives class scores. Early filters can react to simple strokes. Later patterns can combine evidence from larger areas. This is an architectural bias (an assumption in the design). It does not make sure that each hidden unit has a clear meaning for people. <b>Connection to Week 5:</b> Vision Transformers use image patches and attention, not exactly this design with local filters. When you understand CNNs, you can understand this difference.
+
+== 0234d297
+The identifier (ID) of a word or token is arbitrary. If “cat” has the ID 12 and “dog” has the ID 13, their meanings are not similar because the numbers are near. A one-hot encoding does not have this incorrect sequence. But it uses one coordinate for each item in the vocabulary. An <b>embedding table</b> gives each item a learned vector with a dimension that you select. When you look up a token, you select one row of this table.
+
+== a8465248
+A vocabulary of 10,000 tokens with 50-dimensional embeddings has 500,000 embedding parameters. The training task gives the signal that moves these vectors. Thus, context prediction, classification and recommendation can learn different types of similarity. The vectors do not get their meaning from the names of their coordinates. If you rotate the full space, the geometry between the pairs of vectors stays the same.
+
+== c9cc68c7
+For example, <span class="math">u = (1, 0)</span> and <span class="math">v = (1, 1)</span> have the cosine similarity <span class="math">1/\sqrt{2} \approx 0.707</span>. A value near 1 shows similar directions. It does not always mean that you can use one word in place of the other. Antonyms (words with opposite meanings) can occur in the same contexts, and their vectors can be near. Similarity is a learned association. It is not a universal measure of meaning.
+
+== ab1496a8
+Static embeddings give “bank” one vector, also when it means a river bank or a financial institution. Contextual networks calculate a different representation for each occurrence. The drawing above shows an example of a projection. It is not measured evidence that categories of meaning make tidy two-dimensional clusters. Embeddings can also show the biases or the gaps in their training data.
+
+== 56538d64
+“The dog chased the child” and “The child chased the dog” have the same words, but they describe different events. If you calculate the average of static word embeddings, you lose this sequence. A recurrent neural network (RNN) processes a sequence. It updates a hidden state again and again:
+
+== 9739c731
+It uses the same parameters at all positions. The hidden state depends on the inputs before the current position.
+
+== cb66af13
+The state is a learned summary. It is not a perfect memory. Through long sequences, the gradients can become very small or very large. Thus, it is difficult to learn dependencies over long distances. Gated architectures such as LSTMs and GRUs solve parts of this problem, but not all limits. This is an introduction to the concepts. You do not have to implement the gates this week.
+
+== 0bfae681
+<b>Bridge to attention:</b> an RNN must send each important detail through one recurrent state. Attention does not do this. It lets a representation combine information from selected positions. In <a href="../week5/">Week 5</a>, query–key scores set these combinations. Transformers also need information about positions, because a set of token vectors alone does not show the sequence. CNNs, RNNs and attention use different assumptions about how to combine information. They are not only larger and larger versions of the same model.
+
+== 7689f661
+Representation learning does not have to predict a class. An <b>autoencoder</b> changes an input into a code with an encoder, <span class="math">z = \operatorname{encoder}(x)</span>. Then it makes the input again (it reconstructs it) with a decoder, <span class="math">\hat{x} = \operatorname{decoder}(z)</span>. The training target comes from the input. It is not a digit category that a person gives. A reconstruction loss measures the difference between the original data and the reconstructed data.
+
+== ef2e352d
+A bottleneck (a small code), a denoising objective or another constraint can prevent simple copying. For example, a 16-dimensional code must make a summary of a 784-dimensional image in a small space. This code can keep the style of the strokes and the identity of the digit, because both help the reconstruction. It is not always the best representation for classification. A network that is very flexible and has no constraints can learn the identity mapping (it only copies the input), which is not useful.
+
+== 32eaf6ad
+A standard autoencoder <b>does not automatically make realistic new images</b>. Random points in its code space can give bad images after the decoder. Models such as variational autoencoders add more structure, so that sampling works. Here we introduce the ideas of encoder–decoder and latent code, before the generative models of Week 5. The graded autoencoder exercise stays in <a href="../week5/#exercises">Week 5</a>.
+
+== 0fba12f5
+Calculate a perceptron prediction and one update, with the bias.
+
+== f1deb65d
+Explain XOR. Explain how a hidden representation makes a new separation possible.
+
+== 5920a06d
+Follow one forward pass. Tell the difference between logits, the output activation and the loss.
+
+== 52e88db0
+Use the chain rule in a very small network. Explain why the learning rate is important.
+
+== 3e10e1d7
+Tell the difference between a mini-batch update and an epoch. Also tell the difference between backpropagation and optimization.
+
+== 0e7282c8
+Read learning curves. Describe an evaluation procedure without leakage (no information from the test data goes into the training).
+
+== 43dbdc2a
+Compare dense layers, local shared filters and a recurrent state at the level of concepts.
+
+== 3c5685d4
+Explain what an embedding and an autoencoder learn. Give one limit of each.
+
+== 6355cd6e
+Parameters are the learned weights and biases. Hyperparameters include the layer sizes, the learning rate and the regularization strength. The architecture sets a family of computations. Training selects the parameters in this family. Good training performance alone does not show generalization, understanding of meaning or a deployment that people can trust.
+
+== ae04f80a
+<b>Core visual companion:</b> <a href="https://www.3blue1brown.com/topics/neural-networks" target="_blank" rel="noopener">3Blue1Brown's neural-network series</a>. Use its pictures of networks and gradients together with the numerical calculations. Do not use them in place of the calculations.
+
+== 018639c1
+<b>MLPs and derivatives:</b> Zhang et al., <a href="https://d2l.ai/chapter_multilayer-perceptrons/index.html" target="_blank" rel="noopener">Dive into Deep Learning, Multilayer Perceptrons</a>. The sections about forward and backward propagation and about numerical stability give more details.
+
+== 038428e9
+<b>Mathematical reference:</b> Goodfellow, Bengio and Courville (2016), <a href="https://www.deeplearningbook.org/" target="_blank" rel="noopener">Deep Learning</a>, Chapters 6 (feedforward networks), 7 (regularization), 8 (optimization), 9 (CNNs), 10 (sequences) and 14 (autoencoders). These chapters are optional references. You do not have to read all of them.
+
+== 2b624cac
+<b>Implementation:</b> <a href="https://scikit-learn.org/stable/modules/neural_networks_supervised.html" target="_blank" rel="noopener">scikit-learn's supervised neural-network guide</a> explains scaling, solvers and what an iteration is. <a href="https://www.tensorflow.org/tutorials/quickstart/beginner" target="_blank" rel="noopener">TensorFlow's beginner quickstart</a> helps with the activation exercise below.
+
+== be30d0e3
+<b>Word vectors:</b> Pennington, Socher and Manning (2014), <a href="https://aclanthology.org/D14-1162/" target="_blank" rel="noopener">GloVe: Global Vectors for Word Representation</a>. The embedding exercise uses this model family.
 
 == be5c5cff
 <b>Open the TensorFlow Playground:</b><br> Go to <a href="https://playground.tensorflow.org" target="_blank" rel="noopener">TensorFlow Playground</a> in your web browser.
@@ -102,8 +377,8 @@ Try different network architectures, until one of them classifies the data corre
 == 70f12213
 Increase the number of neurons and layers in small steps, until the network classifies the spirals correctly.
 
-== 54ca139a
-What is the minimum number of layers and neurons that classify the spirals accurately?
+== dea5c237
+In your runs, what is the smallest network (layers and neurons) that classified the spirals accurately? Write down the inputs, the learning rate and the test loss. The answer depends on them, so one run does not show a minimum that is always correct.
 
 == e7a5c44b
 <b>Task 2: Change the Activation Function and the Learning Rate</b>
@@ -129,14 +404,14 @@ Increase the regularization strength. Look at the effects on training.
 == 3fffff7b
 Now you train a perceptron on a computer, not on paper. We use <code>MLPClassifier</code> from scikit-learn. One call to <code>.fit()</code> does the full training loop for you: the forward pass, the loss, the backward pass and the weight update. These are the same parts that you read about. The library only connects them for you.
 
-== cef69f4c
-Use the MNIST digit data. The code loads MNIST with <code>sklearn.datasets.fetch_openml("mnist_784")</code>. You can also use <code>mnist-x.data</code>/<code>mnist-y.data</code> from <a href="../files/tests/Perceptron.zip">Perceptron.zip</a>. These are 6,000 images, and their pixels are already 0 or 1, so do not divide by 255. If you use these files, divide them into a training set and a test set:
+== d2f30083
+The full setup below downloads MNIST and scales its pixels. It selects a fixed subset of 10,000 images and makes separate training, validation and test splits. The first download needs an internet connection. You can also use the local data in <a href="../files/tests/Perceptron.zip">Perceptron.zip</a>. Then change the loading step, and check the pixel encoding before you scale. The 6,000 images in <code>mnist-x.data</code> already have the pixel values 0 and 1, so do not divide them by 255. Use the validation split for the comparisons below. Keep the test split for the last configuration that you select:
 
-== 410f6991
-Run the code above with no changes. Write down the test accuracy.
+== 1ca11c5e
+Run the code above with no changes. Write down the validation accuracy.
 
-== b2713ef4
-Change <code>hidden_layer_sizes=(40,)</code> to <code>(10,)</code>. Then change it to <code>(100, 50)</code> (two hidden layers). Run the code again each time and write down the accuracy.
+== 37d0b964
+Change <code>hidden_layer_sizes=(40,)</code> to <code>(10,)</code>. Then change it to <code>(100, 50)</code> (two hidden layers). Run the code again each time and write down the validation accuracy.
 
 == 9d599743
 Change <code>max_iter=8</code> to <code>50</code>. Keep <code>hidden_layer_sizes=(40,)</code>. Run the code again.
@@ -144,17 +419,20 @@ Change <code>max_iter=8</code> to <code>50</code>. Keep <code>hidden_layer_sizes
 == 9d40c33e
 Write 3–4 sentences. Which change helped most? Which change helped least, or made the result worse? Is this what you expected about network capacity and training time?
 
-== 6de0beef
-With <code>solver="sgd"</code>, each of the 8 iterations (<code>max_iter</code>) is an <b>epoch</b>. An epoch is one pass over the full training set. The code uses mini-batches of 200 images (the default <code>batch_size</code>). For each mini-batch, the network does the steps from the lecture: a forward pass, a loss calculation, a backward pass and a weight update with gradient descent. There are 60,000 training images, so there are 300 weight updates in each epoch. This is more than the perceptron from the start of this week, because the training rule is different. <code>MLPClassifier</code> makes a differentiable loss (cross-entropy) as small as possible. It uses backpropagation to calculate how each weight must change, also the weights of the hidden layer. The perceptron learning rule can train only one layer of weights.
+== ea254d3d
+Select a configuration with the validation results. Train it again on the same training split. Then report its accuracy on the held-out test split, one time only. Do not use the test result to select a different configuration.
+
+== 562edadd
+With <code>solver="sgd"</code>, <code>max_iter=8</code> allows a maximum of eight <b>epochs</b>, not eight parameter updates. Each epoch has many mini-batches. For each mini-batch, the network does a forward pass, a loss calculation, backpropagation and an optimizer update. The splits above have 6,400 training images, 1,600 validation images and 2,000 test images. The default <code>batch_size</code> is 200 images, so one epoch has 32 mini-batches and 32 updates. The MLP learns hidden representations with the gradients of the cross-entropy loss. The threshold perceptron uses a different rule: it changes the weights after each mistake, and it can train only one layer of weights. After only eight epochs, you can get a convergence warning. This warning alone does not mean that the code failed. Before you make conclusions, examine the progress of the learning, for example the training loss of each epoch in <code>clf.loss_curve_</code>.
 
 == 80cc5f01
 Start from the Keras MNIST script in the <a href="https://www.tensorflow.org/tutorials/quickstart/beginner" target="_blank" rel="noopener">beginner quickstart</a> of TensorFlow. It uses the model below. Do not change the model architecture, the training loop or the dataset. You change only one word:
 
-== d92475d6
-Train and evaluate the model three times: with <code>activation='relu'</code> (as in the quickstart), with <code>'tanh'</code> and with <code>'sigmoid'</code>. Keep all other settings the same.
+== 624070b6
+Train the model three times: with <code>activation='relu'</code> (as in the quickstart), with <code>'tanh'</code> and with <code>'sigmoid'</code>. Keep all other settings the same. Give <code>validation_split=0.1</code> to <code>model.fit</code>. Then Keras keeps the last 10% of the training images for validation.
 
-== a86c24e2
-For each run, write down the final test accuracy. Also write down after how many epochs the accuracy becomes stable (it does not increase much from one epoch to the next).
+== ac1a0578
+For each run, write down the final validation accuracy (<code>val_accuracy</code>). Also write down after how many epochs the accuracy becomes stable (it does not increase much from one epoch to the next). Use the test set only for the activation that you select, and only one time. The section <a href="#generalization">Learning the training set is not the same as learning the task</a> explains why.
 
 == 62c315d8
 Write 4–5 sentences. In your runs, which activation trained fastest, and which gave the best accuracy? The lecture explained that sigmoid can have <i>vanishing gradients</i> in deeper networks (the gradients become very small). Does your result with 1 hidden layer agree with this? Or is the network too small to show the effect?
@@ -180,20 +458,17 @@ Bonus · not part of the course
 == 82c3319b
 This section is optional extra material. It is <b>not part of the course requirements</b>: you do not need it for the exercises or the exam.
 
-== 960e1b0c
-<code>MLPClassifier</code> and Keras do the training loop for you, so you do not see it. Here is the full loop, for the XOR problem, which a single perceptron cannot solve. The network has two inputs, a hidden layer with four <span class="math">\tanh</span> units, a sigmoid output and the cross-entropy loss. The backward pass applies the chain rule to one layer after the other, from the loss back to the first weights.
+== 5f852b25
+<code>MLPClassifier</code> and Keras do the training loop for you, so you do not see it. The <a href="#backprop-example">numerical backward pass</a> above applied the chain rule by hand to one hidden unit. Here is the same calculation in matrix form, for the <a href="#xor">XOR problem</a>, which a single perceptron cannot solve. The network has two inputs, a hidden layer with four <span class="math">\tanh</span> units, a sigmoid output and the cross-entropy loss. The backward pass applies the chain rule to one layer after the other, from the loss back to the first weights.
 
-== ad258e93
-Look carefully at the line <code>d_out = (p - y) / len(X)</code>. When the output is a sigmoid and the loss is cross-entropy, the derivative of the loss with respect to the logit of the output is only <span class="math">p - y</span>: the prediction minus the target. All other lines are matrix calculus. A framework such as PyTorch does this matrix calculus for you with automatic differentiation.
+== a851c9ae
+Look carefully at the line <code>d_out = (p - y) / len(X)</code>. Assume that the output is a sigmoid and that the loss is cross-entropy. Then the derivative of the loss with respect to the logit of the output is only <span class="math">p - y</span>: the prediction minus the target. This is the error-times-input form from the <a href="#perceptron-update">perceptron rule</a>. All other lines are matrix calculus. A framework such as PyTorch does this matrix calculus for you with automatic differentiation.
 
-== dac84dc2
-Do two experiments with the code above. First, change the seed to 0. Now the network stops on a plateau (a flat area of the loss), and for two of the four inputs it predicts about 0.5. (In our runs, 19 of 20 seeds solved XOR.) Gradient descent finds <i>a</i> low point, but not always the best low point. Second, give each weight the start value 0.5, not a random number. Now all hidden units calculate the same value and get the same gradient. Thus, they stay the same at all times. The network then works as if it has only one hidden unit, and it cannot solve XOR. A random start breaks this symmetry. The scale of the random start values is also important (Xavier or He initialization). A good scale prevents that the signals in deep networks become too small or too large.
+== d48ac6a9
+Do two experiments with the code above. First, change the seed to 0. Now the network stops on a plateau (a flat area of the loss), and for two of the four inputs it predicts about 0.5. (In our runs, 19 of 20 seeds solved XOR.) Gradient descent finds <i>a</i> low point, but not always the best low point. Second, give each weight the start value 0.5, not a random number. Now all hidden units calculate the same value and get the same gradient. Thus, they stay the same at all times. The network then works as if it has only one hidden unit, and it cannot solve XOR. Random start values break this symmetry, as <a href="#training-loop">Putting the training loop together</a> explains.
 
 == 6ca8e0f3
 A network with one hidden layer can approximate any continuous function on a bounded region as accurately as you want, if it has sufficient hidden units. Cybenko (1989) proved this for sigmoids. Leshno, Lin, Pinkus and Schocken (1993) proved it for each continuous activation that is not a polynomial. People often say that this theorem means "neural networks can learn anything". This is not correct. The theorem does not tell you <b>how many</b> units are necessary (possibly an extremely large number). It does not tell you if <b>gradient descent</b> will find the weights. It also does not tell you how well the result <b>generalizes</b> from a finite training set. In practice, depth is part of the answer: a deep network can represent some functions with few units, but a shallow network needs exponentially many units for them.
-
-== 9cc86c18
-3Blue1Brown, <a href="https://www.3blue1brown.com/lessons/neural-networks/" target="_blank" rel="noopener"><i>But what is a neural network?</i></a>, and the next chapters about gradient descent and backpropagation.
 
 == 7d0dc37b
 Andrej Karpathy, <a href="https://karpathy.ai/zero-to-hero.html" target="_blank" rel="noopener"><i>Neural Networks: Zero to Hero</i></a>: video lectures. They build backpropagation (micrograd) and at the end a GPT, with no existing code.
