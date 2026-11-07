@@ -1459,7 +1459,9 @@ evaluate the selected model on the test set</code></pre>
                 <li>Start with one hidden layer and four neurons.</li>
                 <li>Gradually increase the number of neurons and layers until the network correctly classifies the
                   spirals.</li>
-                <li>What is the minimum number of layers and neurons needed to classify the spirals accurately?</li>
+                <li>What is the smallest network (layers and neurons) that classified the spirals accurately in your
+                  runs? Note the inputs, learning rate and test loss you used: the answer depends on them, so one run
+                  does not establish a universal minimum.</li>
         </ul>
 
               <p><b>Task 2: Adjusting Activation Functions and Learning Rate</b></p>
@@ -1508,20 +1510,30 @@ evaluate the selected model on the test set</code></pre>
         </p>
         
         <p>
-                Run this on the MNIST digit data. The code loads MNIST via
-                <code>sklearn.datasets.fetch_openml("mnist_784")</code>; you can also reuse
-                <code>mnist-x.data</code>/<code>mnist-y.data</code> from
-                <a href="../files/tests/Perceptron.zip">Perceptron.zip</a> (6,000 images
-                whose pixels are already 0 or 1, so skip the division by 255), as long as
-                you split them into training and test sets:
+                The complete setup below downloads MNIST, scales its pixels, fixes a 10,000-image subset and
+                creates separate training, validation and test splits. The first download requires an internet
+                connection. If you instead reuse the local data in <a href="../files/tests/Perceptron.zip">Perceptron.zip</a>,
+                adapt the loading step and check its pixel encoding before scaling: the 6,000 images in
+                <code>mnist-x.data</code> already have pixel values 0 and 1, so do not divide them by 255. Use the
+                validation split for the comparisons below; reserve the test split for the final selected
+                configuration:
               </p>
               <pre class="sh_python code-highlight"><code>from sklearn.datasets import fetch_openml
+from sklearn.model_selection import train_test_split
 from sklearn.neural_network import MLPClassifier
 
+# MNIST download is required on the first run. Use a fixed subset for speed.
 X, y = fetch_openml("mnist_784", version=1, return_X_y=True, as_frame=False)
-X = X / 255.0                   # scale the pixel values from 0..255 to 0..1
-X_train, X_test = X[:60000], X[60000:]
-y_train, y_test = y[:60000], y[60000:]
+X = X.astype("float32") / 255.0
+X_small, _, y_small, _ = train_test_split(
+    X, y, train_size=10000, stratify=y, random_state=1
+)
+X_dev, X_test, y_dev, y_test = train_test_split(
+    X_small, y_small, test_size=0.2, stratify=y_small, random_state=1
+)
+X_train, X_val, y_train, y_val = train_test_split(
+    X_dev, y_dev, test_size=0.2, stratify=y_dev, random_state=1
+)
 
 clf = MLPClassifier(
     hidden_layer_sizes=(40,),   # one hidden layer, 40 neurons
@@ -1531,16 +1543,21 @@ clf = MLPClassifier(
     random_state=1,
 )
 clf.fit(X_train, y_train)
-print("Test accuracy:", clf.score(X_test, y_test))</code></pre>
+print("Validation accuracy:", clf.score(X_val, y_val))
+# After choosing a configuration using validation results only:
+# print("Final test accuracy:", selected_clf.score(X_test, y_test))</code></pre>
 
               <ol>
-                <li> Run the code above as-is and note the test accuracy.
+                <li> Run the code above as-is and note the validation accuracy.
                 <li> Change <code>hidden_layer_sizes=(40,)</code> to <code>(10,)</code>, then to
-                  <code>(100, 50)</code> (two hidden layers). Rerun each and record the accuracy.
+                  <code>(100, 50)</code> (two hidden layers). Rerun each and record validation accuracy.
                 <li> Change <code>max_iter=8</code> to <code>50</code> (keeping
                   <code>hidden_layer_sizes=(40,)</code>) and rerun.
                 <li> In 3–4 sentences: which change helped most, which helped least or hurt, and
                   does that match your intuition about network capacity vs. training time?
+                <li> Select a configuration using validation results, refit it with
+                  the same training split, and report its held-out test accuracy once.
+                  Do not use the test result to select another configuration.
               </ol>
 
               <div class="hint">
@@ -1549,17 +1566,18 @@ print("Test accuracy:", clf.score(X_test, y_test))</code></pre>
                 </div>
                 <div class="hint__body">
                   <p>
-                    With <code>solver="sgd"</code>, each of the 8 iterations (<code>max_iter</code>)
-                    is an <b>epoch</b>, one pass over the whole training set. The data is processed
-                    in mini-batches of 200 images (the default <code>batch_size</code>), and for
-                    each mini-batch the network does exactly what you've seen in lecture: a forward
-                    pass, a loss computation, a backward pass and a weight update via gradient
-                    descent. With 60,000 training images, that is 300 weight updates per epoch.
-                    What makes this more than the perceptron you studied earlier is the training
-                    rule: <code>MLPClassifier</code> minimizes a differentiable loss (cross-entropy)
-                    and uses backpropagation to work out how every weight, including those of the
-                    hidden layer, should change. The perceptron learning rule can only train a
-                    single layer of weights.
+                    With <code>solver="sgd"</code>, <code>max_iter=8</code> permits up to eight
+                    <b>epochs</b>, not eight parameter updates. Each epoch contains
+                    multiple mini-batches, each with a forward pass, loss calculation,
+                    backpropagation and an optimizer update. The splits above hold 6,400 training,
+                    1,600 validation and 2,000 test images; with the default <code>batch_size</code>
+                    of 200 images, one epoch is 32 mini-batches and so 32 updates. The MLP learns
+                    hidden representations using gradients of the cross-entropy loss; the threshold
+                    perceptron instead uses its mistake-driven update rule, which can train only a
+                    single layer of weights. A convergence warning after only eight epochs can be
+                    expected and does not by itself mean that the code failed. Inspect learning
+                    progress, for example the training loss of each epoch in
+                    <code>clf.loss_curve_</code>, before drawing conclusions.
                   </p>
                 </div>
               </div>
@@ -1598,11 +1616,15 @@ print("Test accuracy:", clf.score(X_test, y_test))</code></pre>
 ])</code></pre>
         
         <ol>
-                <li> Train and evaluate the model with <code>activation='relu'</code> (as in
+                <li> Train the model with <code>activation='relu'</code> (as in
                   the quickstart), <code>'tanh'</code>, and <code>'sigmoid'</code> — three separate
-                  runs, everything else identical.
-                <li> Record the final test accuracy and how many epochs it took to visibly
-                  "settle" (stop improving much epoch to epoch) for each.
+                  runs, everything else identical. Pass <code>validation_split=0.1</code> to
+                  <code>model.fit</code>, so that Keras keeps the last 10% of the training images
+                  for validation.
+                <li> Record the final validation accuracy (<code>val_accuracy</code>) and how many
+                  epochs it took to visibly "settle" (stop improving much epoch to epoch) for each.
+                  Evaluate only the activation you select on the test set, and only once, as in
+                  <a href="#generalization">Learning the training set is not the same as learning the task</a>.
                 <li> In 4–5 sentences: which activation trained fastest/most accurately in your
                   runs? Recall from lecture why sigmoid in particular can suffer from
                   <i>vanishing gradients</i> in deeper networks — does your small 1-hidden-layer
@@ -1671,9 +1693,11 @@ model.most_similar("glass")</code></pre>
           <h2 class="material-heading">Backpropagation by hand: XOR in NumPy</h2>
 
           <p>
-            <code>MLPClassifier</code> and Keras hide the training loop. Here it is in full, for the XOR problem
-            that a single perceptron cannot solve: two inputs, a hidden layer of four <span class="math">\tanh</span>
-            units, a sigmoid output and the cross-entropy loss. The backward pass is the chain rule applied layer by
+            <code>MLPClassifier</code> and Keras hide the training loop. The
+            <a href="#backprop-example">numerical backward pass</a> above applied the chain rule to one hidden unit by
+            hand. Here is the same computation in matrix form, for the <a href="#xor">XOR problem</a> that a single
+            perceptron cannot solve: two inputs, a hidden layer of four <span class="math">\tanh</span> units, a
+            sigmoid output and the cross-entropy loss. The backward pass is the chain rule applied layer by
             layer, from the loss back to the first weights.
           </p>
 
@@ -1703,7 +1727,8 @@ print(p.ravel().round(3))                                         # [0.    0.999
           <p>
             The line <code>d_out = (p - y) / len(X)</code> is worth a second look: for a sigmoid output with the
             cross-entropy loss, the derivative of the loss with respect to the output's logit is simply
-            <span class="math">p - y</span>, the prediction minus the target. Everything else is matrix calculus
+            <span class="math">p - y</span>, the prediction minus the target. This is the error-times-input form
+            mentioned with the <a href="#perceptron-update">perceptron rule</a>. Everything else is matrix calculus
             that a framework like PyTorch does for you with automatic differentiation.
           </p>
 
@@ -1715,8 +1740,8 @@ print(p.ravel().round(3))                                         # [0.    0.999
             Gradient descent finds <i>a</i> low point, not necessarily the best one. Second, start every weight at
             0.5 instead of a random number. Now all hidden units compute the same thing and receive the same
             gradient, so they stay identical forever: the network behaves as if it had one hidden unit, and it
-            cannot solve XOR. Random initialization breaks this symmetry, and choosing its scale well (Xavier or He
-            initialization) keeps the signals in deep networks from fading or exploding.
+            cannot solve XOR. This is the symmetry that random initialization breaks, as described in
+            <a href="#training-loop">Putting the training loop together</a>.
           </p>
 
           <h2 class="material-heading">What the universal approximation theorem says, and what it does not</h2>
@@ -1735,8 +1760,6 @@ print(p.ravel().round(3))                                         # [0.    0.999
           <h2 class="material-heading">Further reading and watching</h2>
 
           <ul>
-            <li>3Blue1Brown, <a href="https://www.3blue1brown.com/lessons/neural-networks/" target="_blank" rel="noopener"><i>But what is a
-              neural network?</i></a> and the chapters that follow on gradient descent and backpropagation.</li>
             <li>Andrej Karpathy, <a href="https://karpathy.ai/zero-to-hero.html" target="_blank" rel="noopener"><i>Neural Networks: Zero to
               Hero</i></a>: video lectures that build backpropagation (micrograd) and finally a GPT from scratch.</li>
             <li>Michael Nielsen, <a href="http://neuralnetworksanddeeplearning.com/" target="_blank" rel="noopener"><i>Neural Networks and Deep

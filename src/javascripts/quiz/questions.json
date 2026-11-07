@@ -694,7 +694,7 @@
           "a probability with Bayes rule"
         ],
         "answer": 0,
-        "explain": "It outputs one class if the weighted sum is positive and the other otherwise: a linear boundary."
+        "explain": "It outputs class 1 when the weighted sum is at least 0 and class 0 otherwise: a linear boundary."
       },
       {
         "q": "A perceptron misclassifies <span class=\"math\">x</span> with label <span class=\"math\">y \\in \\{-1, +1\\}</span>. The update <span class=\"math\">w \\leftarrow w + y\\,x</span>…",
@@ -705,7 +705,7 @@
           "doubles the learning rate for the next example"
         ],
         "answer": 0,
-        "explain": "The score of <span class=\"math\">x</span> changes by <span class=\"math\">y\\, x^\\top x = y \\lVert x \\rVert^2</span>, in the direction of its label."
+        "explain": "The score of <span class=\"math\">x</span> changes by <span class=\"math\">y\\, x^\\top x = y \\lVert x \\rVert^2</span>, in the direction of its label. It is the course rule <span class=\"math\">w' = w + \\lambda (y - \\hat{y})\\, x</span> with <span class=\"math\">\\lambda = 0.5</span>: with labels −1 and +1, a mistake gives <span class=\"math\">y - \\hat{y} = 2y</span>."
       },
       {
         "q": "Why can a single perceptron not learn XOR?",
@@ -752,15 +752,15 @@
         "explain": "tanh runs from −1 to 1 through 0, and ReLU is <span class=\"math\">\\max(0, z)</span>."
       },
       {
-        "q": "<span class=\"math\">\\mathrm{ReLU}(z)</span> equals…",
+        "q": "A training set has 6,000 examples. You train for 8 epochs with mini-batches of 100 examples. How many parameter updates does the optimizer make?",
         "options": [
-          "<span class=\"math\">\\max(0, z)</span>",
-          "<span class=\"math\">1 / (1 + e^{-z})</span>",
-          "<span class=\"math\">z^2</span>",
-          "<span class=\"math\">|z|</span>"
+          "480",
+          "8",
+          "60",
+          "48,000"
         ],
         "answer": 0,
-        "explain": "It is cheap to compute, and its gradient is 1 for every positive input, which helps deep networks train."
+        "explain": "One epoch is one pass over the data: 6,000 / 100 = 60 mini-batches, so 60 updates. Eight epochs give 480 updates."
       },
       {
         "q": "Why can deep networks with sigmoid activations train slowly?",
@@ -815,7 +815,7 @@
           "<span class=\"math\">1</span>"
         ],
         "answer": 0,
-        "explain": "The derivative of the sigmoid cancels neatly, as in the line <code>d_out = (p - y) / len(X)</code> of the Week 4 bonus code."
+        "explain": "The derivative of the sigmoid cancels neatly. This gives the error-times-input form of the update, as in the line <code>d_out = (p - y) / len(X)</code> of the Week 4 bonus code."
       },
       {
         "q": "Every weight of a hidden layer starts with the same value. What happens during training?",
@@ -873,15 +873,15 @@
         "explain": "Word embeddings place words that occur in similar contexts near each other."
       },
       {
-        "q": "In good word vectors, such as the GloVe vectors of this week's exercise, vector(\"king\") − vector(\"man\") + vector(\"woman\") is closest to…",
+        "q": "A convolutional layer has 16 filters of size 3 × 3 over an RGB image (3 channels). How many parameters does it have, including one bias per filter?",
         "options": [
-          "vector(\"queen\")",
-          "vector(\"man\")",
-          "vector(\"kingdom\")",
-          "the zero vector"
+          "448",
+          "432",
+          "28",
+          "It depends on the size of the image"
         ],
         "answer": 0,
-        "explain": "Directions in the embedding space can capture relations such as gender. Such analogies are less tidy than this famous example suggests."
+        "explain": "Each filter has 3 × 3 × 3 = 27 weights and 1 bias, so 28 parameters; 16 filters have 448. The same filters are used at every location, so the image size does not change the count."
       },
       {
         "q": "Word vectors such as GloVe and word2vec are learned from…",

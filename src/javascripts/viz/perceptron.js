@@ -17,7 +17,7 @@ const MIN_GAP = 0.1;
 
 // Labels are -1 and +1, as in the perceptron rule.
 export function makeData(kind, margin = 0.08, count = 36) {
-  // The seeds give well-spread points: 18 per class and convergence in epoch 6 (separable).
+  // The seeds give well-spread points: 18 per class and convergence in epoch 8 (separable).
   const random = createRandom(kind === 'xor' ? 17 : 116);
   const points = [];
   const add = point => {
@@ -58,7 +58,8 @@ export function makeData(kind, margin = 0.08, count = 36) {
 }
 
 export function predict(w, b, point) {
-  return w[0] * point.x + w[1] * point.y + b > 0 ? 1 : -1;
+  // A score of exactly 0 counts as class +1, the convention of the course text (z ≥ 0).
+  return w[0] * point.x + w[1] * point.y + b >= 0 ? 1 : -1;
 }
 
 export default function mountPerceptron(figure) {
@@ -172,7 +173,7 @@ export default function mountPerceptron(figure) {
 
     const point = points[index];
     const z = w[0] * point.x + w[1] * point.y + b;
-    const predicted = z > 0 ? 1 : -1;
+    const predicted = z >= 0 ? 1 : -1;
     const before = { w: w.slice(), b };
 
     if (predicted !== point.label) {
