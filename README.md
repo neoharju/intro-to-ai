@@ -24,7 +24,10 @@ copy is for non-commercial use only.
 
 ## What I changed
 
-Compared with the original `gh-pages` branch (commit `b9dedeb`):
+The course staff's own updates are included up to commit `7947a94` of the original `gh-pages` branch
+(November 2026).
+
+Compared with the original material:
 
 - **Front-end dependencies:** jQuery, Bootstrap, highlight.js and Font Awesome are upgraded and, like the
   Inter font and KaTeX (for the formulas), served from this repository instead of third-party CDNs. The shared
@@ -38,6 +41,10 @@ Compared with the original `gh-pages` branch (commit `b9dedeb`):
   week, from search algorithms and alpha-beta pruning to attention and Q-learning. The figures run the
   algorithms described in the text, in the browser; their code is in `src/javascripts/viz/`.
 - **Practice quiz:** `quiz/` has 20 multiple-choice questions for each week, each with an explanation.
+- **Extra sections on cost and performance:** Weeks 4 and 5 end with optional sections on time and memory
+  complexity (from the perceptron and dense layers to attention and the KV cache) and on performance
+  engineering (arithmetic intensity and the roofline model, number formats, FlashAttention, memory-bound
+  decoding).
 - **Colour themes:** light and dark, following the device's setting by default.
 - **Text size:** normal, large or extra large reading text, from the "Aa" menu in the navigation bar.
 - **Zen mode:** the material without the navigation bar, page header, lecture and deadline boxes and footer
