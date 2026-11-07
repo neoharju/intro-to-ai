@@ -113,8 +113,6 @@
               <li>Naive Bayes and Spam (programming) (2.5p)</li>
             </ul>
             <p>This week's <a href="#exercises">exercises</a> are due at your exercise session in <a href="../week4/">Week 4</a>.</p>
-            <p>The Kaggle competition: Customer Churn is separate and does not count towards the weekly points.
-              You can keep submitting until the last lecture (Fr 11/12).</p>
           </div>
         </div>
 
@@ -1481,7 +1479,7 @@
 				  </p>
 				  <p>
 					<b>Please join the competition here:</b><br>
-					<a class="btn btn-primary" href="https://www.kaggle.com/t/9994c5320ff74f72b036c626a5ecbd33" target="_blank" rel="noopener">Kaggle: Customer Churn</a>
+					<a class="btn btn-primary" href="https://www.kaggle.com/t/565a01105ddb49fa8779202165f5e4a6" target="_blank" rel="noopener">Kaggle: Customer Churn</a>
 				  </p>
 			
 			      <p>
@@ -1500,7 +1498,7 @@
 			
 			      <h2>What to submit</h2>
 			      <p>
-			        Train a model on <code>train.csv</code>. For each row in <code>test.csv</code>, output the probability that the customer will churn. The file must contain two columns named <code>id</code> and <code>Churn</code>. The values of <code>Churn</code> must be probabilities between zero and one.
+			        Train a model on <code>train.csv</code>. For each row in <code>test.csv</code>, output the probability that the customer will churn. The file must contain two columns named <code>ID</code> and <code>Churn</code>. The values of <code>Churn</code> must be probabilities between zero and one.
 			      </p>
 			
 			      <h2>Files</h2>
@@ -1510,19 +1508,21 @@
 			        <li><code>sample_submission.csv</code> the required submission format</li>
 			      </ul>
 			
+			      <div class="alert alert-info"><b>Treat this as a learning opportunity.</b> You could easily solve all the tasks with AI without thinking at all. But if you want to learn something, follow the step-by-step instructions in the baseline notebook and implement things with your own hands: that is far more useful for your learning. <b>So please don't use AI to write the code for this exercise.</b></div>
+
 			      <h2>How to compete</h2>
 			      <ol>
-			        <li>Open the <a href="https://colab.research.google.com/drive/1hGpBZBmPSfoRkrc5CbDpDA-zE5ZWPIZi?usp=sharing" target="_blank" rel="noopener">baseline notebook</a> for instructions and a simple starter model.</li>
+			        <li>Open the <a href="https://colab.research.google.com/drive/1hijpSCNnNG_LuzCFYoLNv12jPAgBc19u?usp=sharing" target="_blank" rel="noopener">baseline notebook</a> for instructions and a simple starter model.</li>
 			        <li>Explore the data, check class balance, and build a clean validation scheme.</li>
 			        <li>Start with logistic regression (you just met it). Later this week you can try a tree or an ensemble and resubmit.</li>
 			        <li>Export predicted probabilities for <code>test.csv</code> in the exact format shown below and submit on Kaggle.</li>
 			      </ol>
 			
 			      <h2>Submission format</h2>
-			      <pre><code class="nohighlight">id,Churn
-			10001,0.137
-			10002,0.842
-			10003,0.023
+			      <pre><code class="nohighlight">ID,Churn
+			0,0.137
+			1,0.842
+			2,0.023
 			...</code></pre>
 			
 			      <h2>Scoring</h2>
@@ -1534,11 +1534,14 @@
 			      </p>
 			
 			      <h2>Points</h2>
+			      <p>The competition is separate and does not count towards the weekly points.</p>
+			      <div class="alert alert-warning"><b>NB:</b> To get points, set your <b>team name</b> on Kaggle (Team tab) to your <b>full name</b> or your <b>University of Helsinki username</b>, so we can identify your submission.</div>
 			      <ul>
 			        <li>Two points: join the Kaggle competition and submit any valid solution.</li>
 			        <li>Five points: finish in the top 5 of the private leaderboard and give a 2-minute presentation of your solution in class. If no one in the top 5 wants to present, the opportunity passes to places 6–10, and so on.</li>
-			        <li>You can keep submitting until the last lecture of the course.</li>
+			        <li>Submissions close Sat 5/12 (end of day, Helsinki time). Final standings and top-5 presentations at the lecture on We 9/12.</li>
 			      </ul>
+			      <p>Questions about the competition: Sergei Smirnov, <a href="mailto:sergei.x.smirnov@helsinki.fi">sergei.x.smirnov@helsinki.fi</a></p>
 			
 			
 			    </div>
@@ -2297,47 +2300,6 @@
           From the perspective of bias and variance, stacking does not have a direct interpretation, as it does not explicitly minimize either component of the error. A well-performing stacking model simply reduces the overall error; this does not mean that both bias and variance decrease, since one of them can grow while their sum falls.
         </p>
         
-        <h2 class="material-heading">
-          Further Reading
-        </h2>
-        
-        <ul>
-          <li>
-            <a href="https://towardsdatascience.com/ensemble-methods-bagging-boosting-and-stacking-c9214a10a205" target="_blank" rel="noopener">
-              Blog post on ensemble methods by Joseph Rocca
-            </a>
-          </li>
-          <li>
-            <a href="https://medium.com/@stevenyu530_73989/stacking-and-blending-intuitive-explanation-of-advanced-ensemble-methods-46b295da413c" target="_blank" rel="noopener">
-              Blog post on stacking and blending by Steven Yu
-            </a>
-          </li>
-        </ul>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-
-        
-        
         <h1 class="material-heading">
           Naive Bayes Classifier
         </h1>
@@ -2472,9 +2434,24 @@
           trees overfit and why ensembles help.
         </p>
         
-        <p>
-          Next week turns to neural networks.
-        </p>
+        <h1 class="material-heading">
+          Further Reading
+        </h1>
+
+        <ul>
+          <li>
+            <a href="https://www.microsoft.com/en-us/research/wp-content/uploads/2006/01/Bishop-Pattern-Recognition-and-Machine-Learning-2006.pdf" target="_blank" rel="noopener">Pattern
+              Recognition and Machine Learning</a>, Christopher Bishop, Springer, 2006.
+          </li>
+          <li>
+            <a href="https://lucykuncheva.co.uk/Combining_Pattern_Classifiers_Methods_and_Algorithms_2nd_ed_Kuncheva%202014-09-09.pdf" target="_blank" rel="noopener">Combining
+              Pattern Classifiers: Methods and Algorithms</a>, Ludmila Kuncheva, Wiley, 2nd edition, 2014.
+          </li>
+          <li>
+            <a href="https://www.stat.uchicago.edu/~lekheng/courses/331/books/James-Witten-Hastie-Tibshirani%20-%20An%20Introduction%20to%20Statistical%20Learning.pdf" target="_blank" rel="noopener">An
+              Introduction to Statistical Learning</a>, James, Witten, Hastie and Tibshirani, Springer, 2013.
+          </li>
+        </ul>
 
         <section class="bonus" aria-label="Bonus material">
           <p class="bonus__badge">Bonus &middot; outside the course</p>

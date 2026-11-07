@@ -165,6 +165,20 @@
         </div>
 
 	        <!-- Teaching content: Episodes 9 to 11 -->
+        <h1 class="material-heading" id="week5-overview">Week 5 overview: from neural networks to foundation models</h1>
+        <p>Week 4 explained how networks compute, learn, and build representations. Week 5 asks how those foundations support modern language, vision, and generative systems. The organizing thread is not a list of model names: it is how a representation gains context, how a reusable model is trained, and how that model is adapted and used.</p>
+        <table class="table">
+          <thead><tr><th scope="col">Part of this week</th><th scope="col">Central question</th><th scope="col">Connection to the next part</th></tr></thead>
+          <tbody>
+          <tr><td>Attention and self-attention</td><td>Which information should each token or position use?</td><td>Queries, keys, and values explain contextual representations and the attention mechanism inside transformers.</td></tr>
+          <tr><td>Transformers, BERT, and GPT</td><td>How do attention, feed-forward layers, residual connections, and training objectives work together?</td><td>Encoder and decoder designs show why a shared family of components supports different tasks.</td></tr>
+          <tr><td>Foundation models and adaptation</td><td>How can broad pretraining support many downstream uses?</td><td>Prompting, retrieval, and fine-tuning offer different ways to connect a model to a task; they are not interchangeable.</td></tr>
+          <tr><td>Multimodal and generative applications</td><td>How do models represent and generate text, images, and other data?</td><td>Latent representations, autoencoders, and GANs provide complementary perspectives on generation and its limitations.</td></tr>
+          <tr><td>Practical exercises</td><td>What do these mechanisms look like when we run and inspect models?</td><td>The existing pipeline, local-model, nanoGPT, and generative activities connect abstractions to observable behaviour.</td></tr>
+          </tbody></table>
+        <p><b>Core route:</b> understand attention intuitively; distinguish encoder-style and autoregressive decoder-style training; explain pretraining versus adaptation; and interpret generation as learned statistical structure rather than guaranteed knowledge. Detailed architecture variants and implementation studies offer further depth. The practical activities retain their existing instructions and assessment requirements.</p>
+        <p><b>Bridge to <a href="../week6/">Week 6</a>:</b> a model can predict or generate without deciding how to act in an environment. Agents add observations, memory, tools, objectives, and an action loop. Reinforcement learning then asks how consequences can improve action over time. This distinction keeps model architecture, learning method, and deployed system separate.</p>
+
         <h1 class="material-heading">Attention and self-attention</h1>
         <p>
           Week 4 introduced embeddings as learned vector representations. A static embedding cannot adapt its meaning
@@ -599,45 +613,28 @@
 	
 	<img src="../img/material/part5/bert_vs_gpt_attention.webp" alt="BERT vs GPT Attention Mechanisms" width="60%">
 	
-	<h2 class="material-heading">Training Nuances</h2>
-	
+	<h2 class="material-heading">Training Transformers: building on Week 4</h2>
+
 	<p>
-	  Unfortunately, if you simply implement a <strong>Transformer</strong> neural network and attempt to train it using 
-	  conventional hyperparameters from other architectures, you are highly likely to encounter failure. 
-	  The optimization process for such models often requires adjustments, and neglecting these details can 
-	  result in significant quality degradation or even unstable training.
+	  The foundations of mini-batches, epochs, learning rates and optimizers are now introduced in
+	  <a href="../week4/#optimization">Week 4</a>. Transformer training uses the same forward, loss, backward and
+	  update loop. Architecture, scale and the task determine the appropriate settings.
 	</p>
 
 	<p>
-	  One critical factor is the <strong>batch size</strong>. Almost all modern Transformer models are trained on 
-	  extremely large batches, sometimes reaching <strong>millions of tokens</strong> in the largest language models. 
-	  Since no modern GPU can handle such large batches in a single step, techniques like 
-	  <a href="https://sebastianraschka.com/blog/2023/llm-grad-accumulation.html#what-is-gradient-accumulation" target="_blank" rel="noopener">
-	  gradient accumulation</a> are commonly used to accumulate gradients over micro-batches before performing an update.
-	</p>
-	
-	<p>
-	  Smith et al. (2018) also suggested <a href="https://openreview.net/forum?id=B1Yy1BxCZ" target="_blank" rel="noopener">
-	  increasing the batch size dynamically</a> during training, and large language models are often trained with a batch size
-	  that grows during the first part of training. The idea is that during early training stages, 
-	  making more frequent gradient descent steps is crucial, while in later stages, it is more important 
-	  to have an accurate gradient estimation.
+	  Large models may use <b>gradient accumulation</b>: compute gradients on several smaller micro-batches and
+	  combine them before one optimizer update. This can approximate a larger effective batch when one batch will
+	  not fit in memory, provided loss scaling and averaging are handled consistently.
 	</p>
 
-	<img src="../img/material/part5/batches_BLEU.webp" alt="batches BLEU" width="60%">
-	
 	<p>
-	  Another crucial factor is the choice of <strong>optimizer</strong> and <strong>learning rate schedule</strong>. 
-	  Training a Transformer with standard <strong>SGD</strong> is highly unlikely to succeed. 
-	  In the original Transformer paper, the <strong>Adam</strong> optimizer was used, and to this day,
-	  Adam, usually in its <strong>AdamW</strong> variant with decoupled weight decay, remains the standard
-	  choice.
-	</p>
-	
-	<p>
-	  However, for large batch sizes, Adam sometimes struggles, leading researchers to use alternatives 
-	  such as <a href="https://arxiv.org/abs/1904.00962" target="_blank" rel="noopener">LAMB</a>, which normalizes weight updates
-	  for each layer to stabilize training.
+	  The original Transformer used Adam with a warm-up and decay schedule. These are design choices rather than a
+	  rule that SGD can never train a Transformer. Batch size, initialization, normalization and the learning-rate
+	  schedule interact. For the original setup and equations, see
+	  <a href="https://arxiv.org/abs/1706.03762" target="_blank" rel="noopener">Vaswani et al. (2017), Section 5</a>.
+	  Today most large Transformers are trained with AdamW, a variant of Adam with decoupled weight decay.
+	  Techniques such as <a href="https://arxiv.org/abs/1904.00962" target="_blank" rel="noopener">LAMB</a> are
+	  examples of research on large-batch optimization, not prerequisites for the exercises in this course.
 	</p>
 
 	<h2 class="material-heading">Transformers Beyond Text</h2>
@@ -1130,6 +1127,14 @@ git checkout 3adf61e1</code></pre>
         </svg>
 
         <h2 class="material-heading">Generative models</h2>
+        <div class="hint"><div class="hint__header"><i class="fa fa-info-circle hint__icon"></i>Connection to Week 4</div>
+          <div class="hint__body"><p>The encoder–decoder and latent-code introduction
+            now appears in <a href="../week4/#autoencoders">Week 4's autoencoder section</a>.
+            Here we extend that foundation to sampling and generative models.
+            Reconstruction by a standard autoencoder alone does not guarantee that
+            random latent vectors produce realistic new samples. The graded
+            autoencoder exercise below remains in Week 5.</p></div></div>
+
 	
 	<p>
 	  Up until now, you have studied machine learning models that primarily predict certain characteristics of objects, 
@@ -1888,3 +1893,4 @@ print(output[1].round(3))    # bank's output:  [0.683 0.097]</code></pre>
 </body>
 
 </html>
+

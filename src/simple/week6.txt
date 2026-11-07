@@ -5,6 +5,9 @@ Bring these to <b>your exercise session this week</b>: <a href="../week5/#exerci
 == eb0fb33a
 Bring the <a href="#exercises">exercises</a> of this week to your exercise session in <a href="../week7/">Week 7</a>.
 
+== 49727c2f
+The <a href="../week3/#exercises">Kaggle competition: Customer Churn</a> closes on <b>Sat 5/12</b> (end of the day, Helsinki time). We show the results at the lecture on We 9/12.
+
 == 36150153
 Objectives (when you complete the course, you ...)
 
@@ -19,6 +22,12 @@ can explain reinforcement learning and multi-agent systems at the level of conce
 
 == 12655c74
 can discuss alignment at the level of concepts
+
+== de6243e6
+Week 5 examined how neural models represent context, generate content and adapt to tasks. A capable model is not yet a complete agent. Someone must decide what the model can do, how it interprets observations, how it selects actions and when it must stop. This week studies this larger system. Our example for the full week is a delivery robot on a campus. We compare it with agents that play games and with language models that use tools.
+
+== c93ed860
+These questions are connected. But they are not a recipe that each agent must implement completely. A rule-based controller possibly does not learn. A planner can use a known model. An LLM agent can use tools without online RL. The core learning goal is this: explain these differences, and solve a small sequential decision problem step by step. The linked research papers and the advanced families of algorithms give optional depth. The ethics material later in the course examines the wider questions of goals, responsibility and human authority.
 
 == 7afffc79
 An <b>agent</b> is a system that perceives an environment and does actions in it. This definition includes a thermostat, a chess program, a delivery robot and an LLM that selects tools. The important change is this: the system does not only predict an answer. It selects an action, and the results of the action change what occurs next. Thus, an agent works in a loop: it observes, it updates an internal state, it selects an action and it observes the result.
@@ -43,6 +52,9 @@ Chess is fully observable and discrete, but it is adversarial and sequential. Dr
 
 == 83a10fc3
 A language model changes a context into probable tokens. An agentic system puts such a model in a loop with memory, tools, an action policy, observations and stop conditions. The model can propose an action. The system around it validates the action and executes it. A call to an API is not intelligent by itself. It increases what the system can change. Thus, the system needs more permissions control, monitoring and recovery.
+
+== 40e5732b
+<b>Reading:</b> <a href="https://aima.cs.berkeley.edu/" target="_blank" rel="noopener">Russell and Norvig, Artificial Intelligence: A Modern Approach, 4th ed., Chapter 2</a>. This chapter explains the agent framework, PEAS and the classification of environments that we use here.
 
 == 6b65dd20
 A <b>simple reflex agent</b> uses condition–action rules: if the temperature is low, turn on the heating. It is fast, but it fails when the current observation does not show everything that is relevant. A <b>model-based agent</b> keeps an internal state, for example an estimate of where a robot is. It updates this state when new observations come. A <b>goal-based agent</b> evaluates actions by whether they reach a wanted state. It often uses search or planning. A <b>utility-based agent</b> compares trade-offs between outcomes, for example speed, safety, energy and comfort. A <b>learning agent</b> changes its behaviour from data or experience. Real systems usually combine these ideas. They do not fit in only one class.
@@ -95,107 +107,113 @@ Says that it was successful but does not check the result
 == f47fe4ae
 Web content changes the goal of the agent
 
-== eae748ef
-In supervised learning, each training example usually gives a target answer. In <b>reinforcement learning (RL)</b>, an agent interacts with an environment. At time <span class="math">t</span>, it observes the state <span class="math">s_t</span> and selects the action <span class="math">a_t</span>. It gets the reward <span class="math">r_{t+1}</span> and moves to a new state <span class="math">s_{t+1}</span>. A <b>policy</b> specifies how the agent selects actions. The objective is usually not the next reward. It is the expected <b>return</b>: the sum of the future rewards. The return is often discounted, so that rewards far in the future count less. With a discount factor <span class="math">\gamma</span> between 0 and 1, the return from time <span class="math">t</span> is
+== 7ddf8a60
+<b>Research example:</b> <a href="https://arxiv.org/abs/2210.03629" target="_blank" rel="noopener">Yao et al. (2023), ReAct</a>, studies language-model systems that change between reasoning steps and actions. It shows an architecture. It does not make sure that the reasoning is reliable or that the execution is safe.
 
-== 12fd73cc
-The main difficulty is that results come later. A chess move does not get a label immediately that says whether it was good. Its value can become clear many moves later. RL must give credit to the correct steps along a trajectory. In a <b>Markov decision process</b>, we assume that the state contains the information that is necessary to predict the distributions of the next state and the reward. This abstraction is powerful. But real observations are often partial, so memory or an estimate of a belief state becomes necessary.
+== b1333740
+The agent architectures above explain how a system can select and execute actions. But they do not explain how it learns which actions to select. A controller that a person wrote, or a planner that gets a model, can act without reinforcement learning. We introduce <b>RL</b> when we want to make the behaviour better from the results of interaction. Then we do not have to give the correct action for each situation.
 
-== 51de70ef
-We can describe a finite Markov decision process with states, actions, transition probabilities, rewards and a discount factor. The transition model gives the probability of each next state after an action. The reward model gives immediate numerical feedback. The discount factor sets how important future rewards are. A <b>policy</b> maps a state (or a history of observations) to a distribution over actions. Learning tries to find a policy with a high expected return. Planning calculates a policy when a sufficiently accurate model of the environment is already known.
+== 82b4af32
+Look at our delivery robot on the campus. At a junction, it can take a short route with many people or a longer quiet route. Possibly it must also charge its battery before it accepts another delivery. Usually, no labelled example tells which action is best at each moment. Also, the action of the robot changes the situations that it will find later. Thus, the problem is different from the classification of a fixed image. When the robot selects an action, it also changes its future data and opportunities.
 
-== f494905d
-The Markov assumption does not mean that history is never important. It means that the selected state representation contains a summary of the relevant history. The physical location of a delivery robot is not sufficient if the battery level, the payload, the direction of the traffic and the current reservation also change what occurs next. If important information is hidden, the agent can keep a <b>belief state</b>: a probability distribution over the possible real states. This connects RL to the probabilistic reasoning from earlier in the course.
+== 64b8c41f
+Because results can come late, <b>credit assignment</b> is important (to find which action caused a result). When the battery of a robot becomes empty, the important mistake was possibly some actions before, when the robot went past a charger. A chess move can change a game where the reward comes only at the end. The learning problem is to connect actions with the results that come after them. It is not sufficient to reward only the last action before a success.
 
-== cf783a41
-<b>Value functions</b> estimate the long-term return. The action-value function <span class="math">Q(s, a)</span> asks this question: if I do action <span class="math">a</span> in state <span class="math">s</span> and then continue with a policy, how much return can I expect? Q-learning moves an estimate toward the observed reward plus the best estimated value of the next state. In words: <b>new estimate ← old estimate + learning rate × (better target − old estimate)</b>. In symbols, with the learning rate <span class="math">\alpha</span> and the discount factor <span class="math">\gamma</span>:
+== 569d4952
+Before we select a learning algorithm, we need a precise description of the decision problem. Which information defines a situation? Which actions are possible? What changes after an action, and which result is good? A <b>Markov decision process (MDP)</b> puts these questions into one model. It is a framework to state a problem. It is <em>not</em> a learning algorithm, and it is not a type of neural network.
 
-== c926155d
-The “better target” has two parts: the reward that the agent just observed, and the estimated value of the best action <span class="math">a'</span> in the next state <span class="math">s'</span>. This is the Bellman idea: the value of a decision is the immediate result plus the value of what becomes possible after it. With many updates, the information about rewards far away moves back through the states that the agent visited before. Q-learning is <b>model-free</b>, because it does not first estimate the full transition model.
+== 2f77d99d
+A usual discounted formulation describes the task with <span class="math">(S, A, P, R, \gamma)</span>. It also has a distribution of start states and the rules for the end of an episode. Rewards can be random (stochastic). More generally, the model gives a joint distribution of the next state and the reward. When we write down these elements, the robot does not have to know their probabilities already. The elements describe what the environment does. An algorithm can have access to this model, estimate it, or learn without an explicit representation of it.
 
-== e87e4632
-<b>Model-based RL</b> is different. It learns or uses a model of how the environment changes, and then it plans with that model. It can need less data, because imagined experience adds to the real interaction. But the planner can use errors in the model. <b>Policy-gradient</b> methods optimize a parameterized policy directly. This is useful for continuous actions. <b>Actor–critic</b> methods combine an actor, which selects actions, and a critic, which estimates the value. These families are technically different, but they solve the same main problem: how to make sequential decisions better from evaluative feedback.
+== 9cc9b05f
+The <b>Markov assumption</b> is about the distributions of the next state and of the reward. When we know the current state and action, these distributions do not need the full history. Thus, the definition of the state is important. The location alone is not sufficient if the result of a move also depends on the remaining battery charge. When we add the battery charge to the state, the representation gives more information. Thus, “Markov” does not mean that the past is not important. It means that the state contains a summary of the past information that this prediction needs.
 
-== f2c3556b
-The discount factor controls the weight of future rewards. The learning rate controls how quickly new evidence replaces old estimates. Deep RL uses neural networks to approximate values or policies for large state spaces. But the training can be unstable and can need very much data.
+== 2a37c395
+<b>The state is not the same as the observation.</b> A camera image can hide a pedestrian behind a door. It possibly does not show how slippery a path is. For these cases, we use a partially observable model, frequently a POMDP. The agent can act with its history of observations, with a learned memory or with a <b>belief state</b>: a distribution over the possible true states. This connects to the material about probabilistic reasoning from earlier weeks. For the first numerical example, we assume on purpose a small state space that the agent can observe.
 
-== e65e4f04
-The agent is one step from the goal. A move to the right gives the reward 10 and ends the episode. The current estimate is <span class="math">Q(s, \text{right}) = 2</span>, and the learning rate is <span class="math">\alpha = 0.5</span>. The episode ends, so there is no future value to add. Thus, the target is 10, the prediction error is <span class="math">10 - 2 = 8</span>, and the new estimate is <span class="math">2 + 0.5 \times 8 = 6</span>. The estimate moves half of the distance to the result that the agent just observed.
+== 9dc3bcd3
+<b>Reading:</b> Sutton &amp; Barto, <a href="#agents-reading">Reinforcement Learning: An Introduction</a>, Chapter 3, gives the MDP formulation. Russell &amp; Norvig, Chapters 16–17, connect utility and sequential decisions. An MDP is suitable for one decision-maker. You can use it for chess against an opponent with a fixed policy. But when the players adapt to each other (strategic interaction), you need game-theoretic or multi-agent models.
 
-== c63e7892
-Now look at an earlier state. A move to the right gives the immediate reward 0. It goes to the state whose best estimated action has the value 6. With the discount factor <span class="math">\gamma = 0.9</span>, the target is <span class="math">0 + 0.9 \times 6 = 5.4</span>. The old estimate was 1, and the learning rate is still 0.5. Thus, the new estimate is <span class="math">1 + 0.5 \times (5.4 - 1) = 3.2</span>. In this way, the information about the goal moves back one transition at a time. With much experience, the agent finds which actions only look good and which actions reliably give a long-term reward.
+== 8c4ef441
+When the task is specified, we can state what the agent must learn. A <b>policy</b> specifies how the agent selects actions. In a fully observed MDP, we frequently write it as <span class="math">\pi(a \mid s)</span>. A deterministic policy selects one action for a state. A stochastic policy gives probabilities. The policy is the rule for the behaviour. It is different from the transition model, which describes how the environment responds.
 
-== 917e6920
-The current expected return for the selected action
+== c6d306eb
+The objective is the expected <b>return</b>, not only the next reward. For a discounted episode, the return from the time <span class="math">t</span> is
 
-== ee189ae8
-The reward that the agent observed after the action
+== a755fb81
+until the episode ends. With <span class="math">\gamma = 0</span>, only the next reward is important. Values nearer to 1 give more weight to later results. Some finite episodic formulations use <span class="math">\gamma = 1</span>. Discounting is a modelling decision. It does not replace safety constraints.
 
-== 38f5fa56
-The discounted value that is available next
+== 346cdd92
+<b>Worked comparison:</b> a short route gives the rewards −1 and then +10. A longer route gives −1, −1 and then +10. With <span class="math">\gamma = 0.9</span>, their returns from the start are <span class="math">-1 + 0.9 \times 10 = 8</span> and <span class="math">-1 - 0.9 + 0.9^2 \times 10 = 6.2</span>. With these assumptions, the first route is better. If the first route has a large probability of an expensive failure, the comparison must include this uncertainty. The return makes the comparison explicit. But it does not tell which reward design is ethically acceptable.
 
-== 83f52c7d
-The immediate reward plus the estimated future value
+== 04bb47ec
+<b>Check your understanding:</b> charging costs time now. Why can it be rational for the robot to charge? Because the charge makes later rewards possible that the robot cannot get with its current battery charge. You must think about the state, the transition dynamics and the return together.
 
-== 8bb09f65
-The target minus the current estimate
+== 7d84b201
+If the agent knows the transitions and the rewards, it can <b>plan</b>: it calculates the results of the possible actions. Dynamic programming is one family of methods that solve known finite MDPs. If the model is not known, the agent must learn from experience. <b>Model-based RL</b> estimates a model and uses it to plan. <b>Model-free RL</b> learns values or a policy. It does not first build an explicit transition model.
 
-== 90bd5be5
-The old value plus the learning rate times the error
+== a6c88553
+This distinction prevents a usual confusion: when we use an MDP, we do not have to use model-based RL. Q-learning can work in an MDP, and it learns directly from sampled transitions. Also, a system can solve a given MDP with planning, without learning from new interaction. Thus, the search methods from earlier weeks and RL are related tools. They are not two names for the same thing.
+
+== 86c6decc
+It is expensive to compare all possible future routes from the start. A <b>value function</b> gives a summary: the expected return from a state when the agent follows a policy. The action-value function <span class="math">Q_\pi(s, a)</span> gives the return that we expect if the agent takes the action <span class="math">a</span> in the state <span class="math">s</span> and then follows <span class="math">\pi</span>. The optimal action-value function <span class="math">Q^*(s, a)</span> assumes that the agent continues optimally. Always know which policy you evaluate. A good state can have a low value if the policy after it is bad.
+
+== a00122c7
+The <b>Bellman principle</b> divides the long-term value into two parts: the immediate reward and the discounted value of what comes after. For example, for a policy,
+
+== 0783abfb
+The expectation includes the action that <span class="math">\pi</span> selects and the uncertain transition. This recursive relation is useful, because it connects decisions that are next to each other. We do not have to look at each full trajectory as a separate object.
+
+== 006b8f34
+Now we introduce Q-learning, because it changes this relation into a simple update from experience. It is a concrete example: the agent learns to compare actions when it does not have the full transition model. This gives the reason for the method before we show its formula.
+
+== 58db00c5
+For a small discrete task, keep one estimate for each state–action pair in a Q-table. After the agent takes the action <span class="math">a</span> in the state <span class="math">s</span>, it observes the reward <span class="math">r</span> and the next state <span class="math">s'</span>. Calculate the target <span class="math">r + \gamma \max_{a'} Q(s', a')</span>, and move the old estimate toward it:
+
+== f187afd7
+The term in brackets is the <b>temporal-difference (TD) error</b>. The learning rate <span class="math">\alpha</span> controls the size of the update. <span class="math">\gamma</span> controls the weight of later rewards. They have different functions. At a true terminal state, the value of what comes after is zero. When an episode stops because of a time limit, this is not always a terminal event. Thus, an implementation must make a distinction between the two cases.
+
+== dbc369f8
+In a state next to the goal, a move to the right gives the reward 10, and the episode ends. If the old Q-value is 2 and <span class="math">\alpha = 0.5</span>, the target is 10, and the new estimate is <span class="math">2 + 0.5\,(10 - 2) = 6</span>. Now look at the state before it. There, a move to the right gives the reward 0 and goes to the state whose best estimate is 6. With <span class="math">\gamma = 0.9</span>, the target is 5.4. If the old estimate is 1, the update gives <span class="math">1 + 0.5\,(5.4 - 1) = 3.2</span>.
+
+== d180de8b
+This is how information about a later goal can change the estimate for an earlier action. The intermediate estimate 6 is not the true terminal reward. It is the current estimate after one update, and more experience can change it. The convergence guarantees for tabular Q-learning need assumptions, for example sufficient exploration and suitable learning rates. They are not automatically true for all neural-network approximations.
 
 == 793733bc
 The agent starts at the bottom left. The goal gives +10 and the pit gives −10. Both end the episode. All other moves give 0. Each move updates one Q-value with the rule above. The learning rate starts at 0.5 and the discount at 0.9, as in the worked example. With the probability ε, the agent selects a random action. Otherwise it selects the best known action. Look at how the information about the goal moves back, one transition at a time.
 
-== f0af15a0
-Clear comparison of actions; good for discrete actions
+== 73f35a47
+<b>Primary reference:</b> Watkins &amp; Dayan (1992), <a href="https://doi.org/10.1007/BF00992698" target="_blank" rel="noopener">Q-learning</a>. For a textbook explanation with examples, see Sutton &amp; Barto, Chapter 6.
 
-== 3ec55442
-Difficult for large continuous action spaces
+== c8b87030
+The robot cannot learn which route is better if it always takes the route that looks best at the start. <b>Exploitation</b> uses the current knowledge. <b>Exploration</b> collects information that can make future decisions better. An <span class="math">\varepsilon</span>-greedy behaviour rule usually selects an action that is best now. But with the probability <span class="math">\varepsilon</span>, it selects a random action to explore. Exploration is a property of the data collection. It is not an extra reward label.
 
-== be311edf
-Works with stochastic and continuous policies
+== c59710ec
+Random exploration is acceptable in a small simulator. But near people or expensive equipment, it can be dangerous. Then you can need constrained actions, simulation, demonstrations and human oversight. Also examine the reward. If the reward is for the distance that the robot travels, not for successful deliveries, the robot can learn to move without a purpose. A reward with a precise specification can still contain the wrong goal. For concrete problems with reward design and safe exploration, see <a href="https://arxiv.org/abs/1606.06565" target="_blank" rel="noopener">Amodei et al. (2016)</a>.
 
-== d9e6d17d
-The gradient estimates can have a high variance
+== fbfb18c5
+Q-learning is a starting point. It is not the only method to learn actions. The next table puts the methods into groups, by what they represent and update. These groups overlap. For example, an actor–critic method can use a learned model, and a value-based method can use a neural network.
 
-== 10d9de3b
-The critic can make the policy learning more efficient
+== 89a1483c
+<b>On-policy and off-policy</b> is a different distinction. On-policy methods learn about the policy that makes their data. Off-policy methods can learn about a different target policy. The update of Q-learning uses a greedy continuation, also when an exploratory action made the transition. Thus, the agent can use past experience again. But this does not make all logged datasets sufficient for reliable learning.
 
-== 7fe855fc
-Two connected learners can become unstable
+== 06f4a756
+<b>Deep RL</b> uses a neural network to approximate a value function, a policy or a model, when a table is not practical. The ideas of representation learning from Weeks 4–5 now support actions, not only classification or generation. Training is still difficult. Observations that follow each other are correlated. The estimated targets change during learning. One parameter update can change many states. Replay buffers and target networks help in methods such as DQN. They are methods for specific algorithms. Not all RL needs them.
 
-== b5d22d93
-Can plan and use experience again efficiently
+== 548257c7
+<b>Further reading:</b> <a href="https://spinningup.openai.com/en/latest/spinningup/rl_intro.html" target="_blank" rel="noopener">Spinning Up: key concepts</a> and <a href="https://spinningup.openai.com/en/latest/spinningup/rl_intro2.html" target="_blank" rel="noopener">the taxonomy of RL algorithms</a>; Mnih et al. (2015), <a href="https://doi.org/10.1038/nature14236" target="_blank" rel="noopener">Human-level control through deep reinforcement learning</a>. The details of algorithms other than the Q-learning example are optional.
 
-== fe10c02e
-The planning can use errors in the model
+== 64150453
+Week 5 introduced pretrained and adapted language models. A model that learned to predict text does not automatically try to be helpful or follow the intent of a user. Human feedback can give another training signal. People compare outputs, a model learns to predict these preferences, and then we can optimize a policy with this learned reward. This is one family of methods, usually with the name RL from human feedback (RLHF).
 
-== f5f21391
-The difference between <b>on-policy</b> and <b>off-policy</b> learning is also important. An on-policy method evaluates and improves the same policy that makes the current behaviour. An off-policy method can learn about one target policy from experience that a different behaviour policy made. Q-learning is off-policy: the exploring behaviour can do a random action, but the update uses the estimated value of the best next action. This makes experience replay and learning from logged data possible. But the difference between the policy that makes the data and the policy that the agent learns can also cause instability.
+== b5852fe4
+Training with feedback is different from acting as an agent after deployment. A language model can get RL training and later answer without tools. An agent that uses tools can do a plan–act–observe loop, but it does not change its weights during this interaction. Also, preference optimization includes methods that do not use an online RL algorithm. Keep the training method and the deployed architecture separate. Then you do not think that each LLM agent is an RL learner.
 
-== 896644d1
-When a neural network replaces a Q-table, the agent can generalize across observations with many dimensions. But the update is not simple any more: you do not change only one independent entry in a table. A change that improves one state can change the predictions for many other states. Observations that come one after the other are correlated. The target also changes while the network learns. Rare successful trajectories can disappear among many usual failures. Common techniques are experience replay, target networks that update slowly, normalized observations, scaled rewards and parallel environments.
+== 0dd5fe08
+Feedback is also incomplete, and it depends on the social situation. A reward model can show human judgments incorrectly. When we optimize its score, the policy can use these errors. A better match with the preferences does not tell whose preferences are important, or which actions are legitimate. These questions lead to alignment and to the ethics material later in the course.
 
-== d06a05fa
-Sample efficiency is important. Famous results in game playing can need millions or billions of simulated interactions. A physical robot cannot safely repeat so much trial and error. <b>Offline RL</b> learns from a dataset that already exists. <b>Imitation learning</b> starts from demonstrations. <b>Model-based learning</b> makes imagined transitions. <b>Curriculum learning</b> gives more difficult situations gradually. Each method decreases some cost. But each method also adds assumptions: about how much of the situations the data covers, about how accurate the model is, or about how good the demonstrator is.
-
-== b6fa03bc
-The evaluation must keep the training return separate from real capability. A policy can memorize a fixed level. It can use a bug in an emulator. It can depend on one exact camera angle. Or it can fail after a small change in the dynamics. A strong evaluation uses initial states that the agent did not see before, changed environments, several random seeds, explicit safety measures and comparisons with simple baselines. The question is not only whether the reward increased. It is also which behaviour gave that reward, and whether that behaviour transfers to other situations.
-
-== 791fe1ee
-An agent has an <b>exploration–exploitation dilemma</b>. It can use the action that it thinks is best now. Or it can try other actions, which can teach it something new. An <span class="math">\varepsilon</span>-greedy policy usually selects the best known action, but sometimes it explores randomly. If the agent explores too little, it keeps its early mistakes. If it explores too much, its performance is not consistent. In real systems, random exploration can be unsafe. Thus, learning can start in simulation, from logged data or with explicit safety constraints.
-
-== e3afa07c
-The reward is not the same as the true goal. An example: a cleaning robot gets points when it detects dirt. It can then decide not to complete the job, so that it can continue to detect dirt. This is <b>reward hacking</b>: the agent finds a behaviour that gets a high score, but the behaviour is not what the designer intended. Good design combines reward shaping with constraints, evaluation in different situations, monitoring for distribution shift and the possibility to stop or correct the behaviour.
-
-== 20290736
-Reinforcement learning is also part of the development of language models. After pretraining, people can compare different responses. A reward model learns to predict these preferences. Then the language model is optimized to give responses that get a higher predicted reward. The usual name for this family of methods is <b>reinforcement learning from human feedback</b> (RLHF). Related methods optimize directly from pairs of preferences (direct preference optimization, DPO), or use feedback that an AI makes (reinforcement learning from AI feedback, RLAIF).
-
-== 018d92a2
-There is a real connection to an RL agent that has a body, but do not make it larger than it is. In a usual conversation, a deployed language model usually does not update its parameters after each response of the user. Most of the reinforcement learning occurred during training. But a tool-using agent does execute a sequential policy at deployment time: it observes results, it changes its next action and it can keep information in external memory. Thus, alignment at training time and agency at deployment time are different layers of the system.
-
-== c0ee784e
-Human preferences are also a proxy that is not perfect. Annotators can disagree. Reward models can be wrong with high confidence outside their training distribution. When you optimize an average preference, you can suppress the correct needs of minorities. Because of these problems, we need different types of evaluation, estimates of uncertainty, red-team tests and limits on actions. A larger reward model is not sufficient. Week 7 discusses the larger questions of ethics and governance. Here, the engineering lesson is this: you must interpret feedback in relation to the task and to the people that it affects.
+== 5bcadbd2
+Until now, we assumed that the transition rules and the reward rules of the environment do not change. When other decision-makers also adapt, the result of an action depends on their decisions and on their learning. Thus, we need a multi-agent view. The delivery robot must negotiate with pedestrians and other robots. It cannot think of them only as fixed obstacles.
 
 == 3a536e02
 When several agents share an environment, the result for each agent depends on the other agents. The interactions can be cooperative, competitive or mixed. People in traffic coordinate without explicit agreement. Bidders in an auction compete. A team of robots can divide the tasks. From the view of one learner, the environment is non-stationary (it changes over time), because the other agents also change their policies.
@@ -214,6 +232,12 @@ Communication is an action that has costs and results. Agents must decide what t
 
 == a2b54b3f
 Craig Reynolds' boids (1987): each boid sees only its neighbours in the view radius. It combines three rules: separation, alignment and cohesion. No rule tells the group to make a flock. Set a rule to 0 to see what that rule adds. Polarization is the length of the average heading vector. It is 1 when all boids fly in the same direction. It is near 0 when their directions are random.
+
+== dbc6f4a5
+<b>Reading:</b> <a href="https://aima.cs.berkeley.edu/" target="_blank" rel="noopener">Russell and Norvig, 4th ed., Chapter 18</a>. This chapter introduces decision making with many agents, cooperation and competition.
+
+== 6cc11091
+Robotics brings the ideas above into the physical world. Before the robot can plan or learn a policy, it needs a useful estimate of the state. When a policy selects an action, a controller must still execute it. Thus, we now separate perception, planning and control. We do not think of the agent as one neural network.
 
 == b33feaa8
 A robot closes the agent loop in the physical world. Sensors change light, force, sound, distance or joint position into measurements. Actuators make motion. Perception estimates the state that is relevant. Planning selects a route or a sequence of actions. Control changes that plan into motor commands. All of these stages have uncertainty. A wheel slips, something blocks a camera, an object moves, or the environment is different from the training environment.
@@ -245,6 +269,9 @@ Full autonomy is not always the most useful objective. In <b>shared autonomy</b>
 == d0bbce87
 Robots also make the risks real and immediate. You can check an incorrect sentence from an LLM before you use it. An incorrect movement of a robot can cause harm immediately. Safe deployment needs redundant sensors, careful operating limits, collision avoidance, emergency stops, tests and a clear division of responsibility. Human supervision must be able to act: if a supervisor cannot understand or stop the system, the supervision has no real meaning.
 
+== d9d80389
+<b>Further reading:</b> <a href="https://www.roboticsbook.org/" target="_blank" rel="noopener">Dellaert and Hutchinson, Introduction to Robotics and Perception</a>. This book connects the parts of the pipeline: perception, estimation, planning and control. Also see Russell and Norvig, Chapter 26.
+
 == a925f74e
 The board, or the history of observations
 
@@ -259,6 +286,39 @@ The same words (environment, observation, action, policy, objective and feedback
 
 == d2cb29ed
 Agency is a relation between a system and an environment. Reinforcement learning is one method to improve actions from their results. Agentic frameworks connect models to tools and memory. Robotics puts the loop in the physical world, which has uncertainty. The capability depends on the full loop. Safe and intended behaviour depends on objectives, constraints, monitoring and human authority.
+
+== 490766c9
+Start with the introductory readings below. The research papers are optional examples of how researchers develop and test these ideas. When you read, look for the answer to the question that we give. You do not have to learn every algorithm completely.
+
+== 5cebb91e
+<b>Agent design and the wider picture:</b> Russell, S. and Norvig, P. (2021), <a href="https://aima.cs.berkeley.edu/" target="_blank" rel="noopener">Artificial Intelligence: A Modern Approach, 4th edition</a>. Chapter 2 is about agents, Chapters 16–17 about decision making, Chapter 18 about multi-agent systems, Chapter 22 about RL and Chapter 26 about robotics. Ask: how do the assumptions about observations and objectives change the design?
+
+== 93fdb3f2
+<b>MDPs and RL foundations:</b> Sutton, R. S. and Barto, A. G. (2018), <a href="https://mitpress.mit.edu/9780262039246/reinforcement-learning/" target="_blank" rel="noopener">Reinforcement Learning: An Introduction, 2nd edition</a> (<a href="http://incompleteideas.net/book/the-book-2nd.html" target="_blank" rel="noopener">authors' book resources</a>). Read Chapter 3 for states, rewards, policies and return. Read Chapter 4 for planning with a known model, Chapter 6 for temporal-difference learning and Q-learning, and Chapter 13 for policy gradients.
+
+== 543b9493
+<b>Accessible mathematical overview:</b> OpenAI, <a href="https://spinningup.openai.com/en/latest/spinningup/rl_intro.html" target="_blank" rel="noopener">Spinning Up: Key Concepts in RL</a> and <a href="https://spinningup.openai.com/en/latest/spinningup/rl_intro2.html" target="_blank" rel="noopener">Kinds of RL Algorithms</a>. Use them to connect the notation with the decision to learn values, policies or a world model.
+
+== ac523a07
+<b>The original result of Q-learning:</b> Watkins, C. J. C. H. and Dayan, P. (1992), <a href="https://doi.org/10.1007/BF00992698" target="_blank" rel="noopener">Q-learning</a>. Keep its convergence assumptions for tables separate from the more difficult case of neural networks.
+
+== e7248d18
+<b>Deep RL example:</b> Mnih et al. (2015), <a href="https://doi.org/10.1038/nature14236" target="_blank" rel="noopener">Human-level control through deep reinforcement learning</a>. Examine how a neural network, a replay memory and a target network extend value learning to Atari observations.
+
+== f223b0ad
+<b>Evaluating learning claims:</b> Henderson et al. (2018), <a href="https://arxiv.org/abs/1709.06560" target="_blank" rel="noopener">Deep Reinforcement Learning That Matters</a>. When you compare methods, why are random seeds, hyperparameters and the reporting decisions important?
+
+== cf26ff25
+<b>Language-model agents:</b> Yao et al. (2023), <a href="https://arxiv.org/abs/2210.03629" target="_blank" rel="noopener">ReAct: Synergizing Reasoning and Acting in Language Models</a>. Find the observations, the actions and the feedback in the loop. Tool use is not the same as online RL.
+
+== 0b832282
+<b>Reward design and safety:</b> Amodei et al. (2016), <a href="https://arxiv.org/abs/1606.06565" target="_blank" rel="noopener">Concrete Problems in AI Safety</a>. Connect reward hacking, safe exploration and distribution shift to the delivery example.
+
+== 39e3ffa7
+<b>Human feedback:</b> Christiano et al. (2017), <a href="https://arxiv.org/abs/1706.03741" target="_blank" rel="noopener">Deep Reinforcement Learning from Human Preferences</a>; Ouyang et al. (2022), <a href="https://arxiv.org/abs/2203.02155" target="_blank" rel="noopener">Training Language Models to Follow Instructions with Human Feedback</a>. Keep these four things separate: the feedback, a learned reward model, the policy training and the deployment.
+
+== 3edfd2d3
+<b>Robotics:</b> Dellaert, F. and Hutchinson, S., <a href="https://www.roboticsbook.org/" target="_blank" rel="noopener">Introduction to Robotics and Perception</a>. This open textbook connects sensing, probabilistic state estimation, planning and control. Connect each component to the loop of an agent with a body.
 
 == 317ae90d
 Before we can build an agent, we must describe its job precisely. The classic method of Russell and Norvig is <b>PEAS</b>: <b>P</b>erformance measure (what is a good result), <b>E</b>nvironment (the world where the agent operates), <b>A</b>ctuators (how the agent acts on the world) and <b>S</b>ensors (how the agent perceives the world).

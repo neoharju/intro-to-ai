@@ -328,6 +328,62 @@ pre code.hljs {
   }
 }
 
+// Answers and extensions that stay hidden until the reader opens them.
+.material details {
+  margin: 1rem 0;
+  padding: .75rem 1rem;
+  background-color: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+
+  > summary {
+    font-weight: 650;
+    color: var(--ink);
+    cursor: pointer;
+  }
+
+  &[open] > summary {
+    margin-bottom: .6rem;
+  }
+
+  > :last-child {
+    margin-bottom: 0;
+  }
+}
+
+// Table captions sit above the table, as a short title.
+.table > caption {
+  padding: 0 0 .45rem;
+  font-size: .875rem;
+  font-weight: 650;
+  color: var(--ink);
+  caption-side: top;
+}
+
+// Notes from the course staff (the Kaggle competition in Week 3).
+.alert {
+  margin: 1.25rem 0;
+  padding: .85rem 1.1rem;
+  color: var(--text);
+  background-color: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+
+  > :last-child {
+    margin-bottom: 0;
+  }
+}
+
+.alert-info {
+  background-color: var(--primary-soft);
+  border-color: var(--primary-line);
+}
+
+.alert-warning {
+  background-color: var(--amber-soft);
+  border-color: var(--amber-line);
+}
+
 // Points of an exercise ("1p", "up to 5p"), taken from its heading by exercises.js.
 .points-pill {
   display: inline-block;

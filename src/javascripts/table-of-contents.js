@@ -116,7 +116,8 @@ class TableOfContents {
       const parent = stack[stack.length - 1];
       const position = parent.children.length + 1;
       const sectionString = parent.sectionString ? `${parent.sectionString}.${position}` : `${position}`;
-      const id = `${uniqueId('section-')}-${kebabCase(headingNode.text())}`;
+      // A heading that already has an id keeps it: other pages link to such ids (../week4/#optimization).
+      const id = node.id || `${uniqueId('section-')}-${kebabCase(headingNode.text())}`;
 
       const section = {
         level,

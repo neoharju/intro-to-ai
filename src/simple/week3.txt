@@ -5,9 +5,6 @@ Bring these to <b>your exercise session this week</b>: <a href="../week2/#exerci
 == 4d170945
 Bring the <a href="#exercises">exercises</a> of this week to your exercise session in <a href="../week4/">Week 4</a>.
 
-== 7b1faf48
-The Kaggle competition: Customer Churn is separate, and it does not give weekly points. You can continue to send submissions until the last lecture (Fr 11/12).
-
 == 36150153
 Objectives (when you complete the course, you ...)
 
@@ -555,7 +552,7 @@ Logistic regression predicts a probability between 0 and 1. The course competiti
 This is a <b>course competition</b> on a platform with the name <a href="https://www.kaggle.com/" target="_blank" rel="noopener">Kaggle</a>. Kaggle is a website where people train machine learning models on shared datasets and compete on a public leaderboard. Large companies also publish their own prediction tasks there, and the teams that win get real prize money. For example, Zillow offered $1.2 million for a better model of home values, and the Heritage Health Prize (2011–2013) offered a grand prize of $3 million. It is also a good place to practise and develop your machine learning skills, also outside this course.
 
 == 87cd0502
-<b>Join the competition here:</b><br> <a class="btn btn-primary" href="https://www.kaggle.com/t/9994c5320ff74f72b036c626a5ecbd33" target="_blank" rel="noopener">Kaggle: Customer Churn</a>
+<b>Join the competition here:</b><br> <a class="btn btn-primary" href="https://www.kaggle.com/t/565a01105ddb49fa8779202165f5e4a6" target="_blank" rel="noopener">Kaggle: Customer Churn</a>
 
 == c4bdc781
 The problem is customer churn for a telecom company. If we can find that a customer will probably leave, we can try to keep the customer with a special offer. On the data page, <code>train.csv</code> has feature columns and the target <code>Churn</code>. <code>test.csv</code> has the same features without the target. You send predicted churn <i>probabilities</i> for each row of <code>test.csv</code>. An example file is <code>sample_submission.csv</code>.
@@ -563,8 +560,8 @@ The problem is customer churn for a telecom company. If we can find that a custo
 == 10e7ffc7
 Your first valid submission (for example logistic regression from the baseline notebook) already gives two points. After that, think of it as a contest: try a tree, and later this week an ensemble, and see whether you go up on the leaderboard. We show the final results in class.
 
-== e88178d6
-Train a model on <code>train.csv</code>. For each row in <code>test.csv</code>, give the probability that the customer will leave (churn). The file must contain two columns with the names <code>id</code> and <code>Churn</code>. The values of <code>Churn</code> must be probabilities between zero and one.
+== df714e56
+Train a model on <code>train.csv</code>. For each row in <code>test.csv</code>, give the probability that the customer will leave (churn). The file must contain two columns with the names <code>ID</code> and <code>Churn</code>. The values of <code>Churn</code> must be probabilities between zero and one.
 
 == f6342ef7
 <code>train.csv</code>: the feature columns and the target column <code>Churn</code>
@@ -575,8 +572,11 @@ Train a model on <code>train.csv</code>. For each row in <code>test.csv</code>, 
 == 7e57d581
 <code>sample_submission.csv</code>: the format that your submission must have
 
+== 8159aac8
+<b>Use this exercise to learn.</b> AI tools can easily solve all the tasks, and you do not have to think. But if you want to learn something, follow the instructions in the baseline notebook step by step, and write the code yourself. This is much more useful for your learning. <b>Thus, do not use AI to write the code for this exercise.</b>
+
 == 6c69961e
-Open the <a href="https://colab.research.google.com/drive/1hGpBZBmPSfoRkrc5CbDpDA-zE5ZWPIZi?usp=sharing" target="_blank" rel="noopener">baseline notebook</a>. It has instructions and a simple starter model.
+Open the <a href="https://colab.research.google.com/drive/1hijpSCNnNG_LuzCFYoLNv12jPAgBc19u?usp=sharing" target="_blank" rel="noopener">baseline notebook</a>. It has instructions and a simple starter model.
 
 == 2bdca90a
 Examine the data, check the class balance, and make a clean validation scheme.
@@ -593,14 +593,20 @@ Kaggle gives a score to each submission with ROC AUC on a hidden split. The publ
 == 68ef54dc
 On this dataset, the leaderboard saturates quickly: the difference between some participants can be only approximately 0.001. This is normal. Think of the competition as a study exercise. What you learn is more important than the last decimal.
 
+== f345f87b
+The competition is separate. It does not give weekly points.
+
+== f32f52c0
+<b>Note:</b> to get points, set your <b>team name</b> on Kaggle (Team tab) to your <b>full name</b> or to your <b>University of Helsinki username</b>. Then we can find your submission.
+
 == b79d12b3
 Two points: join the Kaggle competition and send a valid solution.
 
 == e5bd016e
 Five points: be in the top 5 of the private leaderboard, and give a presentation of 2 minutes about your solution in class. If no person in the top 5 wants to give a presentation, places 6–10 get the opportunity, and so on.
 
-== 09cdf343
-You can continue to send submissions until the last lecture of the course.
+== a66c580a
+You can send submissions until Sat 5/12 (end of the day, Helsinki time). At the lecture on We 9/12, we show the final standings, and the top 5 teams give presentations.
 
 == 2167bcf5
 This saying describes the main idea of metric methods well: "Tell me who your friends are, and I'll tell you who you are." Algorithms in this class have almost no training phase. They only keep all of the training dataset. During prediction, they find objects that are similar to the target object.
@@ -853,6 +859,7 @@ Shallow trees have few parameters. Thus, they can find only high-level statistic
 
 == 631e9153
 Deep trees are different: they can memorize the training subset in detail. Thus, the predictions on test objects change much with the training subset, but on average they are near to the true value (high variance, low bias).
+
 == aa24fe04
 <b>Conclusion:</b> use deep trees.
 
@@ -928,12 +935,6 @@ If there is a large amount of data, you can divide the training set into two par
 == 74d97a76
 For bias and variance, stacking has no direct interpretation, because it does not explicitly make one of the two parts of the error smaller. A good stacking model only decreases the total error. This does not mean that both the bias and the variance decrease, because one of them can increase while their sum decreases.
 
-== cfc0cf47
-<a href="https://towardsdatascience.com/ensemble-methods-bagging-boosting-and-stacking-c9214a10a205" target="_blank" rel="noopener"> Blog post about ensemble methods by Joseph Rocca </a>
-
-== 341b82e6
-<a href="https://medium.com/@stevenyu530_73989/stacking-and-blending-intuitive-explanation-of-advanced-ensemble-methods-46b295da413c" target="_blank" rel="noopener"> Blog post about stacking and blending by Steven Yu </a>
-
 == 36649b1e
 You already know the naive Bayes classifier from the spam filter problem in Week 2. Here, we see how we can use the same idea for the recognition of handwritten digits from the MNIST dataset above. In the spam filter application, the class variable was binary (spam/ham), and the feature variables were the words in the message. In the digit recognition application, the class variable has ten different values (0,...,9). The feature variables are the 28 × 28 = 784 pixel values (binary black/white) in the bitmap images. We keep the pixel values in one vector. We use the value <span class="math">X_j = 1</span> to show that the <span class="math">j</span>th pixel is white. Because it is convenient, we use the value <span class="math">X_j = -1</span> for black.
 
@@ -969,9 +970,6 @@ There are two practical details. First, if pixel j is never white in the trainin
 
 == 5cac2124
 This week was about classical methods for tabular prediction: linear models, nearest neighbours, decision trees, naive Bayes and ensembles (bagging, boosting, random forests, stacking). Bias and variance explain why single trees overfit and why ensembles help.
-
-== 07141f1f
-Next week is about neural networks.
 
 == dfbb47ae
 This section is optional extra material for interested readers, and it is useful for the Kaggle competition. It is <b>not part of the course requirements</b>: you do not need it for the exercises or the exam.
