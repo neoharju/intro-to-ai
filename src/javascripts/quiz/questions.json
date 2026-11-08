@@ -599,7 +599,7 @@
           "2"
         ],
         "answer": 0,
-        "explain": "<span class=\"math\">H = -\\tfrac12 \\log_2 \\tfrac12 - \\tfrac12 \\log_2 \\tfrac12 = 1</span>, the maximum for two classes. A pure node has entropy 0."
+        "explain": "<span class=\"math\">H = -(1/2) \\log_2 (1/2) - (1/2) \\log_2 (1/2) = 1</span>, the maximum for two classes. A pure node has entropy 0."
       },
       {
         "q": "That node (4 spam, 4 ham) is split into two pure children: (4 spam, 0 ham) and (0 spam, 4 ham). What is the information gain?",

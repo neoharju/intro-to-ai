@@ -42,7 +42,7 @@ Larry Wasserman: <a href="https://www.stat.cmu.edu/~brian/valerie/617-2022/0%20-
 The Bayes rule (also known as the Bayes theorem) is the most important tool of probability calculus. We will use it many times when we build AI applications. Here is more material about the Bayes rule:
 
 == 3191a840
-The lecturer has two dice in his office (this is true). One die is an ordinary die: it gives each result from one to six with equal probability. The other die is loaded (this is also true). It gives a six with probability <span class="math">\tfrac{1}{2}</span>, and each other result with probability <span class="math">\tfrac{1}{10}</span>. He rolls the ordinary die first. Then he rolls the loaded die. Calculate the probabilities below. Remember that <span class="math">P(A \mid B)</span> is the conditional probability of <span class="math">A</span> when <span class="math">B</span> is given.
+The lecturer has two dice in his office (this is true). One die is an ordinary die: it gives each result from one to six with equal probability. The other die is loaded (this is also true). It gives a six with probability <span class="math">1/2</span>, and each other result with probability <span class="math">1/10</span>. He rolls the ordinary die first. Then he rolls the loaded die. Calculate the probabilities below. Remember that <span class="math">P(A \mid B)</span> is the conditional probability of <span class="math">A</span> when <span class="math">B</span> is given.
 
 == 5d932ad8
 <i>Hint:</i> Probability calculus can be confusing. Do not worry: with practice, it becomes easier.
@@ -57,7 +57,7 @@ What is the distribution of the sum of the results when you roll the ordinary di
 What is the distribution of the sum of the results when you roll the loaded die two times?
 
 == 5482b3a0
-A person selects one of the two dice (ordinary or loaded) at random. Each die has the probability <span class="math">\tfrac{1}{2}</span>. The person rolls the selected die two times. Calculate the probability <span class="math">P(\text{the die is loaded} \mid \text{the sum of the outcomes is 10}).</span> Also calculate the probability that the die is ordinary. Make sure that the sum of the two probabilities is one.
+A person selects one of the two dice (ordinary or loaded) at random. Each die has the probability <span class="math">1/2</span>. The person rolls the selected die two times. Calculate the probability <span class="math">P(\text{the die is loaded} \mid \text{the sum of the outcomes is 10}).</span> Also calculate the probability that the die is ordinary. Make sure that the sum of the two probabilities is one.
 
 == ae4898a1
 Again, the person selects one die. Each die has the same probability. Each time the person rolls the die, the result is six. After how many rolls are we at least 99% sure that the die is loaded? <br><br> <i>Hint:</i> Calculate the ratio of the posterior probabilities of the two dice after <i>k</i> rolls. When the posterior probability of the loaded die is more than 99%, the ratio of the posterior probabilities is more than <span class="math">0.99 / 0.01 = 99</span>.
@@ -186,7 +186,7 @@ After the exercise above, it is easy to see how to write the filter as a program
 We can put the calculations into a good order if we change the order of the terms a little. We use the same example message with two words. This is the formula for the ratio of the posterior probabilities:
 
 == a66bc598
-A ratio of products is equal to a product of ratios. For example, <span class="math">\frac{ABC}{DEF} = \frac{A}{D} \cdot \frac{B}{E} \cdot \frac{C}{F}</span>. Thus, we can put the terms above into groups like this:
+A ratio of products is equal to a product of ratios. For example, <span class="math">ABC/(DEF) = (A/D) \cdot (B/E) \cdot (C/F)</span>. Thus, we can put the terms above into groups like this:
 
 == 396ba19c
 The general formula is
@@ -279,10 +279,10 @@ About 2%. With natural frequencies: of 100,000 people, 100 are ill, and 99 of th
 <b>Monty Hall.</b> A car is behind one of three doors. Goats are behind the other two doors. You select door 1. The host knows where the car is. He always opens a door that you did not select and that has a goat behind it. When he can select between two doors, he selects at random. He opens door 3. Must you change to door 2?
 
 == 67fc67af
-Yes. The prior is <span class="math">\tfrac13</span> for each door. The probability that the host opens door 3 (the likelihood) is <span class="math">\tfrac12</span> if the car is behind door 1. It is 1 if the car is behind door 2 (he cannot open door 2 or your door 1). It is 0 if the car is behind door 3. The Bayes rule gives
+Yes. The prior is <span class="math">1/3</span> for each door. The probability that the host opens door 3 (the likelihood) is <span class="math">1/2</span> if the car is behind door 1. It is 1 if the car is behind door 2 (he cannot open door 2 or your door 1). It is 0 if the car is behind door 3. The Bayes rule gives
 
 == 85d9efa5
-When you change, you win two times in three. Look at the annoying denominator: it is the probability that the host opens door 3, which is <span class="math">\tfrac12</span>.
+When you change, you win two times in three. Look at the annoying denominator: it is the probability that the host opens door 3, which is <span class="math">1/2</span>.
 
 == d280834c
 3Blue1Brown, <a href="https://www.3blue1brown.com/lessons/bayes-theorem/" target="_blank" rel="noopener"><i>Bayes' theorem</i></a> (2019): a short, visual derivation. It shows the prior, the likelihood and the posterior as areas.

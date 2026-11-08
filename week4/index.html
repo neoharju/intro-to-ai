@@ -739,7 +739,7 @@
 
         <p>
           A <b>loss function</b> measures how the output differs from the target. For a scalar regression example with
-          prediction <span class="math">\hat{y}</span> we can use <span class="math">L = \tfrac{1}{2}(\hat{y} - y)^2</span>.
+          prediction <span class="math">\hat{y}</span> we can use <span class="math">L = (\hat{y} - y)^2 / 2</span>.
           For binary classification, cross-entropy penalizes low probability <span class="math">p</span> assigned to the
           correct label:
         </p>
@@ -808,7 +808,7 @@
         <p>
           Consider a deliberately tiny network with one hidden unit: <span class="math">z = wx + b</span>,
           <span class="math">h = \operatorname{ReLU}(z)</span>, prediction <span class="math">\hat{y} = vh + c</span> and
-          <span class="math">L = \tfrac{1}{2}(\hat{y} - y)^2</span>. Let <span class="math">x = 2</span>,
+          <span class="math">L = (\hat{y} - y)^2 / 2</span>. Let <span class="math">x = 2</span>,
           <span class="math">y = 1</span>, <span class="math">w = 0.5</span>, <span class="math">b = 0</span>,
           <span class="math">v = 2</span> and <span class="math">c = 0</span>. The forward pass gives
           <span class="math">z = 1</span>, <span class="math">h = 1</span>, prediction 2 and loss 0.5.

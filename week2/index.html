@@ -255,8 +255,8 @@
                 The lecturer has two dice in his office (true story). One of them is
                 an ordinary die and will yield any result from one to six with equal
                 probability. However, the other die is loaded (true story, again).
-                It will yield a six with probability <span class="math">\tfrac{1}{2}</span> and any other outcome with
-                probability <span class="math">\tfrac{1}{10}</span>. He will roll the ordinary die first, and then
+                It will yield a six with probability <span class="math">1/2</span> and any other outcome with
+                probability <span class="math">1/10</span>. He will roll the ordinary die first, and then
                 the loaded one. Calculate the following probabilities. Recall
                 that <span class="math">P(A \mid B)</span> means the conditional probability of <span class="math">A</span>
                 given <span class="math">B</span>.
@@ -308,7 +308,7 @@
                 <li> What is the distribution of the sum of the outcomes when
                   rolling the loaded die twice?
                 <li> Assume that either die (ordinary or loaded) is selected
-                  at random with probability <span class="math">\tfrac{1}{2}</span> each. The selected die is
+                  at random with probability <span class="math">1/2</span> each. The selected die is
                   rolled twice. Calculate the probability
                   <span class="math">P(\text{the die is loaded} \mid \text{the sum of the outcomes is 10}).</span>
                   Calculate the probability that the die is ordinary as well to
@@ -360,10 +360,10 @@
           can use the Bayes rule as follows
         </p>
         <div class="math math--key">
-          \underbrace{P(\text{state} \mid \text{observation})}_{\textsf{posterior probability}}
+          \underbrace{P(\text{state} \mid \text{observation})}_{\footnotesize\textsf{posterior probability}}
           \;=\;
-          \frac{\overbrace{P(\text{state})}^{\textsf{prior probability}} \;\; \overbrace{P(\text{observation} \mid \text{state})}^{\textsf{likelihood}}}
-                {\underbrace{P(\text{observation})}_{\textsf{the (annoying) denominator}}}
+          \frac{\overbrace{P(\text{state})}^{\footnotesize\textsf{prior probability}} \;\; \overbrace{P(\text{observation} \mid \text{state})}^{\footnotesize\textsf{likelihood}}}
+                {\underbrace{P(\text{observation})}_{\footnotesize\textsf{the (annoying) denominator}}}
         </div>
         <p>
           The left side of the equation is called the <strong>posterior
@@ -758,7 +758,7 @@
         </div>
         <p>
           Since the ratio of products is equal to the product of ratios &ndash; i.e.,
-          for example, <span class="math">\frac{ABC}{DEF} = \frac{A}{D} \cdot \frac{B}{E} \cdot \frac{C}{F}</span> &ndash;
+          for example, <span class="math">ABC/(DEF) = (A/D) \cdot (B/E) \cdot (C/F)</span> &ndash;
           we can group the above terms as
         </p>
         <div class="math">
@@ -1082,18 +1082,18 @@ def spam_probability(log_r):
           <details>
             <summary>Show the answer</summary>
             <p>
-              Yes. The prior is <span class="math">\tfrac13</span> for each door. The likelihood of the host opening
-              door 3 is <span class="math">\tfrac12</span> if the car is behind door 1, 1 if it is behind door 2
+              Yes. The prior is <span class="math">1/3</span> for each door. The likelihood of the host opening
+              door 3 is <span class="math">1/2</span> if the car is behind door 1, 1 if it is behind door 2
               (he can open neither door 2 nor your door 1), and 0 if it is behind door 3. Bayes rule gives
             </p>
             <div class="math">
               P(\text{car behind 2} \mid \text{door 3 opened})
-              = \frac{\tfrac13 \cdot 1}{\tfrac13 \cdot \tfrac12 + \tfrac13 \cdot 1 + \tfrac13 \cdot 0}
+              = \frac{(1/3) \cdot 1}{(1/3) \cdot (1/2) + (1/3) \cdot 1 + (1/3) \cdot 0}
               = \frac{1/3}{1/2} = \frac23 .
             </div>
             <p>
               Switching wins two times out of three. Note the annoying denominator: the probability that the host
-              opens door 3 at all, which is <span class="math">\tfrac12</span>.
+              opens door 3 at all, which is <span class="math">1/2</span>.
             </p>
           </details>
 

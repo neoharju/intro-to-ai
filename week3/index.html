@@ -802,7 +802,7 @@
                 <li>
                   <i>Optional:</i> Generalize to arbitrary values of <span class="math">N</span>. It may be helpful to
                   recall the sum of a geometric series
-                  <span class="math">1 + k + k^2 + \dots + k^{N-1} = \frac{k^N - 1}{k - 1}</span>, where <span class="math">k \neq 1</span>.
+                  <span class="math">1 + k + k^2 + \dots + k^{N-1} = (k^N - 1)/(k - 1)</span>, where <span class="math">k \neq 1</span>.
               </ol>
 
 
@@ -2554,7 +2554,7 @@
           labeled Yes and one No. Then <span class="math">p = 3/4</span> and
         </p>
         <div class="math">
-          \operatorname{Entropy}(S) = -\tfrac34 \log_2 \tfrac34 - \tfrac14 \log_2 \tfrac14 \approx 0.811
+          \operatorname{Entropy}(S) = -\frac34 \log_2 \frac34 - \frac14 \log_2 \frac14 \approx 0.811
         </div>
         <p>
           In information theory, this is the average number of bits needed to
@@ -2593,7 +2593,7 @@
           (entropy 1). Then
         </p>
         <div class="math">
-          \operatorname{Gain}(S, \text{Color}) = 0.811 - \tfrac24 \cdot 0 - \tfrac24 \cdot 1 = 0.311
+          \operatorname{Gain}(S, \text{Color}) = 0.811 - \frac24 \cdot 0 - \frac24 \cdot 1 = 0.311
         </div>
         <p>
           Testing <code>Color</code> is worth about 0.311 bits: the child regions
@@ -3397,8 +3397,14 @@
           is zero, and a single white pixel at that position makes the
           posterior of class i zero however well the rest of the image
           matches. If that happens for every class, Z = 0 and line 11 divides
-          by zero. The usual remedy is <b>Laplace (add-one) smoothing</b>,
-          <span class="math">\frac{\#\{X_j = 1, \text{class} = i\} + 1}{\#\{\text{class} = i\} + 2}</span>,
+          by zero. The usual remedy is <b>Laplace (add-one) smoothing</b>:
+        </p>
+
+        <div class="math">
+          P(X_j = 1 \mid \text{Class} = i) = \frac{\#\{X_j = 1, \text{Class} = i\} + 1}{\#\{\text{Class} = i\} + 2},
+        </div>
+
+        <p>
           which never gives exactly 0 or 1 (in the spam filter of Week 2, we
           used a small lower bound for the same purpose). Second, a product of
           784 probabilities can underflow to zero in floating point, so
