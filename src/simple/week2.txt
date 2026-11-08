@@ -35,8 +35,8 @@ We will add material about the basic concepts of probability theory: probabilist
 == 11dfb1b5
 This section is not complete. Until then, study these concepts again from a source that you like. Two very good examples are:
 
-== 3fefef77
-Larry Wasserman: <a href="https://doi.org/10.1007/978-0-387-21736-9">All of Statistics</a> (Part I, Probability, is very good; Springer, most university libraries have it)
+== 60ac9558
+Larry Wasserman: <a href="https://www.stat.cmu.edu/~brian/valerie/617-2022/0%20-%20books/2004%20-%20wasserman%20-%20all%20of%20statistics.pdf">All of Statistics</a> (Part I, Probability, is very good)
 
 == e50c43ac
 The Bayes rule (also known as the Bayes theorem) is the most important tool of probability calculus. We will use it many times when we build AI applications. Here is more material about the Bayes rule:

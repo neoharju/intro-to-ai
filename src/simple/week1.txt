@@ -54,7 +54,7 @@ There is no one sentence that all people accept as the definition of artificial 
 Thus, it is useful to keep two types of definition separate. An <b>operational definition</b> tells us which systems are in a technical or regulatory scope. A <b>philosophical definition</b> asks what intelligence, understanding or mind really are. The first type can guide engineering and governance, and we do not have to answer the second question for this.
 
 == 58362849
-The updated <a href="https://oecd.ai/en/ai-publications/explanatory-memorandum-on-the-updated-definition-of-an-ai-system">OECD definition</a> and the <a href="https://eur-lex.europa.eu/eli/reg/2024/1689/oj">EU AI Act</a> describe an AI system like this. It is a machine-based system. It operates with different levels of autonomy, and it can adapt after deployment. It has explicit or implicit objectives. From its inputs, it infers how to make outputs, for example predictions, content, recommendations or decisions. These outputs can have an effect on physical or virtual environments.
+The updated <a href="https://www.oecd.org/en/publications/explanatory-memorandum-on-the-updated-oecd-definition-of-an-ai-system_623da898-en.html">OECD definition</a> and the <a href="https://eur-lex.europa.eu/eli/reg/2024/1689/oj">EU AI Act</a> describe an AI system like this. It is a machine-based system. It operates with different levels of autonomy, and it can adapt after deployment. It has explicit or implicit objectives. From its inputs, it infers how to make outputs, for example predictions, content, recommendations or decisions. These outputs can have an effect on physical or virtual environments.
 
 == a8d8eede
 The important words are <b>machine-based</b>, <b>objectives</b>, <b>inference</b>, <b>outputs</b> and <b>influence</b>. The definition does not require that the system is similar to a human, that it is conscious, or that it uses one specific technique, for example machine learning.
@@ -510,7 +510,7 @@ Vera and Simon (1993) replied that symbolic architectures can perceive signals f
 This debate is similar to questions about AI agents today. A language-model agent can make a plan, call tools and plan again after feedback. This can be effective. But it does not prove that its representations contain the practical and social understanding that a human uses to see what is important. On the other side, when we say that action is situated, this does not explain how an artificial system must remember goals, predict results or coordinate long sequences of actions. Robust intelligence possibly needs both representations and a continuous connection to the environment.
 
 == fa85ec23
-Suchman (1987), <a href="https://doi.org/10.1017/CBO9780511620727"><i>Plans and Situated Actions</i></a>: the main criticism of plans as full scripts for action.
+Suchman (1987), <a href="https://ics.uci.edu/~dfredmil/inf233-FQ07/oldpapers/Suchman1987ch3.pdf"><i>Plans and Situated Actions</i></a>: the main criticism of plans as full scripts for action.
 
 == b42f3ee6
 Vera and Simon (1993), <a href="https://doi.org/10.1207/s15516709cog1701_2"><i>Situated Action: A Symbolic Interpretation</i></a>, together with <a href="https://doi.org/10.1207/s15516709cog1701_5">the response of Suchman</a>: the debate about whether situated action requires that we stop using symbolic descriptions.
@@ -552,7 +552,7 @@ explicit <b>rules</b> are useful, but they possibly do not contain all of human 
 The links to the references below are at the places where we introduce their ideas. The short notes tell what each source gives. They also help you to tell the difference between primary texts and later frameworks or regulation.
 
 == 400c86e3
-OECD (2024), <a href="https://oecd.ai/en/ai-publications/explanatory-memorandum-on-the-updated-definition-of-an-ai-system">Explanatory memorandum on the updated definition of an AI system</a>: the operational definition that this section uses.
+OECD (2024), <a href="https://www.oecd.org/en/publications/explanatory-memorandum-on-the-updated-oecd-definition-of-an-ai-system_623da898-en.html">Explanatory memorandum on the updated definition of an AI system</a>: the operational definition that this section uses.
 
 == d907fe04
 European Union (2024), <a href="https://eur-lex.europa.eu/eli/reg/2024/1689/oj">Artificial Intelligence Act, Regulation (EU) 2024/1689</a>: the legal definitions of AI systems and of general-purpose AI models.

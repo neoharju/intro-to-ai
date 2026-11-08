@@ -5,8 +5,8 @@ Bring these to <b>your exercise session this week</b>: <a href="../week6/#exerci
 == 19564fcb
 <b>This week has no new exercises.</b>
 
-== 377899d5
-This is the last opportunity for the <a href="../week3/#exercises">Kaggle competition: Customer Churn</a>. You can send submissions until the last lecture (Fr 11/12).
+== cee77734
+At the lecture on We 9/12, we show the results of the <a href="../week3/#exercises">Kaggle competition: Customer Churn</a>, and the top 5 teams give presentations.
 
 == 36150153
 Objectives (when you complete the course, you ...)

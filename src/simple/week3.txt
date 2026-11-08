@@ -239,8 +239,8 @@ Do the experiment again some times, to see how much the results change only by c
 == b4540342
 Weeks 1 and 2 were about search and reasoning under uncertainty. The section above continued with Bayesian networks. The rest of this week is about <b>classical machine learning</b>: algorithms that improve when they fit a model to labelled examples. Then they make predictions on new examples.
 
-== fd12112b
-We start with what a supervised learning problem is. Then we study linear models, nearest neighbours, decision trees, ensembles, and naive Bayes as a classical classifier. This week also has a course <b>Kaggle competition</b> on customer churn. It is a contest with a public leaderboard, not one of the usual exercises. It opens after logistic regression, when you have a model that you can send.
+== dca957d4
+We start with what a supervised learning problem is. Then we study linear models, nearest neighbours, decision trees, ensembles, and naive Bayes as a classical classifier. This week also has a course <b>Kaggle competition</b> on customer churn. It is a contest with a public leaderboard, not one of the usual exercises.
 
 == f1b71d13
 <b>Machine learning</b> is the scientific study of algorithms that improve automatically from experience.
@@ -602,8 +602,8 @@ The competition is separate. It does not give weekly points.
 == b79d12b3
 Two points: join the Kaggle competition and send a valid solution.
 
-== e5bd016e
-Five points: be in the top 5 of the private leaderboard, and give a presentation of 2 minutes about your solution in class. If no person in the top 5 wants to give a presentation, places 6–10 get the opportunity, and so on.
+== 7699a23b
+3 more bonus points: be in the top 5 of the private leaderboard, and give a presentation of 2 minutes about your solution in class. If no person in the top 5 wants to give a presentation, places 6–10 get the opportunity, and so on.
 
 == a66c580a
 You can send submissions until Sat 5/12 (end of the day, Helsinki time). At the lecture on We 9/12, we show the final standings, and the top 5 teams give presentations.
