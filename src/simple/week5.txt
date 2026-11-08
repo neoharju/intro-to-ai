@@ -185,6 +185,9 @@ The training objective is only <strong>next-token prediction</strong>. Thus, at 
 == 19507888
 You can use the trained model for <strong>text generation</strong> and for tasks that use text generation. <strong>ChatGPT</strong> also has the same architecture as the base GPT model. The difference is the additional training: fine-tuning on instructions and example dialogues, and reinforcement learning from human feedback (RLHF). This training changes the behaviour of the model very much.
 
+== fe6e7f07
+In code, the loss is the cross-entropy between the predicted distribution and the real next token. We calculate it at each position of each sequence in the batch:
+
 == 928fbce5
 The name <strong>Bidirectional Encoder Representations from Transformers (BERT)</strong> shows the difference from GPT: BERT uses <strong>bidirectional attention</strong>. This means that, when BERT processes the input sequence, all tokens can use information from all other tokens.
 

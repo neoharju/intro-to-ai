@@ -475,9 +475,26 @@
           is determined by the length of the message.
         </p>
 
-        <p>
-          <img src="../img/diagrams/nbmodel-e74b4b40.png" width=65%>
-        </p>
+        <svg class="dg" viewBox="0 0 760 262" style="max-width:760px" role="img" aria-label="The naive Bayes model as a Bayesian network: the class node, spam or ham, has an arrow to each word of the message, word 1, word 2, word 3 and so on up to word n. Given the class, the words are conditionally independent.">
+          <defs><marker id="dg-nbmodel-head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrowhead" d="M0,0 L10,5 L0,10 z"/></marker></defs>
+          <ellipse class="dg-box dg-box--violet" cx="380" cy="54" rx="128" ry="34"/>
+          <text class="dg-title" x="380" y="45">Class</text>
+          <text class="dg-small" x="380" y="68">spam or ham</text>
+          <circle class="dg-box dg-box--blue" cx="110" cy="186" r="36"/>
+          <text class="dg-large" x="110" y="186">word<tspan class="dg-sub" dy="5">1</tspan></text>
+          <path class="dg-arrow" d="M315.3 85.6 L145.9 168.4" marker-end="url(#dg-nbmodel-head)"/>
+          <circle class="dg-box dg-box--blue" cx="240" cy="186" r="36"/>
+          <text class="dg-large" x="240" y="186">word<tspan class="dg-sub" dy="5">2</tspan></text>
+          <path class="dg-arrow" d="M342.4 89.5 L269.1 158.6" marker-end="url(#dg-nbmodel-head)"/>
+          <circle class="dg-box dg-box--blue" cx="370" cy="186" r="36"/>
+          <text class="dg-large" x="370" y="186">word<tspan class="dg-sub" dy="5">3</tspan></text>
+          <path class="dg-arrow" d="M377.1 92 L373 146.1" marker-end="url(#dg-nbmodel-head)"/>
+          <circle class="dg-box dg-box--blue" cx="630" cy="186" r="36"/>
+          <text class="dg-large" x="630" y="186">word<tspan class="dg-sub" dy="5">n</tspan></text>
+          <path class="dg-arrow" d="M441.1 86.2 L594.6 167.3" marker-end="url(#dg-nbmodel-head)"/>
+          <text class="dg-xlarge" x="500" y="186">…</text>
+          <text class="dg-small" x="380" y="248">Given the class, the words are conditionally independent</text>
+        </svg>
 
         <p>
           The naive Bayes model can be represented as a <strong>Bayesian

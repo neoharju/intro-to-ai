@@ -222,7 +222,20 @@
         <p>
           Here's an example DAG:
         </p>
-        <img src="../img/diagrams/BNexample1-5591f5d5.png" width="210" alt="A DAG with four nodes: X has edges to Z and to Å, and Y has an edge to Z.">
+        <svg class="dg" viewBox="0 0 560 262" style="max-width:560px" role="img" aria-label="A directed acyclic graph with four nodes: X has edges to Z and to Å, and Y has an edge to Z.">
+          <defs><marker id="dg-bnexample-head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrowhead" d="M0,0 L10,5 L0,10 z"/></marker></defs>
+          <path class="dg-arrow" d="M266.4 74.9 L129.6 127.1" marker-end="url(#dg-bnexample-head)"/>
+          <path class="dg-arrow" d="M336 62 L438 62" marker-end="url(#dg-bnexample-head)"/>
+          <path class="dg-arrow" d="M266.2 201.7 L129.8 152.3" marker-end="url(#dg-bnexample-head)"/>
+          <circle class="dg-box dg-box--blue" cx="300" cy="62" r="32"/>
+          <text class="dg-xlarge dg-math" x="300" y="62">X</text>
+          <circle class="dg-box dg-box--blue" cx="474" cy="62" r="32"/>
+          <text class="dg-xlarge dg-math" x="474" y="62">Å</text>
+          <circle class="dg-box dg-box--blue" cx="96" cy="140" r="32"/>
+          <text class="dg-xlarge dg-math" x="96" y="140">Z</text>
+          <circle class="dg-box dg-box--blue" cx="300" cy="214" r="32"/>
+          <text class="dg-xlarge dg-math" x="300" y="214">Y</text>
+        </svg>
 
         <p>
           The random variables in the model are X, Y, Z, and &Aring;. (For the
@@ -292,7 +305,26 @@
           car Bayesian network discussed at the lecture. Its structure is
           the following:
         </p>
-        <img src="../img/diagrams/carBN-f8e83c71.png" width="420" alt="The car network: Battery points to Radio and Ignition, Ignition and Gas point to Starts, and Starts points to Moves.">
+        <svg class="dg" viewBox="0 0 700 404" style="max-width:700px" role="img" aria-label="The car network: Battery points to Radio and Ignition, Ignition and Gas point to Starts, and Starts points to Moves.">
+          <defs><marker id="dg-carbn-head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrowhead" d="M0,0 L10,5 L0,10 z"/></marker></defs>
+          <path class="dg-arrow" d="M181 83.4 L135 120.6" marker-end="url(#dg-carbn-head)"/>
+          <path class="dg-arrow" d="M259 83.4 L305 120.6" marker-end="url(#dg-carbn-head)"/>
+          <path class="dg-arrow" d="M382.7 183.5 L428.3 220.5" marker-end="url(#dg-carbn-head)"/>
+          <path class="dg-arrow" d="M551.3 183.5 L505.7 220.5" marker-end="url(#dg-carbn-head)"/>
+          <path class="dg-arrow" d="M467 288 L467 316" marker-end="url(#dg-carbn-head)"/>
+          <ellipse class="dg-box dg-box--blue" cx="220" cy="52" rx="84" ry="32"/>
+          <text class="dg-xlarge" x="220" y="52"><tspan style="font-weight:700">B</tspan>attery</text>
+          <ellipse class="dg-box dg-box--blue" cx="96" cy="152" rx="84" ry="32"/>
+          <text class="dg-xlarge" x="96" y="152"><tspan style="font-weight:700">R</tspan>adio</text>
+          <ellipse class="dg-box dg-box--blue" cx="344" cy="152" rx="84" ry="32"/>
+          <text class="dg-xlarge" x="344" y="152"><tspan style="font-weight:700">I</tspan>gnition</text>
+          <ellipse class="dg-box dg-box--blue" cx="590" cy="152" rx="84" ry="32"/>
+          <text class="dg-xlarge" x="590" y="152"><tspan style="font-weight:700">G</tspan>as</text>
+          <ellipse class="dg-box dg-box--blue" cx="467" cy="252" rx="84" ry="32"/>
+          <text class="dg-xlarge" x="467" y="252"><tspan style="font-weight:700">S</tspan>tarts</text>
+          <ellipse class="dg-box dg-box--blue" cx="467" cy="352" rx="84" ry="32"/>
+          <text class="dg-xlarge" x="467" y="352"><tspan style="font-weight:700">M</tspan>oves</text>
+        </svg>
 
         <p>
           The variables in the model are abbreviated as the first letters:
@@ -1064,7 +1096,88 @@
           represents the value of one pixel (for example, black or white in a binarized version of the data).
         </p>
         
-        <img src="../img/diagrams/MNISTsamples-80d9261b.png" width="88%" alt="MNIST digit samples">
+        <svg class="dg" viewBox="0 0 1240 352" role="img" aria-label="Twenty handwritten digits from the MNIST dataset, each 28 by 28 pixels, with the label given by people above each image: 0, 7, 1, 1, 4, 9, 4, 3, 4, 8 in the first row and 2, 2, 1, 8, 7, 0, 8, 1, 0, 7 in the second. The second image of the first row, labelled 7, looks much like a 4.">
+          <text class="dg-xlarge" x="62" y="20" style="font-weight:650">0</text>
+          <rect class="dg-box dg-box--grey" x="6" y="40" width="112" height="112" rx="6"/>
+          <path class="dg-digit" d="M66 60h4v4h-4zM82 60h4v4h-4zM58 64h4v4h-4zM86 64h4v4h-4zM50 68h8v4h-8zM74 68h4v4h-4zM46 72h4v4h-4zM62 72h4v4h-4zM78 72h4v4h-4zM90 72h4v4h-4zM46 76h4v4h-4zM62 76h4v4h-4zM78 76h4v4h-4zM90 76h4v4h-4zM58 80h4v4h-4zM90 80h4v4h-4zM54 84h4v4h-4zM90 84h4v4h-4zM90 88h4v4h-4zM42 92h4v4h-4zM50 92h4v4h-4zM90 92h4v4h-4zM50 96h4v4h-4zM78 96h4v4h-4zM90 96h4v4h-4zM38 100h4v4h-4zM78 100h4v4h-4zM90 100h4v4h-4zM38 104h4v4h-4zM78 104h4v4h-4zM38 108h4v4h-4zM42 112h4v4h-4zM86 112h4v4h-4zM42 116h4v4h-4zM74 116h4v4h-4zM86 116h4v4h-4zM42 120h4v4h-4zM82 120h4v4h-4zM42 124h4v4h-4zM50 124h4v4h-4zM70 124h4v4h-4zM78 124h4v4h-4zM54 128h4v4h-4zM46 132h4v4h-4zM74 132h4v4h-4zM46 136h4v4h-4zM70 140h4v4h-4zM58 144h4v4h-4z" style="fill:var(--ink);opacity:.45"/>
+          <path class="dg-digit" d="M70 60h12v4h-12zM62 64h24v4h-24zM58 68h16v4h-16zM78 68h12v4h-12zM50 72h12v4h-12zM82 72h8v4h-8zM50 76h12v4h-12zM82 76h8v4h-8zM46 80h12v4h-12zM82 80h8v4h-8zM46 84h8v4h-8zM82 84h8v4h-8zM46 88h8v4h-8zM82 88h8v4h-8zM46 92h4v4h-4zM82 92h8v4h-8zM42 96h8v4h-8zM82 96h8v4h-8zM42 100h8v4h-8zM82 100h8v4h-8zM42 104h8v4h-8zM82 104h8v4h-8zM42 108h8v4h-8zM78 108h12v4h-12zM46 112h4v4h-4zM78 112h8v4h-8zM46 116h4v4h-4zM78 116h8v4h-8zM46 120h4v4h-4zM74 120h8v4h-8zM46 124h4v4h-4zM74 124h4v4h-4zM46 128h8v4h-8zM66 128h12v4h-12zM50 132h24v4h-24zM50 136h24v4h-24zM50 140h20v4h-20z" style="fill:var(--ink)"/>
+          <text class="dg-xlarge" x="186" y="20" style="font-weight:650">7</text>
+          <rect class="dg-box dg-box--grey" x="130" y="40" width="112" height="112" rx="6"/>
+          <path class="dg-digit" d="M214 64h4v4h-4zM206 68h8v4h-8zM222 68h4v4h-4zM186 72h4v4h-4zM202 72h4v4h-4zM222 72h4v4h-4zM186 76h4v4h-4zM222 76h4v4h-4zM182 80h12v4h-12zM154 88h4v4h-4zM214 88h4v4h-4zM154 92h4v4h-4zM182 92h12v4h-12zM154 96h4v4h-4zM166 96h4v4h-4zM190 96h4v4h-4zM206 96h4v4h-4zM186 100h4v4h-4zM182 112h4v4h-4zM198 112h4v4h-4zM174 116h8v4h-8zM194 116h4v4h-4zM190 120h4v4h-4zM186 124h4v4h-4zM162 128h4v4h-4zM182 128h4v4h-4zM158 132h4v4h-4zM178 132h4v4h-4zM158 136h4v4h-4zM174 136h4v4h-4zM154 140h4v4h-4zM170 144h4v4h-4z" style="fill:var(--ink);opacity:.45"/>
+          <path class="dg-digit" d="M218 64h4v4h-4zM174 68h12v4h-12zM214 68h8v4h-8zM170 72h16v4h-16zM206 72h16v4h-16zM170 76h16v4h-16zM202 76h20v4h-20zM162 80h20v4h-20zM194 80h28v4h-28zM158 84h60v4h-60zM158 88h56v4h-56zM158 92h24v4h-24zM194 92h20v4h-20zM158 96h8v4h-8zM194 96h12v4h-12zM190 100h16v4h-16zM186 104h16v4h-16zM186 108h16v4h-16zM186 112h12v4h-12zM182 116h12v4h-12zM174 120h16v4h-16zM170 124h16v4h-16zM166 128h16v4h-16zM162 132h16v4h-16zM162 136h12v4h-12zM158 140h16v4h-16zM154 144h16v4h-16z" style="fill:var(--ink)"/>
+          <text class="dg-xlarge" x="310" y="20" style="font-weight:650">1</text>
+          <rect class="dg-box dg-box--grey" x="254" y="40" width="112" height="112" rx="6"/>
+          <path class="dg-digit" d="M310 56h8v4h-8zM310 60h4v4h-4zM306 88h4v4h-4zM314 88h4v4h-4zM306 92h4v4h-4zM310 112h4v4h-4zM310 116h4v4h-4zM318 116h4v4h-4zM310 120h4v4h-4zM318 120h4v4h-4zM310 124h4v4h-4zM318 124h4v4h-4z" style="fill:var(--ink);opacity:.45"/>
+          <path class="dg-digit" d="M314 60h4v4h-4zM310 64h8v4h-8zM310 68h8v4h-8zM310 72h8v4h-8zM310 76h8v4h-8zM310 80h8v4h-8zM310 84h8v4h-8zM310 88h4v4h-4zM310 92h8v4h-8zM310 96h8v4h-8zM310 100h8v4h-8zM310 104h8v4h-8zM310 108h8v4h-8zM314 112h4v4h-4zM314 116h4v4h-4zM314 120h4v4h-4zM314 124h4v4h-4zM310 128h8v4h-8zM310 132h8v4h-8zM310 136h8v4h-8z" style="fill:var(--ink)"/>
+          <text class="dg-xlarge" x="434" y="20" style="font-weight:650">1</text>
+          <rect class="dg-box dg-box--grey" x="378" y="40" width="112" height="112" rx="6"/>
+          <path class="dg-digit" d="M458 56h8v4h-8zM454 60h4v4h-4zM466 60h4v4h-4zM450 64h4v4h-4zM462 64h4v4h-4zM446 68h4v4h-4zM442 76h4v4h-4zM450 84h4v4h-4zM430 88h4v4h-4zM446 88h4v4h-4zM442 92h4v4h-4zM426 96h4v4h-4zM430 108h4v4h-4zM414 112h4v4h-4zM426 116h4v4h-4zM410 120h4v4h-4zM406 128h4v4h-4zM402 132h4v4h-4zM414 132h4v4h-4zM398 136h4v4h-4zM406 140h4v4h-4z" style="fill:var(--ink);opacity:.45"/>
+          <path class="dg-digit" d="M458 60h8v4h-8zM454 64h8v4h-8zM450 68h12v4h-12zM446 72h12v4h-12zM446 76h12v4h-12zM442 80h12v4h-12zM438 84h12v4h-12zM434 88h12v4h-12zM430 92h12v4h-12zM430 96h12v4h-12zM426 100h12v4h-12zM422 104h12v4h-12zM422 108h8v4h-8zM418 112h12v4h-12zM414 116h12v4h-12zM414 120h12v4h-12zM410 124h12v4h-12zM410 128h8v4h-8zM406 132h8v4h-8zM402 136h12v4h-12z" style="fill:var(--ink)"/>
+          <text class="dg-xlarge" x="558" y="20" style="font-weight:650">4</text>
+          <rect class="dg-box dg-box--grey" x="502" y="40" width="112" height="112" rx="6"/>
+          <path class="dg-digit" d="M566 60h4v4h-4zM570 64h4v4h-4zM570 68h4v4h-4zM530 72h8v4h-8zM570 72h4v4h-4zM530 76h4v4h-4zM570 76h4v4h-4zM530 80h4v4h-4zM570 80h4v4h-4zM534 84h4v4h-4zM542 84h4v4h-4zM570 84h4v4h-4zM546 88h4v4h-4zM562 88h4v4h-4zM570 88h4v4h-4zM554 92h4v4h-4zM570 92h4v4h-4zM542 96h4v4h-4zM570 96h4v4h-4zM550 100h12v4h-12zM570 100h4v4h-4zM566 120h4v4h-4zM574 120h4v4h-4zM566 124h4v4h-4zM574 124h4v4h-4zM566 128h4v4h-4zM566 132h4v4h-4zM566 136h4v4h-4zM566 140h4v4h-4zM574 140h4v4h-4z" style="fill:var(--ink);opacity:.45"/>
+          <path class="dg-digit" d="M566 64h4v4h-4zM566 68h4v4h-4zM566 72h4v4h-4zM534 76h4v4h-4zM566 76h4v4h-4zM534 80h8v4h-8zM566 80h4v4h-4zM538 84h4v4h-4zM566 84h4v4h-4zM538 88h8v4h-8zM566 88h4v4h-4zM542 92h12v4h-12zM558 92h12v4h-12zM546 96h24v4h-24zM566 100h4v4h-4zM566 104h8v4h-8zM566 108h8v4h-8zM566 112h8v4h-8zM566 116h8v4h-8zM570 120h4v4h-4zM570 124h4v4h-4zM570 128h4v4h-4zM570 132h4v4h-4zM570 136h4v4h-4zM570 140h4v4h-4z" style="fill:var(--ink)"/>
+          <text class="dg-xlarge" x="682" y="20" style="font-weight:650">9</text>
+          <rect class="dg-box dg-box--grey" x="626" y="40" width="112" height="112" rx="6"/>
+          <path class="dg-digit" d="M694 64h4v4h-4zM710 64h4v4h-4zM682 68h4v4h-4zM718 68h4v4h-4zM698 72h8v4h-8zM674 76h4v4h-4zM694 76h12v4h-12zM686 80h4v4h-4zM702 80h4v4h-4zM658 88h4v4h-4zM686 88h8v4h-8zM714 88h4v4h-4zM654 92h4v4h-4zM670 92h4v4h-4zM678 92h4v4h-4zM710 92h4v4h-4zM666 96h12v4h-12zM706 96h4v4h-4zM650 100h4v4h-4zM686 100h4v4h-4zM702 100h4v4h-4zM678 104h4v4h-4zM678 108h4v4h-4zM686 108h4v4h-4zM698 108h4v4h-4zM650 112h4v4h-4zM666 112h4v4h-4zM694 116h4v4h-4zM678 120h4v4h-4zM690 124h4v4h-4zM674 128h4v4h-4zM686 128h4v4h-4zM666 136h4v4h-4zM682 136h4v4h-4zM662 144h4v4h-4z" style="fill:var(--ink);opacity:.45"/>
+          <path class="dg-digit" d="M698 64h12v4h-12zM686 68h32v4h-32zM678 72h20v4h-20zM706 72h16v4h-16zM678 76h16v4h-16zM706 76h16v4h-16zM670 80h16v4h-16zM706 80h16v4h-16zM666 84h16v4h-16zM698 84h20v4h-20zM662 88h16v4h-16zM694 88h20v4h-20zM658 92h12v4h-12zM682 92h28v4h-28zM654 96h12v4h-12zM678 96h28v4h-28zM654 100h32v4h-32zM690 100h12v4h-12zM650 104h28v4h-28zM690 104h12v4h-12zM650 108h28v4h-28zM690 108h8v4h-8zM654 112h12v4h-12zM686 112h12v4h-12zM682 116h12v4h-12zM682 120h12v4h-12zM678 124h12v4h-12zM678 128h8v4h-8zM670 132h16v4h-16zM670 136h12v4h-12zM666 140h16v4h-16zM666 144h12v4h-12z" style="fill:var(--ink)"/>
+          <text class="dg-xlarge" x="806" y="20" style="font-weight:650">4</text>
+          <rect class="dg-box dg-box--grey" x="750" y="40" width="112" height="112" rx="6"/>
+          <path class="dg-digit" d="M818 60h8v4h-8zM814 68h4v4h-4zM786 72h8v4h-8zM814 72h4v4h-4zM786 76h4v4h-4zM814 76h4v4h-4zM778 80h4v4h-4zM814 80h4v4h-4zM778 84h4v4h-4zM810 84h4v4h-4zM822 84h4v4h-4zM778 88h4v4h-4zM810 88h4v4h-4zM822 88h4v4h-4zM782 92h4v4h-4zM810 92h4v4h-4zM822 92h4v4h-4zM810 96h4v4h-4zM822 96h4v4h-4zM794 100h4v4h-4zM806 100h4v4h-4zM822 100h4v4h-4zM786 104h4v4h-4zM798 104h4v4h-4zM822 104h4v4h-4zM786 108h4v4h-4zM822 108h4v4h-4zM806 112h4v4h-4zM822 112h4v4h-4zM794 116h8v4h-8zM818 128h4v4h-4zM806 132h4v4h-4zM818 132h4v4h-4zM806 136h4v4h-4zM818 140h4v4h-4zM814 144h4v4h-4z" style="fill:var(--ink);opacity:.45"/>
+          <path class="dg-digit" d="M818 64h8v4h-8zM818 68h8v4h-8zM818 72h8v4h-8zM790 76h4v4h-4zM818 76h8v4h-8zM782 80h12v4h-12zM818 80h8v4h-8zM782 84h12v4h-12zM814 84h8v4h-8zM782 88h12v4h-12zM814 88h8v4h-8zM786 92h8v4h-8zM814 92h8v4h-8zM786 96h8v4h-8zM814 96h8v4h-8zM786 100h8v4h-8zM810 100h12v4h-12zM790 104h8v4h-8zM802 104h20v4h-20zM790 108h32v4h-32zM790 112h16v4h-16zM810 112h12v4h-12zM810 116h12v4h-12zM810 120h12v4h-12zM810 124h12v4h-12zM810 128h8v4h-8zM810 132h8v4h-8zM810 136h12v4h-12zM810 140h8v4h-8z" style="fill:var(--ink)"/>
+          <text class="dg-xlarge" x="930" y="20" style="font-weight:650">3</text>
+          <rect class="dg-box dg-box--grey" x="874" y="40" width="112" height="112" rx="6"/>
+          <path class="dg-digit" d="M938 64h8v4h-8zM954 64h8v4h-8zM922 68h4v4h-4zM914 72h4v4h-4zM910 76h8v4h-8zM958 76h4v4h-4zM910 84h4v4h-4zM918 84h8v4h-8zM950 84h4v4h-4zM926 88h4v4h-4zM946 88h4v4h-4zM918 92h4v4h-4zM910 96h8v4h-8zM946 96h4v4h-4zM922 104h8v4h-8zM950 104h4v4h-4zM922 108h4v4h-4zM950 108h4v4h-4zM902 112h4v4h-4zM914 112h4v4h-4zM938 112h4v4h-4zM950 112h4v4h-4zM934 120h4v4h-4zM946 124h4v4h-4zM926 128h4v4h-4zM938 128h4v4h-4zM922 132h4v4h-4zM918 140h4v4h-4zM934 140h4v4h-4zM902 144h8v4h-8zM930 144h4v4h-4z" style="fill:var(--ink);opacity:.45"/>
+          <path class="dg-digit" d="M946 64h8v4h-8zM926 68h36v4h-36zM918 72h44v4h-44zM918 76h40v4h-40zM910 80h44v4h-44zM914 84h4v4h-4zM934 84h16v4h-16zM930 88h16v4h-16zM922 92h20v4h-20zM918 96h28v4h-28zM906 100h44v4h-44zM902 104h20v4h-20zM938 104h12v4h-12zM902 108h20v4h-20zM938 108h12v4h-12zM906 112h8v4h-8zM942 112h8v4h-8zM938 116h12v4h-12zM938 120h12v4h-12zM934 124h12v4h-12zM930 128h8v4h-8zM926 132h12v4h-12zM922 136h16v4h-16zM922 140h12v4h-12zM910 144h20v4h-20z" style="fill:var(--ink)"/>
+          <text class="dg-xlarge" x="1054" y="20" style="font-weight:650">4</text>
+          <rect class="dg-box dg-box--grey" x="998" y="40" width="112" height="112" rx="6"/>
+          <path class="dg-digit" d="M1078 64h4v4h-4zM1074 68h4v4h-4zM1090 68h4v4h-4zM1038 72h4v4h-4zM1074 72h4v4h-4zM1090 72h4v4h-4zM1026 76h4v4h-4zM1038 76h4v4h-4zM1090 76h4v4h-4zM1070 80h4v4h-4zM1038 84h4v4h-4zM1082 84h8v4h-8zM1022 88h4v4h-4zM1034 88h4v4h-4zM1062 88h4v4h-4zM1078 88h4v4h-4zM1018 92h4v4h-4zM1034 92h4v4h-4zM1054 92h8v4h-8zM1034 96h16v4h-16zM1074 96h4v4h-4zM1022 100h4v4h-4zM1026 104h4v4h-4zM1070 104h4v4h-4zM1026 108h4v4h-4zM1070 108h4v4h-4zM1034 112h12v4h-12zM1050 112h4v4h-4zM1066 112h4v4h-4zM1050 116h4v4h-4zM1050 120h4v4h-4zM1050 124h4v4h-4zM1062 124h4v4h-4zM1046 136h4v4h-4zM1046 140h4v4h-4zM1058 144h4v4h-4z" style="fill:var(--ink);opacity:.45"/>
+          <path class="dg-digit" d="M1082 64h8v4h-8zM1078 68h12v4h-12zM1030 72h8v4h-8zM1078 72h12v4h-12zM1030 76h8v4h-8zM1074 76h16v4h-16zM1026 80h16v4h-16zM1074 80h16v4h-16zM1026 84h12v4h-12zM1070 84h12v4h-12zM1026 88h8v4h-8zM1066 88h12v4h-12zM1022 92h12v4h-12zM1062 92h16v4h-16zM1022 96h12v4h-12zM1050 96h24v4h-24zM1026 100h48v4h-48zM1030 104h40v4h-40zM1030 108h40v4h-40zM1054 112h12v4h-12zM1054 116h12v4h-12zM1054 120h12v4h-12zM1054 124h8v4h-8zM1050 128h12v4h-12zM1050 132h12v4h-12zM1050 136h12v4h-12zM1050 140h12v4h-12zM1050 144h8v4h-8z" style="fill:var(--ink)"/>
+          <text class="dg-xlarge" x="1178" y="20" style="font-weight:650">8</text>
+          <rect class="dg-box dg-box--grey" x="1122" y="40" width="112" height="112" rx="6"/>
+          <path class="dg-digit" d="M1190 64h4v4h-4zM1202 64h4v4h-4zM1182 68h4v4h-4zM1206 68h16v4h-16zM1190 72h4v4h-4zM1178 76h4v4h-4zM1174 80h4v4h-4zM1186 80h4v4h-4zM1198 80h4v4h-4zM1214 80h4v4h-4zM1190 84h8v4h-8zM1210 84h4v4h-4zM1182 88h8v4h-8zM1198 92h4v4h-4zM1190 96h4v4h-4zM1166 100h4v4h-4zM1186 100h4v4h-4zM1158 104h4v4h-4zM1158 108h4v4h-4zM1150 112h4v4h-4zM1170 112h8v4h-8zM1158 120h4v4h-4zM1170 120h4v4h-4zM1182 120h4v4h-4zM1174 124h8v4h-8zM1142 128h32v4h-32z" style="fill:var(--ink);opacity:.45"/>
+          <path class="dg-digit" d="M1194 64h8v4h-8zM1186 68h20v4h-20zM1182 72h8v4h-8zM1202 72h20v4h-20zM1182 76h8v4h-8zM1202 76h20v4h-20zM1178 80h8v4h-8zM1202 80h12v4h-12zM1174 84h12v4h-12zM1198 84h12v4h-12zM1174 88h8v4h-8zM1190 88h16v4h-16zM1174 92h24v4h-24zM1174 96h16v4h-16zM1170 100h16v4h-16zM1162 104h24v4h-24zM1162 108h24v4h-24zM1154 112h16v4h-16zM1178 112h8v4h-8zM1146 116h16v4h-16zM1174 116h12v4h-12zM1142 120h16v4h-16zM1174 120h8v4h-8zM1142 124h32v4h-32z" style="fill:var(--ink)"/>
+          <text class="dg-xlarge" x="62" y="196" style="font-weight:650">2</text>
+          <rect class="dg-box dg-box--grey" x="6" y="216" width="112" height="112" rx="6"/>
+          <path class="dg-digit" d="M54 228h12v4h-12zM78 232h4v4h-4zM82 236h8v4h-8zM70 244h4v4h-4zM90 244h4v4h-4zM58 248h8v4h-8zM62 252h4v4h-4zM94 252h4v4h-4zM94 256h4v4h-4zM94 260h4v4h-4zM94 264h4v4h-4zM90 272h4v4h-4zM70 280h4v4h-4zM34 288h4v4h-4zM46 288h4v4h-4zM62 288h4v4h-4zM86 288h4v4h-4zM18 292h4v4h-4zM90 292h4v4h-4zM98 296h4v4h-4zM70 300h8v4h-8zM90 300h8v4h-8zM18 304h4v4h-4zM58 304h4v4h-4zM22 308h32v4h-32z" style="fill:var(--ink);opacity:.45"/>
+          <path class="dg-digit" d="M50 232h28v4h-28zM50 236h32v4h-32zM50 240h40v4h-40zM54 244h12v4h-12zM74 244h16v4h-16zM78 248h16v4h-16zM78 252h16v4h-16zM78 256h16v4h-16zM78 260h16v4h-16zM78 264h16v4h-16zM78 268h16v4h-16zM78 272h12v4h-12zM74 276h16v4h-16zM74 280h16v4h-16zM70 284h20v4h-20zM38 288h8v4h-8zM66 288h20v4h-20zM22 292h68v4h-68zM18 296h80v4h-80zM18 300h52v4h-52zM78 300h12v4h-12zM22 304h36v4h-36z" style="fill:var(--ink)"/>
+          <text class="dg-xlarge" x="186" y="196" style="font-weight:650">2</text>
+          <rect class="dg-box dg-box--grey" x="130" y="216" width="112" height="112" rx="6"/>
+          <path class="dg-digit" d="M202 236h8v4h-8zM218 236h4v4h-4zM190 240h8v4h-8zM222 240h4v4h-4zM182 244h4v4h-4zM178 248h4v4h-4zM174 252h4v4h-4zM198 252h4v4h-4zM174 256h4v4h-4zM190 256h4v4h-4zM210 256h4v4h-4zM222 256h4v4h-4zM174 260h4v4h-4zM186 260h4v4h-4zM210 260h4v4h-4zM214 268h4v4h-4zM198 272h4v4h-4zM210 272h4v4h-4zM158 276h32v4h-32zM214 276h4v4h-4zM150 280h4v4h-4zM218 280h4v4h-4zM146 284h4v4h-4zM218 284h4v4h-4zM198 288h8v4h-8zM154 292h4v4h-4zM178 292h4v4h-4zM194 292h4v4h-4zM154 296h4v4h-4zM170 296h4v4h-4zM146 304h4v4h-4zM174 304h4v4h-4zM154 308h16v4h-16z" style="fill:var(--ink);opacity:.45"/>
+          <path class="dg-digit" d="M210 236h8v4h-8zM198 240h24v4h-24zM186 244h40v4h-40zM182 248h20v4h-20zM214 248h12v4h-12zM178 252h20v4h-20zM214 252h12v4h-12zM178 256h12v4h-12zM214 256h8v4h-8zM178 260h8v4h-8zM214 260h8v4h-8zM206 264h12v4h-12zM202 268h12v4h-12zM202 272h8v4h-8zM190 276h24v4h-24zM154 280h64v4h-64zM150 284h68v4h-68zM146 288h52v4h-52zM146 292h8v4h-8zM182 292h12v4h-12zM146 296h8v4h-8zM174 296h16v4h-16zM146 300h40v4h-40zM150 304h24v4h-24z" style="fill:var(--ink)"/>
+          <text class="dg-xlarge" x="310" y="196" style="font-weight:650">1</text>
+          <rect class="dg-box dg-box--grey" x="254" y="216" width="112" height="112" rx="6"/>
+          <path class="dg-digit" d="M318 236h8v4h-8zM326 240h4v4h-4zM310 244h4v4h-4zM326 244h4v4h-4zM306 248h4v4h-4zM326 248h4v4h-4zM306 252h4v4h-4zM326 252h4v4h-4zM322 260h4v4h-4zM318 264h4v4h-4zM302 268h4v4h-4zM302 272h4v4h-4zM302 276h4v4h-4zM314 280h4v4h-4zM298 292h4v4h-4zM310 292h4v4h-4zM298 296h4v4h-4zM298 300h4v4h-4zM298 304h4v4h-4zM298 308h4v4h-4zM310 308h4v4h-4zM298 312h4v4h-4zM310 312h4v4h-4z" style="fill:var(--ink);opacity:.45"/>
+          <path class="dg-digit" d="M314 240h12v4h-12zM314 244h12v4h-12zM310 248h16v4h-16zM310 252h16v4h-16zM306 256h20v4h-20zM306 260h16v4h-16zM306 264h12v4h-12zM306 268h12v4h-12zM306 272h12v4h-12zM306 276h12v4h-12zM302 280h12v4h-12zM302 284h12v4h-12zM302 288h12v4h-12zM302 292h8v4h-8zM302 296h12v4h-12zM302 300h12v4h-12zM302 304h12v4h-12zM302 308h8v4h-8zM302 312h8v4h-8zM302 316h8v4h-8z" style="fill:var(--ink)"/>
+          <text class="dg-xlarge" x="434" y="196" style="font-weight:650">8</text>
+          <rect class="dg-box dg-box--grey" x="378" y="216" width="112" height="112" rx="6"/>
+          <path class="dg-digit" d="M442 244h16v4h-16zM430 248h8v4h-8zM458 248h4v4h-4zM466 248h4v4h-4zM482 248h4v4h-4zM430 252h4v4h-4zM462 252h4v4h-4zM482 252h4v4h-4zM422 256h4v4h-4zM442 256h4v4h-4zM450 256h4v4h-4zM478 256h8v4h-8zM418 260h4v4h-4zM430 260h8v4h-8zM470 260h4v4h-4zM426 264h4v4h-4zM442 264h4v4h-4zM462 264h4v4h-4zM418 268h4v4h-4zM438 268h4v4h-4zM454 268h4v4h-4zM430 272h4v4h-4zM450 272h4v4h-4zM422 276h4v4h-4zM442 276h4v4h-4zM418 280h4v4h-4zM438 280h4v4h-4zM418 284h4v4h-4zM434 288h4v4h-4zM434 292h4v4h-4zM430 296h4v4h-4zM398 300h4v4h-4zM414 300h4v4h-4zM398 304h4v4h-4zM398 308h4v4h-4zM422 308h4v4h-4zM418 312h4v4h-4zM406 316h8v4h-8z" style="fill:var(--ink);opacity:.45"/>
+          <path class="dg-digit" d="M438 248h20v4h-20zM470 248h12v4h-12zM434 252h28v4h-28zM466 252h16v4h-16zM426 256h16v4h-16zM454 256h24v4h-24zM422 260h8v4h-8zM454 260h16v4h-16zM418 264h8v4h-8zM446 264h16v4h-16zM422 268h8v4h-8zM442 268h12v4h-12zM422 272h8v4h-8zM434 272h16v4h-16zM426 276h16v4h-16zM422 280h16v4h-16zM422 284h16v4h-16zM414 288h20v4h-20zM410 292h24v4h-24zM406 296h24v4h-24zM402 300h12v4h-12zM418 300h12v4h-12zM402 304h24v4h-24zM402 308h20v4h-20zM402 312h16v4h-16z" style="fill:var(--ink)"/>
+          <text class="dg-xlarge" x="558" y="196" style="font-weight:650">7</text>
+          <rect class="dg-box dg-box--grey" x="502" y="216" width="112" height="112" rx="6"/>
+          <path class="dg-digit" d="M534 244h4v4h-4zM546 244h4v4h-4zM578 244h4v4h-4zM550 248h4v4h-4zM570 248h4v4h-4zM582 248h4v4h-4zM550 252h4v4h-4zM570 252h4v4h-4zM558 256h12v4h-12zM530 260h4v4h-4zM582 260h4v4h-4zM526 264h4v4h-4zM542 264h8v4h-8zM582 264h4v4h-4zM538 268h4v4h-4zM550 268h8v4h-8zM538 272h4v4h-4zM562 272h4v4h-4zM526 276h4v4h-4zM538 276h4v4h-4zM578 276h4v4h-4zM534 280h4v4h-4zM578 280h4v4h-4zM534 284h4v4h-4zM578 284h4v4h-4zM562 288h4v4h-4zM574 296h4v4h-4zM570 300h4v4h-4zM570 304h4v4h-4zM558 308h4v4h-4zM558 312h4v4h-4zM558 316h4v4h-4zM570 316h4v4h-4zM558 320h4v4h-4zM574 320h4v4h-4zM570 324h4v4h-4z" style="fill:var(--ink);opacity:.45"/>
+          <path class="dg-digit" d="M538 244h8v4h-8zM534 248h16v4h-16zM574 248h8v4h-8zM534 252h16v4h-16zM574 252h12v4h-12zM534 256h24v4h-24zM570 256h16v4h-16zM534 260h48v4h-48zM530 264h12v4h-12zM550 264h32v4h-32zM526 268h12v4h-12zM558 268h24v4h-24zM526 272h12v4h-12zM566 272h16v4h-16zM530 276h8v4h-8zM566 276h12v4h-12zM566 280h12v4h-12zM566 284h12v4h-12zM566 288h12v4h-12zM562 292h16v4h-16zM562 296h12v4h-12zM562 300h8v4h-8zM562 304h8v4h-8zM562 308h8v4h-8zM562 312h8v4h-8zM562 316h8v4h-8zM562 320h12v4h-12zM562 324h8v4h-8z" style="fill:var(--ink)"/>
+          <text class="dg-xlarge" x="682" y="196" style="font-weight:650">0</text>
+          <rect class="dg-box dg-box--grey" x="626" y="216" width="112" height="112" rx="6"/>
+          <path class="dg-digit" d="M710 232h12v4h-12zM694 240h4v4h-4zM714 240h8v4h-8zM686 244h4v4h-4zM706 244h4v4h-4zM718 244h4v4h-4zM678 248h8v4h-8zM702 248h4v4h-4zM718 248h8v4h-8zM678 252h4v4h-4zM698 252h8v4h-8zM722 252h4v4h-4zM674 256h4v4h-4zM666 260h4v4h-4zM690 260h8v4h-8zM710 260h4v4h-4zM678 264h4v4h-4zM718 264h4v4h-4zM674 268h4v4h-4zM706 268h4v4h-4zM714 268h4v4h-4zM654 272h4v4h-4zM678 272h4v4h-4zM662 276h8v4h-8zM702 276h4v4h-4zM710 276h4v4h-4zM698 280h4v4h-4zM706 280h4v4h-4zM658 284h4v4h-4zM698 284h4v4h-4zM706 284h4v4h-4zM654 288h4v4h-4zM694 288h4v4h-4zM706 288h4v4h-4zM646 292h4v4h-4zM690 292h4v4h-4zM702 292h4v4h-4zM682 296h4v4h-4zM654 300h4v4h-4zM674 300h4v4h-4zM646 304h4v4h-4zM686 304h4v4h-4zM650 308h4v4h-4zM674 308h8v4h-8zM654 312h4v4h-4zM666 312h8v4h-8z" style="fill:var(--ink);opacity:.45"/>
+          <path class="dg-digit" d="M706 236h20v4h-20zM698 240h16v4h-16zM722 240h4v4h-4zM690 244h16v4h-16zM722 244h4v4h-4zM686 248h16v4h-16zM682 252h16v4h-16zM718 252h4v4h-4zM678 256h20v4h-20zM714 256h8v4h-8zM670 260h16v4h-16zM714 260h8v4h-8zM666 264h12v4h-12zM710 264h8v4h-8zM662 268h12v4h-12zM710 268h4v4h-4zM658 272h20v4h-20zM706 272h8v4h-8zM654 276h8v4h-8zM670 276h12v4h-12zM706 276h4v4h-4zM650 280h12v4h-12zM702 280h4v4h-4zM650 284h8v4h-8zM702 284h4v4h-4zM650 288h4v4h-4zM698 288h8v4h-8zM650 292h4v4h-4zM694 292h8v4h-8zM646 296h8v4h-8zM686 296h12v4h-12zM646 300h8v4h-8zM678 300h16v4h-16zM650 304h36v4h-36zM654 308h20v4h-20zM658 312h8v4h-8z" style="fill:var(--ink)"/>
+          <text class="dg-xlarge" x="806" y="196" style="font-weight:650">8</text>
+          <rect class="dg-box dg-box--grey" x="750" y="216" width="112" height="112" rx="6"/>
+          <path class="dg-digit" d="M790 240h8v4h-8zM810 240h8v4h-8zM786 244h4v4h-4zM822 244h4v4h-4zM786 248h4v4h-4zM798 248h12v4h-12zM826 248h4v4h-4zM786 252h4v4h-4zM798 252h4v4h-4zM810 252h8v4h-8zM826 252h4v4h-4zM802 256h4v4h-4zM822 256h4v4h-4zM830 256h4v4h-4zM806 260h4v4h-4zM818 260h16v4h-16zM794 264h4v4h-4zM822 268h8v4h-8zM838 268h4v4h-4zM790 272h4v4h-4zM818 272h4v4h-4zM798 276h4v4h-4zM806 276h4v4h-4zM818 276h4v4h-4zM786 280h4v4h-4zM794 280h4v4h-4zM818 280h4v4h-4zM786 284h4v4h-4zM794 284h4v4h-4zM810 284h4v4h-4zM818 284h4v4h-4zM786 288h4v4h-4zM810 288h4v4h-4zM818 288h4v4h-4zM786 292h4v4h-4zM794 292h4v4h-4zM786 296h4v4h-4zM794 296h4v4h-4zM794 300h4v4h-4zM790 304h4v4h-4zM798 304h4v4h-4zM802 308h4v4h-4zM810 308h4v4h-4zM806 312h8v4h-8zM818 316h4v4h-4zM798 320h4v4h-4z" style="fill:var(--ink);opacity:.45"/>
+          <path class="dg-digit" d="M798 240h12v4h-12zM790 244h32v4h-32zM790 248h8v4h-8zM810 248h16v4h-16zM790 252h8v4h-8zM818 252h8v4h-8zM790 256h12v4h-12zM826 256h4v4h-4zM794 260h12v4h-12zM798 264h40v4h-40zM794 268h28v4h-28zM830 268h8v4h-8zM794 272h24v4h-24zM790 276h8v4h-8zM810 276h8v4h-8zM790 280h4v4h-4zM810 280h8v4h-8zM790 284h4v4h-4zM814 284h4v4h-4zM790 288h4v4h-4zM814 288h4v4h-4zM790 292h4v4h-4zM814 292h8v4h-8zM790 296h4v4h-4zM814 296h8v4h-8zM790 300h4v4h-4zM814 300h8v4h-8zM794 304h4v4h-4zM814 304h8v4h-8zM794 308h8v4h-8zM814 308h8v4h-8zM794 312h12v4h-12zM814 312h8v4h-8zM794 316h24v4h-24zM802 320h16v4h-16z" style="fill:var(--ink)"/>
+          <text class="dg-xlarge" x="930" y="196" style="font-weight:650">1</text>
+          <rect class="dg-box dg-box--grey" x="874" y="216" width="112" height="112" rx="6"/>
+          <path class="dg-digit" d="M942 236h8v4h-8zM938 248h4v4h-4zM946 248h4v4h-4zM934 252h4v4h-4zM946 252h4v4h-4zM934 256h4v4h-4zM942 260h4v4h-4zM930 264h4v4h-4zM942 264h4v4h-4zM938 268h4v4h-4zM926 272h4v4h-4zM934 272h4v4h-4zM922 276h4v4h-4zM918 280h4v4h-4zM930 280h4v4h-4zM918 284h4v4h-4zM930 284h4v4h-4zM914 292h4v4h-4zM922 296h4v4h-4zM910 300h4v4h-4zM918 300h4v4h-4zM906 304h4v4h-4zM914 312h4v4h-4z" style="fill:var(--ink);opacity:.45"/>
+          <path class="dg-digit" d="M942 240h8v4h-8zM942 244h8v4h-8zM942 248h4v4h-4zM938 252h8v4h-8zM938 256h8v4h-8zM934 260h8v4h-8zM934 264h8v4h-8zM930 268h8v4h-8zM930 272h4v4h-4zM926 276h8v4h-8zM922 280h8v4h-8zM922 284h8v4h-8zM918 288h12v4h-12zM918 292h8v4h-8zM914 296h8v4h-8zM914 300h4v4h-4zM910 304h8v4h-8zM906 308h12v4h-12zM906 312h8v4h-8zM906 316h8v4h-8z" style="fill:var(--ink)"/>
+          <text class="dg-xlarge" x="1054" y="196" style="font-weight:650">0</text>
+          <rect class="dg-box dg-box--grey" x="998" y="216" width="112" height="112" rx="6"/>
+          <path class="dg-digit" d="M1050 232h12v4h-12zM1042 236h4v4h-4zM1062 236h4v4h-4zM1070 240h4v4h-4zM1034 244h4v4h-4zM1074 244h4v4h-4zM1050 248h4v4h-4zM1042 252h4v4h-4zM1054 252h4v4h-4zM1030 256h4v4h-4zM1078 256h4v4h-4zM1026 260h4v4h-4zM1058 260h4v4h-4zM1026 264h4v4h-4zM1038 264h4v4h-4zM1062 264h4v4h-4zM1082 264h4v4h-4zM1038 268h4v4h-4zM1066 268h4v4h-4zM1086 268h4v4h-4zM1038 272h4v4h-4zM1070 272h4v4h-4zM1038 276h4v4h-4zM1070 276h4v4h-4zM1038 280h4v4h-4zM1038 284h4v4h-4zM1042 292h4v4h-4zM1082 292h4v4h-4zM1026 296h4v4h-4zM1046 296h4v4h-4zM1070 296h4v4h-4zM1058 300h8v4h-8zM1078 300h4v4h-4zM1034 304h4v4h-4zM1074 304h4v4h-4zM1066 308h8v4h-8zM1042 312h4v4h-4zM1062 312h4v4h-4zM1046 316h12v4h-12z" style="fill:var(--ink);opacity:.45"/>
+          <path class="dg-digit" d="M1046 236h16v4h-16zM1042 240h28v4h-28zM1038 244h36v4h-36zM1034 248h12v4h-12zM1054 248h24v4h-24zM1034 252h8v4h-8zM1058 252h20v4h-20zM1034 256h8v4h-8zM1058 256h20v4h-20zM1030 260h12v4h-12zM1062 260h20v4h-20zM1030 264h8v4h-8zM1066 264h16v4h-16zM1026 268h12v4h-12zM1070 268h16v4h-16zM1026 272h12v4h-12zM1074 272h16v4h-16zM1026 276h12v4h-12zM1074 276h16v4h-16zM1026 280h12v4h-12zM1074 280h16v4h-16zM1026 284h12v4h-12zM1074 284h16v4h-16zM1026 288h16v4h-16zM1074 288h16v4h-16zM1026 292h16v4h-16zM1074 292h8v4h-8zM1030 296h16v4h-16zM1074 296h8v4h-8zM1030 300h28v4h-28zM1066 300h12v4h-12zM1038 304h36v4h-36zM1042 308h24v4h-24zM1046 312h16v4h-16z" style="fill:var(--ink)"/>
+          <text class="dg-xlarge" x="1178" y="196" style="font-weight:650">7</text>
+          <rect class="dg-box dg-box--grey" x="1122" y="216" width="112" height="112" rx="6"/>
+          <path class="dg-digit" d="M1194 240h4v4h-4zM1210 240h4v4h-4zM1190 244h4v4h-4zM1182 248h4v4h-4zM1170 256h4v4h-4zM1190 256h12v4h-12zM1158 260h8v4h-8zM1186 260h4v4h-4zM1198 260h4v4h-4zM1154 264h4v4h-4zM1182 264h4v4h-4zM1210 264h4v4h-4zM1150 268h4v4h-4zM1174 268h4v4h-4zM1194 268h4v4h-4zM1206 268h4v4h-4zM1142 272h4v4h-4zM1170 272h4v4h-4zM1190 272h4v4h-4zM1138 276h4v4h-4zM1166 276h4v4h-4zM1202 276h4v4h-4zM1154 284h4v4h-4zM1134 288h4v4h-4zM1182 288h4v4h-4zM1198 288h4v4h-4zM1134 292h4v4h-4zM1142 292h4v4h-4zM1178 292h4v4h-4zM1194 292h4v4h-4zM1170 300h4v4h-4zM1186 300h4v4h-4zM1166 308h4v4h-4zM1182 308h4v4h-4zM1166 312h4v4h-4zM1182 312h4v4h-4zM1162 316h4v4h-4zM1174 316h8v4h-8zM1158 320h4v4h-4z" style="fill:var(--ink);opacity:.45"/>
+          <path class="dg-digit" d="M1198 240h12v4h-12zM1194 244h20v4h-20zM1186 248h28v4h-28zM1182 252h32v4h-32zM1174 256h16v4h-16zM1202 256h12v4h-12zM1166 260h20v4h-20zM1202 260h12v4h-12zM1158 264h24v4h-24zM1198 264h12v4h-12zM1154 268h20v4h-20zM1198 268h8v4h-8zM1146 272h24v4h-24zM1194 272h12v4h-12zM1142 276h24v4h-24zM1190 276h12v4h-12zM1138 280h20v4h-20zM1186 280h16v4h-16zM1138 284h16v4h-16zM1186 284h16v4h-16zM1138 288h16v4h-16zM1186 288h12v4h-12zM1138 292h4v4h-4zM1182 292h12v4h-12zM1174 296h16v4h-16zM1174 300h12v4h-12zM1170 304h16v4h-16zM1170 308h12v4h-12zM1170 312h12v4h-12zM1166 316h8v4h-8zM1162 320h12v4h-12z" style="fill:var(--ink)"/>
+        </svg>
         
         <p>
           <i>Figure:</i> Samples of handwritten digits from the widely used MNIST dataset. The correct labels have been 
@@ -1142,7 +1255,76 @@
           Consider, for example, three regression models trained on the same synthetic dataset with a single feature. The yellow points represent the training dataset. In this scenario, we assume there is an underlying "true" relationship (shown as a dashed line) that is distorted by noise (e.g., measurement errors or the influence of other factors).
         </p>
         
-        <img src="../img/material/part4/three_regression_models.webp" width=100%>
+        <svg class="dg" viewBox="0 0 960 330" role="img" aria-label="Three regression models fitted to the same ten training points (yellow), with the true relationship as a dashed line. Left, a straight line misses the curve for small and large x. Middle, a logarithmic model follows the true relationship closely without passing through the points. Right, a piecewise model jumps to the value of the nearest training point, so it passes through every point and memorizes the data.">
+          <text class="dg-heading" x="183" y="18">Linear model</text>
+          <path class="dg-guide" d="M52 250H314M52 197.5H314M52 145H314M52 92.5H314M52 40H314" style="stroke-dasharray:none;opacity:.45"/>
+          <path class="dg-axis" d="M52 40V250H314M52 250v5M168.4 250v5M284.9 250v5M47 250h5M47 197.5h5M47 145h5M47 92.5h5M47 40h5"/>
+          <text class="dg-small" x="52" y="266">0</text>
+          <text class="dg-small" x="168.4" y="266">400</text>
+          <text class="dg-small" x="284.9" y="266">800</text>
+          <text class="dg-small" x="43" y="250" style="text-anchor:end">0</text>
+          <text class="dg-small" x="43" y="197.5" style="text-anchor:end">10</text>
+          <text class="dg-small" x="43" y="145" style="text-anchor:end">20</text>
+          <text class="dg-small" x="43" y="92.5" style="text-anchor:end">30</text>
+          <text class="dg-small" x="43" y="40" style="text-anchor:end">40</text>
+          <path class="dg-curve" d="M52 239.5 L52.6 220.6 L53.2 209.5 L53.7 201.7 L54.3 195.6 L54.9 190.6 L55.5 186.4 L56.1 182.7 L56.7 179.5 L57.2 176.6 L57.8 174 L58.4 171.7 L59 169.5 L59.6 167.5 L60.2 165.6 L60.7 163.8 L61.3 162.2 L61.9 160.6 L62.5 159.1 L63.1 157.7 L63.6 156.4 L64.2 155.1 L64.8 153.9 L65.4 152.7 L66 151.6 L66.6 150.6 L67.1 149.5 L67.7 148.5 L68.3 147.6 L68.9 146.6 L69.5 145.8 L70 144.9 L70.6 144 L71.2 143.2 L71.8 142.4 L72.4 141.7 L73 140.9 L73.5 140.2 L74.1 139.5 L74.7 138.8 L75.3 138.1 L75.9 137.5 L76.5 136.8 L77 136.2 L77.6 135.6 L78.2 135 L78.8 134.4 L79.4 133.8 L79.9 133.3 L80.5 132.7 L81.1 132.2 L81.7 131.6 L82.3 131.1 L82.9 130.6 L83.4 130.1 L84 129.6 L84.6 129.1 L85.2 128.6 L85.8 128.2 L86.4 127.7 L86.9 127.3 L87.5 126.8 L88.1 126.4 L88.7 126 L89.3 125.5 L89.8 125.1 L90.4 124.7 L91 124.3 L91.6 123.9 L92.2 123.5 L92.8 123.1 L93.3 122.7 L93.9 122.4 L94.5 122 L95.1 121.6 L95.7 121.3 L96.2 120.9 L96.8 120.6 L97.4 120.2 L98 119.9 L98.6 119.5 L99.2 119.2 L99.7 118.9 L100.3 118.5 L100.9 118.2 L101.5 117.9 L102.1 117.6 L102.7 117.3 L103.2 117 L103.8 116.7 L104.4 116.4 L105 116.1 L105.6 115.8 L106.1 115.5 L106.7 115.2 L107.3 114.9 L107.9 114.6 L108.5 114.3 L109.1 114.1 L109.6 113.8 L110.2 113.5 L110.8 113.2 L111.4 113 L112 112.7 L112.6 112.4 L113.1 112.2 L113.7 111.9 L114.3 111.7 L114.9 111.4 L115.5 111.2 L116 110.9 L116.6 110.7 L117.2 110.4 L117.8 110.2 L118.4 110 L119 109.7 L119.5 109.5 L120.1 109.3 L120.7 109 L121.3 108.8 L121.9 108.6 L122.4 108.4 L123 108.1 L123.6 107.9 L124.2 107.7 L124.8 107.5 L125.4 107.3 L125.9 107 L126.5 106.8 L127.1 106.6 L127.7 106.4 L128.3 106.2 L128.9 106 L129.4 105.8 L130 105.6 L130.6 105.4 L131.2 105.2 L131.8 105 L132.3 104.8 L132.9 104.6 L133.5 104.4 L134.1 104.2 L134.7 104 L135.3 103.8 L135.8 103.6 L136.4 103.4 L137 103.3 L137.6 103.1 L138.2 102.9 L138.8 102.7 L139.3 102.5 L139.9 102.3 L140.5 102.2 L141.1 102 L141.7 101.8 L142.2 101.6 L142.8 101.5 L143.4 101.3 L144 101.1 L144.6 100.9 L145.2 100.8 L145.7 100.6 L146.3 100.4 L146.9 100.3 L147.5 100.1 L148.1 99.9 L148.6 99.8 L149.2 99.6 L149.8 99.5 L150.4 99.3 L151 99.1 L151.6 99 L152.1 98.8 L152.7 98.7 L153.3 98.5 L153.9 98.3 L154.5 98.2 L155.1 98 L155.6 97.9 L156.2 97.7 L156.8 97.6 L157.4 97.4 L158 97.3 L158.5 97.1 L159.1 97 L159.7 96.8 L160.3 96.7 L160.9 96.5 L161.5 96.4 L162 96.3 L162.6 96.1 L163.2 96 L163.8 95.8 L164.4 95.7 L165 95.5 L165.5 95.4 L166.1 95.3 L166.7 95.1 L167.3 95 L167.9 94.9 L168.4 94.7 L169 94.6 L169.6 94.4 L170.2 94.3 L170.8 94.2 L171.4 94 L171.9 93.9 L172.5 93.8 L173.1 93.7 L173.7 93.5 L174.3 93.4 L174.8 93.3 L175.4 93.1 L176 93 L176.6 92.9 L177.2 92.8 L177.8 92.6 L178.3 92.5 L178.9 92.4 L179.5 92.3 L180.1 92.1 L180.7 92 L181.3 91.9 L181.8 91.8 L182.4 91.6 L183 91.5 L183.6 91.4 L184.2 91.3 L184.7 91.2 L185.3 91 L185.9 90.9 L186.5 90.8 L187.1 90.7 L187.7 90.6 L188.2 90.5 L188.8 90.3 L189.4 90.2 L190 90.1 L190.6 90 L191.2 89.9 L191.7 89.8 L192.3 89.7 L192.9 89.5 L193.5 89.4 L194.1 89.3 L194.6 89.2 L195.2 89.1 L195.8 89 L196.4 88.9 L197 88.8 L197.6 88.7 L198.1 88.5 L198.7 88.4 L199.3 88.3 L199.9 88.2 L200.5 88.1 L201 88 L201.6 87.9 L202.2 87.8 L202.8 87.7 L203.4 87.6 L204 87.5 L204.5 87.4 L205.1 87.3 L205.7 87.2 L206.3 87.1 L206.9 87 L207.5 86.9 L208 86.8 L208.6 86.7 L209.2 86.6 L209.8 86.5 L210.4 86.4 L210.9 86.3 L211.5 86.2 L212.1 86.1 L212.7 86 L213.3 85.9 L213.9 85.8 L214.4 85.7 L215 85.6 L215.6 85.5 L216.2 85.4 L216.8 85.3 L217.4 85.2 L217.9 85.1 L218.5 85 L219.1 84.9 L219.7 84.8 L220.3 84.7 L220.8 84.6 L221.4 84.5 L222 84.4 L222.6 84.3 L223.2 84.2 L223.8 84.2 L224.3 84.1 L224.9 84 L225.5 83.9 L226.1 83.8 L226.7 83.7 L227.2 83.6 L227.8 83.5 L228.4 83.4 L229 83.3 L229.6 83.2 L230.2 83.2 L230.7 83.1 L231.3 83 L231.9 82.9 L232.5 82.8 L233.1 82.7 L233.7 82.6 L234.2 82.5 L234.8 82.5 L235.4 82.4 L236 82.3 L236.6 82.2 L237.1 82.1 L237.7 82 L238.3 81.9 L238.9 81.9 L239.5 81.8 L240.1 81.7 L240.6 81.6 L241.2 81.5 L241.8 81.4 L242.4 81.4 L243 81.3 L243.6 81.2 L244.1 81.1 L244.7 81 L245.3 80.9 L245.9 80.9 L246.5 80.8 L247 80.7 L247.6 80.6 L248.2 80.5 L248.8 80.5 L249.4 80.4 L250 80.3 L250.5 80.2 L251.1 80.1 L251.7 80.1 L252.3 80 L252.9 79.9 L253.4 79.8 L254 79.7 L254.6 79.7 L255.2 79.6 L255.8 79.5 L256.4 79.4 L256.9 79.3 L257.5 79.3 L258.1 79.2 L258.7 79.1 L259.3 79 L259.9 79 L260.4 78.9 L261 78.8 L261.6 78.7 L262.2 78.7 L262.8 78.6 L263.3 78.5 L263.9 78.4 L264.5 78.4 L265.1 78.3 L265.7 78.2 L266.3 78.1 L266.8 78.1 L267.4 78 L268 77.9 L268.6 77.8 L269.2 77.8 L269.8 77.7 L270.3 77.6 L270.9 77.5 L271.5 77.5 L272.1 77.4 L272.7 77.3 L273.2 77.3 L273.8 77.2 L274.4 77.1 L275 77 L275.6 77 L276.2 76.9 L276.7 76.8 L277.3 76.8 L277.9 76.7 L278.5 76.6 L279.1 76.6 L279.6 76.5 L280.2 76.4 L280.8 76.3 L281.4 76.3 L282 76.2 L282.6 76.1 L283.1 76.1 L283.7 76 L284.3 75.9 L284.9 75.9 L285.5 75.8 L286.1 75.7 L286.6 75.7 L287.2 75.6 L287.8 75.5 L288.4 75.5 L289 75.4 L289.5 75.3 L290.1 75.3 L290.7 75.2 L291.3 75.1 L291.9 75.1 L292.5 75 L293 74.9 L293.6 74.9 L294.2 74.8 L294.8 74.7 L295.4 74.7 L296 74.6 L296.5 74.5 L297.1 74.5 L297.7 74.4 L298.3 74.3 L298.9 74.3 L299.4 74.2 L300 74.1 L300.6 74.1 L301.2 74 L301.8 74 L302.4 73.9 L302.9 73.8 L303.5 73.8 L304.1 73.7 L304.7 73.6 L305.3 73.6 L305.8 73.5 L306.4 73.5 L307 73.4 L307.6 73.3 L308.2 73.3 L308.8 73.2 L309.3 73.1 L309.9 73.1 L310.5 73 L311.1 73 L311.7 72.9 L312.3 72.8 L312.8 72.8 L313.4 72.7 L314 72.7" style="stroke:var(--muted);stroke-width:2;stroke-dasharray:7 6"/>
+          <path class="dg-curve dg-curve--blue" d="M52 169.9 L52.6 169.6 L53.2 169.3 L53.7 169 L54.3 168.7 L54.9 168.4 L55.5 168 L56.1 167.7 L56.7 167.4 L57.2 167.1 L57.8 166.8 L58.4 166.5 L59 166.2 L59.6 165.9 L60.2 165.6 L60.7 165.3 L61.3 165 L61.9 164.7 L62.5 164.3 L63.1 164 L63.6 163.7 L64.2 163.4 L64.8 163.1 L65.4 162.8 L66 162.5 L66.6 162.2 L67.1 161.9 L67.7 161.6 L68.3 161.3 L68.9 160.9 L69.5 160.6 L70 160.3 L70.6 160 L71.2 159.7 L71.8 159.4 L72.4 159.1 L73 158.8 L73.5 158.5 L74.1 158.2 L74.7 157.9 L75.3 157.5 L75.9 157.2 L76.5 156.9 L77 156.6 L77.6 156.3 L78.2 156 L78.8 155.7 L79.4 155.4 L79.9 155.1 L80.5 154.8 L81.1 154.5 L81.7 154.1 L82.3 153.8 L82.9 153.5 L83.4 153.2 L84 152.9 L84.6 152.6 L85.2 152.3 L85.8 152 L86.4 151.7 L86.9 151.4 L87.5 151.1 L88.1 150.7 L88.7 150.4 L89.3 150.1 L89.8 149.8 L90.4 149.5 L91 149.2 L91.6 148.9 L92.2 148.6 L92.8 148.3 L93.3 148 L93.9 147.7 L94.5 147.3 L95.1 147 L95.7 146.7 L96.2 146.4 L96.8 146.1 L97.4 145.8 L98 145.5 L98.6 145.2 L99.2 144.9 L99.7 144.6 L100.3 144.3 L100.9 143.9 L101.5 143.6 L102.1 143.3 L102.7 143 L103.2 142.7 L103.8 142.4 L104.4 142.1 L105 141.8 L105.6 141.5 L106.1 141.2 L106.7 140.9 L107.3 140.5 L107.9 140.2 L108.5 139.9 L109.1 139.6 L109.6 139.3 L110.2 139 L110.8 138.7 L111.4 138.4 L112 138.1 L112.6 137.8 L113.1 137.5 L113.7 137.1 L114.3 136.8 L114.9 136.5 L115.5 136.2 L116 135.9 L116.6 135.6 L117.2 135.3 L117.8 135 L118.4 134.7 L119 134.4 L119.5 134.1 L120.1 133.7 L120.7 133.4 L121.3 133.1 L121.9 132.8 L122.4 132.5 L123 132.2 L123.6 131.9 L124.2 131.6 L124.8 131.3 L125.4 131 L125.9 130.7 L126.5 130.3 L127.1 130 L127.7 129.7 L128.3 129.4 L128.9 129.1 L129.4 128.8 L130 128.5 L130.6 128.2 L131.2 127.9 L131.8 127.6 L132.3 127.3 L132.9 126.9 L133.5 126.6 L134.1 126.3 L134.7 126 L135.3 125.7 L135.8 125.4 L136.4 125.1 L137 124.8 L137.6 124.5 L138.2 124.2 L138.8 123.9 L139.3 123.5 L139.9 123.2 L140.5 122.9 L141.1 122.6 L141.7 122.3 L142.2 122 L142.8 121.7 L143.4 121.4 L144 121.1 L144.6 120.8 L145.2 120.5 L145.7 120.1 L146.3 119.8 L146.9 119.5 L147.5 119.2 L148.1 118.9 L148.6 118.6 L149.2 118.3 L149.8 118 L150.4 117.7 L151 117.4 L151.6 117.1 L152.1 116.7 L152.7 116.4 L153.3 116.1 L153.9 115.8 L154.5 115.5 L155.1 115.2 L155.6 114.9 L156.2 114.6 L156.8 114.3 L157.4 114 L158 113.7 L158.5 113.3 L159.1 113 L159.7 112.7 L160.3 112.4 L160.9 112.1 L161.5 111.8 L162 111.5 L162.6 111.2 L163.2 110.9 L163.8 110.6 L164.4 110.3 L165 109.9 L165.5 109.6 L166.1 109.3 L166.7 109 L167.3 108.7 L167.9 108.4 L168.4 108.1 L169 107.8 L169.6 107.5 L170.2 107.2 L170.8 106.9 L171.4 106.5 L171.9 106.2 L172.5 105.9 L173.1 105.6 L173.7 105.3 L174.3 105 L174.8 104.7 L175.4 104.4 L176 104.1 L176.6 103.8 L177.2 103.5 L177.8 103.1 L178.3 102.8 L178.9 102.5 L179.5 102.2 L180.1 101.9 L180.7 101.6 L181.3 101.3 L181.8 101 L182.4 100.7 L183 100.4 L183.6 100.1 L184.2 99.7 L184.7 99.4 L185.3 99.1 L185.9 98.8 L186.5 98.5 L187.1 98.2 L187.7 97.9 L188.2 97.6 L188.8 97.3 L189.4 97 L190 96.7 L190.6 96.3 L191.2 96 L191.7 95.7 L192.3 95.4 L192.9 95.1 L193.5 94.8 L194.1 94.5 L194.6 94.2 L195.2 93.9 L195.8 93.6 L196.4 93.3 L197 92.9 L197.6 92.6 L198.1 92.3 L198.7 92 L199.3 91.7 L199.9 91.4 L200.5 91.1 L201 90.8 L201.6 90.5 L202.2 90.2 L202.8 89.9 L203.4 89.5 L204 89.2 L204.5 88.9 L205.1 88.6 L205.7 88.3 L206.3 88 L206.9 87.7 L207.5 87.4 L208 87.1 L208.6 86.8 L209.2 86.5 L209.8 86.1 L210.4 85.8 L210.9 85.5 L211.5 85.2 L212.1 84.9 L212.7 84.6 L213.3 84.3 L213.9 84 L214.4 83.7 L215 83.4 L215.6 83.1 L216.2 82.7 L216.8 82.4 L217.4 82.1 L217.9 81.8 L218.5 81.5 L219.1 81.2 L219.7 80.9 L220.3 80.6 L220.8 80.3 L221.4 80 L222 79.7 L222.6 79.3 L223.2 79 L223.8 78.7 L224.3 78.4 L224.9 78.1 L225.5 77.8 L226.1 77.5 L226.7 77.2 L227.2 76.9 L227.8 76.6 L228.4 76.3 L229 75.9 L229.6 75.6 L230.2 75.3 L230.7 75 L231.3 74.7 L231.9 74.4 L232.5 74.1 L233.1 73.8 L233.7 73.5 L234.2 73.2 L234.8 72.9 L235.4 72.5 L236 72.2 L236.6 71.9 L237.1 71.6 L237.7 71.3 L238.3 71 L238.9 70.7 L239.5 70.4 L240.1 70.1 L240.6 69.8 L241.2 69.5 L241.8 69.1 L242.4 68.8 L243 68.5 L243.6 68.2 L244.1 67.9 L244.7 67.6 L245.3 67.3 L245.9 67 L246.5 66.7 L247 66.4 L247.6 66.1 L248.2 65.7 L248.8 65.4 L249.4 65.1 L250 64.8 L250.5 64.5 L251.1 64.2 L251.7 63.9 L252.3 63.6 L252.9 63.3 L253.4 63 L254 62.7 L254.6 62.3 L255.2 62 L255.8 61.7 L256.4 61.4 L256.9 61.1 L257.5 60.8 L258.1 60.5 L258.7 60.2 L259.3 59.9 L259.9 59.6 L260.4 59.3 L261 58.9 L261.6 58.6 L262.2 58.3 L262.8 58 L263.3 57.7 L263.9 57.4 L264.5 57.1 L265.1 56.8 L265.7 56.5 L266.3 56.2 L266.8 55.9 L267.4 55.5 L268 55.2 L268.6 54.9 L269.2 54.6 L269.8 54.3 L270.3 54 L270.9 53.7 L271.5 53.4 L272.1 53.1 L272.7 52.8 L273.2 52.5 L273.8 52.1 L274.4 51.8 L275 51.5 L275.6 51.2 L276.2 50.9 L276.7 50.6 L277.3 50.3 L277.9 50 L278.5 49.7 L279.1 49.4 L279.6 49.1 L280.2 48.7 L280.8 48.4 L281.4 48.1 L282 47.8 L282.6 47.5 L283.1 47.2 L283.7 46.9 L284.3 46.6 L284.9 46.3 L285.5 46 L286.1 45.7 L286.6 45.3 L287.2 45 L287.8 44.7 L288.4 44.4 L289 44.1 L289.5 43.8 L290.1 43.5 L290.7 43.2 L291.3 42.9 L291.9 42.6 L292.5 42.3 L293 41.9 L293.6 41.6 L294.2 41.3 L294.8 41 L295.4 40.7 L296 40.4 L296.5 40.1" style="stroke-width:2.5"/>
+          <circle class="dg-ink--amber" cx="52" cy="239.5" r="5.5" style="stroke:var(--surface);stroke-width:1.5"/>
+          <circle class="dg-ink--amber" cx="59.3" cy="165" r="5.5" style="stroke:var(--surface);stroke-width:1.5"/>
+          <circle class="dg-ink--amber" cx="60.7" cy="167" r="5.5" style="stroke:var(--surface);stroke-width:1.5"/>
+          <circle class="dg-ink--amber" cx="89.8" cy="135.4" r="5.5" style="stroke:var(--surface);stroke-width:1.5"/>
+          <circle class="dg-ink--amber" cx="92.8" cy="128.4" r="5.5" style="stroke:var(--surface);stroke-width:1.5"/>
+          <circle class="dg-ink--amber" cx="94.2" cy="133.6" r="5.5" style="stroke:var(--surface);stroke-width:1.5"/>
+          <circle class="dg-ink--amber" cx="121.9" cy="107.9" r="5.5" style="stroke:var(--surface);stroke-width:1.5"/>
+          <circle class="dg-ink--amber" cx="168.4" cy="79.2" r="5.5" style="stroke:var(--surface);stroke-width:1.5"/>
+          <circle class="dg-ink--amber" cx="191.7" cy="95.5" r="5.5" style="stroke:var(--surface);stroke-width:1.5"/>
+          <circle class="dg-ink--amber" cx="273.2" cy="84.4" r="5.5" style="stroke:var(--surface);stroke-width:1.5"/>
+          <text class="dg-heading" x="493" y="18">Logarithmic model</text>
+          <path class="dg-guide" d="M362 250H624M362 197.5H624M362 145H624M362 92.5H624M362 40H624" style="stroke-dasharray:none;opacity:.45"/>
+          <path class="dg-axis" d="M362 40V250H624M362 250v5M478.4 250v5M594.9 250v5M357 250h5M357 197.5h5M357 145h5M357 92.5h5M357 40h5"/>
+          <text class="dg-small" x="362" y="266">0</text>
+          <text class="dg-small" x="478.4" y="266">400</text>
+          <text class="dg-small" x="594.9" y="266">800</text>
+          <text class="dg-small" x="493" y="286">x</text>
+          <path class="dg-curve" d="M362 239.5 L362.6 220.6 L363.2 209.5 L363.7 201.7 L364.3 195.6 L364.9 190.6 L365.5 186.4 L366.1 182.7 L366.7 179.5 L367.2 176.6 L367.8 174 L368.4 171.7 L369 169.5 L369.6 167.5 L370.2 165.6 L370.7 163.8 L371.3 162.2 L371.9 160.6 L372.5 159.1 L373.1 157.7 L373.6 156.4 L374.2 155.1 L374.8 153.9 L375.4 152.7 L376 151.6 L376.6 150.6 L377.1 149.5 L377.7 148.5 L378.3 147.6 L378.9 146.6 L379.5 145.8 L380 144.9 L380.6 144 L381.2 143.2 L381.8 142.4 L382.4 141.7 L383 140.9 L383.5 140.2 L384.1 139.5 L384.7 138.8 L385.3 138.1 L385.9 137.5 L386.5 136.8 L387 136.2 L387.6 135.6 L388.2 135 L388.8 134.4 L389.4 133.8 L389.9 133.3 L390.5 132.7 L391.1 132.2 L391.7 131.6 L392.3 131.1 L392.9 130.6 L393.4 130.1 L394 129.6 L394.6 129.1 L395.2 128.6 L395.8 128.2 L396.4 127.7 L396.9 127.3 L397.5 126.8 L398.1 126.4 L398.7 126 L399.3 125.5 L399.8 125.1 L400.4 124.7 L401 124.3 L401.6 123.9 L402.2 123.5 L402.8 123.1 L403.3 122.7 L403.9 122.4 L404.5 122 L405.1 121.6 L405.7 121.3 L406.2 120.9 L406.8 120.6 L407.4 120.2 L408 119.9 L408.6 119.5 L409.2 119.2 L409.7 118.9 L410.3 118.5 L410.9 118.2 L411.5 117.9 L412.1 117.6 L412.7 117.3 L413.2 117 L413.8 116.7 L414.4 116.4 L415 116.1 L415.6 115.8 L416.1 115.5 L416.7 115.2 L417.3 114.9 L417.9 114.6 L418.5 114.3 L419.1 114.1 L419.6 113.8 L420.2 113.5 L420.8 113.2 L421.4 113 L422 112.7 L422.6 112.4 L423.1 112.2 L423.7 111.9 L424.3 111.7 L424.9 111.4 L425.5 111.2 L426 110.9 L426.6 110.7 L427.2 110.4 L427.8 110.2 L428.4 110 L429 109.7 L429.5 109.5 L430.1 109.3 L430.7 109 L431.3 108.8 L431.9 108.6 L432.4 108.4 L433 108.1 L433.6 107.9 L434.2 107.7 L434.8 107.5 L435.4 107.3 L435.9 107 L436.5 106.8 L437.1 106.6 L437.7 106.4 L438.3 106.2 L438.9 106 L439.4 105.8 L440 105.6 L440.6 105.4 L441.2 105.2 L441.8 105 L442.3 104.8 L442.9 104.6 L443.5 104.4 L444.1 104.2 L444.7 104 L445.3 103.8 L445.8 103.6 L446.4 103.4 L447 103.3 L447.6 103.1 L448.2 102.9 L448.8 102.7 L449.3 102.5 L449.9 102.3 L450.5 102.2 L451.1 102 L451.7 101.8 L452.2 101.6 L452.8 101.5 L453.4 101.3 L454 101.1 L454.6 100.9 L455.2 100.8 L455.7 100.6 L456.3 100.4 L456.9 100.3 L457.5 100.1 L458.1 99.9 L458.6 99.8 L459.2 99.6 L459.8 99.5 L460.4 99.3 L461 99.1 L461.6 99 L462.1 98.8 L462.7 98.7 L463.3 98.5 L463.9 98.3 L464.5 98.2 L465.1 98 L465.6 97.9 L466.2 97.7 L466.8 97.6 L467.4 97.4 L468 97.3 L468.5 97.1 L469.1 97 L469.7 96.8 L470.3 96.7 L470.9 96.5 L471.5 96.4 L472 96.3 L472.6 96.1 L473.2 96 L473.8 95.8 L474.4 95.7 L475 95.5 L475.5 95.4 L476.1 95.3 L476.7 95.1 L477.3 95 L477.9 94.9 L478.4 94.7 L479 94.6 L479.6 94.4 L480.2 94.3 L480.8 94.2 L481.4 94 L481.9 93.9 L482.5 93.8 L483.1 93.7 L483.7 93.5 L484.3 93.4 L484.8 93.3 L485.4 93.1 L486 93 L486.6 92.9 L487.2 92.8 L487.8 92.6 L488.3 92.5 L488.9 92.4 L489.5 92.3 L490.1 92.1 L490.7 92 L491.3 91.9 L491.8 91.8 L492.4 91.6 L493 91.5 L493.6 91.4 L494.2 91.3 L494.7 91.2 L495.3 91 L495.9 90.9 L496.5 90.8 L497.1 90.7 L497.7 90.6 L498.2 90.5 L498.8 90.3 L499.4 90.2 L500 90.1 L500.6 90 L501.2 89.9 L501.7 89.8 L502.3 89.7 L502.9 89.5 L503.5 89.4 L504.1 89.3 L504.6 89.2 L505.2 89.1 L505.8 89 L506.4 88.9 L507 88.8 L507.6 88.7 L508.1 88.5 L508.7 88.4 L509.3 88.3 L509.9 88.2 L510.5 88.1 L511 88 L511.6 87.9 L512.2 87.8 L512.8 87.7 L513.4 87.6 L514 87.5 L514.5 87.4 L515.1 87.3 L515.7 87.2 L516.3 87.1 L516.9 87 L517.5 86.9 L518 86.8 L518.6 86.7 L519.2 86.6 L519.8 86.5 L520.4 86.4 L520.9 86.3 L521.5 86.2 L522.1 86.1 L522.7 86 L523.3 85.9 L523.9 85.8 L524.4 85.7 L525 85.6 L525.6 85.5 L526.2 85.4 L526.8 85.3 L527.4 85.2 L527.9 85.1 L528.5 85 L529.1 84.9 L529.7 84.8 L530.3 84.7 L530.8 84.6 L531.4 84.5 L532 84.4 L532.6 84.3 L533.2 84.2 L533.8 84.2 L534.3 84.1 L534.9 84 L535.5 83.9 L536.1 83.8 L536.7 83.7 L537.2 83.6 L537.8 83.5 L538.4 83.4 L539 83.3 L539.6 83.2 L540.2 83.2 L540.7 83.1 L541.3 83 L541.9 82.9 L542.5 82.8 L543.1 82.7 L543.7 82.6 L544.2 82.5 L544.8 82.5 L545.4 82.4 L546 82.3 L546.6 82.2 L547.1 82.1 L547.7 82 L548.3 81.9 L548.9 81.9 L549.5 81.8 L550.1 81.7 L550.6 81.6 L551.2 81.5 L551.8 81.4 L552.4 81.4 L553 81.3 L553.6 81.2 L554.1 81.1 L554.7 81 L555.3 80.9 L555.9 80.9 L556.5 80.8 L557 80.7 L557.6 80.6 L558.2 80.5 L558.8 80.5 L559.4 80.4 L560 80.3 L560.5 80.2 L561.1 80.1 L561.7 80.1 L562.3 80 L562.9 79.9 L563.4 79.8 L564 79.7 L564.6 79.7 L565.2 79.6 L565.8 79.5 L566.4 79.4 L566.9 79.3 L567.5 79.3 L568.1 79.2 L568.7 79.1 L569.3 79 L569.9 79 L570.4 78.9 L571 78.8 L571.6 78.7 L572.2 78.7 L572.8 78.6 L573.3 78.5 L573.9 78.4 L574.5 78.4 L575.1 78.3 L575.7 78.2 L576.3 78.1 L576.8 78.1 L577.4 78 L578 77.9 L578.6 77.8 L579.2 77.8 L579.8 77.7 L580.3 77.6 L580.9 77.5 L581.5 77.5 L582.1 77.4 L582.7 77.3 L583.2 77.3 L583.8 77.2 L584.4 77.1 L585 77 L585.6 77 L586.2 76.9 L586.7 76.8 L587.3 76.8 L587.9 76.7 L588.5 76.6 L589.1 76.6 L589.6 76.5 L590.2 76.4 L590.8 76.3 L591.4 76.3 L592 76.2 L592.6 76.1 L593.1 76.1 L593.7 76 L594.3 75.9 L594.9 75.9 L595.5 75.8 L596.1 75.7 L596.6 75.7 L597.2 75.6 L597.8 75.5 L598.4 75.5 L599 75.4 L599.5 75.3 L600.1 75.3 L600.7 75.2 L601.3 75.1 L601.9 75.1 L602.5 75 L603 74.9 L603.6 74.9 L604.2 74.8 L604.8 74.7 L605.4 74.7 L606 74.6 L606.5 74.5 L607.1 74.5 L607.7 74.4 L608.3 74.3 L608.9 74.3 L609.4 74.2 L610 74.1 L610.6 74.1 L611.2 74 L611.8 74 L612.4 73.9 L612.9 73.8 L613.5 73.8 L614.1 73.7 L614.7 73.6 L615.3 73.6 L615.8 73.5 L616.4 73.5 L617 73.4 L617.6 73.3 L618.2 73.3 L618.8 73.2 L619.3 73.1 L619.9 73.1 L620.5 73 L621.1 73 L621.7 72.9 L622.3 72.8 L622.8 72.8 L623.4 72.7 L624 72.7" style="stroke:var(--muted);stroke-width:2;stroke-dasharray:7 6"/>
+          <path class="dg-curve dg-curve--green" d="M362 240.4 L362.6 221.7 L363.2 210.8 L363.7 203.1 L364.3 197 L364.9 192.1 L365.5 188 L366.1 184.4 L366.7 181.2 L367.2 178.4 L367.8 175.8 L368.4 173.5 L369 171.3 L369.6 169.3 L370.2 167.4 L370.7 165.7 L371.3 164.1 L371.9 162.5 L372.5 161.1 L373.1 159.7 L373.6 158.4 L374.2 157.1 L374.8 155.9 L375.4 154.8 L376 153.7 L376.6 152.6 L377.1 151.6 L377.7 150.6 L378.3 149.7 L378.9 148.8 L379.5 147.9 L380 147 L380.6 146.2 L381.2 145.4 L381.8 144.6 L382.4 143.9 L383 143.1 L383.5 142.4 L384.1 141.7 L384.7 141 L385.3 140.4 L385.9 139.7 L386.5 139.1 L387 138.5 L387.6 137.9 L388.2 137.3 L388.8 136.7 L389.4 136.1 L389.9 135.6 L390.5 135 L391.1 134.5 L391.7 134 L392.3 133.4 L392.9 132.9 L393.4 132.5 L394 132 L394.6 131.5 L395.2 131 L395.8 130.6 L396.4 130.1 L396.9 129.7 L397.5 129.2 L398.1 128.8 L398.7 128.4 L399.3 128 L399.8 127.5 L400.4 127.1 L401 126.7 L401.6 126.3 L402.2 126 L402.8 125.6 L403.3 125.2 L403.9 124.8 L404.5 124.5 L405.1 124.1 L405.7 123.7 L406.2 123.4 L406.8 123 L407.4 122.7 L408 122.4 L408.6 122 L409.2 121.7 L409.7 121.4 L410.3 121 L410.9 120.7 L411.5 120.4 L412.1 120.1 L412.7 119.8 L413.2 119.5 L413.8 119.2 L414.4 118.9 L415 118.6 L415.6 118.3 L416.1 118 L416.7 117.7 L417.3 117.4 L417.9 117.2 L418.5 116.9 L419.1 116.6 L419.6 116.3 L420.2 116.1 L420.8 115.8 L421.4 115.6 L422 115.3 L422.6 115 L423.1 114.8 L423.7 114.5 L424.3 114.3 L424.9 114 L425.5 113.8 L426 113.5 L426.6 113.3 L427.2 113.1 L427.8 112.8 L428.4 112.6 L429 112.4 L429.5 112.1 L430.1 111.9 L430.7 111.7 L431.3 111.4 L431.9 111.2 L432.4 111 L433 110.8 L433.6 110.6 L434.2 110.3 L434.8 110.1 L435.4 109.9 L435.9 109.7 L436.5 109.5 L437.1 109.3 L437.7 109.1 L438.3 108.9 L438.9 108.7 L439.4 108.5 L440 108.3 L440.6 108.1 L441.2 107.9 L441.8 107.7 L442.3 107.5 L442.9 107.3 L443.5 107.1 L444.1 106.9 L444.7 106.7 L445.3 106.5 L445.8 106.3 L446.4 106.2 L447 106 L447.6 105.8 L448.2 105.6 L448.8 105.4 L449.3 105.2 L449.9 105.1 L450.5 104.9 L451.1 104.7 L451.7 104.5 L452.2 104.4 L452.8 104.2 L453.4 104 L454 103.9 L454.6 103.7 L455.2 103.5 L455.7 103.4 L456.3 103.2 L456.9 103 L457.5 102.9 L458.1 102.7 L458.6 102.5 L459.2 102.4 L459.8 102.2 L460.4 102.1 L461 101.9 L461.6 101.7 L462.1 101.6 L462.7 101.4 L463.3 101.3 L463.9 101.1 L464.5 101 L465.1 100.8 L465.6 100.7 L466.2 100.5 L466.8 100.4 L467.4 100.2 L468 100.1 L468.5 99.9 L469.1 99.8 L469.7 99.6 L470.3 99.5 L470.9 99.3 L471.5 99.2 L472 99.1 L472.6 98.9 L473.2 98.8 L473.8 98.6 L474.4 98.5 L475 98.4 L475.5 98.2 L476.1 98.1 L476.7 97.9 L477.3 97.8 L477.9 97.7 L478.4 97.5 L479 97.4 L479.6 97.3 L480.2 97.1 L480.8 97 L481.4 96.9 L481.9 96.8 L482.5 96.6 L483.1 96.5 L483.7 96.4 L484.3 96.2 L484.8 96.1 L485.4 96 L486 95.9 L486.6 95.7 L487.2 95.6 L487.8 95.5 L488.3 95.4 L488.9 95.2 L489.5 95.1 L490.1 95 L490.7 94.9 L491.3 94.7 L491.8 94.6 L492.4 94.5 L493 94.4 L493.6 94.3 L494.2 94.1 L494.7 94 L495.3 93.9 L495.9 93.8 L496.5 93.7 L497.1 93.6 L497.7 93.4 L498.2 93.3 L498.8 93.2 L499.4 93.1 L500 93 L500.6 92.9 L501.2 92.8 L501.7 92.7 L502.3 92.5 L502.9 92.4 L503.5 92.3 L504.1 92.2 L504.6 92.1 L505.2 92 L505.8 91.9 L506.4 91.8 L507 91.7 L507.6 91.6 L508.1 91.5 L508.7 91.3 L509.3 91.2 L509.9 91.1 L510.5 91 L511 90.9 L511.6 90.8 L512.2 90.7 L512.8 90.6 L513.4 90.5 L514 90.4 L514.5 90.3 L515.1 90.2 L515.7 90.1 L516.3 90 L516.9 89.9 L517.5 89.8 L518 89.7 L518.6 89.6 L519.2 89.5 L519.8 89.4 L520.4 89.3 L520.9 89.2 L521.5 89.1 L522.1 89 L522.7 88.9 L523.3 88.8 L523.9 88.7 L524.4 88.6 L525 88.5 L525.6 88.4 L526.2 88.3 L526.8 88.2 L527.4 88.1 L527.9 88 L528.5 88 L529.1 87.9 L529.7 87.8 L530.3 87.7 L530.8 87.6 L531.4 87.5 L532 87.4 L532.6 87.3 L533.2 87.2 L533.8 87.1 L534.3 87 L534.9 86.9 L535.5 86.8 L536.1 86.8 L536.7 86.7 L537.2 86.6 L537.8 86.5 L538.4 86.4 L539 86.3 L539.6 86.2 L540.2 86.1 L540.7 86 L541.3 86 L541.9 85.9 L542.5 85.8 L543.1 85.7 L543.7 85.6 L544.2 85.5 L544.8 85.4 L545.4 85.4 L546 85.3 L546.6 85.2 L547.1 85.1 L547.7 85 L548.3 84.9 L548.9 84.9 L549.5 84.8 L550.1 84.7 L550.6 84.6 L551.2 84.5 L551.8 84.4 L552.4 84.4 L553 84.3 L553.6 84.2 L554.1 84.1 L554.7 84 L555.3 83.9 L555.9 83.9 L556.5 83.8 L557 83.7 L557.6 83.6 L558.2 83.5 L558.8 83.5 L559.4 83.4 L560 83.3 L560.5 83.2 L561.1 83.1 L561.7 83.1 L562.3 83 L562.9 82.9 L563.4 82.8 L564 82.8 L564.6 82.7 L565.2 82.6 L565.8 82.5 L566.4 82.5 L566.9 82.4 L567.5 82.3 L568.1 82.2 L568.7 82.1 L569.3 82.1 L569.9 82 L570.4 81.9 L571 81.8 L571.6 81.8 L572.2 81.7 L572.8 81.6 L573.3 81.5 L573.9 81.5 L574.5 81.4 L575.1 81.3 L575.7 81.3 L576.3 81.2 L576.8 81.1 L577.4 81 L578 81 L578.6 80.9 L579.2 80.8 L579.8 80.7 L580.3 80.7 L580.9 80.6 L581.5 80.5 L582.1 80.5 L582.7 80.4 L583.2 80.3 L583.8 80.2 L584.4 80.2 L585 80.1 L585.6 80 L586.2 80 L586.7 79.9 L587.3 79.8 L587.9 79.8 L588.5 79.7 L589.1 79.6 L589.6 79.6 L590.2 79.5 L590.8 79.4 L591.4 79.3 L592 79.3 L592.6 79.2 L593.1 79.1 L593.7 79.1 L594.3 79 L594.9 78.9 L595.5 78.9 L596.1 78.8 L596.6 78.7 L597.2 78.7 L597.8 78.6 L598.4 78.5 L599 78.5 L599.5 78.4 L600.1 78.3 L600.7 78.3 L601.3 78.2 L601.9 78.1 L602.5 78.1 L603 78 L603.6 78 L604.2 77.9 L604.8 77.8 L605.4 77.8 L606 77.7 L606.5 77.6 L607.1 77.6 L607.7 77.5 L608.3 77.4 L608.9 77.4 L609.4 77.3 L610 77.2 L610.6 77.2 L611.2 77.1 L611.8 77.1 L612.4 77 L612.9 76.9 L613.5 76.9 L614.1 76.8 L614.7 76.7 L615.3 76.7 L615.8 76.6 L616.4 76.6 L617 76.5 L617.6 76.4 L618.2 76.4 L618.8 76.3 L619.3 76.3 L619.9 76.2 L620.5 76.1 L621.1 76.1 L621.7 76 L622.3 76 L622.8 75.9 L623.4 75.8 L624 75.8" style="stroke-width:2.5"/>
+          <circle class="dg-ink--amber" cx="362" cy="239.5" r="5.5" style="stroke:var(--surface);stroke-width:1.5"/>
+          <circle class="dg-ink--amber" cx="369.3" cy="165" r="5.5" style="stroke:var(--surface);stroke-width:1.5"/>
+          <circle class="dg-ink--amber" cx="370.7" cy="167" r="5.5" style="stroke:var(--surface);stroke-width:1.5"/>
+          <circle class="dg-ink--amber" cx="399.8" cy="135.4" r="5.5" style="stroke:var(--surface);stroke-width:1.5"/>
+          <circle class="dg-ink--amber" cx="402.8" cy="128.4" r="5.5" style="stroke:var(--surface);stroke-width:1.5"/>
+          <circle class="dg-ink--amber" cx="404.2" cy="133.6" r="5.5" style="stroke:var(--surface);stroke-width:1.5"/>
+          <circle class="dg-ink--amber" cx="431.9" cy="107.9" r="5.5" style="stroke:var(--surface);stroke-width:1.5"/>
+          <circle class="dg-ink--amber" cx="478.4" cy="79.2" r="5.5" style="stroke:var(--surface);stroke-width:1.5"/>
+          <circle class="dg-ink--amber" cx="501.7" cy="95.5" r="5.5" style="stroke:var(--surface);stroke-width:1.5"/>
+          <circle class="dg-ink--amber" cx="583.2" cy="84.4" r="5.5" style="stroke:var(--surface);stroke-width:1.5"/>
+          <text class="dg-heading" x="803" y="18">Piecewise model</text>
+          <path class="dg-guide" d="M672 250H934M672 197.5H934M672 145H934M672 92.5H934M672 40H934" style="stroke-dasharray:none;opacity:.45"/>
+          <path class="dg-axis" d="M672 40V250H934M672 250v5M788.4 250v5M904.9 250v5M667 250h5M667 197.5h5M667 145h5M667 92.5h5M667 40h5"/>
+          <text class="dg-small" x="672" y="266">0</text>
+          <text class="dg-small" x="788.4" y="266">400</text>
+          <text class="dg-small" x="904.9" y="266">800</text>
+          <path class="dg-curve" d="M672 239.5 L672.6 220.6 L673.2 209.5 L673.7 201.7 L674.3 195.6 L674.9 190.6 L675.5 186.4 L676.1 182.7 L676.7 179.5 L677.2 176.6 L677.8 174 L678.4 171.7 L679 169.5 L679.6 167.5 L680.2 165.6 L680.7 163.8 L681.3 162.2 L681.9 160.6 L682.5 159.1 L683.1 157.7 L683.6 156.4 L684.2 155.1 L684.8 153.9 L685.4 152.7 L686 151.6 L686.6 150.6 L687.1 149.5 L687.7 148.5 L688.3 147.6 L688.9 146.6 L689.5 145.8 L690 144.9 L690.6 144 L691.2 143.2 L691.8 142.4 L692.4 141.7 L693 140.9 L693.5 140.2 L694.1 139.5 L694.7 138.8 L695.3 138.1 L695.9 137.5 L696.5 136.8 L697 136.2 L697.6 135.6 L698.2 135 L698.8 134.4 L699.4 133.8 L699.9 133.3 L700.5 132.7 L701.1 132.2 L701.7 131.6 L702.3 131.1 L702.9 130.6 L703.4 130.1 L704 129.6 L704.6 129.1 L705.2 128.6 L705.8 128.2 L706.4 127.7 L706.9 127.3 L707.5 126.8 L708.1 126.4 L708.7 126 L709.3 125.5 L709.8 125.1 L710.4 124.7 L711 124.3 L711.6 123.9 L712.2 123.5 L712.8 123.1 L713.3 122.7 L713.9 122.4 L714.5 122 L715.1 121.6 L715.7 121.3 L716.2 120.9 L716.8 120.6 L717.4 120.2 L718 119.9 L718.6 119.5 L719.2 119.2 L719.7 118.9 L720.3 118.5 L720.9 118.2 L721.5 117.9 L722.1 117.6 L722.7 117.3 L723.2 117 L723.8 116.7 L724.4 116.4 L725 116.1 L725.6 115.8 L726.1 115.5 L726.7 115.2 L727.3 114.9 L727.9 114.6 L728.5 114.3 L729.1 114.1 L729.6 113.8 L730.2 113.5 L730.8 113.2 L731.4 113 L732 112.7 L732.6 112.4 L733.1 112.2 L733.7 111.9 L734.3 111.7 L734.9 111.4 L735.5 111.2 L736 110.9 L736.6 110.7 L737.2 110.4 L737.8 110.2 L738.4 110 L739 109.7 L739.5 109.5 L740.1 109.3 L740.7 109 L741.3 108.8 L741.9 108.6 L742.4 108.4 L743 108.1 L743.6 107.9 L744.2 107.7 L744.8 107.5 L745.4 107.3 L745.9 107 L746.5 106.8 L747.1 106.6 L747.7 106.4 L748.3 106.2 L748.9 106 L749.4 105.8 L750 105.6 L750.6 105.4 L751.2 105.2 L751.8 105 L752.3 104.8 L752.9 104.6 L753.5 104.4 L754.1 104.2 L754.7 104 L755.3 103.8 L755.8 103.6 L756.4 103.4 L757 103.3 L757.6 103.1 L758.2 102.9 L758.8 102.7 L759.3 102.5 L759.9 102.3 L760.5 102.2 L761.1 102 L761.7 101.8 L762.2 101.6 L762.8 101.5 L763.4 101.3 L764 101.1 L764.6 100.9 L765.2 100.8 L765.7 100.6 L766.3 100.4 L766.9 100.3 L767.5 100.1 L768.1 99.9 L768.6 99.8 L769.2 99.6 L769.8 99.5 L770.4 99.3 L771 99.1 L771.6 99 L772.1 98.8 L772.7 98.7 L773.3 98.5 L773.9 98.3 L774.5 98.2 L775.1 98 L775.6 97.9 L776.2 97.7 L776.8 97.6 L777.4 97.4 L778 97.3 L778.5 97.1 L779.1 97 L779.7 96.8 L780.3 96.7 L780.9 96.5 L781.5 96.4 L782 96.3 L782.6 96.1 L783.2 96 L783.8 95.8 L784.4 95.7 L785 95.5 L785.5 95.4 L786.1 95.3 L786.7 95.1 L787.3 95 L787.9 94.9 L788.4 94.7 L789 94.6 L789.6 94.4 L790.2 94.3 L790.8 94.2 L791.4 94 L791.9 93.9 L792.5 93.8 L793.1 93.7 L793.7 93.5 L794.3 93.4 L794.8 93.3 L795.4 93.1 L796 93 L796.6 92.9 L797.2 92.8 L797.8 92.6 L798.3 92.5 L798.9 92.4 L799.5 92.3 L800.1 92.1 L800.7 92 L801.3 91.9 L801.8 91.8 L802.4 91.6 L803 91.5 L803.6 91.4 L804.2 91.3 L804.7 91.2 L805.3 91 L805.9 90.9 L806.5 90.8 L807.1 90.7 L807.7 90.6 L808.2 90.5 L808.8 90.3 L809.4 90.2 L810 90.1 L810.6 90 L811.2 89.9 L811.7 89.8 L812.3 89.7 L812.9 89.5 L813.5 89.4 L814.1 89.3 L814.6 89.2 L815.2 89.1 L815.8 89 L816.4 88.9 L817 88.8 L817.6 88.7 L818.1 88.5 L818.7 88.4 L819.3 88.3 L819.9 88.2 L820.5 88.1 L821 88 L821.6 87.9 L822.2 87.8 L822.8 87.7 L823.4 87.6 L824 87.5 L824.5 87.4 L825.1 87.3 L825.7 87.2 L826.3 87.1 L826.9 87 L827.5 86.9 L828 86.8 L828.6 86.7 L829.2 86.6 L829.8 86.5 L830.4 86.4 L830.9 86.3 L831.5 86.2 L832.1 86.1 L832.7 86 L833.3 85.9 L833.9 85.8 L834.4 85.7 L835 85.6 L835.6 85.5 L836.2 85.4 L836.8 85.3 L837.4 85.2 L837.9 85.1 L838.5 85 L839.1 84.9 L839.7 84.8 L840.3 84.7 L840.8 84.6 L841.4 84.5 L842 84.4 L842.6 84.3 L843.2 84.2 L843.8 84.2 L844.3 84.1 L844.9 84 L845.5 83.9 L846.1 83.8 L846.7 83.7 L847.2 83.6 L847.8 83.5 L848.4 83.4 L849 83.3 L849.6 83.2 L850.2 83.2 L850.7 83.1 L851.3 83 L851.9 82.9 L852.5 82.8 L853.1 82.7 L853.7 82.6 L854.2 82.5 L854.8 82.5 L855.4 82.4 L856 82.3 L856.6 82.2 L857.1 82.1 L857.7 82 L858.3 81.9 L858.9 81.9 L859.5 81.8 L860.1 81.7 L860.6 81.6 L861.2 81.5 L861.8 81.4 L862.4 81.4 L863 81.3 L863.6 81.2 L864.1 81.1 L864.7 81 L865.3 80.9 L865.9 80.9 L866.5 80.8 L867 80.7 L867.6 80.6 L868.2 80.5 L868.8 80.5 L869.4 80.4 L870 80.3 L870.5 80.2 L871.1 80.1 L871.7 80.1 L872.3 80 L872.9 79.9 L873.4 79.8 L874 79.7 L874.6 79.7 L875.2 79.6 L875.8 79.5 L876.4 79.4 L876.9 79.3 L877.5 79.3 L878.1 79.2 L878.7 79.1 L879.3 79 L879.9 79 L880.4 78.9 L881 78.8 L881.6 78.7 L882.2 78.7 L882.8 78.6 L883.3 78.5 L883.9 78.4 L884.5 78.4 L885.1 78.3 L885.7 78.2 L886.3 78.1 L886.8 78.1 L887.4 78 L888 77.9 L888.6 77.8 L889.2 77.8 L889.8 77.7 L890.3 77.6 L890.9 77.5 L891.5 77.5 L892.1 77.4 L892.7 77.3 L893.2 77.3 L893.8 77.2 L894.4 77.1 L895 77 L895.6 77 L896.2 76.9 L896.7 76.8 L897.3 76.8 L897.9 76.7 L898.5 76.6 L899.1 76.6 L899.6 76.5 L900.2 76.4 L900.8 76.3 L901.4 76.3 L902 76.2 L902.6 76.1 L903.1 76.1 L903.7 76 L904.3 75.9 L904.9 75.9 L905.5 75.8 L906.1 75.7 L906.6 75.7 L907.2 75.6 L907.8 75.5 L908.4 75.5 L909 75.4 L909.5 75.3 L910.1 75.3 L910.7 75.2 L911.3 75.1 L911.9 75.1 L912.5 75 L913 74.9 L913.6 74.9 L914.2 74.8 L914.8 74.7 L915.4 74.7 L916 74.6 L916.5 74.5 L917.1 74.5 L917.7 74.4 L918.3 74.3 L918.9 74.3 L919.4 74.2 L920 74.1 L920.6 74.1 L921.2 74 L921.8 74 L922.4 73.9 L922.9 73.8 L923.5 73.8 L924.1 73.7 L924.7 73.6 L925.3 73.6 L925.8 73.5 L926.4 73.5 L927 73.4 L927.6 73.3 L928.2 73.3 L928.8 73.2 L929.3 73.1 L929.9 73.1 L930.5 73 L931.1 73 L931.7 72.9 L932.3 72.8 L932.8 72.8 L933.4 72.7 L934 72.7" style="stroke:var(--muted);stroke-width:2;stroke-dasharray:7 6"/>
+          <path class="dg-curve dg-curve--violet" d="M672 239.5 L672.6 239.5 L673.2 239.5 L673.7 239.5 L674.3 239.5 L674.9 239.5 L675.5 239.5 L676.1 239.5 L676.1 165 L676.7 165 L677.2 165 L677.8 165 L678.4 165 L679 165 L679.6 165 L680.2 165 L680.2 167 L680.7 167 L681.3 167 L681.9 167 L682.5 167 L683.1 167 L683.6 167 L684.2 167 L684.8 167 L685.4 167 L686 167 L686.6 167 L687.1 167 L687.7 167 L688.3 167 L688.9 167 L689.5 167 L690 167 L690.6 167 L691.2 167 L691.8 167 L692.4 167 L693 167 L693.5 167 L694.1 167 L694.7 167 L695.3 167 L695.9 167 L695.9 135.4 L696.5 135.4 L697 135.4 L697.6 135.4 L698.2 135.4 L698.8 135.4 L699.4 135.4 L699.9 135.4 L700.5 135.4 L701.1 135.4 L701.7 135.4 L702.3 135.4 L702.9 135.4 L703.4 135.4 L704 135.4 L704.6 135.4 L705.2 135.4 L705.8 135.4 L706.4 135.4 L706.9 135.4 L707.5 135.4 L708.1 135.4 L708.7 135.4 L709.3 135.4 L709.8 135.4 L710.4 135.4 L711 135.4 L711.6 135.4 L711.6 128.4 L712.2 128.4 L712.8 128.4 L713.3 128.4 L713.9 128.4 L713.9 133.6 L714.5 133.6 L715.1 133.6 L715.7 133.6 L716.2 133.6 L716.8 133.6 L717.4 133.6 L718 133.6 L718.6 133.6 L719.2 133.6 L719.7 133.6 L720.3 133.6 L720.9 133.6 L721.5 133.6 L722.1 133.6 L722.7 133.6 L723.2 133.6 L723.8 133.6 L724.4 133.6 L725 133.6 L725.6 133.6 L726.1 133.6 L726.7 133.6 L727.3 133.6 L727.9 133.6 L728.5 133.6 L728.5 107.9 L729.1 107.9 L729.6 107.9 L730.2 107.9 L730.8 107.9 L731.4 107.9 L732 107.9 L732.6 107.9 L733.1 107.9 L733.7 107.9 L734.3 107.9 L734.9 107.9 L735.5 107.9 L736 107.9 L736.6 107.9 L737.2 107.9 L737.8 107.9 L738.4 107.9 L739 107.9 L739.5 107.9 L740.1 107.9 L740.7 107.9 L741.3 107.9 L741.9 107.9 L742.4 107.9 L743 107.9 L743.6 107.9 L744.2 107.9 L744.8 107.9 L745.4 107.9 L745.9 107.9 L746.5 107.9 L747.1 107.9 L747.7 107.9 L748.3 107.9 L748.9 107.9 L749.4 107.9 L750 107.9 L750.6 107.9 L751.2 107.9 L751.8 107.9 L752.3 107.9 L752.9 107.9 L753.5 107.9 L754.1 107.9 L754.7 107.9 L755.3 107.9 L755.8 107.9 L756.4 107.9 L757 107.9 L757.6 107.9 L758.2 107.9 L758.8 107.9 L759.3 107.9 L759.9 107.9 L760.5 107.9 L761.1 107.9 L761.7 107.9 L762.2 107.9 L762.8 107.9 L763.4 107.9 L764 107.9 L764.6 107.9 L765.2 107.9 L765.7 107.9 L765.7 79.2 L766.3 79.2 L766.9 79.2 L767.5 79.2 L768.1 79.2 L768.6 79.2 L769.2 79.2 L769.8 79.2 L770.4 79.2 L771 79.2 L771.6 79.2 L772.1 79.2 L772.7 79.2 L773.3 79.2 L773.9 79.2 L774.5 79.2 L775.1 79.2 L775.6 79.2 L776.2 79.2 L776.8 79.2 L777.4 79.2 L778 79.2 L778.5 79.2 L779.1 79.2 L779.7 79.2 L780.3 79.2 L780.9 79.2 L781.5 79.2 L782 79.2 L782.6 79.2 L783.2 79.2 L783.8 79.2 L784.4 79.2 L785 79.2 L785.5 79.2 L786.1 79.2 L786.7 79.2 L787.3 79.2 L787.9 79.2 L788.4 79.2 L789 79.2 L789.6 79.2 L790.2 79.2 L790.8 79.2 L791.4 79.2 L791.9 79.2 L792.5 79.2 L793.1 79.2 L793.7 79.2 L794.3 79.2 L794.8 79.2 L795.4 79.2 L796 79.2 L796.6 79.2 L797.2 79.2 L797.8 79.2 L798.3 79.2 L798.9 79.2 L799.5 79.2 L800.1 79.2 L800.7 79.2 L800.7 95.5 L801.3 95.5 L801.8 95.5 L802.4 95.5 L803 95.5 L803.6 95.5 L804.2 95.5 L804.7 95.5 L805.3 95.5 L805.9 95.5 L806.5 95.5 L807.1 95.5 L807.7 95.5 L808.2 95.5 L808.8 95.5 L809.4 95.5 L810 95.5 L810.6 95.5 L811.2 95.5 L811.7 95.5 L812.3 95.5 L812.9 95.5 L813.5 95.5 L814.1 95.5 L814.6 95.5 L815.2 95.5 L815.8 95.5 L816.4 95.5 L817 95.5 L817.6 95.5 L818.1 95.5 L818.7 95.5 L819.3 95.5 L819.9 95.5 L820.5 95.5 L821 95.5 L821.6 95.5 L822.2 95.5 L822.8 95.5 L823.4 95.5 L824 95.5 L824.5 95.5 L825.1 95.5 L825.7 95.5 L826.3 95.5 L826.9 95.5 L827.5 95.5 L828 95.5 L828.6 95.5 L829.2 95.5 L829.8 95.5 L830.4 95.5 L830.9 95.5 L831.5 95.5 L832.1 95.5 L832.7 95.5 L833.3 95.5 L833.9 95.5 L834.4 95.5 L835 95.5 L835.6 95.5 L836.2 95.5 L836.8 95.5 L837.4 95.5 L837.9 95.5 L838.5 95.5 L839.1 95.5 L839.7 95.5 L840.3 95.5 L840.8 95.5 L841.4 95.5 L842 95.5 L842.6 95.5 L843.2 95.5 L843.8 95.5 L844.3 95.5 L844.9 95.5 L845.5 95.5 L846.1 95.5 L846.7 95.5 L847.2 95.5 L847.8 95.5 L848.4 95.5 L849 95.5 L849.6 95.5 L850.2 95.5 L850.7 95.5 L851.3 95.5 L851.9 95.5 L852.5 95.5 L853.1 95.5 L853.1 84.4 L853.7 84.4 L854.2 84.4 L854.8 84.4 L855.4 84.4 L856 84.4 L856.6 84.4 L857.1 84.4 L857.7 84.4 L858.3 84.4 L858.9 84.4 L859.5 84.4 L860.1 84.4 L860.6 84.4 L861.2 84.4 L861.8 84.4 L862.4 84.4 L863 84.4 L863.6 84.4 L864.1 84.4 L864.7 84.4 L865.3 84.4 L865.9 84.4 L866.5 84.4 L867 84.4 L867.6 84.4 L868.2 84.4 L868.8 84.4 L869.4 84.4 L870 84.4 L870.5 84.4 L871.1 84.4 L871.7 84.4 L872.3 84.4 L872.9 84.4 L873.4 84.4 L874 84.4 L874.6 84.4 L875.2 84.4 L875.8 84.4 L876.4 84.4 L876.9 84.4 L877.5 84.4 L878.1 84.4 L878.7 84.4 L879.3 84.4 L879.9 84.4 L880.4 84.4 L881 84.4 L881.6 84.4 L882.2 84.4 L882.8 84.4 L883.3 84.4 L883.9 84.4 L884.5 84.4 L885.1 84.4 L885.7 84.4 L886.3 84.4 L886.8 84.4 L887.4 84.4 L888 84.4 L888.6 84.4 L889.2 84.4 L889.8 84.4 L890.3 84.4 L890.9 84.4 L891.5 84.4 L892.1 84.4 L892.7 84.4 L893.2 84.4 L893.8 84.4 L894.4 84.4 L895 84.4 L895.6 84.4 L896.2 84.4 L896.7 84.4 L897.3 84.4 L897.9 84.4 L898.5 84.4 L899.1 84.4 L899.6 84.4 L900.2 84.4 L900.8 84.4 L901.4 84.4 L902 84.4 L902.6 84.4 L903.1 84.4 L903.7 84.4 L904.3 84.4 L904.9 84.4 L905.5 84.4 L906.1 84.4 L906.6 84.4 L907.2 84.4 L907.8 84.4 L908.4 84.4 L909 84.4 L909.5 84.4 L910.1 84.4 L910.7 84.4 L911.3 84.4 L911.9 84.4 L912.5 84.4 L913 84.4 L913.6 84.4 L914.2 84.4 L914.8 84.4 L915.4 84.4 L916 84.4 L916.5 84.4 L917.1 84.4 L917.7 84.4 L918.3 84.4 L918.9 84.4 L919.4 84.4 L920 84.4 L920.6 84.4 L921.2 84.4 L921.8 84.4 L922.4 84.4 L922.9 84.4 L923.5 84.4 L924.1 84.4 L924.7 84.4 L925.3 84.4 L925.8 84.4 L926.4 84.4 L927 84.4 L927.6 84.4 L928.2 84.4 L928.8 84.4 L929.3 84.4 L929.9 84.4 L930.5 84.4 L931.1 84.4 L931.7 84.4 L932.3 84.4 L932.8 84.4 L933.4 84.4 L934 84.4" style="stroke-width:2.5"/>
+          <circle class="dg-ink--amber" cx="672" cy="239.5" r="5.5" style="stroke:var(--surface);stroke-width:1.5"/>
+          <circle class="dg-ink--amber" cx="679.3" cy="165" r="5.5" style="stroke:var(--surface);stroke-width:1.5"/>
+          <circle class="dg-ink--amber" cx="680.7" cy="167" r="5.5" style="stroke:var(--surface);stroke-width:1.5"/>
+          <circle class="dg-ink--amber" cx="709.8" cy="135.4" r="5.5" style="stroke:var(--surface);stroke-width:1.5"/>
+          <circle class="dg-ink--amber" cx="712.8" cy="128.4" r="5.5" style="stroke:var(--surface);stroke-width:1.5"/>
+          <circle class="dg-ink--amber" cx="714.2" cy="133.6" r="5.5" style="stroke:var(--surface);stroke-width:1.5"/>
+          <circle class="dg-ink--amber" cx="741.9" cy="107.9" r="5.5" style="stroke:var(--surface);stroke-width:1.5"/>
+          <circle class="dg-ink--amber" cx="788.4" cy="79.2" r="5.5" style="stroke:var(--surface);stroke-width:1.5"/>
+          <circle class="dg-ink--amber" cx="811.7" cy="95.5" r="5.5" style="stroke:var(--surface);stroke-width:1.5"/>
+          <circle class="dg-ink--amber" cx="893.2" cy="84.4" r="5.5" style="stroke:var(--surface);stroke-width:1.5"/>
+          <path class="dg-curve" d="M220 306 h30" style="stroke:var(--muted);stroke-width:2;stroke-dasharray:7 6"/>
+          <text class="dg-small dg-start" x="258" y="306">true relationship</text>
+          <path class="dg-curve dg-curve--blue" d="M420 306 h10" style="stroke-width:2.5;stroke-linecap:butt"/>
+          <path class="dg-curve dg-curve--green" d="M433 306 h10" style="stroke-width:2.5;stroke-linecap:butt"/>
+          <path class="dg-curve dg-curve--violet" d="M446 306 h10" style="stroke-width:2.5;stroke-linecap:butt"/>
+          <text class="dg-small dg-start" x="466" y="306">fitted model</text>
+          <circle class="dg-ink--amber" cx="588" cy="306" r="5.5"/>
+          <text class="dg-small dg-start" x="600" y="306">training data</text>
+        </svg>
 
         <p>
           The leftmost linear model is insufficient: it does what it can but poorly approximates the relationship, especially for small and large values of <span class="math">x</span>. On the right, we see a model that "memorized" the entire training dataset (indeed, to compute this function’s value, we would need to know the coordinates of all the original points) instead of modeling the underlying dependency. Finally, the central model, while not passing through the training data points, approximates the true dependency reasonably well.
@@ -1255,7 +1437,67 @@
           Consider the example of detecting fraudulent transactions. Suppose we know exactly one numerical variable: the transaction amount. For binary classification (legitimate vs. potentially fraudulent transactions), we will search for a decision rule: wherever the function's value is positive, we predict one class; where it is negative, we predict the other. In our example, the simplest rule would be a threshold transaction amount above which a transaction is flagged as suspicious.
         </p>
 
-        <img src="../img/material/part4/regression-vs-classification_simple-comparison-image_v3.png" width=60%>
+        <svg class="dg" viewBox="0 0 960 470" role="img" aria-label="Left, classification: a straight line splits the plane into two regions, one for the crosses and one for the circles, so the line assigns each observation to a class. Right, regression: a curve fitted to the grey points gives a numeric output for an input; dashed arrows go from an input on the horizontal axis up to the curve and across to the predicted value.">
+          <defs><marker id="dg-regclass-head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrowhead" d="M0,0 L10,5 L0,10 z"/></marker></defs>
+          <text class="dg-title" x="240" y="22">Classification</text>
+          <text class="dg-small" x="240" y="46">groups observations into classes</text>
+          <path class="dg-box dg-box--blue" d="M40 70 L440 70 L440 71.6 L40 319.6 Z" style="stroke:none"/>
+          <path class="dg-box dg-box--amber" d="M40 319.6 L440 71.6 L440 390 L40 390 Z" style="stroke:none"/>
+          <rect class="dg-axis" x="40" y="70" width="400" height="320"/>
+          <path class="dg-boundary" d="M40 319.6 L440 71.6"/>
+          <path class="dg-curve dg-curve--blue" d="M72 112L88 128M72 128L88 112" style="stroke-width:3.5"/>
+          <path class="dg-curve dg-curve--blue" d="M142 84L158 100M142 100L158 84" style="stroke-width:3.5"/>
+          <path class="dg-curve dg-curve--blue" d="M192 132L208 148M192 148L208 132" style="stroke-width:3.5"/>
+          <path class="dg-curve dg-curve--blue" d="M277 96L293 112M277 112L293 96" style="stroke-width:3.5"/>
+          <path class="dg-curve dg-curve--blue" d="M312 142L328 158M312 158L328 142" style="stroke-width:3.5"/>
+          <path class="dg-curve dg-curve--blue" d="M70 228L86 244M70 244L86 228" style="stroke-width:3.5"/>
+          <circle class="dg-curve dg-curve--amber" cx="175" cy="290" r="10" style="stroke-width:3.5;fill:none"/>
+          <circle class="dg-curve dg-curve--amber" cx="115" cy="330" r="10" style="stroke-width:3.5;fill:none"/>
+          <circle class="dg-curve dg-curve--amber" cx="230" cy="345" r="10" style="stroke-width:3.5;fill:none"/>
+          <circle class="dg-curve dg-curve--amber" cx="280" cy="300" r="10" style="stroke-width:3.5;fill:none"/>
+          <circle class="dg-curve dg-curve--amber" cx="330" cy="330" r="10" style="stroke-width:3.5;fill:none"/>
+          <circle class="dg-curve dg-curve--amber" cx="395" cy="230" r="10" style="stroke-width:3.5;fill:none"/>
+          <text class="dg-small" x="240" y="420">The line assigns each observation to the</text>
+          <text class="dg-small" x="240" y="438">crosses or to the circles</text>
+          <text class="dg-title" x="720" y="22">Regression</text>
+          <text class="dg-small" x="720" y="46">predicts a numeric value</text>
+          <rect class="dg-axis" x="520" y="70" width="400" height="320"/>
+          <path class="dg-curve dg-curve--blue" d="M520 310.2 L522 307.4 L524 304.7 L526 302.1 L528 299.5 L530 296.9 L532 294.4 L534 292 L536 289.6 L538 287.2 L540 284.9 L542 282.7 L544 280.4 L546 278.3 L548 276.2 L550 274.1 L552 272.1 L554 270.1 L556 268.2 L558 266.3 L560 264.4 L562 262.6 L564 260.9 L566 259.1 L568 257.5 L570 255.8 L572 254.2 L574 252.7 L576 251.1 L578 249.7 L580 248.2 L582 246.8 L584 245.5 L586 244.1 L588 242.8 L590 241.6 L592 240.4 L594 239.2 L596 238 L598 236.9 L600 235.8 L602 234.8 L604 233.8 L606 232.8 L608 231.8 L610 230.9 L612 230 L614 229.1 L616 228.3 L618 227.5 L620 226.7 L622 226 L624 225.3 L626 224.6 L628 223.9 L630 223.3 L632 222.7 L634 222.1 L636 221.5 L638 221 L640 220.5 L642 220 L644 219.5 L646 219.1 L648 218.6 L650 218.2 L652 217.9 L654 217.5 L656 217.2 L658 216.8 L660 216.5 L662 216.3 L664 216 L666 215.7 L668 215.5 L670 215.3 L672 215.1 L674 214.9 L676 214.7 L678 214.6 L680 214.4 L682 214.3 L684 214.2 L686 214.1 L688 214 L690 213.9 L692 213.9 L694 213.8 L696 213.8 L698 213.7 L700 213.7 L702 213.7 L704 213.7 L706 213.7 L708 213.7 L710 213.7 L712 213.7 L714 213.7 L716 213.8 L718 213.8 L720 213.8 L722 213.9 L724 213.9 L726 214 L728 214 L730 214.1 L732 214.1 L734 214.2 L736 214.2 L738 214.3 L740 214.3 L742 214.4 L744 214.4 L746 214.5 L748 214.5 L750 214.6 L752 214.6 L754 214.6 L756 214.7 L758 214.7 L760 214.7 L762 214.7 L764 214.7 L766 214.7 L768 214.7 L770 214.7 L772 214.7 L774 214.7 L776 214.6 L778 214.6 L780 214.5 L782 214.4 L784 214.3 L786 214.2 L788 214.1 L790 214 L792 213.9 L794 213.7 L796 213.6 L798 213.4 L800 213.2 L802 213 L804 212.7 L806 212.5 L808 212.2 L810 212 L812 211.7 L814 211.3 L816 211 L818 210.7 L820 210.3 L822 209.9 L824 209.5 L826 209 L828 208.6 L830 208.1 L832 207.6 L834 207 L836 206.5 L838 205.9 L840 205.3 L842 204.7 L844 204 L846 203.3 L848 202.6 L850 201.9 L852 201.1 L854 200.3 L856 199.5 L858 198.6 L860 197.8 L862 196.9 L864 195.9 L866 194.9 L868 193.9 L870 192.9 L872 191.8 L874 190.7 L876 189.6 L878 188.4 L880 187.2 L882 185.9 L884 184.6 L886 183.3 L888 182 L890 180.6 L892 179.1 L894 177.7 L896 176.2 L898 174.6 L900 173 L902 171.4 L904 169.7 L906 168 L908 166.3 L910 164.5 L912 162.7 L914 160.8 L916 158.9 L918 156.9 L920 154.9" style="stroke-width:3"/>
+          <circle class="dg-dot" cx="532.6" cy="304.1" r="5" style="fill:var(--muted)"/>
+          <circle class="dg-dot" cx="564.2" cy="243" r="5" style="fill:var(--muted)"/>
+          <circle class="dg-dot" cx="567.4" cy="273" r="5" style="fill:var(--muted)"/>
+          <circle class="dg-dot" cx="574.7" cy="255.8" r="5" style="fill:var(--muted)"/>
+          <circle class="dg-dot" cx="592.1" cy="221.7" r="5" style="fill:var(--muted)"/>
+          <circle class="dg-dot" cx="621" cy="211.7" r="5" style="fill:var(--muted)"/>
+          <circle class="dg-dot" cx="638.9" cy="214.7" r="5" style="fill:var(--muted)"/>
+          <circle class="dg-dot" cx="642.1" cy="203.8" r="5" style="fill:var(--muted)"/>
+          <circle class="dg-dot" cx="644.2" cy="264.9" r="5" style="fill:var(--muted)"/>
+          <circle class="dg-dot" cx="650.1" cy="196.1" r="5" style="fill:var(--muted)"/>
+          <circle class="dg-dot" cx="679.1" cy="228.5" r="5" style="fill:var(--muted)"/>
+          <circle class="dg-dot" cx="693.9" cy="241.2" r="5" style="fill:var(--muted)"/>
+          <circle class="dg-dot" cx="694.9" cy="207" r="5" style="fill:var(--muted)"/>
+          <circle class="dg-dot" cx="709.2" cy="200.4" r="5" style="fill:var(--muted)"/>
+          <circle class="dg-dot" cx="712.1" cy="220.8" r="5" style="fill:var(--muted)"/>
+          <circle class="dg-dot" cx="726.3" cy="233.1" r="5" style="fill:var(--muted)"/>
+          <circle class="dg-dot" cx="750.9" cy="216" r="5" style="fill:var(--muted)"/>
+          <circle class="dg-dot" cx="752" cy="217.4" r="5" style="fill:var(--muted)"/>
+          <circle class="dg-dot" cx="752.6" cy="191.8" r="5" style="fill:var(--muted)"/>
+          <circle class="dg-dot" cx="775.9" cy="204.6" r="5" style="fill:var(--muted)"/>
+          <circle class="dg-dot" cx="793.8" cy="214" r="5" style="fill:var(--muted)"/>
+          <circle class="dg-dot" cx="808.2" cy="196.4" r="5" style="fill:var(--muted)"/>
+          <circle class="dg-dot" cx="809.4" cy="219.4" r="5" style="fill:var(--muted)"/>
+          <circle class="dg-dot" cx="822.8" cy="229.5" r="5" style="fill:var(--muted)"/>
+          <circle class="dg-dot" cx="833.3" cy="200" r="5" style="fill:var(--muted)"/>
+          <circle class="dg-dot" cx="867.3" cy="184" r="5" style="fill:var(--muted)"/>
+          <circle class="dg-dot" cx="891.6" cy="179.2" r="5" style="fill:var(--muted)"/>
+          <circle class="dg-dot" cx="898" cy="182.9" r="5" style="fill:var(--muted)"/>
+          <path class="dg-arrow" d="M880 390 V193.2" style="stroke-dasharray:6 5" marker-end="url(#dg-regclass-head)"/>
+          <path class="dg-arrow" d="M874 187.2 H528" style="stroke-dasharray:6 5" marker-end="url(#dg-regclass-head)"/>
+          <text class="dg-small" x="880" y="404">input</text>
+          <text class="dg-small dg-start" x="532" y="173.2">predicted output</text>
+          <text class="dg-small" x="720" y="420">The fitted curve gives a predicted output</text>
+          <text class="dg-small" x="720" y="438">for any input</text>
+        </svg>
 
         <p>
           In the case of higher dimensions, instead of a line there will be a hyperplane with a similar meaning.
@@ -1321,7 +1563,79 @@
           The goal of a linear model is to be trained in a way that the hyperplane it defines separates objects of one class from those of the other as effectively as possible.
         </p>
 
-        <img src="../img/material/part4/Linear Classification.png" width=30%>
+        <svg class="dg" viewBox="0 0 560 500" style="max-width:560px" role="img" aria-label="Two classes of points in three dimensions, circles and squares, on either side of a flat separating plane drawn inside a box: in higher dimensions, a linear classifier separates the classes with a hyperplane.">
+          <path class="dg-axis" d="M106.2 436.5 L106.2 162.5"/>
+          <path class="dg-axis" d="M106.2 436.5 L158.3 316.4" style="stroke-dasharray:4 4"/>
+          <path class="dg-axis" d="M106.2 436.5 L401.7 457.7"/>
+          <path class="dg-axis" d="M106.2 162.5 L158.3 42.3"/>
+          <path class="dg-axis" d="M106.2 162.5 L401.7 183.6"/>
+          <path class="dg-axis" d="M158.3 316.4 L158.3 42.3" style="stroke-dasharray:4 4"/>
+          <path class="dg-axis" d="M158.3 316.4 L453.8 337.5" style="stroke-dasharray:4 4"/>
+          <path class="dg-axis" d="M158.3 42.3 L453.8 63.5"/>
+          <path class="dg-axis" d="M401.7 457.7 L401.7 183.6"/>
+          <path class="dg-axis" d="M401.7 457.7 L453.8 337.5"/>
+          <path class="dg-axis" d="M401.7 183.6 L453.8 63.5"/>
+          <path class="dg-axis" d="M453.8 337.5 L453.8 63.5" style="stroke-dasharray:4 4"/>
+          <rect class="dg-dot--b" x="385.3" y="211.4" width="13" height="13" style="stroke:var(--surface);stroke-width:1.5"/>
+          <rect class="dg-dot--b" x="389.2" y="206.3" width="13" height="13" style="stroke:var(--surface);stroke-width:1.5"/>
+          <rect class="dg-dot--b" x="347.1" y="302.8" width="13" height="13" style="stroke:var(--surface);stroke-width:1.5"/>
+          <rect class="dg-dot--b" x="350.3" y="255" width="13" height="13" style="stroke:var(--surface);stroke-width:1.5"/>
+          <rect class="dg-dot--b" x="379.2" y="193.2" width="13" height="13" style="stroke:var(--surface);stroke-width:1.5"/>
+          <rect class="dg-dot--b" x="361.7" y="207.3" width="13" height="13" style="stroke:var(--surface);stroke-width:1.5"/>
+          <rect class="dg-dot--b" x="394" y="124.2" width="13" height="13" style="stroke:var(--surface);stroke-width:1.5"/>
+          <rect class="dg-dot--b" x="378.6" y="226.1" width="13" height="13" style="stroke:var(--surface);stroke-width:1.5"/>
+          <rect class="dg-dot--b" x="306" y="270.2" width="13" height="13" style="stroke:var(--surface);stroke-width:1.5"/>
+          <rect class="dg-dot--b" x="307.6" y="246.4" width="13" height="13" style="stroke:var(--surface);stroke-width:1.5"/>
+          <rect class="dg-dot--b" x="373.3" y="236.3" width="13" height="13" style="stroke:var(--surface);stroke-width:1.5"/>
+          <rect class="dg-dot--b" x="304.8" y="223" width="13" height="13" style="stroke:var(--surface);stroke-width:1.5"/>
+          <rect class="dg-dot--b" x="357.6" y="273.7" width="13" height="13" style="stroke:var(--surface);stroke-width:1.5"/>
+          <rect class="dg-dot--b" x="301.5" y="312.4" width="13" height="13" style="stroke:var(--surface);stroke-width:1.5"/>
+          <rect class="dg-dot--b" x="390" y="291.5" width="13" height="13" style="stroke:var(--surface);stroke-width:1.5"/>
+          <rect class="dg-dot--b" x="355.6" y="267.1" width="13" height="13" style="stroke:var(--surface);stroke-width:1.5"/>
+          <rect class="dg-dot--b" x="313.9" y="242.7" width="13" height="13" style="stroke:var(--surface);stroke-width:1.5"/>
+          <rect class="dg-dot--b" x="326" y="199.6" width="13" height="13" style="stroke:var(--surface);stroke-width:1.5"/>
+          <rect class="dg-dot--b" x="329.1" y="245.9" width="13" height="13" style="stroke:var(--surface);stroke-width:1.5"/>
+          <rect class="dg-dot--b" x="363.3" y="285" width="13" height="13" style="stroke:var(--surface);stroke-width:1.5"/>
+          <rect class="dg-dot--b" x="325.1" y="250.5" width="13" height="13" style="stroke:var(--surface);stroke-width:1.5"/>
+          <rect class="dg-dot--b" x="375.1" y="242.4" width="13" height="13" style="stroke:var(--surface);stroke-width:1.5"/>
+          <rect class="dg-dot--b" x="336.9" y="292.1" width="13" height="13" style="stroke:var(--surface);stroke-width:1.5"/>
+          <rect class="dg-dot--b" x="339" y="363.3" width="13" height="13" style="stroke:var(--surface);stroke-width:1.5"/>
+          <rect class="dg-dot--b" x="391.1" y="304.1" width="13" height="13" style="stroke:var(--surface);stroke-width:1.5"/>
+          <rect class="dg-dot--b" x="308.3" y="294.4" width="13" height="13" style="stroke:var(--surface);stroke-width:1.5"/>
+          <path class="dg-box dg-box--green" d="M276.5 50.8 L386.9 182.6 L283.5 449.2 L173.1 317.4 Z" style="fill-opacity:.6;stroke-width:2"/>
+          <circle class="dg-dot--a" cx="210.6" cy="264.5" r="7" style="stroke:var(--surface);stroke-width:1.5"/>
+          <circle class="dg-dot--a" cx="247.6" cy="229.9" r="7" style="stroke:var(--surface);stroke-width:1.5"/>
+          <circle class="dg-dot--a" cx="206.6" cy="242.8" r="7" style="stroke:var(--surface);stroke-width:1.5"/>
+          <circle class="dg-dot--a" cx="141.7" cy="256.5" r="7" style="stroke:var(--surface);stroke-width:1.5"/>
+          <circle class="dg-dot--a" cx="196" cy="188.6" r="7" style="stroke:var(--surface);stroke-width:1.5"/>
+          <circle class="dg-dot--a" cx="241.8" cy="233.7" r="7" style="stroke:var(--surface);stroke-width:1.5"/>
+          <circle class="dg-dot--a" cx="225.5" cy="157.1" r="7" style="stroke:var(--surface);stroke-width:1.5"/>
+          <circle class="dg-dot--a" cx="237.1" cy="240" r="7" style="stroke:var(--surface);stroke-width:1.5"/>
+          <circle class="dg-dot--a" cx="214.2" cy="272.1" r="7" style="stroke:var(--surface);stroke-width:1.5"/>
+          <circle class="dg-dot--a" cx="175.5" cy="218.4" r="7" style="stroke:var(--surface);stroke-width:1.5"/>
+          <circle class="dg-dot--a" cx="257.6" cy="211.6" r="7" style="stroke:var(--surface);stroke-width:1.5"/>
+          <circle class="dg-dot--a" cx="234" cy="288.3" r="7" style="stroke:var(--surface);stroke-width:1.5"/>
+          <circle class="dg-dot--a" cx="208.9" cy="169.2" r="7" style="stroke:var(--surface);stroke-width:1.5"/>
+          <circle class="dg-dot--a" cx="184.7" cy="267.3" r="7" style="stroke:var(--surface);stroke-width:1.5"/>
+          <circle class="dg-dot--a" cx="253.9" cy="280.7" r="7" style="stroke:var(--surface);stroke-width:1.5"/>
+          <circle class="dg-dot--a" cx="244.1" cy="261.5" r="7" style="stroke:var(--surface);stroke-width:1.5"/>
+          <circle class="dg-dot--a" cx="240.4" cy="221.2" r="7" style="stroke:var(--surface);stroke-width:1.5"/>
+          <circle class="dg-dot--a" cx="239.4" cy="208.6" r="7" style="stroke:var(--surface);stroke-width:1.5"/>
+          <circle class="dg-dot--a" cx="254.6" cy="298.5" r="7" style="stroke:var(--surface);stroke-width:1.5"/>
+          <circle class="dg-dot--a" cx="141.1" cy="263.1" r="7" style="stroke:var(--surface);stroke-width:1.5"/>
+          <circle class="dg-dot--a" cx="231.5" cy="193.1" r="7" style="stroke:var(--surface);stroke-width:1.5"/>
+          <circle class="dg-dot--a" cx="156.4" cy="265" r="7" style="stroke:var(--surface);stroke-width:1.5"/>
+          <circle class="dg-dot--a" cx="262.6" cy="243.1" r="7" style="stroke:var(--surface);stroke-width:1.5"/>
+          <circle class="dg-dot--a" cx="247.3" cy="241.3" r="7" style="stroke:var(--surface);stroke-width:1.5"/>
+          <circle class="dg-dot--a" cx="226.3" cy="260.8" r="7" style="stroke:var(--surface);stroke-width:1.5"/>
+          <circle class="dg-dot--a" cx="285.9" cy="236.8" r="7" style="stroke:var(--surface);stroke-width:1.5"/>
+          <circle class="dg-dot--a" cx="150" cy="482" r="7"/>
+          <text class="dg-small dg-start" x="164" y="482">class −1</text>
+          <rect class="dg-dot--b" x="251.5" y="475.5" width="13" height="13"/>
+          <text class="dg-small dg-start" x="272" y="482">class +1</text>
+          <rect class="dg-box dg-box--green" x="360" y="475" width="26" height="14" style="fill-opacity:.55"/>
+          <text class="dg-small dg-start" x="394" y="482">separating plane</text>
+        </svg>
 
         <h2 class="material-heading">
           Logistic Regression
@@ -1425,7 +1739,38 @@
                 On a machine that folds plastic film, the temperature can be varied between 130°C and 185°C. To explore how temperature influences fold thickness, a dataset of 12 temperature and thickness values is collected. Refer to the plot for details.
               </p>
 
-              <img src="../img/exercises/exersice_4_4_plot.png" alt="Plastic Film Folding Plot" width="60%">
+              <svg class="dg" viewBox="0 0 560 470" style="max-width:560px" role="img" aria-label="Fold thickness against temperature for twelve settings from 130 to 185 degrees: the points fall from about 134 at 130 degrees to about 85 at 185 degrees and scatter by a few units around a straight line.">
+                <path class="dg-guide" d="M90 364.3H520M90 312.9H520M90 261.4H520M90 210H520M90 158.6H520M90 107.1H520M90 55.7H520" style="stroke-dasharray:none;opacity:.45"/>
+                <path class="dg-axis" d="M90 30V390H520M111.1 390v5M181.6 390v5M252.1 390v5M322.6 390v5M393.1 390v5M463.6 390v5M85 364.3h5M85 312.9h5M85 261.4h5M85 210h5M85 158.6h5M85 107.1h5M85 55.7h5"/>
+                <text class="dg-small" x="111.1" y="406">130</text>
+                <text class="dg-small" x="181.6" y="406">140</text>
+                <text class="dg-small" x="252.1" y="406">150</text>
+                <text class="dg-small" x="322.6" y="406">160</text>
+                <text class="dg-small" x="393.1" y="406">170</text>
+                <text class="dg-small" x="463.6" y="406">180</text>
+                <text class="dg-small" x="81" y="364.3" style="text-anchor:end">80</text>
+                <text class="dg-small" x="81" y="312.9" style="text-anchor:end">90</text>
+                <text class="dg-small" x="81" y="261.4" style="text-anchor:end">100</text>
+                <text class="dg-small" x="81" y="210" style="text-anchor:end">110</text>
+                <text class="dg-small" x="81" y="158.6" style="text-anchor:end">120</text>
+                <text class="dg-small" x="81" y="107.1" style="text-anchor:end">130</text>
+                <text class="dg-small" x="81" y="55.7" style="text-anchor:end">140</text>
+                <text class="dg-small" x="305" y="426">Temperature (°C)</text>
+                <text transform="rotate(-90 30 210)" class="dg-large" x="30" y="210">Thickness</text>
+                <path class="dg-curve" d="M90 67.5 L520 349.9" style="stroke:var(--ink);stroke-width:1.5"/>
+                <circle class="dg-dot" cx="111.1" cy="88.6" r="7" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.5"/>
+                <circle class="dg-dot" cx="146.4" cy="86.6" r="7" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.5"/>
+                <circle class="dg-dot" cx="181.6" cy="111.3" r="7" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.5"/>
+                <circle class="dg-dot" cx="216.9" cy="165.8" r="7" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.5"/>
+                <circle class="dg-dot" cx="252.1" cy="184.3" r="7" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.5"/>
+                <circle class="dg-dot" cx="287.4" cy="210.5" r="7" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.5"/>
+                <circle class="dg-dot" cx="322.6" cy="212.6" r="7" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.5"/>
+                <circle class="dg-dot" cx="357.9" cy="246.5" r="7" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.5"/>
+                <circle class="dg-dot" cx="393.1" cy="254.2" r="7" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.5"/>
+                <circle class="dg-dot" cx="428.4" cy="324.2" r="7" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.5"/>
+                <circle class="dg-dot" cx="463.6" cy="283.5" r="7" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.5"/>
+                <circle class="dg-dot" cx="498.9" cy="336.5" r="7" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.5"/>
+              </svg>
 
               <p>
                 The notes above write a one-feature linear model as
@@ -1596,7 +1941,36 @@
           label. An example is given in the following diagram (panels a and b).
         </p>
 
-        <img src="../img/diagrams/nearestneighbors_diagram1-f375dbbf.png" width=90%><br><br>
+        <svg class="dg" viewBox="0 0 960 300" role="img" aria-label="Three panels with the same training points of two classes, blue circles and orange squares, and two test points drawn as stars. a: the test points before classification. b: each test point takes the class of its single nearest neighbor; the right test point lies among orange squares, but its nearest neighbor is a blue circle, so it becomes blue. c: with the three nearest neighbors, the left test point stays blue, and the right one becomes orange, because two of its three neighbors are orange.">
+          <text class="dg-heading dg-start" x="10" y="18">a. Training and test points</text>
+          <rect class="dg-box dg-box--grey" x="8" y="40" width="304" height="214" rx="8"/>
+          <path class="dg-dot--a" d="M31.4 87.6a7 7 0 1 0 14 0a7 7 0 1 0 -14 0ZM110.5 69.5a7 7 0 1 0 14 0a7 7 0 1 0 -14 0ZM51.2 118.5a7 7 0 1 0 14 0a7 7 0 1 0 -14 0ZM130.3 128a7 7 0 1 0 14 0a7 7 0 1 0 -14 0ZM169.8 88.4a7 7 0 1 0 14 0a7 7 0 1 0 -14 0ZM60.6 147.8a7 7 0 1 0 14 0a7 7 0 1 0 -14 0ZM181 147.8a7 7 0 1 0 14 0a7 7 0 1 0 -14 0ZM90.7 167.6a7 7 0 1 0 14 0a7 7 0 1 0 -14 0ZM248.1 138.3a7 7 0 1 0 14 0a7 7 0 1 0 -14 0ZM31.4 226.9a7 7 0 1 0 14 0a7 7 0 1 0 -14 0ZM100.2 216.6a7 7 0 1 0 14 0a7 7 0 1 0 -14 0ZM130.3 226a7 7 0 1 0 14 0a7 7 0 1 0 -14 0Z" style="stroke:var(--surface);stroke-width:1.5"/>
+          <path class="dg-dot--b" d="M160 51.8h13v13h-13ZM277.8 51.8h13v13h-13ZM239.1 72.5h13v13h-13ZM219.4 91.4h13v13h-13ZM258.1 100.9h13v13h-13ZM160 112h13v13h-13ZM219.4 151.6h13v13h-13ZM239.1 161.1h13v13h-13ZM150.6 170.5h13v13h-13ZM229.7 191.2h13v13h-13ZM179.8 219.5h13v13h-13ZM277.8 219.5h13v13h-13Z" style="stroke:var(--surface);stroke-width:1.5"/>
+          <path class="dg-dot" d="M87.4 96.2 L84.2 103.9 L76 104.5 L82.3 109.9 L80.3 117.9 L87.4 113.6 L94.5 117.9 L92.5 109.9 L98.8 104.5 L90.6 103.9 Z" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.8;stroke-linejoin:round"/>
+          <path class="dg-dot" d="M235.3 115.1 L232.1 122.8 L223.9 123.4 L230.2 128.8 L228.3 136.8 L235.3 132.5 L242.4 136.8 L240.5 128.8 L246.7 123.4 L238.5 122.8 Z" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.8;stroke-linejoin:round"/>
+          <text class="dg-heading dg-start" x="328" y="18">b. 1 nearest neighbor</text>
+          <rect class="dg-box dg-box--grey" x="326" y="40" width="304" height="214" rx="8"/>
+          <path class="dg-edge" d="M405.4 108.2L376.2 118.5M553.3 127.1L573.1 138.3" style="stroke:var(--ink);stroke-width:2"/>
+          <path class="dg-dot--a" d="M349.4 87.6a7 7 0 1 0 14 0a7 7 0 1 0 -14 0ZM428.5 69.5a7 7 0 1 0 14 0a7 7 0 1 0 -14 0ZM369.2 118.5a7 7 0 1 0 14 0a7 7 0 1 0 -14 0ZM448.3 128a7 7 0 1 0 14 0a7 7 0 1 0 -14 0ZM487.8 88.4a7 7 0 1 0 14 0a7 7 0 1 0 -14 0ZM378.6 147.8a7 7 0 1 0 14 0a7 7 0 1 0 -14 0ZM499 147.8a7 7 0 1 0 14 0a7 7 0 1 0 -14 0ZM408.7 167.6a7 7 0 1 0 14 0a7 7 0 1 0 -14 0ZM566.1 138.3a7 7 0 1 0 14 0a7 7 0 1 0 -14 0ZM349.4 226.9a7 7 0 1 0 14 0a7 7 0 1 0 -14 0ZM418.2 216.6a7 7 0 1 0 14 0a7 7 0 1 0 -14 0ZM448.3 226a7 7 0 1 0 14 0a7 7 0 1 0 -14 0Z" style="stroke:var(--surface);stroke-width:1.5"/>
+          <path class="dg-dot--b" d="M478 51.8h13v13h-13ZM595.8 51.8h13v13h-13ZM557.1 72.5h13v13h-13ZM537.4 91.4h13v13h-13ZM576.1 100.9h13v13h-13ZM478 112h13v13h-13ZM537.4 151.6h13v13h-13ZM557.1 161.1h13v13h-13ZM468.6 170.5h13v13h-13ZM547.7 191.2h13v13h-13ZM497.8 219.5h13v13h-13ZM595.8 219.5h13v13h-13Z" style="stroke:var(--surface);stroke-width:1.5"/>
+          <path class="dg-dot" d="M405.4 96.2 L402.2 103.9 L394 104.5 L400.3 109.9 L398.3 117.9 L405.4 113.6 L412.5 117.9 L410.5 109.9 L416.8 104.5 L408.6 103.9 Z" style="fill:var(--dg-class-a);stroke:var(--ink);stroke-width:1.8;stroke-linejoin:round"/>
+          <path class="dg-dot" d="M553.3 115.1 L550.1 122.8 L541.9 123.4 L548.2 128.8 L546.3 136.8 L553.3 132.5 L560.4 136.8 L558.5 128.8 L564.7 123.4 L556.5 122.8 Z" style="fill:var(--dg-class-a);stroke:var(--ink);stroke-width:1.8;stroke-linejoin:round"/>
+          <text class="dg-heading dg-start" x="646" y="18">c. 3 nearest neighbors</text>
+          <rect class="dg-box dg-box--grey" x="644" y="40" width="304" height="214" rx="8"/>
+          <path class="dg-edge" d="M723.4 108.2L694.2 118.5M723.4 108.2L703.6 147.8M723.4 108.2L753.5 69.5M871.3 127.1L891.1 138.3M871.3 127.1L861.9 97.9M871.3 127.1L861.9 158.1" style="stroke:var(--ink);stroke-width:2"/>
+          <path class="dg-dot--a" d="M667.4 87.6a7 7 0 1 0 14 0a7 7 0 1 0 -14 0ZM746.5 69.5a7 7 0 1 0 14 0a7 7 0 1 0 -14 0ZM687.2 118.5a7 7 0 1 0 14 0a7 7 0 1 0 -14 0ZM766.3 128a7 7 0 1 0 14 0a7 7 0 1 0 -14 0ZM805.8 88.4a7 7 0 1 0 14 0a7 7 0 1 0 -14 0ZM696.6 147.8a7 7 0 1 0 14 0a7 7 0 1 0 -14 0ZM817 147.8a7 7 0 1 0 14 0a7 7 0 1 0 -14 0ZM726.7 167.6a7 7 0 1 0 14 0a7 7 0 1 0 -14 0ZM884.1 138.3a7 7 0 1 0 14 0a7 7 0 1 0 -14 0ZM667.4 226.9a7 7 0 1 0 14 0a7 7 0 1 0 -14 0ZM736.2 216.6a7 7 0 1 0 14 0a7 7 0 1 0 -14 0ZM766.3 226a7 7 0 1 0 14 0a7 7 0 1 0 -14 0Z" style="stroke:var(--surface);stroke-width:1.5"/>
+          <path class="dg-dot--b" d="M796 51.8h13v13h-13ZM913.8 51.8h13v13h-13ZM875.1 72.5h13v13h-13ZM855.4 91.4h13v13h-13ZM894.1 100.9h13v13h-13ZM796 112h13v13h-13ZM855.4 151.6h13v13h-13ZM875.1 161.1h13v13h-13ZM786.6 170.5h13v13h-13ZM865.7 191.2h13v13h-13ZM815.8 219.5h13v13h-13ZM913.8 219.5h13v13h-13Z" style="stroke:var(--surface);stroke-width:1.5"/>
+          <path class="dg-dot" d="M723.4 96.2 L720.2 103.9 L712 104.5 L718.3 109.9 L716.3 117.9 L723.4 113.6 L730.5 117.9 L728.5 109.9 L734.8 104.5 L726.6 103.9 Z" style="fill:var(--dg-class-a);stroke:var(--ink);stroke-width:1.8;stroke-linejoin:round"/>
+          <path class="dg-dot" d="M871.3 115.1 L868.1 122.8 L859.9 123.4 L866.2 128.8 L864.3 136.8 L871.3 132.5 L878.4 136.8 L876.5 128.8 L882.7 123.4 L874.5 122.8 Z" style="fill:var(--dg-class-b);stroke:var(--ink);stroke-width:1.8;stroke-linejoin:round"/>
+          <circle class="dg-dot--a" cx="150" cy="284" r="7" style="stroke:var(--surface);stroke-width:1.5"/>
+          <text class="dg-small dg-start" x="164" y="284">class A</text>
+          <rect class="dg-dot--b" x="241.5" y="277.5" width="13" height="13" style="stroke:var(--surface);stroke-width:1.5"/>
+          <text class="dg-small dg-start" x="262" y="284">class B</text>
+          <path class="dg-dot" d="M352 273 L349.1 280 L341.5 280.6 L347.3 285.5 L345.5 292.9 L352 288.9 L358.5 292.9 L356.7 285.5 L362.5 280.6 L354.9 280 Z" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.8;stroke-linejoin:round"/>
+          <text class="dg-small dg-start" x="370" y="284">test point (its fill shows the predicted class)</text>
+          <path class="dg-edge" d="M682 284 L716 284" style="stroke:var(--ink);stroke-width:2"/>
+          <text class="dg-small dg-start" x="726" y="284">line to a nearest neighbor</text>
+        </svg>
 
         <p>
           In the k-nearest neighbor (k-NN) classifier, the idea is very
@@ -1616,7 +1990,138 @@
             Below are the other possible metrics. We won't dive deeper into them, but it's important to know that Euclidean distance is the most common, but not the only option.
           </p>
 
-        <img src="../img/material/part4/metrics_knn.webp" width=80%>
+        <svg class="dg" viewBox="0 0 960 466" role="img" aria-label="Eight ways to measure the distance between two objects A and B. Euclidean: the length of the straight line between two points. Cosine: one minus the cosine of the angle between two vectors. Hamming: the number of positions where two strings differ; 101100 and 111000 differ in 2 positions. Manhattan: the sum of the moves along the axes. Jaccard: one minus the size of the intersection of two sets divided by the size of their union. Minkowski: a family with a parameter p; the points at distance 1 from a centre form a diamond for p = 1 (Manhattan), a circle for p = 2 (Euclidean) and a square for p = infinity. Haversine: the length of the arc between two points on a sphere. Sørensen–Dice: one minus twice the intersection divided by the sum of the sizes of the two sets.">
+          <defs><marker id="dg-metrics-head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrowhead" d="M0,0 L10,5 L0,10 z"/></marker></defs>
+          <rect class="dg-box dg-box--grey" x="12" y="8" width="225" height="217" rx="10"/>
+          <text class="dg-heading dg-start" x="26" y="30">Euclidean</text>
+          <text x="124.5" y="207" style="font-size:13px"><tspan class="dg-math">d</tspan> = √Σ(<tspan class="dg-math">a</tspan><tspan class="dg-sub" dy="5">i</tspan><tspan dy="-5">​</tspan> − <tspan class="dg-math">b</tspan><tspan class="dg-sub" dy="5">i</tspan><tspan dy="-5">​</tspan>)²</text>
+          <rect class="dg-box dg-box--grey" x="249" y="8" width="225" height="217" rx="10"/>
+          <text class="dg-heading dg-start" x="263" y="30">Cosine</text>
+          <text x="361.5" y="207" style="font-size:13px"><tspan class="dg-math">d</tspan> = 1 − cos <tspan class="dg-math">θ</tspan></text>
+          <rect class="dg-box dg-box--grey" x="486" y="8" width="225" height="217" rx="10"/>
+          <text class="dg-heading dg-start" x="500" y="30">Hamming</text>
+          <text x="598.5" y="207" style="font-size:13px"><tspan class="dg-math">d</tspan> = positions that differ = 2</text>
+          <rect class="dg-box dg-box--grey" x="723" y="8" width="225" height="217" rx="10"/>
+          <text class="dg-heading dg-start" x="737" y="30">Manhattan</text>
+          <text x="835.5" y="207" style="font-size:13px"><tspan class="dg-math">d</tspan> = Σ|<tspan class="dg-math">a</tspan><tspan class="dg-sub" dy="5">i</tspan><tspan dy="-5">​</tspan> − <tspan class="dg-math">b</tspan><tspan class="dg-sub" dy="5">i</tspan><tspan dy="-5">​</tspan>|</text>
+          <rect class="dg-box dg-box--grey" x="12" y="241" width="225" height="217" rx="10"/>
+          <text class="dg-heading dg-start" x="26" y="263">Jaccard</text>
+          <text x="124.5" y="440" style="font-size:13px"><tspan class="dg-math">d</tspan> = 1 − |A ∩ B| / |A ∪ B|</text>
+          <rect class="dg-box dg-box--grey" x="249" y="241" width="225" height="217" rx="10"/>
+          <text class="dg-heading dg-start" x="263" y="263">Minkowski</text>
+          <text x="361.5" y="440" style="font-size:13px"><tspan class="dg-math">d</tspan> = (Σ|<tspan class="dg-math">a</tspan><tspan class="dg-sub" dy="5">i</tspan><tspan dy="-5">​</tspan> − <tspan class="dg-math">b</tspan><tspan class="dg-sub" dy="5">i</tspan><tspan dy="-5">​</tspan>|<tspan class="dg-sub" dy="-6">p</tspan><tspan dy="6">​</tspan>)<tspan class="dg-sub" dy="-6">1/p</tspan><tspan dy="6">​</tspan></text>
+          <rect class="dg-box dg-box--grey" x="486" y="241" width="225" height="217" rx="10"/>
+          <text class="dg-heading dg-start" x="500" y="263">Haversine</text>
+          <text x="598.5" y="440" style="font-size:13px"><tspan class="dg-math">d</tspan> = length of the arc on the sphere</text>
+          <rect class="dg-box dg-box--grey" x="723" y="241" width="225" height="217" rx="10"/>
+          <text class="dg-heading dg-start" x="737" y="263">Sørensen–Dice</text>
+          <text x="835.5" y="440" style="font-size:13px"><tspan class="dg-math">d</tspan> = 1 − 2|A ∩ B| / (|A| + |B|)</text>
+          <path class="dg-arrow" d="M78.6 87.9 L170.4 150.1" marker-start="url(#dg-metrics-head)" marker-end="url(#dg-metrics-head)"/>
+          <circle class="dg-dot--a" cx="67" cy="80" r="9"/>
+          <circle class="dg-dot--b" cx="182" cy="158" r="9"/>
+          <text class="dg-math" x="49" y="66">a</text>
+          <text class="dg-math" x="200" y="172">b</text>
+          <path class="dg-arrow" d="M279 182 L353.3 80.5" marker-end="url(#dg-metrics-head)"/>
+          <path class="dg-arrow" d="M279 182 L432.7 130.2" marker-end="url(#dg-metrics-head)"/>
+          <circle class="dg-dot--a" cx="361" cy="70" r="9"/>
+          <circle class="dg-dot--b" cx="445" cy="126" r="9"/>
+          <path class="dg-edge" d="M328.3 165.4 A52 52 0 0 0 309.7 140" style="stroke:var(--ink);stroke-width:1.5"/>
+          <text class="dg-math" x="332.2" y="143" style="font-size:16px">θ</text>
+          <text class="dg-math" x="343" y="64">a</text>
+          <text class="dg-math" x="449" y="106">b</text>
+          <rect class="dg-box dg-box--amber" x="560" y="66" width="28" height="106" rx="5"/>
+          <rect class="dg-box dg-box--amber" x="608" y="66" width="28" height="106" rx="5"/>
+          <text class="dg-heading" x="520" y="92" style="fill:var(--dg-class-a)">A</text>
+          <rect class="dg-axis" x="538" y="79" width="24" height="26" style="fill:var(--surface)"/>
+          <text x="550" y="92" style="font-size:15px;fill:var(--ink)">1</text>
+          <rect class="dg-axis" x="562" y="79" width="24" height="26" style="fill:var(--surface)"/>
+          <text x="574" y="92" style="font-size:15px;fill:var(--ink)">0</text>
+          <rect class="dg-axis" x="586" y="79" width="24" height="26" style="fill:var(--surface)"/>
+          <text x="598" y="92" style="font-size:15px;fill:var(--ink)">1</text>
+          <rect class="dg-axis" x="610" y="79" width="24" height="26" style="fill:var(--surface)"/>
+          <text x="622" y="92" style="font-size:15px;fill:var(--ink)">1</text>
+          <rect class="dg-axis" x="634" y="79" width="24" height="26" style="fill:var(--surface)"/>
+          <text x="646" y="92" style="font-size:15px;fill:var(--ink)">0</text>
+          <rect class="dg-axis" x="658" y="79" width="24" height="26" style="fill:var(--surface)"/>
+          <text x="670" y="92" style="font-size:15px;fill:var(--ink)">0</text>
+          <text class="dg-heading" x="520" y="146" style="fill:var(--dg-class-b)">B</text>
+          <rect class="dg-axis" x="538" y="133" width="24" height="26" style="fill:var(--surface)"/>
+          <text x="550" y="146" style="font-size:15px;fill:var(--ink)">1</text>
+          <rect class="dg-axis" x="562" y="133" width="24" height="26" style="fill:var(--surface)"/>
+          <text x="574" y="146" style="font-size:15px;fill:var(--ink)">1</text>
+          <rect class="dg-axis" x="586" y="133" width="24" height="26" style="fill:var(--surface)"/>
+          <text x="598" y="146" style="font-size:15px;fill:var(--ink)">1</text>
+          <rect class="dg-axis" x="610" y="133" width="24" height="26" style="fill:var(--surface)"/>
+          <text x="622" y="146" style="font-size:15px;fill:var(--ink)">0</text>
+          <rect class="dg-axis" x="634" y="133" width="24" height="26" style="fill:var(--surface)"/>
+          <text x="646" y="146" style="font-size:15px;fill:var(--ink)">0</text>
+          <rect class="dg-axis" x="658" y="133" width="24" height="26" style="fill:var(--surface)"/>
+          <text x="670" y="146" style="font-size:15px;fill:var(--ink)">0</text>
+          <path class="dg-guide" d="M753 54 V184" style="stroke-dasharray:none;opacity:.6"/>
+          <path class="dg-guide" d="M773 54 V184" style="stroke-dasharray:none;opacity:.6"/>
+          <path class="dg-guide" d="M793 54 V184" style="stroke-dasharray:none;opacity:.6"/>
+          <path class="dg-guide" d="M813 54 V184" style="stroke-dasharray:none;opacity:.6"/>
+          <path class="dg-guide" d="M833 54 V184" style="stroke-dasharray:none;opacity:.6"/>
+          <path class="dg-guide" d="M853 54 V184" style="stroke-dasharray:none;opacity:.6"/>
+          <path class="dg-guide" d="M873 54 V184" style="stroke-dasharray:none;opacity:.6"/>
+          <path class="dg-guide" d="M893 54 V184" style="stroke-dasharray:none;opacity:.6"/>
+          <path class="dg-guide" d="M913 54 V184" style="stroke-dasharray:none;opacity:.6"/>
+          <path class="dg-guide" d="M933 54 V184" style="stroke-dasharray:none;opacity:.6"/>
+          <path class="dg-guide" d="M753 54 H933" style="stroke-dasharray:none;opacity:.6"/>
+          <path class="dg-guide" d="M753 80 H933" style="stroke-dasharray:none;opacity:.6"/>
+          <path class="dg-guide" d="M753 106 H933" style="stroke-dasharray:none;opacity:.6"/>
+          <path class="dg-guide" d="M753 132 H933" style="stroke-dasharray:none;opacity:.6"/>
+          <path class="dg-guide" d="M753 158 H933" style="stroke-dasharray:none;opacity:.6"/>
+          <path class="dg-guide" d="M753 184 H933" style="stroke-dasharray:none;opacity:.6"/>
+          <path class="dg-arrow" d="M786 80 H893 V145" marker-end="url(#dg-metrics-head)"/>
+          <circle class="dg-dot--a" cx="773" cy="80" r="9"/>
+          <circle class="dg-dot--b" cx="893" cy="158" r="9"/>
+          <text class="dg-math" x="773" y="62">a</text>
+          <text class="dg-math" x="875" y="170">b</text>
+          <path class="dg-dot" d="M104 292.3 A24 24 0 0 1 104 329.7 A24 24 0 0 1 104 292.3Z" style="fill:var(--dg-violet-line);fill-opacity:.55"/>
+          <circle class="dg-dot" cx="89" cy="311" r="24" style="fill:none;stroke:var(--dg-class-a);stroke-width:2.5"/>
+          <circle class="dg-dot" cx="119" cy="311" r="24" style="fill:none;stroke:var(--dg-class-b);stroke-width:2.5"/>
+          <text class="dg-small" x="77" y="311" style="fill:var(--ink)">A</text>
+          <text class="dg-small" x="131" y="311" style="fill:var(--ink)">B</text>
+          <text class="dg-start" x="158" y="311" style="font-size:13px">|A ∩ B|</text>
+          <path class="dg-axis" d="M58 347 H208" style="stroke:var(--ink)"/>
+          <path class="dg-dot" d="M65 383 a24 24 0 1 0 48 0 a24 24 0 1 0 -48 0ZM95 383 a24 24 0 1 0 48 0 a24 24 0 1 0 -48 0Z" style="fill:var(--dg-violet-line);fill-opacity:.4"/>
+          <circle class="dg-dot" cx="89" cy="383" r="24" style="fill:none;stroke:var(--dg-class-a);stroke-width:2.5"/>
+          <circle class="dg-dot" cx="119" cy="383" r="24" style="fill:none;stroke:var(--dg-class-b);stroke-width:2.5"/>
+          <text class="dg-small" x="77" y="383" style="fill:var(--ink)">A</text>
+          <text class="dg-small" x="131" y="383" style="fill:var(--ink)">B</text>
+          <text class="dg-start" x="158" y="383" style="font-size:13px">|A ∪ B|</text>
+          <path class="dg-curve dg-curve--blue" d="M327 295 L379 347 L327 399 L275 347 Z" style="stroke-width:2.5"/>
+          <circle class="dg-curve dg-curve--violet" cx="327" cy="347" r="52" style="stroke-width:2.5"/>
+          <rect class="dg-curve dg-curve--green" x="275" y="295" width="104" height="104" style="stroke-width:2.5"/>
+          <circle class="dg-dot" cx="327" cy="347" r="3.5" style="fill:var(--ink)"/>
+          <path class="dg-curve dg-curve--blue" d="M395 321 h18" style="stroke-width:2.5"/>
+          <text class="dg-start" x="419" y="321" style="font-size:13px">p = 1</text>
+          <path class="dg-curve dg-curve--violet" d="M395 347 h18" style="stroke-width:2.5"/>
+          <text class="dg-start" x="419" y="347" style="font-size:13px">p = 2</text>
+          <path class="dg-curve dg-curve--green" d="M395 373 h18" style="stroke-width:2.5"/>
+          <text class="dg-start" x="419" y="373" style="font-size:13px">p = ∞</text>
+          <text class="dg-small" x="361.5" y="420">distance 1 from the centre</text>
+          <circle class="dg-axis" cx="598" cy="345" r="60" style="stroke:var(--muted)"/>
+          <path class="dg-axis" d="M538 345 A60 16.5 0 0 1 658 345" style="stroke:var(--muted);stroke-dasharray:4 4"/>
+          <path class="dg-axis" d="M538 345 A60 16.5 0 0 0 658 345" style="stroke:var(--muted)"/>
+          <path class="dg-curve" d="M562.8 316.1L654.4 350.7" style="stroke:var(--muted);stroke-width:1.5;stroke-dasharray:4 4"/>
+          <path class="dg-curve" d="M562.8 316.1 L566.7 315.7 L570.8 315.5 L575.1 315.5 L579.6 315.7 L584.2 316.1 L588.8 316.7 L593.6 317.5 L598.3 318.5 L603.1 319.6 L607.8 320.9 L612.5 322.4 L617.1 324 L621.5 325.8 L625.8 327.7 L629.9 329.7 L633.8 331.8 L637.4 334.1 L640.8 336.3 L643.9 338.7 L646.7 341 L649.1 343.4 L651.2 345.9 L653 348.3 L654.4 350.7" style="stroke:var(--ink);stroke-width:2.5"/>
+          <circle class="dg-dot--a" cx="562.8" cy="316.1" r="8" style="stroke:var(--surface);stroke-width:1.5"/>
+          <circle class="dg-dot--b" cx="654.4" cy="350.7" r="8" style="stroke:var(--surface);stroke-width:1.5"/>
+          <text x="783" y="311" style="font-size:14px">2 ×</text>
+          <path class="dg-dot" d="M847 292.3 A24 24 0 0 1 847 329.7 A24 24 0 0 1 847 292.3Z" style="fill:var(--dg-violet-line);fill-opacity:.55"/>
+          <circle class="dg-dot" cx="832" cy="311" r="24" style="fill:none;stroke:var(--dg-class-a);stroke-width:2.5"/>
+          <circle class="dg-dot" cx="862" cy="311" r="24" style="fill:none;stroke:var(--dg-class-b);stroke-width:2.5"/>
+          <text class="dg-small" x="820" y="311" style="fill:var(--ink)">A</text>
+          <text class="dg-small" x="874" y="311" style="fill:var(--ink)">B</text>
+          <path class="dg-axis" d="M753 347 H919" style="stroke:var(--ink)"/>
+          <circle class="dg-dot" cx="799" cy="383" r="24" style="fill:var(--dg-violet-line);fill-opacity:.4;stroke:var(--dg-class-a);stroke-width:2.5"/>
+          <text class="dg-small" x="799" y="383" style="fill:var(--ink)">A</text>
+          <circle class="dg-dot" cx="873" cy="383" r="24" style="fill:var(--dg-violet-line);fill-opacity:.4;stroke:var(--dg-class-b);stroke-width:2.5"/>
+          <text class="dg-small" x="873" y="383" style="fill:var(--ink)">B</text>
+          <text x="836" y="383" style="font-size:16px">+</text>
+        </svg>
 
         <p>
           Let us now proceed to a more formal description of the algorithm. We will first consider the task of multi-class classification.
@@ -1796,7 +2301,43 @@
           Let’s start with a small example. The image below illustrates a tree constructed for a classification task with five classes:
         </p>
         
-        <img src="../img/material/part4/DecisionTreeExample.webp" width="70%" alt="Example of a Decision Tree">
+        <svg class="dg" viewBox="0 0 700 372" style="max-width:700px" role="img" aria-label="A decision tree for five classes. The root asks whether x is at least x1. If not, a node asks whether y is at least y1: no gives class 1, yes class 2. If x is at least x1, a node asks whether x is at least x2: no gives class 3; yes leads to a node that asks whether y is at least y2: no gives class 5, yes class 4.">
+          <defs><marker id="dg-dtree-head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrowhead" d="M0,0 L10,5 L0,10 z"/></marker></defs>
+          <path class="dg-arrow" d="M300 56 L150 109" marker-end="url(#dg-dtree-head)"/>
+          <text class="dg-small" x="211" y="80" style="text-anchor:end">No</text>
+          <path class="dg-arrow" d="M300 56 L450 109" marker-end="url(#dg-dtree-head)"/>
+          <text class="dg-small dg-start" x="389" y="80">Yes</text>
+          <path class="dg-arrow" d="M150 156 L80 206" marker-end="url(#dg-dtree-head)"/>
+          <text class="dg-small" x="101" y="178.5" style="text-anchor:end">No</text>
+          <path class="dg-arrow" d="M150 156 L220 206" marker-end="url(#dg-dtree-head)"/>
+          <text class="dg-small dg-start" x="199" y="178.5">Yes</text>
+          <path class="dg-arrow" d="M450 156 L370 206" marker-end="url(#dg-dtree-head)"/>
+          <text class="dg-small" x="396" y="178.5" style="text-anchor:end">No</text>
+          <path class="dg-arrow" d="M450 156 L540 209" marker-end="url(#dg-dtree-head)"/>
+          <text class="dg-small dg-start" x="509" y="180">Yes</text>
+          <path class="dg-arrow" d="M540 256 L470 306" marker-end="url(#dg-dtree-head)"/>
+          <text class="dg-small" x="491" y="278.5" style="text-anchor:end">No</text>
+          <path class="dg-arrow" d="M540 256 L610 306" marker-end="url(#dg-dtree-head)"/>
+          <text class="dg-small dg-start" x="589" y="278.5">Yes</text>
+          <rect class="dg-box dg-box--grey" x="244" y="12" width="112" height="44" rx="8"/>
+          <text class="dg-large" x="300" y="34"><tspan class="dg-math">x</tspan> ≥ <tspan class="dg-math">x</tspan><tspan class="dg-sub" dy="5">1</tspan></text>
+          <rect class="dg-box dg-box--grey" x="94" y="112" width="112" height="44" rx="8"/>
+          <text class="dg-large" x="150" y="134"><tspan class="dg-math">y</tspan> ≥ <tspan class="dg-math">y</tspan><tspan class="dg-sub" dy="5">1</tspan></text>
+          <rect class="dg-box dg-box--grey" x="394" y="112" width="112" height="44" rx="8"/>
+          <text class="dg-large" x="450" y="134"><tspan class="dg-math">x</tspan> ≥ <tspan class="dg-math">x</tspan><tspan class="dg-sub" dy="5">2</tspan></text>
+          <rect class="dg-box dg-box--grey" x="484" y="212" width="112" height="44" rx="8"/>
+          <text class="dg-large" x="540" y="234"><tspan class="dg-math">y</tspan> ≥ <tspan class="dg-math">y</tspan><tspan class="dg-sub" dy="5">2</tspan></text>
+          <rect class="dg-box dg-box--blue" x="55" y="209" width="50" height="50" rx="6"/>
+          <text class="dg-title" x="80" y="234">1</text>
+          <rect class="dg-box dg-box--violet" x="195" y="209" width="50" height="50" rx="6"/>
+          <text class="dg-title" x="220" y="234">2</text>
+          <rect class="dg-box dg-box--amber" x="345" y="209" width="50" height="50" rx="6"/>
+          <text class="dg-title" x="370" y="234">3</text>
+          <rect class="dg-box dg-box--pink" x="445" y="309" width="50" height="50" rx="6"/>
+          <text class="dg-title" x="470" y="334">5</text>
+          <rect class="dg-box dg-box--green" x="585" y="309" width="50" height="50" rx="6"/>
+          <text class="dg-title" x="610" y="334">4</text>
+        </svg>
 
         <p>
           In this example, objects have two features with real-valued attributes: <span class="math">X</span> and <span class="math">Y</span>. The decision about which class a given object belongs to is made by traversing the tree from the root to a leaf.
@@ -1818,7 +2359,61 @@
           The image below visualizes the process of creating decision boundaries generated by the tree (shown on the right side of the image):
         </p>
         
-        <img src="../img/material/part4/DecisionTreeSurfaces.webp" width="70%" alt="Decision Boundaries Created by the Tree">
+        <svg class="dg" viewBox="0 0 1000 396" role="img" aria-label="Left, the same decision tree; right, the regions it creates in the plane of x and y. The vertical lines x1 and x2 and the horizontal lines y1 and y2 divide the plane into five rectangles: class 1 for x below x1 and y below y1, class 2 for x below x1 and y above y1, class 3 for x between x1 and x2, class 5 for x above x2 and y below y2, and class 4 for x above x2 and y above y2.">
+          <defs><marker id="dg-dregions-head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrowhead" d="M0,0 L10,5 L0,10 z"/></marker></defs>
+          <path class="dg-arrow" d="M230 51.6 L110 93.4" marker-end="url(#dg-dregions-head)"/>
+          <text class="dg-small" x="158.8" y="70.8" style="text-anchor:end">No</text>
+          <path class="dg-arrow" d="M230 51.6 L350 93.4" marker-end="url(#dg-dregions-head)"/>
+          <text class="dg-small dg-start" x="301.2" y="70.8">Yes</text>
+          <path class="dg-arrow" d="M110 131.6 L54 171" marker-end="url(#dg-dregions-head)"/>
+          <text class="dg-small" x="70.8" y="149.6" style="text-anchor:end">No</text>
+          <path class="dg-arrow" d="M110 131.6 L166 171" marker-end="url(#dg-dregions-head)"/>
+          <text class="dg-small dg-start" x="149.2" y="149.6">Yes</text>
+          <path class="dg-arrow" d="M350 131.6 L286 171" marker-end="url(#dg-dregions-head)"/>
+          <text class="dg-small" x="306.8" y="149.6" style="text-anchor:end">No</text>
+          <path class="dg-arrow" d="M350 131.6 L422 173.4" marker-end="url(#dg-dregions-head)"/>
+          <text class="dg-small dg-start" x="397.2" y="150.8">Yes</text>
+          <path class="dg-arrow" d="M422 211.6 L366 251" marker-end="url(#dg-dregions-head)"/>
+          <text class="dg-small" x="382.8" y="229.6" style="text-anchor:end">No</text>
+          <path class="dg-arrow" d="M422 211.6 L478 251" marker-end="url(#dg-dregions-head)"/>
+          <text class="dg-small dg-start" x="461.2" y="229.6">Yes</text>
+          <rect class="dg-box dg-box--grey" x="185.2" y="16.4" width="89.6" height="35.2" rx="8"/>
+          <text class="dg-large" x="230" y="34"><tspan class="dg-math">x</tspan> ≥ <tspan class="dg-math">x</tspan><tspan class="dg-sub" dy="5">1</tspan></text>
+          <rect class="dg-box dg-box--grey" x="65.2" y="96.4" width="89.6" height="35.2" rx="8"/>
+          <text class="dg-large" x="110" y="114"><tspan class="dg-math">y</tspan> ≥ <tspan class="dg-math">y</tspan><tspan class="dg-sub" dy="5">1</tspan></text>
+          <rect class="dg-box dg-box--grey" x="305.2" y="96.4" width="89.6" height="35.2" rx="8"/>
+          <text class="dg-large" x="350" y="114"><tspan class="dg-math">x</tspan> ≥ <tspan class="dg-math">x</tspan><tspan class="dg-sub" dy="5">2</tspan></text>
+          <rect class="dg-box dg-box--grey" x="377.2" y="176.4" width="89.6" height="35.2" rx="8"/>
+          <text class="dg-large" x="422" y="194"><tspan class="dg-math">y</tspan> ≥ <tspan class="dg-math">y</tspan><tspan class="dg-sub" dy="5">2</tspan></text>
+          <rect class="dg-box dg-box--blue" x="34" y="174" width="40" height="40" rx="6"/>
+          <text class="dg-title" x="54" y="194">1</text>
+          <rect class="dg-box dg-box--violet" x="146" y="174" width="40" height="40" rx="6"/>
+          <text class="dg-title" x="166" y="194">2</text>
+          <rect class="dg-box dg-box--amber" x="266" y="174" width="40" height="40" rx="6"/>
+          <text class="dg-title" x="286" y="194">3</text>
+          <rect class="dg-box dg-box--pink" x="346" y="254" width="40" height="40" rx="6"/>
+          <text class="dg-title" x="366" y="274">5</text>
+          <rect class="dg-box dg-box--green" x="458" y="254" width="40" height="40" rx="6"/>
+          <text class="dg-title" x="478" y="274">4</text>
+          <rect class="dg-box dg-box--blue" x="620" y="254.6" width="108.9" height="75.4"/>
+          <text class="dg-title" x="674.5" y="292.3">1</text>
+          <rect class="dg-box dg-box--violet" x="620" y="40" width="108.9" height="214.6"/>
+          <text class="dg-title" x="674.5" y="147.3">2</text>
+          <rect class="dg-box dg-box--amber" x="728.9" y="40" width="59.4" height="290"/>
+          <text class="dg-title" x="758.6" y="185">3</text>
+          <rect class="dg-box dg-box--green" x="788.3" y="40" width="161.7" height="92.8"/>
+          <text class="dg-title" x="869.1" y="86.4">4</text>
+          <rect class="dg-box dg-box--pink" x="788.3" y="132.8" width="161.7" height="197.2"/>
+          <text class="dg-title" x="869.1" y="231.4">5</text>
+          <path class="dg-axis" d="M620 28 V330 H964"/>
+          <text class="dg-large" x="728.9" y="350"><tspan class="dg-math">x</tspan><tspan class="dg-sub" dy="5">1</tspan><tspan dy="-5">​</tspan></text>
+          <text class="dg-large" x="788.3" y="350"><tspan class="dg-math">x</tspan><tspan class="dg-sub" dy="5">2</tspan><tspan dy="-5">​</tspan></text>
+          <text class="dg-large" x="608" y="254.6" style="text-anchor:end"><tspan class="dg-math">y</tspan><tspan class="dg-sub" dy="5">1</tspan><tspan dy="-5">​</tspan></text>
+          <text class="dg-large" x="608" y="132.8" style="text-anchor:end"><tspan class="dg-math">y</tspan><tspan class="dg-sub" dy="5">2</tspan><tspan dy="-5">​</tspan></text>
+          <text class="dg-large dg-math" x="974" y="330">x</text>
+          <text class="dg-large dg-math" x="620" y="18">y</text>
+          <path class="dg-arrow" d="M540 190 L585 190" marker-end="url(#dg-dregions-head)"/>
+        </svg>
 
         <p>
           Each predicate splits the current subset of the feature space into two parts. In the first step, the split based on <span class="math">[x \ge x_1]</span> divides the entire plane into two corresponding regions. At the next level, the region where <span class="math">x < x_1</span> (the left branch, where the predicate is false) is further split into two parts based on the second feature, <span class="math">[y \ge y_1]</span>, resulting in regions 1 and 2. The same process is repeated for the right branch of the tree, and so on, until the leaf nodes are reached, forming five regions in the feature space. Each object in the dataset is assigned to one of these five regions, determining its class based on the region it falls into.
@@ -1832,7 +2427,72 @@
           For clearer visualization, data points with <code>Lot_Frontage > 150</code> and <code>Lot_Area > 20000</code> were removed before constructing the tree. The resulting decision surface shows that each rectangular region predicts the same price:
         </p>
         
-        <img src="../img/material/part4/DecisionTreeHousing.webp" width="70%" alt="Decision Surface for Ames Housing Dataset">
+        <svg class="dg" viewBox="0 0 760 500" style="max-width:760px" role="img" aria-label="The decision surface of a depth-4 regression tree trained on 1,163 houses of the Ames housing data, with the lot frontage on the horizontal axis and the lot area on the vertical axis. The tree splits the plane into 16 rectangles, and each rectangle predicts one price, from about $94,000 to about $366,000; a darker rectangle means a higher price. The highest prices are predicted for large lots with a frontage of about 85 to 115 feet.">
+          <rect class="dg-heat" x="92" y="227.1" width="9.6" height="208.9" style="fill:var(--dg-blue-line);fill-opacity:0.10;stroke:var(--surface);stroke-width:1"/>
+          <rect class="dg-heat" x="101.6" y="227.1" width="100" height="208.9" style="fill:var(--dg-blue-line);fill-opacity:0.27;stroke:var(--surface);stroke-width:1"/>
+          <rect class="dg-heat" x="201.6" y="371.7" width="46.2" height="64.3" style="fill:var(--dg-blue-line);fill-opacity:0.28;stroke:var(--surface);stroke-width:1"/>
+          <rect class="dg-heat" x="201.6" y="227.1" width="46.2" height="144.7" style="fill:var(--dg-blue-line);fill-opacity:0.18;stroke:var(--surface);stroke-width:1"/>
+          <rect class="dg-heat" x="247.8" y="268" width="19.2" height="168" style="fill:var(--dg-blue-line);fill-opacity:0.30;stroke:var(--surface);stroke-width:1"/>
+          <rect class="dg-heat" x="267" y="268" width="325" height="168" style="fill:var(--dg-blue-line);fill-opacity:0.23;stroke:var(--surface);stroke-width:1"/>
+          <rect class="dg-heat" x="247.8" y="227.1" width="53.8" height="40.9" style="fill:var(--dg-blue-line);fill-opacity:0.28;stroke:var(--surface);stroke-width:1"/>
+          <rect class="dg-heat" x="301.6" y="227.1" width="290.4" height="40.9" style="fill:var(--dg-blue-line);fill-opacity:0.36;stroke:var(--surface);stroke-width:1"/>
+          <rect class="dg-heat" x="92" y="157.6" width="194.2" height="69.5" style="fill:var(--dg-blue-line);fill-opacity:0.29;stroke:var(--surface);stroke-width:1"/>
+          <rect class="dg-heat" x="286.2" y="157.6" width="57.7" height="69.5" style="fill:var(--dg-blue-line);fill-opacity:0.38;stroke:var(--surface);stroke-width:1"/>
+          <rect class="dg-heat" x="92" y="36" width="248.1" height="121.6" style="fill:var(--dg-blue-line);fill-opacity:0.44;stroke:var(--surface);stroke-width:1"/>
+          <rect class="dg-heat" x="340.1" y="36" width="3.8" height="121.6" style="fill:var(--dg-blue-line);fill-opacity:0.76;stroke:var(--surface);stroke-width:1"/>
+          <rect class="dg-heat" x="343.9" y="36" width="80.8" height="191.1" style="fill:var(--dg-blue-line);fill-opacity:0.52;stroke:var(--surface);stroke-width:1"/>
+          <rect class="dg-heat" x="424.7" y="36" width="30.8" height="191.1" style="fill:var(--dg-blue-line);fill-opacity:0.76;stroke:var(--surface);stroke-width:1"/>
+          <rect class="dg-heat" x="455.5" y="50" width="136.5" height="177.1" style="fill:var(--dg-blue-line);fill-opacity:0.34;stroke:var(--surface);stroke-width:1"/>
+          <rect class="dg-heat" x="455.5" y="36" width="136.5" height="14" style="fill:var(--dg-blue-line);fill-opacity:0.65;stroke:var(--surface);stroke-width:1"/>
+          <path class="dg-axis" d="M92 36V436H592M92 436v5M168.9 436v5M245.8 436v5M322.8 436v5M399.7 436v5M476.6 436v5M553.5 436v5M87 404.4h5M87 351.8h5M87 299.2h5M87 246.5h5M87 193.9h5M87 141.3h5M87 88.6h5M87 36h5"/>
+          <text class="dg-small" x="92" y="452">20</text>
+          <text class="dg-small" x="168.9" y="452">40</text>
+          <text class="dg-small" x="245.8" y="452">60</text>
+          <text class="dg-small" x="322.8" y="452">80</text>
+          <text class="dg-small" x="399.7" y="452">100</text>
+          <text class="dg-small" x="476.6" y="452">120</text>
+          <text class="dg-small" x="553.5" y="452">140</text>
+          <text class="dg-small" x="83" y="404.4" style="text-anchor:end">2,500</text>
+          <text class="dg-small" x="83" y="351.8" style="text-anchor:end">5,000</text>
+          <text class="dg-small" x="83" y="299.2" style="text-anchor:end">7,500</text>
+          <text class="dg-small" x="83" y="246.5" style="text-anchor:end">10,000</text>
+          <text class="dg-small" x="83" y="193.9" style="text-anchor:end">12,500</text>
+          <text class="dg-small" x="83" y="141.3" style="text-anchor:end">15,000</text>
+          <text class="dg-small" x="83" y="88.6" style="text-anchor:end">17,500</text>
+          <text class="dg-small" x="83" y="36" style="text-anchor:end">20,000</text>
+          <text class="dg-small" x="342" y="472">Lot frontage (feet)</text>
+          <text class="dg-small dg-start" x="92" y="22">Lot area (square feet)</text>
+          <path class="dg-dot" d="M265 279h0M323 255h0M277 220h0M246 256h0M338 157h0M342 160h0M304 245h0M211 328h0M207 301h0M284 221h0M342 206h0M365 233h0M292 230h0M269 169h0M284 298h0M404 158h0M234 300h0M304 252h0M184 368h0M438 157h0M246 305h0M392 215h0M196 113h0M246 324h0M207 278h0M342 224h0M284 235h0M246 303h0M430 175h0M446 228h0M300 277h0M277 290h0M265 330h0M338 275h0M457 101h0M284 290h0M250 296h0M200 187h0M338 223h0M142 363h0M269 294h0M215 326h0M438 279h0M246 307h0M400 243h0M107 401h0M357 212h0M257 182h0M184 321h0M207 240h0M307 255h0M292 233h0M196 360h0M327 129h0M380 170h0M280 297h0M300 244h0M342 242h0M246 335h0M96 423h0M207 275h0M246 237h0M400 183h0M138 362h0M315 242h0M323 270h0M480 119h0M484 206h0M169 374h0M419 279h0M246 287h0M342 278h0M323 176h0M280 260h0M315 241h0M296 227h0M342 233h0M311 261h0M311 263h0M261 309h0M377 238h0M304 260h0M246 230h0M207 331h0M419 210h0M304 257h0M311 247h0M250 304h0M146 389h0M361 197h0M207 329h0M304 258h0M227 291h0M200 98h0M246 314h0M227 365h0M280 268h0M354 158h0M304 302h0M315 239h0M323 238h0M330 224h0M296 266h0M265 132h0M284 236h0M315 212h0M288 278h0M284 265h0M107 404h0M257 299h0M477 239h0M427 165h0M338 218h0M246 255h0M369 204h0M400 193h0M530 49h0M438 169h0M380 201h0M227 341h0M169 343h0M254 244h0M346 235h0M254 283h0M184 345h0M323 242h0M196 196h0M338 191h0M388 246h0M257 90h0M246 278h0M223 297h0M246 266h0M257 217h0M369 300h0M246 238h0M173 353h0M277 267h0M246 306h0M107 409h0M319 259h0M369 341h0M323 277h0M304 244h0M207 310h0M207 383h0M396 208h0M169 169h0M304 283h0M273 339h0M334 238h0M292 275h0M180 171h0M292 246h0M234 249h0M180 394h0M296 268h0M342 215h0M411 173h0M96 422h0M330 248h0M96 418h0M284 278h0M180 390h0M296 273h0M304 233h0M265 272h0M373 204h0M215 273h0M304 268h0M169 375h0M257 352h0M304 230h0M280 265h0M304 219h0M292 219h0M227 344h0M184 357h0M265 281h0M342 260h0M284 280h0M269 273h0M261 272h0M277 271h0M323 195h0M284 190h0M477 51h0M280 255h0M354 279h0M207 341h0M130 347h0M315 203h0M246 280h0M288 312h0M338 231h0M369 209h0M307 282h0M227 304h0M511 263h0M554 54h0M427 153h0M334 246h0M330 219h0M146 350h0M300 255h0M207 288h0M150 368h0M311 251h0M246 273h0M477 128h0M227 337h0M246 217h0M157 290h0M304 168h0M269 301h0M361 211h0M323 162h0M361 125h0M269 115h0M469 169h0M284 251h0M350 70h0M461 173h0M361 196h0M207 289h0M265 293h0M288 293h0M377 183h0M361 249h0M442 115h0M396 202h0M346 239h0M204 335h0M384 220h0M207 352h0M138 229h0M323 213h0M246 322h0M284 285h0M242 284h0M242 267h0M346 159h0M365 159h0M269 196h0M342 158h0M257 271h0M154 402h0M265 322h0M154 406h0M277 292h0M419 220h0M369 311h0M315 204h0M261 303h0M242 232h0M404 264h0M315 293h0M323 97h0M207 306h0M319 233h0M265 284h0M234 271h0M407 222h0M354 217h0M246 286h0M319 262h0M246 268h0M238 280h0M292 305h0M373 260h0M384 194h0M207 280h0M288 200h0M246 244h0M277 256h0M265 286h0M161 142h0M246 242h0M373 203h0M211 236h0M257 129h0M434 159h0M342 230h0M230 268h0M242 221h0M296 270h0M300 292h0M246 285h0M315 308h0M323 263h0M292 268h0M246 386h0M311 276h0M261 315h0M515 216h0M246 339h0M107 417h0M400 229h0M96 417h0M180 232h0M169 364h0M169 367h0M273 197h0M419 132h0M369 202h0M219 374h0M284 273h0M296 250h0M542 110h0M207 276h0M284 337h0M257 261h0M146 361h0M304 289h0M246 283h0M300 205h0M319 257h0M392 216h0M307 261h0M369 205h0M150 380h0M438 142h0M173 345h0M323 279h0M304 181h0M419 169h0M207 332h0M392 120h0M292 208h0M207 404h0M319 240h0M284 199h0M96 425h0M419 129h0M207 335h0M246 291h0M246 265h0M304 251h0M284 264h0M400 129h0M107 408h0M246 297h0M323 256h0M304 292h0M304 151h0M169 314h0M288 264h0M227 234h0M377 200h0M319 242h0M219 227h0M361 205h0M380 209h0M254 299h0M284 177h0M273 142h0M238 266h0M246 327h0M300 266h0M284 310h0M234 269h0M342 150h0M315 244h0M146 372h0M238 97h0M223 305h0M204 284h0M219 372h0M350 222h0M273 272h0M238 323h0M280 144h0M246 225h0M311 246h0M257 164h0M269 313h0M311 221h0M284 243h0M319 198h0M300 181h0M334 180h0M307 247h0M215 325h0M384 209h0M146 381h0M327 201h0M392 190h0M327 208h0M304 173h0M354 216h0M227 241h0M300 273h0M207 265h0M261 282h0M388 173h0M246 318h0M354 289h0M280 219h0M246 381h0M323 184h0M107 416h0M300 227h0M207 268h0M323 246h0M130 390h0M354 188h0M342 171h0M330 195h0M315 201h0M250 290h0M96 426h0M323 272h0M242 305h0M342 199h0M188 283h0M361 230h0M288 308h0M350 247h0M284 213h0M330 267h0M146 360h0M342 207h0M323 262h0M261 310h0M246 228h0M219 373h0M254 190h0M304 165h0M323 230h0M342 264h0M342 237h0M284 295h0M96 416h0M246 240h0M365 237h0M315 89h0M304 248h0M477 172h0M361 246h0M423 221h0M261 275h0M223 317h0M438 153h0M215 267h0M323 208h0M227 362h0M361 220h0M238 104h0M338 242h0M250 298h0M246 343h0M223 166h0M234 322h0M242 367h0M342 155h0M307 296h0M284 339h0M200 326h0M265 267h0M230 370h0M269 274h0M169 359h0M246 249h0M323 247h0M384 235h0M280 248h0M284 286h0M346 177h0M246 311h0M165 344h0M296 255h0M304 217h0M246 277h0M292 237h0M265 261h0M265 315h0M284 186h0M173 343h0M265 211h0M242 234h0M227 272h0M319 263h0M323 241h0M277 230h0M265 199h0M246 312h0M330 259h0M130 256h0M304 150h0M304 194h0M273 270h0M377 292h0M438 158h0M346 221h0M400 176h0M315 235h0M257 291h0M265 306h0M273 114h0M150 324h0M307 244h0M369 248h0M307 264h0M288 284h0M234 295h0M415 172h0M319 188h0M169 356h0M257 284h0M365 199h0M342 175h0M361 287h0M200 202h0M323 271h0M184 323h0M246 331h0M327 221h0M454 145h0M207 328h0M265 277h0M107 403h0M323 207h0M184 256h0M400 246h0M304 291h0M284 209h0M323 289h0M400 190h0M304 261h0M154 130h0M154 364h0M219 307h0M407 80h0M227 296h0M304 212h0M327 253h0M273 233h0M342 310h0M323 248h0M300 270h0M246 201h0M215 337h0M300 271h0M354 209h0M246 309h0M184 167h0M246 326h0M265 307h0M207 349h0M242 110h0M380 123h0M507 201h0M284 222h0M288 309h0M207 273h0M400 185h0M265 310h0M261 274h0M207 144h0M346 215h0M588 192h0M330 325h0M130 394h0M96 415h0M411 181h0M350 225h0M284 279h0M265 242h0M319 241h0M296 269h0M338 211h0M257 278h0M215 334h0M273 245h0M304 253h0M227 191h0M177 295h0M392 271h0M342 151h0M265 162h0M315 260h0M246 293h0M150 259h0M330 307h0M107 430h0M284 301h0M207 305h0M323 219h0M515 255h0M304 238h0M154 409h0M380 212h0M211 333h0M150 367h0M277 258h0M392 200h0M277 228h0M242 345h0M334 243h0M330 258h0M480 85h0M323 252h0M384 195h0M211 358h0M246 251h0M300 242h0M304 205h0M96 410h0M180 202h0M304 250h0M246 211h0M296 207h0M261 301h0M215 258h0M296 261h0M288 257h0M407 123h0M207 324h0M357 186h0M354 181h0M146 344h0M346 208h0M342 119h0M234 262h0M246 223h0M411 222h0M400 257h0M277 277h0M361 218h0M415 218h0M180 309h0M384 219h0M477 78h0M242 292h0M177 374h0M292 243h0M315 211h0M207 297h0M304 290h0M157 364h0M323 225h0M304 299h0M342 234h0M157 387h0M107 412h0M288 263h0M300 334h0M315 261h0M330 207h0M250 252h0M319 269h0M107 415h0M392 199h0M454 239h0M427 218h0M323 236h0M296 308h0M269 269h0M361 343h0M234 251h0M342 166h0M242 283h0M338 245h0M207 259h0M219 379h0M242 209h0M257 232h0M323 250h0M234 272h0M223 324h0M392 273h0M246 302h0M304 204h0M234 283h0M530 83h0M361 160h0M146 352h0M369 206h0M307 265h0M434 273h0M246 185h0M319 256h0M261 237h0M238 229h0M477 168h0M307 249h0M150 372h0M546 77h0M323 108h0M342 232h0M157 311h0M223 295h0M311 282h0M261 339h0M246 252h0M427 234h0M357 195h0M277 269h0M246 299h0M323 260h0M211 288h0M238 161h0M265 271h0M304 221h0M288 260h0M361 148h0M284 294h0M342 243h0M207 260h0M280 242h0M396 308h0M269 293h0M227 283h0M315 236h0M357 232h0M246 133h0M265 236h0M346 150h0M292 270h0M284 291h0M284 250h0M227 278h0M384 181h0M173 196h0M261 267h0M265 285h0M334 250h0M373 222h0M254 250h0M365 156h0M230 372h0M242 255h0M265 252h0M246 173h0M150 378h0M357 179h0M315 218h0M492 215h0M219 344h0M380 218h0M273 251h0M250 272h0M377 259h0M207 254h0M169 338h0M346 224h0M323 274h0M369 244h0M296 274h0M138 386h0M430 180h0M200 311h0M400 204h0M400 89h0M430 146h0M250 242h0M196 368h0M304 242h0M427 243h0M207 345h0M304 247h0M169 381h0M284 367h0M257 266h0M342 247h0M227 230h0M107 407h0M323 254h0M350 262h0M380 174h0M477 256h0M284 282h0M234 298h0M342 223h0M373 135h0M207 347h0M365 212h0M284 262h0M230 147h0M407 242h0M511 105h0M211 250h0M492 117h0M296 278h0M277 264h0M173 401h0M200 233h0M357 226h0M246 226h0M296 252h0M188 284h0M323 106h0M177 144h0M265 269h0M354 190h0M211 327h0M254 301h0M204 136h0M184 376h0M246 294h0M319 196h0M354 226h0M261 182h0M211 381h0M246 218h0M323 231h0M327 227h0M246 227h0M373 241h0M323 91h0M323 280h0M361 301h0M319 214h0M342 225h0M315 262h0M361 95h0M254 290h0M342 180h0M269 267h0M277 252h0" style="fill:none;stroke:var(--ink);stroke-width:3.4;stroke-linecap:round;opacity:.5"/>
+          <text x="151.6" y="331.5" style="font-size:12px;font-weight:650;fill:var(--ink);paint-order:stroke;stroke:var(--surface);stroke-width:4px;stroke-linejoin:round">$165k</text>
+          <text x="224.7" y="403.9" style="font-size:12px;font-weight:650;fill:var(--ink);paint-order:stroke;stroke:var(--surface);stroke-width:4px;stroke-linejoin:round">$167k</text>
+          <text x="224.7" y="299.4" style="font-size:12px;font-weight:650;fill:var(--ink);paint-order:stroke;stroke:var(--surface);stroke-width:4px;stroke-linejoin:round">$128k</text>
+          <text x="429.5" y="352" style="font-size:12px;font-weight:650;fill:var(--ink);paint-order:stroke;stroke:var(--surface);stroke-width:4px;stroke-linejoin:round">$150k</text>
+          <text x="274.7" y="247.5" style="font-size:12px;font-weight:650;fill:var(--ink);paint-order:stroke;stroke:var(--surface);stroke-width:4px;stroke-linejoin:round">$169k</text>
+          <text x="446.8" y="247.5" style="font-size:12px;font-weight:650;fill:var(--ink);paint-order:stroke;stroke:var(--surface);stroke-width:4px;stroke-linejoin:round">$201k</text>
+          <text x="189.1" y="192.3" style="font-size:12px;font-weight:650;fill:var(--ink);paint-order:stroke;stroke:var(--surface);stroke-width:4px;stroke-linejoin:round">$175k</text>
+          <text x="315.1" y="192.3" style="font-size:12px;font-weight:650;fill:var(--ink);paint-order:stroke;stroke:var(--surface);stroke-width:4px;stroke-linejoin:round">$209k</text>
+          <text x="216" y="96.8" style="font-size:12px;font-weight:650;fill:var(--ink);paint-order:stroke;stroke:var(--surface);stroke-width:4px;stroke-linejoin:round">$233k</text>
+          <text x="384.3" y="131.5" style="font-size:12px;font-weight:650;fill:var(--ink);paint-order:stroke;stroke:var(--surface);stroke-width:4px;stroke-linejoin:round">$266k</text>
+          <text transform="rotate(-90 440.1 131.5)" x="440.1" y="131.5" style="font-size:12px;font-weight:650;fill:var(--ink);paint-order:stroke;stroke:var(--surface);stroke-width:4px;stroke-linejoin:round">$366k</text>
+          <text x="523.7" y="138.5" style="font-size:12px;font-weight:650;fill:var(--ink);paint-order:stroke;stroke:var(--surface);stroke-width:4px;stroke-linejoin:round">$194k</text>
+          <defs><linearGradient id="dg-ames-scale" x1="0" y1="1" x2="0" y2="0"><stop offset="0" style="stop-color:var(--dg-blue-line);stop-opacity:0.06"/><stop offset="1" style="stop-color:var(--dg-blue-line);stop-opacity:0.80"/></linearGradient></defs>
+          <text class="dg-small dg-start" x="636" y="28" style="fill:var(--ink)">Predicted price</text>
+          <rect class="dg-axis" x="640" y="60" width="18" height="300" style="fill:url(#dg-ames-scale)"/>
+          <path class="dg-axis" d="M658 340 h5"/>
+          <text class="dg-small dg-start" x="668" y="340">$100k</text>
+          <path class="dg-axis" d="M658 290 h5"/>
+          <text class="dg-small dg-start" x="668" y="290">$150k</text>
+          <path class="dg-axis" d="M658 240 h5"/>
+          <text class="dg-small dg-start" x="668" y="240">$200k</text>
+          <path class="dg-axis" d="M658 190 h5"/>
+          <text class="dg-small dg-start" x="668" y="190">$250k</text>
+          <path class="dg-axis" d="M658 140 h5"/>
+          <text class="dg-small dg-start" x="668" y="140">$300k</text>
+          <path class="dg-axis" d="M658 90 h5"/>
+          <text class="dg-small dg-start" x="668" y="90">$350k</text>
+          <path class="dg-dot" d="M642 394h0" style="fill:none;stroke:var(--ink);stroke-width:3.4;stroke-linecap:round;opacity:.5"/>
+          <text class="dg-small dg-start" x="652" y="394">one house</text>
+        </svg>
 
         <p>
           Those figures show a <i>finished</i> tree: the predicates and the regions
@@ -2103,7 +2763,31 @@
           with added normal noise <span class="math">\epsilon \sim \mathcal{N}(0, 9)</span> (mean 0, variance 9). Here is an example of a sample from such data:
         </p>
         
-        <img src="../img/material/part4/BaggingDecisionTreesExample.webp" width="70%" alt="Example Data for Bagging with Decision Trees">
+        <svg class="dg" viewBox="0 0 720 420" style="max-width:720px" role="img" aria-label="One sample of the data: the true function x sin x as a dashed line, 20 training points as blue circles and 20 test points as orange squares, scattered around the curve by the noise.">
+          <path class="dg-guide" d="M70 311H680M70 248.5H680M70 186H680M70 123.5H680M70 61H680" style="stroke-dasharray:none;opacity:.45"/>
+          <path class="dg-axis" d="M70 36V336H680M84.5 336v5M229.8 336v5M375 336v5M520.2 336v5M665.5 336v5M65 311h5M65 248.5h5M65 186h5M65 123.5h5M65 61h5"/>
+          <text class="dg-small" x="84.5" y="352">-10</text>
+          <text class="dg-small" x="229.8" y="352">-5</text>
+          <text class="dg-small" x="375" y="352">0</text>
+          <text class="dg-small" x="520.2" y="352">5</text>
+          <text class="dg-small" x="665.5" y="352">10</text>
+          <text class="dg-small" x="61" y="311" style="text-anchor:end">-10</text>
+          <text class="dg-small" x="61" y="248.5" style="text-anchor:end">-5</text>
+          <text class="dg-small" x="61" y="186" style="text-anchor:end">0</text>
+          <text class="dg-small" x="61" y="123.5" style="text-anchor:end">5</text>
+          <text class="dg-small" x="61" y="61" style="text-anchor:end">10</text>
+          <text class="dg-small" x="375" y="372">x</text>
+          <text class="dg-small dg-start" x="70" y="22">y</text>
+          <path class="dg-curve" d="M84.5 254 L107.8 160.4 L113.6 139.6 L119.4 121.7 L125.2 107.1 L131 96.3 L136.8 89.6 L139.7 87.8 L142.6 87.1 L147 87.9 L149.9 89.6 L152.8 92.4 L157.1 98.1 L163 108.4 L173.1 132.3 L197.8 199.9 L203.6 213.6 L209.4 225.2 L215.2 234.5 L221 241.1 L226.9 245 L232.7 246.2 L237 245.3 L241.4 243.1 L245.7 239.7 L251.5 233.5 L260.3 221.7 L282 188.3 L287.9 180.7 L293.7 174.3 L299.5 169.2 L303.8 166.5 L309.6 164.1 L315.5 163.3 L322.7 164.1 L330 166.6 L353.2 179.6 L360.5 183 L367.7 185.2 L375 186 L382.3 185.2 L391 182.4 L398.2 178.8 L417.1 168 L425.8 164.5 L434.5 163.3 L438.9 163.8 L443.3 165.1 L447.6 167.3 L452 170.4 L456.3 174.3 L462.1 180.7 L470.9 192.5 L492.6 225.9 L502.8 238.3 L508.6 243.1 L513 245.3 L518.8 246.1 L523.1 245 L527.5 242.4 L533.3 236.4 L539.1 227.8 L544.9 216.7 L555.1 192.4 L578.3 128.5 L584.1 114.6 L590 102.9 L595.8 94 L600.1 89.6 L604.5 87.4 L608.8 87.3 L611.7 88.6 L614.6 90.9 L620.5 98.6 L626.3 110.4 L632.1 125.9 L637.9 144.6 L643.7 165.9 L665.5 254" style="stroke:var(--muted);stroke-width:2.5;stroke-dasharray:8 6"/>
+          <path class="dg-dot--a" d="M471.2 168.2a6 6 0 1 0 12 0a6 6 0 1 0 -12 0ZM203 280a6 6 0 1 0 12 0a6 6 0 1 0 -12 0ZM258.3 235.6a6 6 0 1 0 12 0a6 6 0 1 0 -12 0ZM543 201.5a6 6 0 1 0 12 0a6 6 0 1 0 -12 0ZM657 269.5a6 6 0 1 0 12 0a6 6 0 1 0 -12 0ZM161.2 127a6 6 0 1 0 12 0a6 6 0 1 0 -12 0ZM124.3 105.7a6 6 0 1 0 12 0a6 6 0 1 0 -12 0ZM183.6 162.3a6 6 0 1 0 12 0a6 6 0 1 0 -12 0ZM287.5 190.7a6 6 0 1 0 12 0a6 6 0 1 0 -12 0ZM177.1 149.5a6 6 0 1 0 12 0a6 6 0 1 0 -12 0ZM420.6 162.1a6 6 0 1 0 12 0a6 6 0 1 0 -12 0ZM436.9 149a6 6 0 1 0 12 0a6 6 0 1 0 -12 0ZM139.8 79a6 6 0 1 0 12 0a6 6 0 1 0 -12 0ZM407.2 107.9a6 6 0 1 0 12 0a6 6 0 1 0 -12 0ZM81.2 268.4a6 6 0 1 0 12 0a6 6 0 1 0 -12 0ZM348.7 135.4a6 6 0 1 0 12 0a6 6 0 1 0 -12 0ZM645.3 211.5a6 6 0 1 0 12 0a6 6 0 1 0 -12 0ZM543 243.7a6 6 0 1 0 12 0a6 6 0 1 0 -12 0ZM425.2 118a6 6 0 1 0 12 0a6 6 0 1 0 -12 0ZM267.5 217.5a6 6 0 1 0 12 0a6 6 0 1 0 -12 0Z" style="stroke:var(--surface);stroke-width:1.5"/>
+          <path class="dg-dot--b" d="M605 105.3h11v11h-11ZM400.8 197.4h11v11h-11ZM294.9 186.8h11v11h-11ZM563.5 173.6h11v11h-11ZM281.6 193h11v11h-11ZM475 159h11v11h-11ZM211.7 261.6h11v11h-11ZM92.9 158.9h11v11h-11ZM483.4 199.3h11v11h-11ZM274.7 180.2h11v11h-11ZM277.7 212.3h11v11h-11ZM239.3 252.2h11v11h-11ZM225 166.6h11v11h-11ZM410.2 159.5h11v11h-11ZM273 167.8h11v11h-11ZM326.3 137.1h11v11h-11ZM196.3 164.5h11v11h-11ZM372.5 189.3h11v11h-11ZM419.1 182.2h11v11h-11ZM323.2 162.8h11v11h-11Z" style="stroke:var(--surface);stroke-width:1.5"/>
+          <path class="dg-curve" d="M150 404 h34" style="stroke:var(--muted);stroke-width:2.5;stroke-dasharray:8 6"/>
+          <text class="dg-small dg-start" x="192" y="404">true function x sin x</text>
+          <circle class="dg-dot--a" cx="370" cy="404" r="6"/>
+          <text class="dg-small dg-start" x="382" y="404">training points</text>
+          <rect class="dg-dot--b" x="494.5" y="398.5" width="11" height="11"/>
+          <text class="dg-small dg-start" x="512" y="404">test points</text>
+        </svg>
 
         <p>
           Let’s examine how the predictions of depth-7 decision trees and bagging over such trees depend on the training dataset. We will train decision trees 100 times on various random samples of size 20. Additionally, we will use bagging with 10 depth-7 decision trees as base models, training it 100 times on random samples of size 20 as well.
@@ -2113,7 +2797,54 @@
           If we visualize the predictions of the trained models across all 100 iterations, we get a result similar to this:
         </p>
         
-        <img src="../img/material/part4/BaggingPredictionsExample.webp" width="70%" alt="Predictions of single depth-7 trees and of bagging, each trained on 100 different training sets of 20 points">
+        <svg class="dg" viewBox="0 0 960 400" role="img" aria-label="Two panels with the predictions of models trained on 100 different training sets of 20 points, with the true function x sin x as a dashed line. Left, single decision trees of depth 7: the band that holds the middle 80 percent of the predictions is wide. Right, bagging with 10 trees of depth 7: the band is narrower, so the predictions vary less, and the mean prediction is a little flatter at the peaks of the curve.">
+          <text class="dg-heading" x="260" y="18" style="fill:var(--dg-violet-line)">One decision tree (depth 7)</text>
+          <path class="dg-guide" d="M60 314H460M60 269H460M60 224H460M60 179H460M60 134H460M60 89H460M60 44H460" style="stroke-dasharray:none;opacity:.45"/>
+          <path class="dg-axis" d="M60 44V314H460M60 314v5M160 314v5M260 314v5M360 314v5M460 314v5M55 314h5M55 269h5M55 224h5M55 179h5M55 134h5M55 89h5M55 44h5"/>
+          <text class="dg-small" x="60" y="330">-10</text>
+          <text class="dg-small" x="160" y="330">-5</text>
+          <text class="dg-small" x="260" y="330">0</text>
+          <text class="dg-small" x="360" y="330">5</text>
+          <text class="dg-small" x="460" y="330">10</text>
+          <text class="dg-small" x="51" y="314" style="text-anchor:end">-15</text>
+          <text class="dg-small" x="51" y="269" style="text-anchor:end">-10</text>
+          <text class="dg-small" x="51" y="224" style="text-anchor:end">-5</text>
+          <text class="dg-small" x="51" y="179" style="text-anchor:end">0</text>
+          <text class="dg-small" x="51" y="134" style="text-anchor:end">5</text>
+          <text class="dg-small" x="51" y="89" style="text-anchor:end">10</text>
+          <text class="dg-small" x="51" y="44" style="text-anchor:end">15</text>
+          <text class="dg-small" x="260" y="350">x</text>
+          <path class="dg-dot" d="M60 111.2 L68 111.2 L69 109.4 L73 109.4 L74 102.4 L77 102.4 L78 96.6 L82 96.6 L83 96.1 L86 91.8 L87 82.9 L95 83.4 L96 84.2 L98 84.2 L99 80.4 L100 83.4 L101 79.7 L102 83.9 L104 83.9 L105 80.2 L108 79.9 L109 84.5 L110 83.2 L111 83.2 L112 75.1 L113 83.3 L114 86.9 L117 86.9 L118 88.6 L119 96.3 L122 97.3 L125 97.3 L126 102.3 L127 102.3 L128 103.8 L129 102.3 L130 106.7 L134 106.7 L136 117.2 L138 117.2 L139 121 L140 125.8 L141 137.8 L142 137.8 L143 147.2 L144 147.2 L146 150.4 L147 161.2 L148 161.2 L149 162.5 L151 162.5 L152 165 L155 165.4 L156 168.7 L157 169.4 L158 171.6 L159 178.5 L160 178.5 L161 171.6 L163 171.6 L164 177.8 L165 177.8 L167 183.2 L168 183.2 L169 181.8 L171 181.8 L172 180.8 L175 180.6 L176 177.6 L177 177.6 L178 169.9 L179 152.1 L183 152.1 L185 155.8 L186 151 L188 151 L189 152.2 L190 152.2 L191 151 L192 151 L193 148.8 L197 148.1 L198 145.4 L199 145.4 L200 146.7 L202 143.8 L204 143.8 L205 141.9 L208 142.4 L209 137.1 L214 137.1 L215 130.8 L216 129.2 L218 129.9 L219 136.4 L220 136.4 L221 128.8 L222 128.8 L223 129.9 L224 128.6 L226 131.4 L227 131.4 L228 132.7 L234 132.7 L235 136.4 L236 136.4 L237 132.7 L238 132.7 L239 131.4 L242 131.4 L244 133.7 L245 137.1 L246 137.1 L247 138 L248 140.4 L251 140.4 L252 138 L253 137.1 L254 137.1 L255 133.7 L256 140.3 L258 140.3 L259 141 L261 140.3 L263 141 L265 140.4 L268 140.8 L269 137.5 L274 138.2 L275 137.2 L276 137.2 L277 133.7 L278 133.7 L279 132.2 L282 132.2 L284 130 L294 130.4 L295 128.7 L296 128.8 L297 126.4 L298 131.1 L299 131.1 L300 130.5 L301 128.8 L303 128.8 L304 126.4 L311 125.8 L312 122.4 L313 125.8 L315 126.4 L316 128.7 L317 128.7 L318 130.5 L323 131.1 L324 133.1 L326 133.1 L327 135.1 L329 152.6 L330 152.6 L331 158.9 L332 161.2 L337 162 L338 164 L340 165.3 L342 164.2 L344 164.2 L346 166 L348 166.8 L351 166.8 L352 169.1 L354 169.5 L355 173.4 L358 173.4 L359 183.8 L360 183.8 L361 180.9 L362 173.4 L366 173.4 L367 176 L368 176 L370 169.5 L372 169.5 L373 165.3 L374 165.3 L375 163.4 L377 156.4 L378 150.3 L380 148.2 L381 148.2 L382 145.8 L383 131.7 L384 126.8 L385 126.8 L386 115.2 L387 115.2 L388 113.1 L389 113.1 L390 111.3 L391 111.3 L392 106.6 L394 102.3 L395 102.3 L396 101.1 L397 101.1 L398 102.3 L399 102.3 L400 101.1 L403 100.1 L407 89.8 L408 92.4 L409 92.4 L412 86.5 L416 86.4 L417 85.1 L418 86.6 L420 86.4 L421 85.1 L422 85.9 L427 85.8 L428 89.5 L431 89.6 L432 92.4 L433 92.5 L435 95.4 L436 95.8 L438 101.9 L441 101.9 L443 103.8 L444 105.7 L460 105.7 L460 241.7 L459 236.9 L458 236.9 L457 235 L452 235 L449 225.5 L447 223.4 L445 223.4 L444 221.6 L443 221.3 L442 211.7 L440 199 L439 196 L438 185.3 L436 177.9 L435 177.9 L434 176.2 L432 174.6 L431 172.7 L429 172.7 L427 165.9 L424 165.4 L423 161.5 L417 161.5 L416 165.1 L414 166.6 L412 166.6 L410 175.6 L409 178.3 L408 178.3 L407 184.8 L406 184.8 L404 189.9 L401 189.9 L399 193 L398 193 L397 202.9 L396 207.3 L395 211.3 L394 211.3 L392 218.2 L390 218.7 L389 219.6 L388 225.1 L385 229.4 L383 229.4 L382 232.3 L380 232.3 L377 235.5 L374 236.3 L373 237.7 L372 241.8 L369 242.8 L368 248 L367 248 L366 248.9 L364 248.9 L363 247.9 L362 244.2 L361 247.9 L358 247.9 L357 244.7 L356 244.7 L355 246.7 L354 246.7 L353 244 L347 243.3 L346 239.7 L344 239.7 L343 237.5 L340 236.2 L339 233.2 L338 235 L337 234.5 L336 235 L333 232.1 L332 232.9 L331 229.8 L328 229.1 L326 226 L320 225.3 L318 221.5 L317 215.9 L315 215.9 L314 215.2 L313 212.6 L312 212 L311 199.6 L310 197.7 L309 196.9 L304 197.2 L303 196.2 L299 196.2 L298 195.5 L296 195.5 L295 196.2 L294 195.5 L293 199.1 L292 199.6 L289 199.1 L288 196.2 L287 195.5 L285 195.5 L284 193.2 L283 193.2 L278 204.1 L277 205.5 L276 205.8 L275 209.2 L274 209.2 L273 207.6 L272 209.4 L270 209.4 L269 210.1 L268 212.1 L266 212.1 L265 210.1 L263 209.7 L257 210.1 L256 211.7 L254 211.7 L253 210.1 L252 211.7 L250 207.6 L246 207.2 L245 205.9 L243 205.9 L242 205.2 L241 203.3 L239 203.3 L238 199.1 L236 199.1 L235 200.1 L234 205.3 L233 203.4 L232 205.6 L229 205.6 L227 207.6 L226 206.5 L224 206.5 L223 207.6 L221 206.9 L219 207.2 L217 213.4 L216 213.4 L214 222.4 L212 222.4 L211 223.5 L210 223.5 L209 225 L206 225.9 L205 227.4 L202 227.4 L201 230.3 L194 230.3 L192 232.6 L191 231.1 L189 233.9 L187 234.6 L185 240.8 L182 232.8 L181 234.2 L180 234.2 L179 237.4 L177 237.4 L175 240.8 L174 240.8 L173 242 L172 242 L171 245.4 L170 241.7 L169 245.8 L165 245.8 L164 247.9 L162 247.9 L161 245.8 L154 245.8 L153 242.6 L152 242.6 L150 239.8 L149 239.8 L148 238.4 L145 231.9 L143 231.4 L142 230.6 L141 228.1 L140 227.7 L137 224.4 L135 224.4 L134 215.2 L132 215.2 L131 208.9 L129 202.3 L128 201.9 L127 197.4 L126 197.1 L125 192.6 L123 191.6 L122 189.1 L121 189.1 L120 186.1 L119 186.1 L118 183.7 L116 183.7 L115 178.2 L113 171.9 L112 165.4 L111 165.4 L109 159.5 L106 159.5 L103 158.1 L102 159.1 L101 158.1 L100 158.1 L99 159.1 L95 158.9 L94 160.6 L93 172 L92 172 L91 175.4 L90 176.6 L89 176.6 L88 178.4 L87 178.4 L86 186.9 L85 187.9 L83 197.2 L82 198.6 L81 207.1 L80 207.1 L79 208.1 L75 208.1 L73 213.5 L72 212.8 L71 213.5 L70 218.6 L68 223.7 L66 223.7 L65 225.2 L60 225.2 Z" style="fill:var(--dg-violet-line);fill-opacity:.2;stroke:none"/>
+          <path class="dg-curve dg-curve--violet" d="M60 175.2 L92 175.2 L93 136.2 L115 136.2 L116 96.6 L129 96.6 L130 192.9 L153 192.9 L154 218.8 L173 218.8 L174 186.8 L183 186.8 L184 271.9 L188 271.9 L189 197.2 L206 197.2 L207 207.2 L222 207.2 L223 174.5 L226 174.5 L227 216.2 L235 216.2 L236 154.4 L253 154.4 L254 178.3 L269 178.3 L270 204.3 L277 204.3 L278 165.8 L320 165.8 L321 164.6 L368 164.6 L369 149.4 L383 149.4 L384 167.9 L415 167.9 L416 116.6 L439 116.6 L440 153.7 L460 153.7" style="stroke-width:1.3;opacity:.7"/>
+          <path class="dg-curve dg-curve--violet" d="M60 106.6 L105 106.6 L106 114.9 L127 114.9 L128 164.8 L136 164.8 L137 193.4 L150 193.4 L151 248.5 L166 248.5 L167 230.9 L209 230.9 L210 179.3 L256 179.3 L257 173.3 L264 173.3 L265 191.2 L280 191.2 L281 155.6 L315 155.6 L316 202 L368 202 L369 172.6 L377 172.6 L378 213.6 L384 213.6 L385 217.2 L391 217.2 L392 178.8 L398 178.8 L399 133.4 L401 133.4 L402 108 L403 108 L404 135.7 L407 135.7 L408 154.7 L460 154.7" style="stroke-width:1.3;opacity:.7"/>
+          <path class="dg-curve" d="M60 228 L76 160.5 L84 132.7 L88 122.2 L92 114.4 L96 109.6 L100 107.8 L103 108.4 L107 111.6 L110 115.7 L114 123.1 L121 140.3 L138 189 L146 207.3 L150 213.9 L154 218.7 L158 221.5 L162 222.3 L165 221.7 L168 220.1 L171 217.7 L175 213.2 L181 204.7 L196 180.7 L204 170.6 L211 164.9 L215 163.2 L219 162.6 L224 163.2 L229 165.1 L250 176.8 L255 178.4 L260 179 L265 178.4 L271 176.4 L289 166 L295 163.5 L301 162.6 L307 164 L313 167.7 L320 175.2 L326 183.7 L341 207.7 L348 216.7 L352 220.1 L355 221.7 L359 222.3 L362 221.5 L365 219.6 L369 215.3 L373 209.1 L377 201.1 L384 183.6 L400 137.6 L408 119.1 L412 112.8 L415 109.6 L418 108 L421 107.9 L425 110.5 L429 116.1 L433 124.5 L437 135.7 L445 164.5 L460 228" style="stroke:var(--muted);stroke-width:2.5;stroke-dasharray:8 6"/>
+          <path class="dg-curve dg-curve--violet" d="M60 172.7 L66 172.4 L68 171.5 L69 167.7 L73 161.7 L76 154.5 L77 154 L78 151.5 L81 148.1 L82 143.5 L83 142.2 L84 135.5 L86 132.2 L87 128.9 L93 123.5 L95 122.8 L96 124.5 L98 123.6 L100 120.8 L101 120.3 L102 120.9 L103 120.2 L105 120.3 L107 122.2 L109 122.7 L111 126 L112 125.8 L114 130.3 L115 131.5 L117 132.2 L118 133.9 L119 138.1 L120 138.1 L125 145.3 L126 150.2 L127 150.7 L128 155.5 L129 155.8 L130 159.7 L134 165.1 L135 173.1 L136 176 L138 178.4 L140 186 L144 191.8 L147 198.5 L149 202.2 L150 202.3 L152 207 L153 206.5 L154 208.7 L155 208.3 L157 210.9 L160 211.7 L161 212.7 L163 212.3 L164 213.7 L165 212.9 L167 214.3 L169 213.1 L170 210.7 L171 211.8 L172 210.2 L173 210.1 L177 206.6 L178 204 L180 202.7 L182 199.2 L185 201.7 L187 196.5 L190 195 L191 193.7 L192 194 L195 187.9 L196 187.2 L197 187.5 L198 186.7 L199 188.1 L200 188 L203 182.9 L206 181.3 L207 181.8 L211 178.5 L212 176.8 L213 177.4 L214 176.7 L216 171.9 L217 171.7 L218 170.2 L221 169.1 L222 169.2 L224 167 L227 168.4 L228 168.4 L230 166.7 L233 167.5 L238 166.7 L239 167.3 L242 167.6 L243 169 L247 171.6 L250 172.3 L251 173.6 L252 173.9 L253 173.3 L254 174.5 L255 173.8 L256 175 L257 174.5 L259 175.4 L260 174.8 L263 174.8 L266 176.4 L268 175.9 L270 174.2 L272 174.5 L273 173.7 L274 174.9 L279 166.9 L284 161.6 L286 162.7 L287 162.3 L290 164.2 L291 163.2 L292 163.3 L293 162.4 L297 160.7 L298 163.8 L299 164.6 L301 163.1 L303 163.4 L304 164.5 L305 164.4 L306 165 L309 164 L310 164.1 L312 165.9 L314 169 L316 170.9 L317 171.2 L318 174.9 L320 177.5 L321 177.4 L325 181.7 L326 181.5 L328 188.9 L330 190.7 L332 195.8 L333 195.2 L337 197.9 L340 202 L344 203.4 L347 207.9 L350 210.7 L351 210 L352 211.4 L353 211.4 L355 214.7 L357 214.8 L358 216.9 L361 216.3 L362 214.3 L363 215.1 L365 215.1 L371 210 L372 209.9 L373 207.1 L374 206.8 L375 204.3 L377 201.9 L380 193.6 L382 192.3 L383 185.5 L384 184.1 L385 181 L386 175.6 L388 170 L390 166.7 L394 154.5 L395 153.8 L396 151.8 L397 151.6 L398 149 L400 146.7 L402 141.6 L404 139.6 L406 132.7 L407 132.9 L408 131.3 L409 131.6 L412 126.6 L414 125.6 L415 123.8 L416 123.3 L418 120.6 L419 120.2 L420 120.6 L421 119.6 L423 120 L424 122.8 L427 125.1 L428 128.2 L429 129.3 L431 128.5 L432 131.8 L434 133.8 L435 136.7 L437 138.7 L439 145.1 L441 146.7 L445 160.3 L446 162.5 L448 164.4 L449 167.3 L451 168.5 L452 170.8 L454 171.1 L457 170.2 L460 170.8" style="stroke-width:3.5"/>
+          <text class="dg-heading" x="730" y="18" style="fill:var(--dg-green-line)">Bagging: 10 trees of depth 7</text>
+          <path class="dg-guide" d="M530 314H930M530 269H930M530 224H930M530 179H930M530 134H930M530 89H930M530 44H930" style="stroke-dasharray:none;opacity:.45"/>
+          <path class="dg-axis" d="M530 44V314H930M530 314v5M630 314v5M730 314v5M830 314v5M930 314v5M525 314h5M525 269h5M525 224h5M525 179h5M525 134h5M525 89h5M525 44h5"/>
+          <text class="dg-small" x="530" y="330">-10</text>
+          <text class="dg-small" x="630" y="330">-5</text>
+          <text class="dg-small" x="730" y="330">0</text>
+          <text class="dg-small" x="830" y="330">5</text>
+          <text class="dg-small" x="930" y="330">10</text>
+          <text class="dg-small" x="730" y="350">x</text>
+          <path class="dg-dot" d="M530 115.8 L538 115.8 L539 114.8 L547 114.8 L548 113.4 L551 113.4 L553 109.1 L555 101.6 L559 101.6 L560 100.2 L561 101 L562 96.2 L563 98 L565 98 L566 101.3 L568 101.3 L569 98.1 L572 98.1 L576 95.8 L577 97.2 L578 97.2 L579 102.1 L581 101.9 L582 97.2 L583 100.5 L585 100.9 L586 106.8 L587 106.8 L589 109.8 L592 110 L593 111.2 L597 111.2 L598 113.9 L599 112.1 L600 113.9 L601 123.9 L602 125.7 L604 125.7 L605 131.5 L606 132.4 L607 136.6 L608 136.6 L610 141.3 L612 142.2 L613 146.8 L616 146.9 L617 150.3 L618 150.3 L619 152.6 L621 152.8 L622 156.7 L624 171.8 L625 171.8 L626 173.7 L635 173.8 L636 177 L637 178.3 L638 178.3 L639 181.9 L640 178.2 L641 178 L643 173.6 L647 173.6 L648 172.2 L651 172.2 L652 166 L653 167.9 L654 167.6 L655 168.1 L660 168.2 L662 167.4 L665 159.2 L666 159.2 L668 152.7 L671 152.6 L672 151.2 L674 151.2 L678 150.1 L680 149.2 L681 147.6 L682 147.6 L683 149.1 L686 149.2 L687 150 L689 149 L691 143.6 L692 144 L693 142.6 L694 142.6 L695 141.4 L697 141.4 L698 144.8 L705 145.3 L707 145 L708 143.5 L709 139.7 L711 139.7 L712 139.1 L713 140.1 L721 139.7 L722 140.1 L723 143.3 L727 143.8 L728 146.1 L734 146.1 L735 144.1 L736 146.2 L737 144.6 L738 146.2 L739 144.1 L740 143.6 L744 143.6 L749 142.1 L752 142.1 L754 140.5 L757 140.3 L758 138.2 L759 138.2 L760 137.2 L761 137.3 L762 139.5 L765 137.9 L767 138.5 L768 141.6 L774 140.6 L777 141.4 L779 141.2 L780 140.4 L785 141.2 L787 144.1 L788 144.6 L789 148.1 L791 147.4 L794 147.6 L795 153.4 L796 153.7 L798 160.5 L800 160.5 L801 161.6 L807 161.8 L808 164.7 L809 164.7 L810 167 L811 165.9 L812 167.1 L814 167.1 L815 165.9 L816 168.8 L817 168.8 L818 169.8 L821 169.7 L822 172.1 L828 172.4 L829 176.3 L830 174.8 L834 174.8 L835 173.3 L837 173.8 L839 173.3 L840 172.3 L841 168.7 L842 168.7 L846 166.4 L847 164 L848 163.8 L850 157.2 L851 157.2 L852 155.5 L853 147.7 L855 138.5 L856 138.5 L857 136.8 L859 126.2 L862 125.7 L863 125 L864 119.5 L866 115.3 L867 115.3 L868 117.5 L869 111.8 L870 111.5 L871 109.3 L872 109.3 L873 104.1 L875 103.5 L876 102.1 L877 102.1 L878 100.4 L886 100.9 L888 97.2 L889 96.5 L890 96.8 L891 96 L895 99.4 L904 101.1 L905 103.8 L907 104.7 L908 109.6 L913 109.8 L914 111.4 L930 111.4 L930 212.2 L928 212.2 L927 211.3 L925 213 L923 213 L922 211.3 L921 213.1 L919 210.2 L918 210.2 L917 208.9 L915 208.8 L914 206.5 L913 198.1 L912 196.8 L910 189.2 L909 189.2 L908 183.2 L906 178 L902 178 L901 169.7 L897 169.7 L896 168.8 L892 168.2 L891 168.8 L887 169.2 L886 172.7 L885 169 L883 169 L882 170.6 L881 174.6 L878 174.7 L876 178.4 L875 183.2 L873 183.2 L872 184 L871 184 L869 191.1 L868 191.1 L866 197.2 L865 197.2 L864 200.3 L863 201.5 L862 205.3 L861 205.3 L860 210.1 L857 211.4 L856 214.3 L854 215.3 L852 215.3 L851 217.6 L850 217.6 L849 219.3 L848 224.8 L847 225.6 L843 226.2 L842 233.3 L839 233.5 L837 239.6 L833 239.6 L832 233.7 L831 237.4 L823 236.9 L822 235.6 L821 235.3 L817 235.3 L816 230.9 L815 230.9 L813 228.8 L810 228.5 L809 227.1 L805 225.8 L803 223.7 L802 224.8 L801 220.3 L797 215.9 L796 211.4 L793 211.2 L792 209.3 L790 209.9 L789 209.3 L787 204.4 L784 203.7 L783 202.5 L781 202.5 L780 201.3 L779 197.7 L778 197.7 L777 194.4 L776 196.4 L774 194.3 L764 193.8 L763 199.2 L762 199.2 L761 197.3 L760 197.4 L759 199.3 L758 197.4 L756 197.4 L755 199.3 L748 199.9 L747 200.9 L742 200.9 L741 200.4 L740 197.9 L737 203.7 L735 204 L734 201.2 L731 201.2 L730 198.7 L728 198.7 L727 201.2 L724 200.8 L723 196.2 L722 196.2 L721 197.5 L720 195.4 L719 197.5 L714 197.2 L713 197.9 L712 197.2 L711 191.8 L710 191 L705 191.4 L704 198.8 L703 199.8 L701 199.8 L700 200.9 L691 201.1 L689 202.1 L688 203.6 L685 204.6 L684 206.7 L681 207.5 L679 212.8 L678 212.8 L677 215.3 L676 215.3 L675 217.3 L673 217.3 L672 218.1 L671 221.8 L665 221.8 L664 223.3 L659 222.8 L658 224.1 L657 228.1 L656 228.1 L655 230 L654 228.4 L653 228 L652 225.1 L651 225.1 L650 228 L643 228.2 L641 232.7 L640 228.5 L638 228.9 L637 231.4 L635 231.7 L634 233 L633 233.1 L632 234.7 L631 234.7 L630 233.6 L628 233 L627 231.6 L626 233 L625 231.6 L624 231.6 L623 228.7 L621 228.1 L620 226.9 L617 226.8 L616 217.7 L615 217.1 L612 216.8 L611 214.7 L610 214.7 L608 209.2 L605 209 L604 202.4 L600 202 L599 200.1 L598 193 L596 191.2 L593 190.4 L592 188.4 L589 188.4 L587 175.9 L586 175.9 L585 173.5 L583 173.5 L582 172.2 L581 172.3 L579 163 L576 163 L575 160.1 L574 160.1 L572 158.2 L570 158.2 L569 163.4 L568 159.9 L567 163.1 L566 164.5 L565 172.5 L564 172.5 L563 174.9 L562 174.9 L560 177.2 L559 177.2 L558 180.6 L554 180.6 L550 192.3 L546 192.3 L545 194.4 L544 195.2 L541 195.4 L538 201.1 L530 201.1 Z" style="fill:var(--dg-green-line);fill-opacity:.2;stroke:none"/>
+          <path class="dg-curve dg-curve--green" d="M530 175.2 L562 175.2 L563 151.8 L564 151.8 L565 120.4 L585 120.4 L586 108.5 L597 108.5 L598 114.2 L599 114.2 L600 162.3 L609 162.3 L610 170.6 L611 170.6 L612 182.8 L617 182.8 L618 187.8 L623 187.8 L624 195.6 L631 195.6 L633 195 L634 202.9 L639 203.3 L640 214.4 L643 214.4 L644 208 L645 218.6 L653 218.6 L654 252.7 L658 252.7 L659 222.8 L663 222.8 L664 221.6 L672 221.6 L673 208.7 L674 208.7 L675 198.9 L676 198.9 L677 201.9 L678 199.7 L686 199.7 L687 195.4 L692 195.4 L693 179.1 L695 179.1 L696 180 L697 192.5 L701 192.5 L703 181.1 L705 181.1 L706 168.8 L717 168.8 L718 165 L719 165 L720 167.9 L723 167.9 L724 182.3 L728 182.3 L729 187.3 L739 187.3 L740 197.7 L742 197.7 L743 196.4 L747 196.4 L748 184.9 L765 184.9 L766 179.7 L783 179.7 L784 178.3 L788 178.3 L789 166.4 L797 166.2 L798 161.9 L838 161.9 L839 154.3 L853 155 L854 160.5 L877 160.5 L878 154.4 L885 154.4 L886 137.5 L909 137.5 L910 156.1 L930 156.1" style="stroke-width:1.3;opacity:.7"/>
+          <path class="dg-curve dg-curve--green" d="M530 114.9 L575 114.9 L576 117.4 L584 117.4 L585 134.9 L597 134.9 L598 164.8 L606 164.8 L607 187.7 L620 187.7 L621 229.1 L623 229.1 L624 243.3 L636 243.3 L637 238 L676 238 L677 224.1 L679 224.1 L680 203.6 L683 203.6 L684 188.5 L686 188.5 L687 178.8 L726 178.8 L727 178 L734 178 L735 190.4 L750 190.4 L751 166.3 L785 166 L786 179.2 L799 179.2 L800 185.2 L806 185.2 L807 186.9 L809 186.9 L810 192.7 L817 192.7 L818 203.4 L824 203.4 L825 201.8 L827 201.8 L828 204.3 L838 204.3 L839 195.7 L847 195.5 L848 203.7 L851 203.7 L852 206.1 L854 206.1 L856 208.2 L858 208.2 L859 194.8 L861 194.8 L862 175.6 L868 175.6 L870 132.4 L872 120.5 L873 120.8 L874 131.8 L875 131.8 L876 134 L877 134 L878 139.7 L930 139.7" style="stroke-width:1.3;opacity:.7"/>
+          <path class="dg-curve" d="M530 228 L546 160.5 L554 132.7 L558 122.2 L562 114.4 L566 109.6 L570 107.8 L573 108.4 L577 111.6 L580 115.7 L584 123.1 L591 140.3 L608 189 L616 207.3 L620 213.9 L624 218.7 L628 221.5 L632 222.3 L635 221.7 L638 220.1 L641 217.7 L645 213.2 L651 204.7 L666 180.7 L674 170.6 L681 164.9 L685 163.2 L689 162.6 L694 163.2 L699 165.1 L720 176.8 L725 178.4 L730 179 L735 178.4 L741 176.4 L759 166 L765 163.5 L771 162.6 L777 164 L783 167.7 L790 175.2 L796 183.7 L811 207.7 L818 216.7 L822 220.1 L825 221.7 L829 222.3 L832 221.5 L835 219.6 L839 215.3 L843 209.1 L847 201.1 L854 183.6 L870 137.6 L878 119.1 L882 112.8 L885 109.6 L888 108 L891 107.9 L895 110.5 L899 116.1 L903 124.5 L907 135.7 L915 164.5 L930 228" style="stroke:var(--muted);stroke-width:2.5;stroke-dasharray:8 6"/>
+          <path class="dg-curve dg-curve--green" d="M530 163 L538 162.7 L539 160.6 L544 156.2 L546 153.3 L547 153.1 L551 149.5 L553 145.6 L554 141.3 L557 137.3 L559 135.4 L561 134.5 L563 132.3 L565 131 L566 131.1 L567 130 L570 129.1 L573 129 L579 131.7 L581 134.1 L582 133.9 L583 135.7 L587 139 L589 144.2 L592 146.9 L594 150.9 L595 151.5 L596 153.7 L597 154.2 L598 156.7 L599 157.3 L604 166.1 L605 170.7 L608 174 L609 178.2 L612 183.6 L614 185.4 L617 191 L619 193.6 L620 194.1 L624 200.2 L625 200.1 L627 202 L631 204.3 L633 204.2 L634 204.8 L635 204.4 L637 205.1 L640 204.4 L641 204.7 L647 201.9 L648 200.5 L649 199.8 L650 199.8 L652 197.8 L655 198 L657 195.7 L659 194.5 L660 194.8 L665 189.3 L670 187.1 L673 183.4 L678 180.7 L679 179.3 L682 177.2 L684 176.9 L688 172.5 L694 169.9 L698 170.8 L699 170.2 L705 169.8 L708 168.9 L712 168.9 L713 170.2 L717 171.5 L720 171.5 L723 172.2 L724 173.1 L727 172.8 L734 174.2 L740 172.5 L744 173.6 L747 172.2 L751 169.3 L752 169.2 L753 168.1 L757 167.9 L759 169 L761 167.9 L767 167.2 L768 168.5 L770 169.5 L771 169.1 L773 169.6 L774 170.4 L776 170.8 L779 170.6 L783 172.1 L787 175.5 L788 177.4 L790 179.1 L791 179.1 L795 183.1 L796 183 L798 188.2 L800 190.1 L802 193.6 L804 193.8 L805 195.2 L807 196 L808 197.3 L813 199.5 L818 204.1 L820 205 L821 204.7 L824 207 L827 206.7 L828 208 L838 204.4 L839 203 L842 200.6 L843 198.4 L844 198.1 L847 194.3 L850 188.8 L852 187.2 L853 184.1 L854 183.3 L856 177.1 L860 169.3 L864 158.6 L869 151 L872 144.7 L874 143.1 L876 139.5 L877 139.1 L878 137.4 L879 137.5 L885 133.8 L886 134.1 L888 132.6 L891 131.9 L893 132.7 L899 137.4 L901 137.1 L902 139.4 L905 142.5 L907 143.5 L909 147.9 L911 149.9 L914 156.5 L916 159 L917 159.4 L919 161.7 L923 164.1 L930 164.1" style="stroke-width:3.5"/>
+          <path class="dg-curve" d="M70 382 h34" style="stroke:var(--muted);stroke-width:2.5;stroke-dasharray:8 6"/>
+          <text class="dg-small dg-start" x="112" y="382">true function x sin x</text>
+          <path class="dg-curve dg-curve--violet" d="M282 382 h16" style="stroke-width:3.5;stroke-linecap:butt"/>
+          <rect class="dg-dot" x="458" y="374" width="16" height="16" style="fill:var(--dg-violet-line);fill-opacity:.2"/>
+          <path class="dg-curve dg-curve--violet" d="M710 382 h16" style="stroke-width:1.3;opacity:.7;stroke-linecap:butt"/>
+          <path class="dg-curve dg-curve--green" d="M300 382 h16" style="stroke-width:3.5;stroke-linecap:butt"/>
+          <rect class="dg-dot" x="476" y="374" width="16" height="16" style="fill:var(--dg-green-line);fill-opacity:.2"/>
+          <path class="dg-curve dg-curve--green" d="M728 382 h16" style="stroke-width:1.3;opacity:.7;stroke-linecap:butt"/>
+          <text class="dg-small dg-start" x="324" y="382">mean prediction</text>
+          <text class="dg-small dg-start" x="500" y="382">middle 80 % of the predictions</text>
+          <text class="dg-small dg-start" x="752" y="382">two of the predictions</text>
+        </svg>
 
         <p>
           The predictions of bagging vary less from one training set to another than those of a single tree. On average the two are close, but the mean prediction of bagging is a little flatter at the peaks: each bootstrap sample contains only about 63&nbsp;% of the distinct training points (about 13 of the 20), so each of its trees is fitted to less data.
@@ -2123,10 +2854,71 @@
           To quantify this, we can compute the bias and variance of single trees and of bagging as a function of the maximum tree depth, here averaged over 300 training sets for each depth:
         </p>
         
-        <img src="../img/material/part4/BiasVarianceBagging.webp" width="70%" alt="Bias squared and variance of single trees and of bagging against the maximum tree depth">
+        <svg class="dg" viewBox="0 0 960 400" role="img" aria-label="Two line charts against the maximum depth of the trees, from 1 to 15. Left, bias squared: it falls from about 10 at depth 1 to below 2 for one tree and to about 3 for bagging. Right, variance: it rises from about 6 to about 14 for one tree and from about 4 to about 9 for bagging, so bagging divides the variance by about 1.6; ten uncorrelated trees would divide it by 10 (the dashed line).">
+          <defs><marker id="dg-biasvar-head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrowhead" d="M0,0 L10,5 L0,10 z"/></marker></defs>
+          <text class="dg-heading" x="255" y="18">Bias² (averaged over x)</text>
+          <path class="dg-guide" d="M60 314H450M60 262.6H450M60 211.1H450M60 159.7H450M60 108.3H450M60 56.9H450" style="stroke-dasharray:none;opacity:.45"/>
+          <path class="dg-axis" d="M60 44V314H450M73 314v5M125 314v5M177 314v5M229 314v5M281 314v5M333 314v5M385 314v5M437 314v5M55 314h5M55 262.6h5M55 211.1h5M55 159.7h5M55 108.3h5M55 56.9h5"/>
+          <text class="dg-small" x="73" y="330">1</text>
+          <text class="dg-small" x="125" y="330">3</text>
+          <text class="dg-small" x="177" y="330">5</text>
+          <text class="dg-small" x="229" y="330">7</text>
+          <text class="dg-small" x="281" y="330">9</text>
+          <text class="dg-small" x="333" y="330">11</text>
+          <text class="dg-small" x="385" y="330">13</text>
+          <text class="dg-small" x="437" y="330">15</text>
+          <text class="dg-small" x="51" y="314" style="text-anchor:end">0</text>
+          <text class="dg-small" x="51" y="262.6" style="text-anchor:end">2</text>
+          <text class="dg-small" x="51" y="211.1" style="text-anchor:end">4</text>
+          <text class="dg-small" x="51" y="159.7" style="text-anchor:end">6</text>
+          <text class="dg-small" x="51" y="108.3" style="text-anchor:end">8</text>
+          <text class="dg-small" x="51" y="56.9" style="text-anchor:end">10</text>
+          <text class="dg-small" x="255" y="350">Maximum depth of the trees</text>
+          <path class="dg-curve dg-curve--violet" d="M73 64 L99 164.5 L125 220.7 L151 255.3 L177 267.3 L203 266 L229 266.4 L255 271.2 L281 267.8 L307 271.7 L333 270.4 L359 270 L385 271.1 L411 268.7 L437 275" style="stroke-width:2.5"/>
+          <path class="dg-ink--violet" d="M68.5 64a4.5 4.5 0 1 0 9 0a4.5 4.5 0 1 0 -9 0ZM94.5 164.5a4.5 4.5 0 1 0 9 0a4.5 4.5 0 1 0 -9 0ZM120.5 220.7a4.5 4.5 0 1 0 9 0a4.5 4.5 0 1 0 -9 0ZM146.5 255.3a4.5 4.5 0 1 0 9 0a4.5 4.5 0 1 0 -9 0ZM172.5 267.3a4.5 4.5 0 1 0 9 0a4.5 4.5 0 1 0 -9 0ZM198.5 266a4.5 4.5 0 1 0 9 0a4.5 4.5 0 1 0 -9 0ZM224.5 266.4a4.5 4.5 0 1 0 9 0a4.5 4.5 0 1 0 -9 0ZM250.5 271.2a4.5 4.5 0 1 0 9 0a4.5 4.5 0 1 0 -9 0ZM276.5 267.8a4.5 4.5 0 1 0 9 0a4.5 4.5 0 1 0 -9 0ZM302.5 271.7a4.5 4.5 0 1 0 9 0a4.5 4.5 0 1 0 -9 0ZM328.5 270.4a4.5 4.5 0 1 0 9 0a4.5 4.5 0 1 0 -9 0ZM354.5 270a4.5 4.5 0 1 0 9 0a4.5 4.5 0 1 0 -9 0ZM380.5 271.1a4.5 4.5 0 1 0 9 0a4.5 4.5 0 1 0 -9 0ZM406.5 268.7a4.5 4.5 0 1 0 9 0a4.5 4.5 0 1 0 -9 0ZM432.5 275a4.5 4.5 0 1 0 9 0a4.5 4.5 0 1 0 -9 0Z" style="stroke:var(--surface);stroke-width:1.2"/>
+          <path class="dg-curve dg-curve--green" d="M73 58.2 L99 147.6 L125 196.1 L151 219.2 L177 229 L203 228 L229 226.7 L255 232.7 L281 230.2 L307 233.6 L333 229.2 L359 229.1 L385 232.3 L411 228.3 L437 235.9" style="stroke-width:2.5"/>
+          <path class="dg-ink--green" d="M69 54.2h8v8h-8ZM95 143.6h8v8h-8ZM121 192.1h8v8h-8ZM147 215.2h8v8h-8ZM173 225h8v8h-8ZM199 224h8v8h-8ZM225 222.7h8v8h-8ZM251 228.7h8v8h-8ZM277 226.2h8v8h-8ZM303 229.6h8v8h-8ZM329 225.2h8v8h-8ZM355 225.1h8v8h-8ZM381 228.3h8v8h-8ZM407 224.3h8v8h-8ZM433 231.9h8v8h-8Z" style="stroke:var(--surface);stroke-width:1.2"/>
+          <text class="dg-small" x="411" y="206.5" style="fill:var(--dg-green-line);font-weight:650">bagging</text>
+          <text class="dg-small" x="411" y="290.5" style="fill:var(--dg-violet-line);font-weight:650">one tree</text>
+          <text class="dg-heading" x="735" y="18">Variance (averaged over x)</text>
+          <path class="dg-guide" d="M540 314H930M540 246.5H930M540 179H930M540 111.5H930M540 44H930" style="stroke-dasharray:none;opacity:.45"/>
+          <path class="dg-axis" d="M540 44V314H930M553 314v5M605 314v5M657 314v5M709 314v5M761 314v5M813 314v5M865 314v5M917 314v5M535 314h5M535 246.5h5M535 179h5M535 111.5h5M535 44h5"/>
+          <text class="dg-small" x="553" y="330">1</text>
+          <text class="dg-small" x="605" y="330">3</text>
+          <text class="dg-small" x="657" y="330">5</text>
+          <text class="dg-small" x="709" y="330">7</text>
+          <text class="dg-small" x="761" y="330">9</text>
+          <text class="dg-small" x="813" y="330">11</text>
+          <text class="dg-small" x="865" y="330">13</text>
+          <text class="dg-small" x="917" y="330">15</text>
+          <text class="dg-small" x="531" y="314" style="text-anchor:end">0</text>
+          <text class="dg-small" x="531" y="246.5" style="text-anchor:end">4</text>
+          <text class="dg-small" x="531" y="179" style="text-anchor:end">8</text>
+          <text class="dg-small" x="531" y="111.5" style="text-anchor:end">12</text>
+          <text class="dg-small" x="531" y="44" style="text-anchor:end">16</text>
+          <text class="dg-small" x="735" y="350">Maximum depth of the trees</text>
+          <path class="dg-curve" d="M553 303.3 L579 299.3 L605 295.8 L631 292.4 L657 292.1 L683 291.1 L709 290.7 L735 289.5 L761 291.3 L787 289.4 L813 289.5 L839 289.2 L865 289.8 L891 290.8 L917 289.8" style="stroke:var(--muted);stroke-width:2.5;stroke-dasharray:8 6"/>
+          <text class="dg-small" x="917" y="275.8" style="text-anchor:end">one tree ÷ 10</text>
+          <path class="dg-curve dg-curve--violet" d="M553 207.4 L579 166.9 L605 132.1 L631 97.7 L657 95.5 L683 84.6 L709 80.8 L735 69 L761 87.4 L787 67.9 L813 69.1 L839 65.6 L865 72.4 L891 82.3 L917 71.8" style="stroke-width:2.5"/>
+          <path class="dg-ink--violet" d="M548.5 207.4a4.5 4.5 0 1 0 9 0a4.5 4.5 0 1 0 -9 0ZM574.5 166.9a4.5 4.5 0 1 0 9 0a4.5 4.5 0 1 0 -9 0ZM600.5 132.1a4.5 4.5 0 1 0 9 0a4.5 4.5 0 1 0 -9 0ZM626.5 97.7a4.5 4.5 0 1 0 9 0a4.5 4.5 0 1 0 -9 0ZM652.5 95.5a4.5 4.5 0 1 0 9 0a4.5 4.5 0 1 0 -9 0ZM678.5 84.6a4.5 4.5 0 1 0 9 0a4.5 4.5 0 1 0 -9 0ZM704.5 80.8a4.5 4.5 0 1 0 9 0a4.5 4.5 0 1 0 -9 0ZM730.5 69a4.5 4.5 0 1 0 9 0a4.5 4.5 0 1 0 -9 0ZM756.5 87.4a4.5 4.5 0 1 0 9 0a4.5 4.5 0 1 0 -9 0ZM782.5 67.9a4.5 4.5 0 1 0 9 0a4.5 4.5 0 1 0 -9 0ZM808.5 69.1a4.5 4.5 0 1 0 9 0a4.5 4.5 0 1 0 -9 0ZM834.5 65.6a4.5 4.5 0 1 0 9 0a4.5 4.5 0 1 0 -9 0ZM860.5 72.4a4.5 4.5 0 1 0 9 0a4.5 4.5 0 1 0 -9 0ZM886.5 82.3a4.5 4.5 0 1 0 9 0a4.5 4.5 0 1 0 -9 0ZM912.5 71.8a4.5 4.5 0 1 0 9 0a4.5 4.5 0 1 0 -9 0Z" style="stroke:var(--surface);stroke-width:1.2"/>
+          <path class="dg-curve dg-curve--green" d="M553 244.3 L579 219.5 L605 198.8 L631 180.7 L657 177.3 L683 176.9 L709 170.9 L735 162 L761 176.2 L787 163.5 L813 163 L839 167.8 L865 165.9 L891 173 L917 165.3" style="stroke-width:2.5"/>
+          <path class="dg-ink--green" d="M549 240.3h8v8h-8ZM575 215.5h8v8h-8ZM601 194.8h8v8h-8ZM627 176.7h8v8h-8ZM653 173.3h8v8h-8ZM679 172.9h8v8h-8ZM705 166.9h8v8h-8ZM731 158h8v8h-8ZM757 172.2h8v8h-8ZM783 159.5h8v8h-8ZM809 159h8v8h-8ZM835 163.8h8v8h-8ZM861 161.9h8v8h-8ZM887 169h8v8h-8ZM913 161.3h8v8h-8Z" style="stroke:var(--surface);stroke-width:1.2"/>
+          <text class="dg-small" x="605" y="88.2" style="fill:var(--dg-violet-line);font-weight:650">one tree</text>
+          <text class="dg-small" x="839" y="194.8" style="fill:var(--dg-green-line);font-weight:650">bagging</text>
+          <path class="dg-arrow" d="M709 88.8 V162.9" style="stroke-width:1.8" marker-end="url(#dg-biasvar-head)"/>
+          <text class="dg-start" x="717" y="125.8" style="font-size:13px;font-weight:650;fill:var(--ink)">÷ 1.6</text>
+          <path class="dg-curve dg-curve--violet" d="M190 382 h28" style="stroke-width:2.5"/>
+          <circle class="dg-ink--violet" cx="204" cy="382" r="4.5"/>
+          <text class="dg-small dg-start" x="226" y="382">one tree</text>
+          <path class="dg-curve dg-curve--green" d="M330 382 h28" style="stroke-width:2.5"/>
+          <rect class="dg-ink--green" x="340" y="378" width="8" height="8"/>
+          <text class="dg-small dg-start" x="366" y="382">bagging</text>
+          <path class="dg-curve" d="M466 382 h34" style="stroke:var(--muted);stroke-width:2.5;stroke-dasharray:8 6"/>
+          <text class="dg-small dg-start" x="508" y="382">one tree ÷ 10: what 10 uncorrelated trees would give</text>
+        </svg>
 
         <p>
-          Bagging reduces the variance, but by a factor of about 1.6, not 10. Ten <i>uncorrelated</i> trees, each with variance <span class="math">\sigma^2</span>, would average to a variance of <span class="math">\sigma^2 / 10</span> (the dashed line). The trees of one bagging ensemble are far from uncorrelated: their bootstrap samples are drawn from the same 20 points, so they share most of their data and its noise. Two trees of the same ensemble have a correlation of about <span class="math">\rho = 0.45</span> here, and the variance of an average of <span class="math">B</span> such trees is <span class="math">\rho\sigma^2 + (1 - \rho)\,\sigma^2 / B</span> (see below), which never falls below <span class="math">\rho\sigma^2</span>, however many trees are added. The bias grows a little at the same time, but for deep trees the total error, bias<sup>2</sup> plus variance, still falls by about a quarter, from about 15 to 12.
+          Bagging reduces the variance, but by a factor of about 1.6, not 10. Ten <i>uncorrelated</i> trees, each with variance <span class="math">\sigma^2</span>, would average to a variance of <span class="math">\sigma^2 / 10</span> (the dashed line). The trees of one bagging ensemble are far from uncorrelated: their bootstrap samples are drawn from the same 20 points, so they share most of their data and its noise. Two trees of the same ensemble have a correlation of about <span class="math">\rho = 0.45</span> here, and the variance of an average of <span class="math">B</span> such trees is <span class="math">\rho\sigma^2 + (1 - \rho)\,\sigma^2 / B</span> (see below), which never falls below <span class="math">\rho\sigma^2</span>, however many trees are added. The bias grows a little at the same time, but for deep trees the total error, bias<sup>2</sup> plus variance, still falls by about a quarter, from about 16 to 12.
         </p>
 
         <h2 class="material-heading">
@@ -2216,7 +3008,45 @@
           <li>In <b>boosting</b>, base algorithms are trained sequentially.</li>
         </ul>
 
-        <img src="../img/material/part4/Boosting.webp" width="70%" alt="Boosting">
+        <svg class="dg" viewBox="0 0 900 266" role="img" aria-label="Boosting trains weak models one after another. Each round trains a weak model h on the training data with the current weights w; the errors of the ensemble so far then update the weights for the next round. The final model adds up all the weak models, each with its own weight alpha.">
+          <defs><marker id="dg-boosting-head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrowhead" d="M0,0 L10,5 L0,10 z"/></marker></defs>
+          <rect class="dg-box dg-box--blue" x="10" y="54" width="100" height="64" rx="10"/>
+          <text x="60" y="75">training data</text>
+          <text x="60" y="98">weights <tspan class="dg-math">w</tspan><tspan class="dg-sub" dy="-7">(1)</tspan></text>
+          <rect class="dg-box dg-box--violet" x="150" y="54" width="100" height="64" rx="10"/>
+          <text x="200" y="75">weak model</text>
+          <text class="dg-large" x="200" y="98"><tspan class="dg-math">h</tspan><tspan class="dg-sub" dy="5">1</tspan><tspan dy="-5">​</tspan></text>
+          <path class="dg-arrow" d="M200 120 L200 192" marker-end="url(#dg-boosting-head)"/>
+          <rect class="dg-box dg-box--blue" x="290" y="54" width="100" height="64" rx="10"/>
+          <text x="340" y="75">training data</text>
+          <text x="340" y="98">weights <tspan class="dg-math">w</tspan><tspan class="dg-sub" dy="-7">(2)</tspan></text>
+          <rect class="dg-box dg-box--violet" x="430" y="54" width="100" height="64" rx="10"/>
+          <text x="480" y="75">weak model</text>
+          <text class="dg-large" x="480" y="98"><tspan class="dg-math">h</tspan><tspan class="dg-sub" dy="5">2</tspan><tspan dy="-5">​</tspan></text>
+          <path class="dg-arrow" d="M480 120 L480 192" marker-end="url(#dg-boosting-head)"/>
+          <rect class="dg-box dg-box--blue" x="650" y="54" width="100" height="64" rx="10"/>
+          <text x="700" y="75">training data</text>
+          <text x="700" y="98">weights <tspan class="dg-math">w</tspan><tspan class="dg-sub" dy="-7">(M)</tspan></text>
+          <rect class="dg-box dg-box--violet" x="790" y="54" width="100" height="64" rx="10"/>
+          <text x="840" y="75">weak model</text>
+          <text class="dg-large" x="840" y="98"><tspan class="dg-math">h</tspan><tspan class="dg-sub" dy="5">M</tspan><tspan dy="-5">​</tspan></text>
+          <path class="dg-arrow" d="M840 120 L840 192" marker-end="url(#dg-boosting-head)"/>
+          <path class="dg-arrow" d="M112 86 L148 86" marker-end="url(#dg-boosting-head)"/>
+          <text class="dg-small" x="130" y="40">train</text>
+          <path class="dg-arrow" d="M252 86 L288 86" marker-end="url(#dg-boosting-head)"/>
+          <text class="dg-small" x="270" y="40">reweight</text>
+          <path class="dg-arrow" d="M392 86 L428 86" marker-end="url(#dg-boosting-head)"/>
+          <text class="dg-small" x="410" y="40">train</text>
+          <path class="dg-arrow" d="M752 86 L788 86" marker-end="url(#dg-boosting-head)"/>
+          <text class="dg-small" x="770" y="40">train</text>
+          <path class="dg-arrow" d="M532 86 L566 86" marker-end="url(#dg-boosting-head)"/>
+          <text class="dg-xlarge" x="590" y="86">…</text>
+          <path class="dg-arrow" d="M612 86 L648 86" marker-end="url(#dg-boosting-head)"/>
+          <text class="dg-small" x="590" y="134">each round reweights the</text>
+          <text class="dg-small" x="590" y="150">examples the ensemble gets wrong</text>
+          <rect class="dg-box dg-box--green" x="30" y="196" width="840" height="54" rx="10"/>
+          <text class="dg-large" x="450" y="223">final model: <tspan class="dg-math">α</tspan><tspan class="dg-sub" dy="5">1</tspan><tspan dy="-5">​</tspan> <tspan class="dg-math">h</tspan><tspan class="dg-sub" dy="5">1</tspan><tspan dy="-5">​</tspan> + <tspan class="dg-math">α</tspan><tspan class="dg-sub" dy="5">2</tspan><tspan dy="-5">​</tspan> <tspan class="dg-math">h</tspan><tspan class="dg-sub" dy="5">2</tspan><tspan dy="-5">​</tspan> + … + <tspan class="dg-math">α</tspan><tspan class="dg-sub" dy="5">M</tspan><tspan dy="-5">​</tspan> <tspan class="dg-math">h</tspan><tspan class="dg-sub" dy="5">M</tspan><tspan dy="-5">​</tspan></text>
+        </svg>
 
 
         <p>
@@ -2282,9 +3112,163 @@
           </li>
         </ol>
 
-        <img src="../img/material/part4/stacking_1.webp" width="70%" alt="stacking_1">
+        <svg class="dg" viewBox="0 0 900 330" role="img" aria-label="Stacking, step 1: the training data of eight rows is split into four folds of two rows. For each fold, the base models m1, m2 and m3 are trained on the other three folds and predict the rows of this fold. Their predictions become three new features for every row.">
+          <defs><marker id="dg-stack1-head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrowhead" d="M0,0 L10,5 L0,10 z"/></marker></defs>
+          <text class="dg-heading" x="226" y="20">training data</text>
+          <text class="dg-small" x="106" y="55" style="font-weight:650">x₀</text>
+          <text class="dg-small" x="166" y="55" style="font-weight:650">x₁</text>
+          <text class="dg-small" x="226" y="55" style="font-weight:650">x₂</text>
+          <text class="dg-small" x="286" y="55" style="font-weight:650">x₃</text>
+          <text class="dg-small" x="346" y="55" style="font-weight:650">y</text>
+          <rect class="dg-box dg-box--pink" x="76" y="70" width="300" height="30" style="stroke-width:.75"/>
+          <text x="106" y="85">0.94</text>
+          <text x="166" y="85">0.27</text>
+          <text x="226" y="85">0.80</text>
+          <text x="286" y="85">0.34</text>
+          <text x="346" y="85">1</text>
+          <rect class="dg-box dg-box--pink" x="76" y="100" width="300" height="30" style="stroke-width:.75"/>
+          <text x="106" y="115">0.02</text>
+          <text x="166" y="115">0.22</text>
+          <text x="226" y="115">0.17</text>
+          <text x="286" y="115">0.84</text>
+          <text x="346" y="115">0</text>
+          <rect class="dg-box dg-box--amber" x="76" y="130" width="300" height="30" style="stroke-width:.75"/>
+          <text x="106" y="145">0.83</text>
+          <text x="166" y="145">0.11</text>
+          <text x="226" y="145">0.23</text>
+          <text x="286" y="145">0.42</text>
+          <text x="346" y="145">1</text>
+          <rect class="dg-box dg-box--amber" x="76" y="160" width="300" height="30" style="stroke-width:.75"/>
+          <text x="106" y="175">0.74</text>
+          <text x="166" y="175">0.26</text>
+          <text x="226" y="175">0.03</text>
+          <text x="286" y="175">0.41</text>
+          <text x="346" y="175">0</text>
+          <rect class="dg-box dg-box--green" x="76" y="190" width="300" height="30" style="stroke-width:.75"/>
+          <text x="106" y="205">0.08</text>
+          <text x="166" y="205">0.29</text>
+          <text x="226" y="205">0.76</text>
+          <text x="286" y="205">0.37</text>
+          <text x="346" y="205">0</text>
+          <rect class="dg-box dg-box--green" x="76" y="220" width="300" height="30" style="stroke-width:.75"/>
+          <text x="106" y="235">0.71</text>
+          <text x="166" y="235">0.76</text>
+          <text x="226" y="235">0.43</text>
+          <text x="286" y="235">0.95</text>
+          <text x="346" y="235">1</text>
+          <rect class="dg-box dg-box--blue" x="76" y="250" width="300" height="30" style="stroke-width:.75"/>
+          <text x="106" y="265">0.08</text>
+          <text x="166" y="265">0.71</text>
+          <text x="226" y="265">0.97</text>
+          <text x="286" y="265">0.04</text>
+          <text x="346" y="265">0</text>
+          <rect class="dg-box dg-box--blue" x="76" y="280" width="300" height="30" style="stroke-width:.75"/>
+          <text x="106" y="295">0.84</text>
+          <text x="166" y="295">0.97</text>
+          <text x="226" y="295">0.89</text>
+          <text x="286" y="295">0.05</text>
+          <text x="346" y="295">1</text>
+          <path class="dg-axis" d="M76 70 h300"/>
+          <text class="dg-small" x="66" y="100" style="text-anchor:end">fold 1</text>
+          <text class="dg-small" x="66" y="160" style="text-anchor:end">fold 2</text>
+          <text class="dg-small" x="66" y="220" style="text-anchor:end">fold 3</text>
+          <text class="dg-small" x="66" y="280" style="text-anchor:end">fold 4</text>
+          <text class="dg-heading" x="745" y="20">out-of-fold predictions</text>
+          <text class="dg-small" x="675" y="55" style="font-weight:650">m₁</text>
+          <text class="dg-small" x="745" y="55" style="font-weight:650">m₂</text>
+          <text class="dg-small" x="815" y="55" style="font-weight:650">m₃</text>
+          <rect class="dg-box dg-box--pink" x="640" y="70" width="210" height="30" style="stroke-width:.75"/>
+          <text x="675" y="85">0.96</text>
+          <text x="745" y="85">0.86</text>
+          <text x="815" y="85">0.66</text>
+          <rect class="dg-box dg-box--pink" x="640" y="100" width="210" height="30" style="stroke-width:.75"/>
+          <text x="675" y="115">0.03</text>
+          <text x="745" y="115">0.13</text>
+          <text x="815" y="115">0.30</text>
+          <rect class="dg-box dg-box--amber" x="640" y="130" width="210" height="30" style="stroke-width:.75"/>
+          <text x="675" y="145">0.90</text>
+          <text x="745" y="145">0.90</text>
+          <text x="815" y="145">0.85</text>
+          <rect class="dg-box dg-box--amber" x="640" y="160" width="210" height="30" style="stroke-width:.75"/>
+          <text x="675" y="175">0.12</text>
+          <text x="745" y="175">0.10</text>
+          <text x="815" y="175">0.11</text>
+          <rect class="dg-box dg-box--green" x="640" y="190" width="210" height="30" style="stroke-width:.75"/>
+          <text x="675" y="205">0.03</text>
+          <text x="745" y="205">0.09</text>
+          <text x="815" y="205">0.08</text>
+          <rect class="dg-box dg-box--green" x="640" y="220" width="210" height="30" style="stroke-width:.75"/>
+          <text x="675" y="235">0.77</text>
+          <text x="745" y="235">0.50</text>
+          <text x="815" y="235">0.67</text>
+          <rect class="dg-box dg-box--blue" x="640" y="250" width="210" height="30" style="stroke-width:.75"/>
+          <text x="675" y="265">0.19</text>
+          <text x="745" y="265">0.65</text>
+          <text x="815" y="265">0.20</text>
+          <rect class="dg-box dg-box--blue" x="640" y="280" width="210" height="30" style="stroke-width:.75"/>
+          <text x="675" y="295">0.91</text>
+          <text x="745" y="295">0.89</text>
+          <text x="815" y="295">0.90</text>
+          <path class="dg-axis" d="M640 70 h210"/>
+          <path class="dg-arrow" d="M402 175 L622 175" marker-end="url(#dg-stack1-head)"/>
+          <text class="dg-small" x="512" y="140">train m₁, m₂, m₃ on the</text>
+          <text class="dg-small" x="512" y="156">other three folds, then</text>
+          <text class="dg-small" x="512" y="196">predict this fold</text>
+        </svg>
 
-        <img src="../img/material/part4/stacking_2.webp" width="70%" alt="stacking_2">
+        <svg class="dg" viewBox="0 0 900 330" role="img" aria-label="Stacking, step 2: the out-of-fold predictions of m1, m2 and m3, together with the true labels y, form the training data of the meta-model.">
+          <defs><marker id="dg-stack2-head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrowhead" d="M0,0 L10,5 L0,10 z"/></marker></defs>
+          <text class="dg-heading" x="200" y="20">training data of the meta-model</text>
+          <text class="dg-small" x="95" y="55" style="font-weight:650">m₁</text>
+          <text class="dg-small" x="165" y="55" style="font-weight:650">m₂</text>
+          <text class="dg-small" x="235" y="55" style="font-weight:650">m₃</text>
+          <text class="dg-small" x="305" y="55" style="font-weight:650">y</text>
+          <rect class="dg-box dg-box--pink" x="60" y="70" width="280" height="30" style="stroke-width:.75"/>
+          <text x="95" y="85">0.96</text>
+          <text x="165" y="85">0.86</text>
+          <text x="235" y="85">0.66</text>
+          <text x="305" y="85">1</text>
+          <rect class="dg-box dg-box--pink" x="60" y="100" width="280" height="30" style="stroke-width:.75"/>
+          <text x="95" y="115">0.03</text>
+          <text x="165" y="115">0.13</text>
+          <text x="235" y="115">0.30</text>
+          <text x="305" y="115">0</text>
+          <rect class="dg-box dg-box--amber" x="60" y="130" width="280" height="30" style="stroke-width:.75"/>
+          <text x="95" y="145">0.90</text>
+          <text x="165" y="145">0.90</text>
+          <text x="235" y="145">0.85</text>
+          <text x="305" y="145">1</text>
+          <rect class="dg-box dg-box--amber" x="60" y="160" width="280" height="30" style="stroke-width:.75"/>
+          <text x="95" y="175">0.12</text>
+          <text x="165" y="175">0.10</text>
+          <text x="235" y="175">0.11</text>
+          <text x="305" y="175">0</text>
+          <rect class="dg-box dg-box--green" x="60" y="190" width="280" height="30" style="stroke-width:.75"/>
+          <text x="95" y="205">0.03</text>
+          <text x="165" y="205">0.09</text>
+          <text x="235" y="205">0.08</text>
+          <text x="305" y="205">0</text>
+          <rect class="dg-box dg-box--green" x="60" y="220" width="280" height="30" style="stroke-width:.75"/>
+          <text x="95" y="235">0.77</text>
+          <text x="165" y="235">0.50</text>
+          <text x="235" y="235">0.67</text>
+          <text x="305" y="235">1</text>
+          <rect class="dg-box dg-box--blue" x="60" y="250" width="280" height="30" style="stroke-width:.75"/>
+          <text x="95" y="265">0.19</text>
+          <text x="165" y="265">0.65</text>
+          <text x="235" y="265">0.20</text>
+          <text x="305" y="265">0</text>
+          <rect class="dg-box dg-box--blue" x="60" y="280" width="280" height="30" style="stroke-width:.75"/>
+          <text x="95" y="295">0.91</text>
+          <text x="165" y="295">0.89</text>
+          <text x="235" y="295">0.90</text>
+          <text x="305" y="295">1</text>
+          <path class="dg-axis" d="M60 70 h280"/>
+          <path class="dg-arrow" d="M360 175 L560 175" marker-end="url(#dg-stack2-head)"/>
+          <text class="dg-small" x="460" y="158">train the meta-model</text>
+          <rect class="dg-box dg-box--violet" x="570" y="125" width="200" height="100" rx="14"/>
+          <text class="dg-title" x="670" y="175">meta-model</text>
+        </svg>
 
 
         <p>

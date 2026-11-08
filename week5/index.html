@@ -252,7 +252,104 @@
 	  <a href="https://arxiv.org/pdf/1706.03762" target="_blank" rel="noopener">paper</a>:
 	</p>
 	
-	<img src="../img/material/part5/transformer_architecture_image.svg" alt="Transformer Architecture" width="90%">
+        <svg class="dg" viewBox="0 0 760 770" style="max-width:700px" role="img" aria-label="The Transformer architecture. Left, the encoder: the input embeddings plus positional encodings pass through N identical blocks; each block has multi-head self-attention and a feed-forward layer, each followed by Add &amp; Norm, a residual connection and layer normalization. Right, the decoder: the output embeddings, the outputs shifted right by one position, plus positional encodings pass through N blocks with masked multi-head self-attention, multi-head attention whose keys K and values V come from the encoder output and whose queries Q come from the decoder, and a feed-forward layer, each followed by Add &amp; Norm. A linear layer and a softmax give the output probabilities.">
+          <defs><marker id="dg-transformer-head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrowhead" d="M0,0 L10,5 L0,10 z"/></marker></defs>
+          <rect class="dg-box dg-box--grey" x="120" y="320" width="200" height="280" rx="14"/>
+          <rect class="dg-box dg-box--grey" x="410" y="150" width="220" height="450" rx="14"/>
+          <text class="dg-large" x="104" y="460" style="text-anchor:end">N×</text>
+          <text class="dg-large dg-start" x="648" y="375">N×</text>
+          <text x="220" y="742" style="font-size:15px">Inputs</text>
+          <path class="dg-arrow" d="M220 728 L220 700" marker-end="url(#dg-transformer-head)"/>
+          <rect class="dg-box dg-box--pink" x="140" y="654" width="160" height="44" rx="8"/>
+          <text x="220" y="667.5" style="font-size:14px">Input</text>
+          <text x="220" y="684.5" style="font-size:14px">embedding</text>
+          <path class="dg-arrow" d="M220 654 L220 642" marker-end="url(#dg-transformer-head)"/>
+          <circle class="dg-dot" cx="220" cy="630" r="10" style="fill:var(--surface);stroke:var(--dg-arrow);stroke-width:2"/>
+          <path class="dg-arrow" d="M214 630H226M220 624V636" style="stroke-width:2"/>
+          <circle class="dg-dot" cx="138" cy="630" r="16" style="fill:var(--surface);stroke:var(--dg-arrow);stroke-width:2"/>
+          <path class="dg-arrow" d="M127 630Q132.5 616 138 630T149 630" style="stroke-width:2"/>
+          <path class="dg-arrow" d="M154 630 L210 630"/>
+          <text x="114" y="621" style="text-anchor:end;font-size:14px">Positional</text>
+          <text x="114" y="639" style="text-anchor:end;font-size:14px">encoding</text>
+          <text x="520" y="742" style="font-size:15px">Outputs</text>
+          <text x="520" y="759" style="font-size:15px">(shifted right)</text>
+          <path class="dg-arrow" d="M520 728 L520 700" marker-end="url(#dg-transformer-head)"/>
+          <rect class="dg-box dg-box--pink" x="440" y="654" width="160" height="44" rx="8"/>
+          <text x="520" y="667.5" style="font-size:14px">Output</text>
+          <text x="520" y="684.5" style="font-size:14px">embedding</text>
+          <path class="dg-arrow" d="M520 654 L520 642" marker-end="url(#dg-transformer-head)"/>
+          <circle class="dg-dot" cx="520" cy="630" r="10" style="fill:var(--surface);stroke:var(--dg-arrow);stroke-width:2"/>
+          <path class="dg-arrow" d="M514 630H526M520 624V636" style="stroke-width:2"/>
+          <circle class="dg-dot" cx="602" cy="630" r="16" style="fill:var(--surface);stroke:var(--dg-arrow);stroke-width:2"/>
+          <path class="dg-arrow" d="M591 630Q596.5 616 602 630T613 630" style="stroke-width:2"/>
+          <path class="dg-arrow" d="M586 630 L530 630"/>
+          <text class="dg-start" x="626" y="621" style="font-size:14px">Positional</text>
+          <text class="dg-start" x="626" y="639" style="font-size:14px">encoding</text>
+          <path class="dg-arrow" d="M220 620 L220 572"/>
+          <path class="dg-arrow" d="M170 572 L270 572"/>
+          <path class="dg-arrow" d="M170 572 L170 556" marker-end="url(#dg-transformer-head)"/>
+          <path class="dg-arrow" d="M220 572 L220 556" marker-end="url(#dg-transformer-head)"/>
+          <path class="dg-arrow" d="M270 572 L270 556" marker-end="url(#dg-transformer-head)"/>
+          <path class="dg-arrow" d="M220 588 L132 588 L132 470 L139 470" marker-end="url(#dg-transformer-head)"/>
+          <rect class="dg-box dg-box--amber" x="140" y="502" width="160" height="52" rx="8"/>
+          <text x="220" y="519.5" style="font-size:14px">Multi-Head</text>
+          <text x="220" y="536.5" style="font-size:14px">Attention</text>
+          <path class="dg-arrow" d="M220 502 L220 486" marker-end="url(#dg-transformer-head)"/>
+          <rect class="dg-box dg-box--green" x="140" y="455" width="160" height="30" rx="8"/>
+          <text x="220" y="470" style="font-size:14px">Add &amp; Norm</text>
+          <path class="dg-arrow" d="M220 455 L220 433" marker-end="url(#dg-transformer-head)"/>
+          <path class="dg-arrow" d="M220 444 L132 444 L132 350 L139 350" marker-end="url(#dg-transformer-head)"/>
+          <rect class="dg-box dg-box--blue" x="140" y="380" width="160" height="52" rx="8"/>
+          <text x="220" y="397.5" style="font-size:14px">Feed</text>
+          <text x="220" y="414.5" style="font-size:14px">Forward</text>
+          <path class="dg-arrow" d="M220 380 L220 366" marker-end="url(#dg-transformer-head)"/>
+          <rect class="dg-box dg-box--green" x="140" y="335" width="160" height="30" rx="8"/>
+          <text x="220" y="350" style="font-size:14px">Add &amp; Norm</text>
+          <path class="dg-arrow" d="M220 335 L220 296 L390 296 L390 398 L455 398 L455 386" marker-end="url(#dg-transformer-head)"/>
+          <path class="dg-arrow" d="M455 398 L495 398 L495 386" marker-end="url(#dg-transformer-head)"/>
+          <path class="dg-arrow" d="M520 620 L520 570"/>
+          <path class="dg-arrow" d="M470 570 L570 570"/>
+          <path class="dg-arrow" d="M470 570 L470 536" marker-end="url(#dg-transformer-head)"/>
+          <path class="dg-arrow" d="M520 570 L520 536" marker-end="url(#dg-transformer-head)"/>
+          <path class="dg-arrow" d="M570 570 L570 536" marker-end="url(#dg-transformer-head)"/>
+          <path class="dg-arrow" d="M520 588 L622 588 L622 446 L601 446" marker-end="url(#dg-transformer-head)"/>
+          <rect class="dg-box dg-box--amber" x="440" y="474" width="160" height="60" rx="8"/>
+          <text x="520" y="487" style="font-size:14px">Masked</text>
+          <text x="520" y="504" style="font-size:14px">Multi-Head</text>
+          <text x="520" y="521" style="font-size:14px">Attention</text>
+          <path class="dg-arrow" d="M520 474 L520 462" marker-end="url(#dg-transformer-head)"/>
+          <rect class="dg-box dg-box--green" x="440" y="431" width="160" height="30" rx="8"/>
+          <text x="520" y="446" style="font-size:14px">Add &amp; Norm</text>
+          <path class="dg-arrow" d="M520 431 L520 404 L575 404 L575 386" marker-end="url(#dg-transformer-head)"/>
+          <path class="dg-arrow" d="M520 422 L622 422 L622 300 L601 300" marker-end="url(#dg-transformer-head)"/>
+          <rect class="dg-box dg-box--amber" x="440" y="332" width="160" height="52" rx="8"/>
+          <text x="520" y="349.5" style="font-size:14px">Multi-Head</text>
+          <text x="520" y="366.5" style="font-size:14px">Attention</text>
+          <text class="dg-math dg-start" x="463" y="393" style="font-size:13px;font-weight:650">K</text>
+          <text class="dg-math dg-start" x="503" y="393" style="font-size:13px;font-weight:650">V</text>
+          <text class="dg-math dg-start" x="583" y="393" style="font-size:13px;font-weight:650">Q</text>
+          <path class="dg-arrow" d="M520 332 L520 316" marker-end="url(#dg-transformer-head)"/>
+          <rect class="dg-box dg-box--green" x="440" y="285" width="160" height="30" rx="8"/>
+          <text x="520" y="300" style="font-size:14px">Add &amp; Norm</text>
+          <path class="dg-arrow" d="M520 285 L520 263" marker-end="url(#dg-transformer-head)"/>
+          <path class="dg-arrow" d="M520 274 L622 274 L622 180 L601 180" marker-end="url(#dg-transformer-head)"/>
+          <rect class="dg-box dg-box--blue" x="440" y="210" width="160" height="52" rx="8"/>
+          <text x="520" y="227.5" style="font-size:14px">Feed</text>
+          <text x="520" y="244.5" style="font-size:14px">Forward</text>
+          <path class="dg-arrow" d="M520 210 L520 196" marker-end="url(#dg-transformer-head)"/>
+          <rect class="dg-box dg-box--green" x="440" y="165" width="160" height="30" rx="8"/>
+          <text x="520" y="180" style="font-size:14px">Add &amp; Norm</text>
+          <path class="dg-arrow" d="M520 165 L520 129" marker-end="url(#dg-transformer-head)"/>
+          <rect class="dg-box dg-box--violet" x="440" y="96" width="160" height="32" rx="8"/>
+          <text x="520" y="112" style="font-size:14px">Linear</text>
+          <path class="dg-arrow" d="M520 96 L520 79" marker-end="url(#dg-transformer-head)"/>
+          <rect class="dg-box dg-box--green" x="440" y="46" width="160" height="32" rx="8"/>
+          <text x="520" y="62" style="font-size:14px">Softmax</text>
+          <path class="dg-arrow" d="M520 46 L520 30" marker-end="url(#dg-transformer-head)"/>
+          <text x="520" y="16" style="font-size:15px">Output probabilities</text>
+          <text class="dg-heading" x="220" y="274">Encoder</text>
+          <text class="dg-heading" x="396" y="136" style="text-anchor:end">Decoder</text>
+        </svg>
 
 	<h3>Transformer Encoder and Decoder</h3>
 	
@@ -260,7 +357,62 @@
 	  On the left side of the diagram, we see the structure of the encoder. It sequentially applies <span class="math">N</span> blocks to the input sequence:
 	</p>
 	
-	<img src="../img/material/part5/transformer_encoder.svg" alt="Transformer Encoder Structure" width="60%">
+        <svg class="dg" viewBox="0 0 900 470" role="img" aria-label="Left, the encoder applies N blocks one after another to a sequence of n vectors; every block outputs a sequence of the same length n. Right, one block: multi-head attention, then Add &amp; Norm, then a feed-forward layer, then Add &amp; Norm. Each Add &amp; Norm adds the input of the layer back to its output, a residual connection, and normalizes the sum: LayerNorm(x + F(x)).">
+          <defs><marker id="dg-encoder-head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrowhead" d="M0,0 L10,5 L0,10 z"/></marker></defs>
+          <rect class="dg-box dg-box--pink" x="81" y="415" width="22" height="22" rx="4"/>
+          <rect class="dg-box dg-box--pink" x="115" y="415" width="22" height="22" rx="4"/>
+          <rect class="dg-box dg-box--pink" x="149" y="415" width="22" height="22" rx="4"/>
+          <rect class="dg-box dg-box--pink" x="183" y="415" width="22" height="22" rx="4"/>
+          <rect class="dg-box dg-box--pink" x="217" y="415" width="22" height="22" rx="4"/>
+          <text class="dg-small" x="160" y="456">input: n vectors</text>
+          <path class="dg-arrow" d="M160 412 L160 394" marker-end="url(#dg-encoder-head)"/>
+          <rect class="dg-box dg-box--grey" x="70" y="348" width="180" height="44" rx="8"/>
+          <text x="160" y="370" style="font-size:15px">Block 1</text>
+          <rect class="dg-box dg-box--grey" x="70" y="278" width="180" height="44" rx="8"/>
+          <text x="160" y="300" style="font-size:15px">Block 2</text>
+          <rect class="dg-box dg-box--grey" x="70" y="168" width="180" height="44" rx="8"/>
+          <text x="160" y="190" style="font-size:15px">Block N</text>
+          <path class="dg-arrow" d="M160 348 L160 324" marker-end="url(#dg-encoder-head)"/>
+          <path class="dg-arrow" d="M160 278 L160 262"/>
+          <text x="160" y="245" style="font-size:20px;fill:var(--muted)">⋮</text>
+          <path class="dg-arrow" d="M160 228 L160 214" marker-end="url(#dg-encoder-head)"/>
+          <path class="dg-arrow" d="M160 168 L160 134" marker-end="url(#dg-encoder-head)"/>
+          <rect class="dg-box dg-box--green" x="81" y="109" width="22" height="22" rx="4"/>
+          <rect class="dg-box dg-box--green" x="115" y="109" width="22" height="22" rx="4"/>
+          <rect class="dg-box dg-box--green" x="149" y="109" width="22" height="22" rx="4"/>
+          <rect class="dg-box dg-box--green" x="183" y="109" width="22" height="22" rx="4"/>
+          <rect class="dg-box dg-box--green" x="217" y="109" width="22" height="22" rx="4"/>
+          <text class="dg-small" x="160" y="90">output: n vectors, the same length</text>
+          <text class="dg-large" x="56" y="300" style="text-anchor:end">N×</text>
+          <path class="dg-guide" d="M250 278L420 30M250 322L420 450"/>
+          <rect class="dg-box dg-box--grey" x="420" y="30" width="460" height="420" rx="14"/>
+          <path class="dg-arrow" d="M580 440 L580 404"/>
+          <path class="dg-arrow" d="M520 404 L640 404"/>
+          <path class="dg-arrow" d="M520 404 L520 388" marker-end="url(#dg-encoder-head)"/>
+          <path class="dg-arrow" d="M580 404 L580 388" marker-end="url(#dg-encoder-head)"/>
+          <path class="dg-arrow" d="M640 404 L640 388" marker-end="url(#dg-encoder-head)"/>
+          <path class="dg-arrow" d="M580 422 L690 422 L690 290 L671 290" marker-end="url(#dg-encoder-head)"/>
+          <rect class="dg-box dg-box--amber" x="490" y="334" width="180" height="52" rx="8"/>
+          <text x="580" y="351.5" style="font-size:14px">Multi-Head</text>
+          <text x="580" y="368.5" style="font-size:14px">Attention</text>
+          <path class="dg-arrow" d="M580 334 L580 306" marker-end="url(#dg-encoder-head)"/>
+          <rect class="dg-box dg-box--green" x="490" y="275" width="180" height="30" rx="8"/>
+          <text x="580" y="290" style="font-size:14px">Add &amp; Norm</text>
+          <path class="dg-arrow" d="M580 275 L580 247" marker-end="url(#dg-encoder-head)"/>
+          <path class="dg-arrow" d="M580 262 L690 262 L690 128 L671 128" marker-end="url(#dg-encoder-head)"/>
+          <rect class="dg-box dg-box--blue" x="490" y="194" width="180" height="52" rx="8"/>
+          <text x="580" y="211.5" style="font-size:14px">Feed</text>
+          <text x="580" y="228.5" style="font-size:14px">Forward</text>
+          <path class="dg-arrow" d="M580 194 L580 144" marker-end="url(#dg-encoder-head)"/>
+          <rect class="dg-box dg-box--green" x="490" y="113" width="180" height="30" rx="8"/>
+          <text x="580" y="128" style="font-size:14px">Add &amp; Norm</text>
+          <path class="dg-arrow" d="M580 113 L580 50" marker-end="url(#dg-encoder-head)"/>
+          <text class="dg-small" x="568" y="66" style="text-anchor:end">to Block 3</text>
+          <text class="dg-small dg-start" x="704" y="382">residual connection:</text>
+          <text class="dg-small dg-start" x="704" y="400">the input x skips the layer</text>
+          <text class="dg-small dg-start" x="704" y="268">Add &amp; Norm:</text>
+          <text class="dg-start" x="704" y="290" style="font-size:14px">LayerNorm(<tspan class="dg-math">x</tspan> + <tspan class="dg-math">F</tspan>(<tspan class="dg-math">x</tspan>))</text>
+        </svg>
 	
 	<p>
 	  Each block outputs a sequence of the same length. It contains two key layers: 
@@ -306,7 +458,81 @@
 	  <li><span class="math">v_i</span> — the actual stored values.</li>
 	</ul>
 	
-	<img src="../img/material/part5/self_attention_queries.webp" alt="Self-Attention Queries and Keys" width="60%">
+        <svg class="dg" viewBox="0 0 960 470" role="img" aria-label="Self-attention for the word &quot;it&quot; in &quot;a robot must obey the orders given it&quot;, with illustrative numbers. Every word has a key vector and a value vector. The query vector of &quot;it&quot; is compared with the key of every word by a dot product, which gives a score: 2.8 for &quot;a&quot;, 3.3 for &quot;robot&quot;, -2.9 for &quot;must&quot; and &quot;obey&quot;, and between 0.1 and 1.7 for the other words. A softmax turns the scores into weights that sum to 100 percent: 50 percent for &quot;robot&quot;, 30 percent for &quot;a&quot;, 10 percent for &quot;orders&quot;, 4 percent or less for the others, and 0.1 percent each for &quot;must&quot; and &quot;obey&quot;. The output for &quot;it&quot; is the sum of the values, each multiplied by its weight, so it is made mostly of the values of &quot;robot&quot; and &quot;a&quot;.">
+          <text class="dg-large" x="196" y="26">a</text>
+          <path class="dg-box dg-box--amber" d="M172 56h16v16h-16ZM188 56h16v16h-16ZM204 56h16v16h-16Z"/>
+          <text class="dg-large" x="288" y="26">robot</text>
+          <path class="dg-box dg-box--amber" d="M264 56h16v16h-16ZM280 56h16v16h-16ZM296 56h16v16h-16Z"/>
+          <text class="dg-large" x="380" y="26">must</text>
+          <path class="dg-box dg-box--amber" d="M356 56h16v16h-16ZM372 56h16v16h-16ZM388 56h16v16h-16Z"/>
+          <text class="dg-large" x="472" y="26">obey</text>
+          <path class="dg-box dg-box--amber" d="M448 56h16v16h-16ZM464 56h16v16h-16ZM480 56h16v16h-16Z"/>
+          <text class="dg-large" x="564" y="26">the</text>
+          <path class="dg-box dg-box--amber" d="M540 56h16v16h-16ZM556 56h16v16h-16ZM572 56h16v16h-16Z"/>
+          <text class="dg-large" x="656" y="26">orders</text>
+          <path class="dg-box dg-box--amber" d="M632 56h16v16h-16ZM648 56h16v16h-16ZM664 56h16v16h-16Z"/>
+          <text class="dg-large" x="748" y="26">given</text>
+          <path class="dg-box dg-box--amber" d="M724 56h16v16h-16ZM740 56h16v16h-16ZM756 56h16v16h-16Z"/>
+          <text class="dg-large" x="840" y="26" style="font-weight:650;fill:var(--dg-pink-line)">it</text>
+          <path class="dg-box dg-box--amber" d="M816 56h16v16h-16ZM832 56h16v16h-16ZM848 56h16v16h-16Z"/>
+          <text class="dg-start" x="20" y="64" style="font-size:14px;font-weight:650;fill:var(--dg-amber-line)">key k</text>
+          <path class="dg-box dg-box--pink" d="M878 56h16v16h-16ZM894 56h16v16h-16ZM910 56h16v16h-16Z"/>
+          <text x="902" y="38" style="font-size:13px;font-weight:650;fill:var(--dg-pink-line)">query q</text>
+          <path class="dg-curve" d="M902 74V92H196M196 92v8M288 92v8M380 92v8M472 92v8M564 92v8M656 92v8M748 92v8M840 92v8" style="stroke:var(--dg-pink-line);stroke-width:2;stroke-dasharray:5 4"/>
+          <text class="dg-start" x="20" y="118" style="font-size:14px;font-weight:650;fill:var(--ink)">score</text>
+          <text class="dg-small dg-start" x="20" y="136">q · k</text>
+          <text x="196" y="118" style="font-size:15px;fill:var(--ink)">2.8</text>
+          <text x="288" y="118" style="font-size:15px;fill:var(--ink)">3.3</text>
+          <text x="380" y="118" style="font-size:15px;fill:var(--ink)">−2.9</text>
+          <text x="472" y="118" style="font-size:15px;fill:var(--ink)">−2.9</text>
+          <text x="564" y="118" style="font-size:15px;fill:var(--ink)">0.1</text>
+          <text x="656" y="118" style="font-size:15px;fill:var(--ink)">1.7</text>
+          <text x="748" y="118" style="font-size:15px;fill:var(--ink)">0.8</text>
+          <text x="840" y="118" style="font-size:15px;fill:var(--ink)">0.8</text>
+          <text class="dg-start" x="20" y="196" style="font-size:14px;font-weight:650;fill:var(--ink)">weight</text>
+          <text class="dg-small dg-start" x="20" y="214">softmax of the scores;</text>
+          <text class="dg-small dg-start" x="20" y="232">sums to 100 %</text>
+          <path class="dg-axis" d="M162 252H874"/>
+          <rect class="dg-ink--violet" x="178" y="200.9" width="36" height="51.1" rx="2"/>
+          <text x="196" y="188.9" style="font-size:14px;font-weight:650;fill:var(--ink)">30 %</text>
+          <rect class="dg-ink--violet" x="270" y="167.7" width="36" height="84.3" rx="2"/>
+          <text x="288" y="155.7" style="font-size:14px;font-weight:650;fill:var(--ink)">50 %</text>
+          <rect class="dg-ink--violet" x="362" y="250.5" width="36" height="1.5" rx="2"/>
+          <text x="380" y="238.5" style="font-size:14px;font-weight:650;fill:var(--ink)">0.1 %</text>
+          <rect class="dg-ink--violet" x="454" y="250.5" width="36" height="1.5" rx="2"/>
+          <text x="472" y="238.5" style="font-size:14px;font-weight:650;fill:var(--ink)">0.1 %</text>
+          <rect class="dg-ink--violet" x="546" y="248.6" width="36" height="3.4" rx="2"/>
+          <text x="564" y="236.6" style="font-size:14px;font-weight:650;fill:var(--ink)">2 %</text>
+          <rect class="dg-ink--violet" x="638" y="235" width="36" height="17" rx="2"/>
+          <text x="656" y="223" style="font-size:14px;font-weight:650;fill:var(--ink)">10 %</text>
+          <rect class="dg-ink--violet" x="730" y="245.1" width="36" height="6.9" rx="2"/>
+          <text x="748" y="233.1" style="font-size:14px;font-weight:650;fill:var(--ink)">4 %</text>
+          <rect class="dg-ink--violet" x="822" y="245.1" width="36" height="6.9" rx="2"/>
+          <text x="840" y="233.1" style="font-size:14px;font-weight:650;fill:var(--ink)">4 %</text>
+          <text class="dg-start" x="20" y="298" style="font-size:14px;font-weight:650;fill:var(--dg-blue-line)">value v</text>
+          <path class="dg-curve" d="M196 310L560 388" style="stroke:var(--dg-violet-line);stroke-width:5.8;opacity:.5;stroke-linecap:butt"/>
+          <path class="dg-curve" d="M288 310L560 388" style="stroke:var(--dg-violet-line);stroke-width:8.9;opacity:.5;stroke-linecap:butt"/>
+          <path class="dg-curve" d="M380 310L560 388" style="stroke:var(--dg-violet-line);stroke-width:1.0;opacity:.5;stroke-linecap:butt"/>
+          <path class="dg-curve" d="M472 310L560 388" style="stroke:var(--dg-violet-line);stroke-width:1.0;opacity:.5;stroke-linecap:butt"/>
+          <path class="dg-curve" d="M564 310L560 388" style="stroke:var(--dg-violet-line);stroke-width:1.3;opacity:.5;stroke-linecap:butt"/>
+          <path class="dg-curve" d="M656 310L560 388" style="stroke:var(--dg-violet-line);stroke-width:2.6;opacity:.5;stroke-linecap:butt"/>
+          <path class="dg-curve" d="M748 310L560 388" style="stroke:var(--dg-violet-line);stroke-width:1.7;opacity:.5;stroke-linecap:butt"/>
+          <path class="dg-curve" d="M840 310L560 388" style="stroke:var(--dg-violet-line);stroke-width:1.7;opacity:.5;stroke-linecap:butt"/>
+          <path class="dg-box dg-box--blue" d="M172 290h16v16h-16ZM188 290h16v16h-16ZM204 290h16v16h-16Z"/>
+          <path class="dg-box dg-box--blue" d="M264 290h16v16h-16ZM280 290h16v16h-16ZM296 290h16v16h-16Z"/>
+          <path class="dg-box dg-box--blue" d="M356 290h16v16h-16ZM372 290h16v16h-16ZM388 290h16v16h-16Z" style="opacity:0.30"/>
+          <path class="dg-box dg-box--blue" d="M448 290h16v16h-16ZM464 290h16v16h-16ZM480 290h16v16h-16Z" style="opacity:0.30"/>
+          <path class="dg-box dg-box--blue" d="M540 290h16v16h-16ZM556 290h16v16h-16ZM572 290h16v16h-16Z" style="opacity:0.35"/>
+          <path class="dg-box dg-box--blue" d="M632 290h16v16h-16ZM648 290h16v16h-16ZM664 290h16v16h-16Z" style="opacity:0.53"/>
+          <path class="dg-box dg-box--blue" d="M724 290h16v16h-16ZM740 290h16v16h-16ZM756 290h16v16h-16Z" style="opacity:0.39"/>
+          <path class="dg-box dg-box--blue" d="M816 290h16v16h-16ZM832 290h16v16h-16ZM848 290h16v16h-16Z" style="opacity:0.39"/>
+          <path class="dg-box dg-box--blue" d="M536 392h16v16h-16ZM552 392h16v16h-16ZM568 392h16v16h-16Z"/>
+          <rect class="dg-axis" x="530" y="386" width="60" height="28" rx="6" style="stroke:var(--ink);stroke-width:2"/>
+          <text class="dg-start" x="20" y="400" style="font-size:14px;font-weight:650;fill:var(--ink)">output for “it”</text>
+          <text class="dg-start" x="604" y="400" style="font-size:14px;fill:var(--ink)">= 0.30 v(a) + 0.50 v(robot) + 0.10 v(orders) + … </text>
+          <text class="dg-small dg-start" x="604" y="422">one term for every word</text>
+          <text class="dg-small" x="940" y="456" style="text-anchor:end">Illustrative numbers.</text>
+        </svg>
 
 	<p>
 	  The closeness of a query to a key can be determined using a dot product:
@@ -363,7 +589,47 @@
 	  sequence, while the keys and values come from the input (i.e., from the encoder's outputs).
 	</p>
 	
-	<img src="../img/material/part5/decoder_attention.webp" alt="Decoder Cross-Attention" width="60%">
+        <svg class="dg" viewBox="0 0 880 430" role="img" aria-label="Cross-attention in the decoder. The multi-head attention layer in the middle of a decoder block takes its keys K and values V from the output of the encoder, that is, from the input sequence, and its queries Q from the decoder itself, that is, from the output sequence produced so far.">
+          <defs><marker id="dg-cross-head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrowhead" d="M0,0 L10,5 L0,10 z"/></marker></defs>
+          <rect class="dg-box dg-box--grey" x="70" y="200" width="200" height="190" rx="14"/>
+          <text class="dg-small" x="170" y="412">last encoder block</text>
+          <path class="dg-arrow" d="M170 388 L170 352" marker-end="url(#dg-cross-head)"/>
+          <rect class="dg-box dg-box--blue" x="90" y="308" width="160" height="44" rx="8"/>
+          <text x="170" y="321.5" style="font-size:14px">Feed</text>
+          <text x="170" y="338.5" style="font-size:14px">Forward</text>
+          <path class="dg-arrow" d="M170 308 L170 266" marker-end="url(#dg-cross-head)"/>
+          <rect class="dg-box dg-box--green" x="90" y="235" width="160" height="30" rx="8"/>
+          <text x="170" y="250" style="font-size:14px">Add &amp; Norm</text>
+          <path class="dg-arrow" d="M170 235 L170 150 L420 150 L420 330 L520 330 L520 304" marker-end="url(#dg-cross-head)"/>
+          <path class="dg-arrow" d="M520 330 L580 330 L580 304" marker-end="url(#dg-cross-head)"/>
+          <text class="dg-small dg-start" x="182" y="120" style="fill:var(--ink)">encoder output: the keys</text>
+          <text class="dg-small dg-start" x="182" y="138" style="fill:var(--ink)">and values (from the input)</text>
+          <rect class="dg-box dg-box--grey" x="450" y="40" width="300" height="380" rx="14"/>
+          <text class="dg-small dg-start" x="462" y="58">decoder block</text>
+          <path class="dg-arrow" d="M600 418 L600 386" marker-end="url(#dg-cross-head)"/>
+          <text class="dg-small dg-start" x="612" y="404">from masked self-attention</text>
+          <rect class="dg-box dg-box--green" x="500" y="355" width="200" height="30" rx="8"/>
+          <text x="600" y="370" style="font-size:14px">Add &amp; Norm</text>
+          <path class="dg-arrow" d="M600 355 L600 342 L660 342 L660 304" marker-end="url(#dg-cross-head)"/>
+          <path class="dg-arrow" d="M600 348 L728 348 L728 176 L701 176" marker-end="url(#dg-cross-head)"/>
+          <rect class="dg-box dg-box--amber" x="500" y="246" width="200" height="56" rx="8"/>
+          <text x="600" y="265.5" style="font-size:14px">Multi-Head Attention</text>
+          <text x="600" y="282.5" style="font-size:14px"><tspan class="dg-small">(cross-attention)</tspan></text>
+          <text class="dg-math dg-start" x="529" y="314" style="font-size:14px;font-weight:650">K</text>
+          <text class="dg-math dg-start" x="589" y="314" style="font-size:14px;font-weight:650">V</text>
+          <text class="dg-math dg-start" x="669" y="314" style="font-size:14px;font-weight:650">Q</text>
+          <path class="dg-arrow" d="M600 246 L600 192" marker-end="url(#dg-cross-head)"/>
+          <rect class="dg-box dg-box--green" x="500" y="161" width="200" height="30" rx="8"/>
+          <text x="600" y="176" style="font-size:14px">Add &amp; Norm</text>
+          <path class="dg-arrow" d="M600 161 L600 128" marker-end="url(#dg-cross-head)"/>
+          <rect class="dg-box dg-box--blue" x="500" y="82" width="200" height="44" rx="8"/>
+          <text x="600" y="95.5" style="font-size:14px">Feed</text>
+          <text x="600" y="112.5" style="font-size:14px">Forward</text>
+          <path class="dg-arrow" d="M600 82 L600 50" marker-end="url(#dg-cross-head)"/>
+          <text class="dg-small dg-start" x="760" y="300" style="fill:var(--ink)">queries: from</text>
+          <text class="dg-small dg-start" x="760" y="318" style="fill:var(--ink)">the decoder (the</text>
+          <text class="dg-small dg-start" x="760" y="336" style="fill:var(--ink)">output so far)</text>
+        </svg>
 	
 	<p>
 	  Another key feature of the decoder's attention is that, in the form described above, 
@@ -379,7 +645,107 @@
 	  mask has a lower triangular shape.
 	</p>
 	
-	<img src="../img/material/part5/attention_mask.svg" alt="Autoregressive Attention Mask" width="50%">
+        <svg class="dg" viewBox="0 0 940 420" role="img" aria-label="The causal attention mask for the five tokens &quot;a robot must obey orders&quot;. Left, the attention scores: each row is the query of one token and each column the key of one token; every score above the diagonal, where the key belongs to a later token, is set to minus infinity. Right, the weights after the softmax of each row: the masked weights are 0 and each row sums to 1, so the matrix is lower triangular and a token never uses later tokens.">
+          <defs><marker id="dg-mask-head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrowhead" d="M0,0 L10,5 L0,10 z"/></marker></defs>
+          <text class="dg-heading" x="270" y="20">scores with the mask</text>
+          <text class="dg-small" x="270" y="46">key (the token looked at) →</text>
+          <text class="dg-small" x="118" y="78" style="text-anchor:end">query ↓</text>
+          <text x="158" y="82" style="font-size:13px">a</text>
+          <text x="214" y="82" style="font-size:13px">robot</text>
+          <text x="270" y="82" style="font-size:13px">must</text>
+          <text x="326" y="82" style="font-size:13px">obey</text>
+          <text x="382" y="82" style="font-size:13px">orders</text>
+          <text x="120" y="124" style="text-anchor:end;font-size:13px">a</text>
+          <text x="120" y="180" style="text-anchor:end;font-size:13px">robot</text>
+          <text x="120" y="236" style="text-anchor:end;font-size:13px">must</text>
+          <text x="120" y="292" style="text-anchor:end;font-size:13px">obey</text>
+          <text x="120" y="348" style="text-anchor:end;font-size:13px">orders</text>
+          <path class="dg-box dg-box--grey" d="M186 96h56v56h-56ZM242 96h56v56h-56ZM298 96h56v56h-56ZM354 96h56v56h-56ZM242 152h56v56h-56ZM298 152h56v56h-56ZM354 152h56v56h-56ZM298 208h56v56h-56ZM354 208h56v56h-56ZM354 264h56v56h-56Z" style="stroke-width:1"/>
+          <path class="dg-box dg-box--blue" d="M130 96h56v56h-56ZM130 152h56v56h-56ZM186 152h56v56h-56ZM130 208h56v56h-56ZM186 208h56v56h-56ZM242 208h56v56h-56ZM130 264h56v56h-56ZM186 264h56v56h-56ZM242 264h56v56h-56ZM298 264h56v56h-56ZM130 320h56v56h-56ZM186 320h56v56h-56ZM242 320h56v56h-56ZM298 320h56v56h-56ZM354 320h56v56h-56Z" style="stroke-width:1"/>
+          <text x="158" y="124" style="font-size:14px;fill:var(--ink)">−0.7</text>
+          <text class="dg-small" x="214" y="124">−∞</text>
+          <text class="dg-small" x="270" y="124">−∞</text>
+          <text class="dg-small" x="326" y="124">−∞</text>
+          <text class="dg-small" x="382" y="124">−∞</text>
+          <text x="158" y="180" style="font-size:14px;fill:var(--ink)">0.0</text>
+          <text x="214" y="180" style="font-size:14px;fill:var(--ink)">−0.7</text>
+          <text class="dg-small" x="270" y="180">−∞</text>
+          <text class="dg-small" x="326" y="180">−∞</text>
+          <text class="dg-small" x="382" y="180">−∞</text>
+          <text x="158" y="236" style="font-size:14px;fill:var(--ink)">0.3</text>
+          <text x="214" y="236" style="font-size:14px;fill:var(--ink)">1.7</text>
+          <text x="270" y="236" style="font-size:14px;fill:var(--ink)">0.3</text>
+          <text class="dg-small" x="326" y="236">−∞</text>
+          <text class="dg-small" x="382" y="236">−∞</text>
+          <text x="158" y="292" style="font-size:14px;fill:var(--ink)">2.5</text>
+          <text x="214" y="292" style="font-size:14px;fill:var(--ink)">−2.1</text>
+          <text x="270" y="292" style="font-size:14px;fill:var(--ink)">1.2</text>
+          <text x="326" y="292" style="font-size:14px;fill:var(--ink)">−0.4</text>
+          <text class="dg-small" x="382" y="292">−∞</text>
+          <text x="158" y="348" style="font-size:14px;fill:var(--ink)">−0.7</text>
+          <text x="214" y="348" style="font-size:14px;fill:var(--ink)">−0.7</text>
+          <text x="270" y="348" style="font-size:14px;fill:var(--ink)">0.4</text>
+          <text x="326" y="348" style="font-size:14px;fill:var(--ink)">−0.1</text>
+          <text x="382" y="348" style="font-size:14px;fill:var(--ink)">1.6</text>
+          <text class="dg-heading" x="730" y="20">weights after the softmax</text>
+          <text class="dg-small" x="730" y="46">key (the token looked at) →</text>
+          <text class="dg-small" x="578" y="78" style="text-anchor:end">query ↓</text>
+          <text x="618" y="82" style="font-size:13px">a</text>
+          <text x="674" y="82" style="font-size:13px">robot</text>
+          <text x="730" y="82" style="font-size:13px">must</text>
+          <text x="786" y="82" style="font-size:13px">obey</text>
+          <text x="842" y="82" style="font-size:13px">orders</text>
+          <text x="580" y="124" style="text-anchor:end;font-size:13px">a</text>
+          <text x="580" y="180" style="text-anchor:end;font-size:13px">robot</text>
+          <text x="580" y="236" style="text-anchor:end;font-size:13px">must</text>
+          <text x="580" y="292" style="text-anchor:end;font-size:13px">obey</text>
+          <text x="580" y="348" style="text-anchor:end;font-size:13px">orders</text>
+          <path class="dg-box dg-box--grey" d="M646 96h56v56h-56ZM702 96h56v56h-56ZM758 96h56v56h-56ZM814 96h56v56h-56ZM702 152h56v56h-56ZM758 152h56v56h-56ZM814 152h56v56h-56ZM758 208h56v56h-56ZM814 208h56v56h-56ZM814 264h56v56h-56Z" style="stroke-width:1"/>
+          <rect class="dg-dot" x="590" y="96" width="56" height="56" style="fill:var(--dg-blue-line);fill-opacity:0.70;stroke:var(--line-strong);stroke-width:1"/>
+          <rect class="dg-dot" x="590" y="152" width="56" height="56" style="fill:var(--dg-blue-line);fill-opacity:0.50;stroke:var(--line-strong);stroke-width:1"/>
+          <rect class="dg-dot" x="646" y="152" width="56" height="56" style="fill:var(--dg-blue-line);fill-opacity:0.28;stroke:var(--line-strong);stroke-width:1"/>
+          <rect class="dg-dot" x="590" y="208" width="56" height="56" style="fill:var(--dg-blue-line);fill-opacity:0.19;stroke:var(--line-strong);stroke-width:1"/>
+          <rect class="dg-dot" x="646" y="208" width="56" height="56" style="fill:var(--dg-blue-line);fill-opacity:0.49;stroke:var(--line-strong);stroke-width:1"/>
+          <rect class="dg-dot" x="702" y="208" width="56" height="56" style="fill:var(--dg-blue-line);fill-opacity:0.19;stroke:var(--line-strong);stroke-width:1"/>
+          <rect class="dg-dot" x="590" y="264" width="56" height="56" style="fill:var(--dg-blue-line);fill-opacity:0.54;stroke:var(--line-strong);stroke-width:1"/>
+          <rect class="dg-dot" x="646" y="264" width="56" height="56" style="fill:var(--dg-blue-line);fill-opacity:0.09;stroke:var(--line-strong);stroke-width:1"/>
+          <rect class="dg-dot" x="702" y="264" width="56" height="56" style="fill:var(--dg-blue-line);fill-opacity:0.20;stroke:var(--line-strong);stroke-width:1"/>
+          <rect class="dg-dot" x="758" y="264" width="56" height="56" style="fill:var(--dg-blue-line);fill-opacity:0.10;stroke:var(--line-strong);stroke-width:1"/>
+          <rect class="dg-dot" x="590" y="320" width="56" height="56" style="fill:var(--dg-blue-line);fill-opacity:0.12;stroke:var(--line-strong);stroke-width:1"/>
+          <rect class="dg-dot" x="646" y="320" width="56" height="56" style="fill:var(--dg-blue-line);fill-opacity:0.12;stroke:var(--line-strong);stroke-width:1"/>
+          <rect class="dg-dot" x="702" y="320" width="56" height="56" style="fill:var(--dg-blue-line);fill-opacity:0.19;stroke:var(--line-strong);stroke-width:1"/>
+          <rect class="dg-dot" x="758" y="320" width="56" height="56" style="fill:var(--dg-blue-line);fill-opacity:0.15;stroke:var(--line-strong);stroke-width:1"/>
+          <rect class="dg-dot" x="814" y="320" width="56" height="56" style="fill:var(--dg-blue-line);fill-opacity:0.45;stroke:var(--line-strong);stroke-width:1"/>
+          <text x="618" y="124" style="font-size:14px;fill:var(--ink);paint-order:stroke;stroke:var(--surface);stroke-width:4px;stroke-linejoin:round">1.00</text>
+          <text class="dg-small" x="674" y="124">0</text>
+          <text class="dg-small" x="730" y="124">0</text>
+          <text class="dg-small" x="786" y="124">0</text>
+          <text class="dg-small" x="842" y="124">0</text>
+          <text x="618" y="180" style="font-size:14px;fill:var(--ink);paint-order:stroke;stroke:var(--surface);stroke-width:4px;stroke-linejoin:round">0.67</text>
+          <text x="674" y="180" style="font-size:14px;fill:var(--ink);paint-order:stroke;stroke:var(--surface);stroke-width:4px;stroke-linejoin:round">0.33</text>
+          <text class="dg-small" x="730" y="180">0</text>
+          <text class="dg-small" x="786" y="180">0</text>
+          <text class="dg-small" x="842" y="180">0</text>
+          <text x="618" y="236" style="font-size:14px;fill:var(--ink);paint-order:stroke;stroke:var(--surface);stroke-width:4px;stroke-linejoin:round">0.17</text>
+          <text x="674" y="236" style="font-size:14px;fill:var(--ink);paint-order:stroke;stroke:var(--surface);stroke-width:4px;stroke-linejoin:round">0.66</text>
+          <text x="730" y="236" style="font-size:14px;fill:var(--ink);paint-order:stroke;stroke:var(--surface);stroke-width:4px;stroke-linejoin:round">0.17</text>
+          <text class="dg-small" x="786" y="236">0</text>
+          <text class="dg-small" x="842" y="236">0</text>
+          <text x="618" y="292" style="font-size:14px;fill:var(--ink);paint-order:stroke;stroke:var(--surface);stroke-width:4px;stroke-linejoin:round">0.75</text>
+          <text x="674" y="292" style="font-size:14px;fill:var(--ink);paint-order:stroke;stroke:var(--surface);stroke-width:4px;stroke-linejoin:round">0.01</text>
+          <text x="730" y="292" style="font-size:14px;fill:var(--ink);paint-order:stroke;stroke:var(--surface);stroke-width:4px;stroke-linejoin:round">0.20</text>
+          <text x="786" y="292" style="font-size:14px;fill:var(--ink);paint-order:stroke;stroke:var(--surface);stroke-width:4px;stroke-linejoin:round">0.04</text>
+          <text class="dg-small" x="842" y="292">0</text>
+          <text x="618" y="348" style="font-size:14px;fill:var(--ink);paint-order:stroke;stroke:var(--surface);stroke-width:4px;stroke-linejoin:round">0.06</text>
+          <text x="674" y="348" style="font-size:14px;fill:var(--ink);paint-order:stroke;stroke:var(--surface);stroke-width:4px;stroke-linejoin:round">0.06</text>
+          <text x="730" y="348" style="font-size:14px;fill:var(--ink);paint-order:stroke;stroke:var(--surface);stroke-width:4px;stroke-linejoin:round">0.18</text>
+          <text x="786" y="348" style="font-size:14px;fill:var(--ink);paint-order:stroke;stroke:var(--surface);stroke-width:4px;stroke-linejoin:round">0.11</text>
+          <text x="842" y="348" style="font-size:14px;fill:var(--ink);paint-order:stroke;stroke:var(--surface);stroke-width:4px;stroke-linejoin:round">0.59</text>
+          <path class="dg-arrow" d="M434 236 L520 236" marker-end="url(#dg-mask-head)"/>
+          <text class="dg-small" x="477" y="218" style="fill:var(--ink)">softmax</text>
+          <text class="dg-small" x="477" y="256" style="fill:var(--ink)">of each row</text>
+          <text class="dg-small" x="470" y="400">Row i uses only the columns 1 to i: a token never sees the tokens after it.</text>
+        </svg>
 	
 	<figure class="viz" data-viz="attention">
 	  <figcaption class="viz__caption">
@@ -412,7 +778,86 @@
 	  parts of the input sequence and capture multiple relationships in parallel.
 	</p>
 	
-	<img src="../img/material/part5/multi_head_attention.svg" alt="Multi-Head Attention Mechanism" width="60%">
+        <svg class="dg" viewBox="0 0 940 500" role="img" aria-label="Multi-head attention. The queries, keys and values go to h heads. Each head has its own linear projections of Q, K and V and computes scaled dot-product attention in a smaller space. The outputs of the heads are concatenated and passed through a final linear layer.">
+          <defs><marker id="dg-mha-head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrowhead" d="M0,0 L10,5 L0,10 z"/></marker></defs>
+          <rect class="dg-box dg-box--grey" x="42" y="196" width="256" height="222" rx="12" style="stroke-dasharray:5 4"/>
+          <text class="dg-small dg-start" x="54" y="214" style="fill:var(--ink);font-weight:650">head 1</text>
+          <rect class="dg-box dg-box--grey" x="54" y="350" width="72" height="44" rx="8"/>
+          <text x="90" y="364" style="font-size:13px">Linear</text>
+          <text x="90" y="380" style="font-size:13px"><tspan class="dg-math">W</tspan><tspan class="dg-sub" dy="5">1</tspan><tspan dy="-5">​</tspan><tspan class="dg-sub" dy="-6">Q</tspan><tspan dy="6">​</tspan></text>
+          <path class="dg-arrow" d="M90 350 L90 318" marker-end="url(#dg-mha-head)"/>
+          <rect class="dg-box dg-box--grey" x="134" y="350" width="72" height="44" rx="8"/>
+          <text x="170" y="364" style="font-size:13px">Linear</text>
+          <text x="170" y="380" style="font-size:13px"><tspan class="dg-math">W</tspan><tspan class="dg-sub" dy="5">1</tspan><tspan dy="-5">​</tspan><tspan class="dg-sub" dy="-6">K</tspan><tspan dy="6">​</tspan></text>
+          <path class="dg-arrow" d="M170 350 L170 318" marker-end="url(#dg-mha-head)"/>
+          <rect class="dg-box dg-box--grey" x="214" y="350" width="72" height="44" rx="8"/>
+          <text x="250" y="364" style="font-size:13px">Linear</text>
+          <text x="250" y="380" style="font-size:13px"><tspan class="dg-math">W</tspan><tspan class="dg-sub" dy="5">1</tspan><tspan dy="-5">​</tspan><tspan class="dg-sub" dy="-6">V</tspan><tspan dy="6">​</tspan></text>
+          <path class="dg-arrow" d="M250 350 L250 318" marker-end="url(#dg-mha-head)"/>
+          <rect class="dg-box dg-box--violet" x="56" y="264" width="228" height="52" rx="8"/>
+          <text x="170" y="281.5" style="font-size:14px">Scaled Dot-Product</text>
+          <text x="170" y="298.5" style="font-size:14px">Attention</text>
+          <path class="dg-arrow" d="M170 264 L170 166" marker-end="url(#dg-mha-head)"/>
+          <rect class="dg-box dg-box--grey" x="322" y="196" width="256" height="222" rx="12" style="stroke-dasharray:5 4"/>
+          <text class="dg-small dg-start" x="334" y="214" style="fill:var(--ink);font-weight:650">head 2</text>
+          <rect class="dg-box dg-box--grey" x="334" y="350" width="72" height="44" rx="8"/>
+          <text x="370" y="364" style="font-size:13px">Linear</text>
+          <text x="370" y="380" style="font-size:13px"><tspan class="dg-math">W</tspan><tspan class="dg-sub" dy="5">2</tspan><tspan dy="-5">​</tspan><tspan class="dg-sub" dy="-6">Q</tspan><tspan dy="6">​</tspan></text>
+          <path class="dg-arrow" d="M370 350 L370 318" marker-end="url(#dg-mha-head)"/>
+          <rect class="dg-box dg-box--grey" x="414" y="350" width="72" height="44" rx="8"/>
+          <text x="450" y="364" style="font-size:13px">Linear</text>
+          <text x="450" y="380" style="font-size:13px"><tspan class="dg-math">W</tspan><tspan class="dg-sub" dy="5">2</tspan><tspan dy="-5">​</tspan><tspan class="dg-sub" dy="-6">K</tspan><tspan dy="6">​</tspan></text>
+          <path class="dg-arrow" d="M450 350 L450 318" marker-end="url(#dg-mha-head)"/>
+          <rect class="dg-box dg-box--grey" x="494" y="350" width="72" height="44" rx="8"/>
+          <text x="530" y="364" style="font-size:13px">Linear</text>
+          <text x="530" y="380" style="font-size:13px"><tspan class="dg-math">W</tspan><tspan class="dg-sub" dy="5">2</tspan><tspan dy="-5">​</tspan><tspan class="dg-sub" dy="-6">V</tspan><tspan dy="6">​</tspan></text>
+          <path class="dg-arrow" d="M530 350 L530 318" marker-end="url(#dg-mha-head)"/>
+          <rect class="dg-box dg-box--violet" x="336" y="264" width="228" height="52" rx="8"/>
+          <text x="450" y="281.5" style="font-size:14px">Scaled Dot-Product</text>
+          <text x="450" y="298.5" style="font-size:14px">Attention</text>
+          <path class="dg-arrow" d="M450 264 L450 166" marker-end="url(#dg-mha-head)"/>
+          <rect class="dg-box dg-box--grey" x="642" y="196" width="256" height="222" rx="12" style="stroke-dasharray:5 4"/>
+          <text class="dg-small dg-start" x="654" y="214" style="fill:var(--ink);font-weight:650">head h</text>
+          <rect class="dg-box dg-box--grey" x="654" y="350" width="72" height="44" rx="8"/>
+          <text x="690" y="364" style="font-size:13px">Linear</text>
+          <text x="690" y="380" style="font-size:13px"><tspan class="dg-math">W</tspan><tspan class="dg-sub" dy="5">h</tspan><tspan dy="-5">​</tspan><tspan class="dg-sub" dy="-6">Q</tspan><tspan dy="6">​</tspan></text>
+          <path class="dg-arrow" d="M690 350 L690 318" marker-end="url(#dg-mha-head)"/>
+          <rect class="dg-box dg-box--grey" x="734" y="350" width="72" height="44" rx="8"/>
+          <text x="770" y="364" style="font-size:13px">Linear</text>
+          <text x="770" y="380" style="font-size:13px"><tspan class="dg-math">W</tspan><tspan class="dg-sub" dy="5">h</tspan><tspan dy="-5">​</tspan><tspan class="dg-sub" dy="-6">K</tspan><tspan dy="6">​</tspan></text>
+          <path class="dg-arrow" d="M770 350 L770 318" marker-end="url(#dg-mha-head)"/>
+          <rect class="dg-box dg-box--grey" x="814" y="350" width="72" height="44" rx="8"/>
+          <text x="850" y="364" style="font-size:13px">Linear</text>
+          <text x="850" y="380" style="font-size:13px"><tspan class="dg-math">W</tspan><tspan class="dg-sub" dy="5">h</tspan><tspan dy="-5">​</tspan><tspan class="dg-sub" dy="-6">V</tspan><tspan dy="6">​</tspan></text>
+          <path class="dg-arrow" d="M850 350 L850 318" marker-end="url(#dg-mha-head)"/>
+          <rect class="dg-box dg-box--violet" x="656" y="264" width="228" height="52" rx="8"/>
+          <text x="770" y="281.5" style="font-size:14px">Scaled Dot-Product</text>
+          <text x="770" y="298.5" style="font-size:14px">Attention</text>
+          <path class="dg-arrow" d="M770 264 L770 166" marker-end="url(#dg-mha-head)"/>
+          <text class="dg-xlarge" x="610" y="290" style="fill:var(--muted)">…</text>
+          <text class="dg-math" x="26" y="438" style="font-size:16px;font-weight:650;fill:var(--dg-pink-line)">Q</text>
+          <path class="dg-curve" d="M38 438H690" style="stroke:var(--dg-pink-line);stroke-width:2"/>
+          <path class="dg-curve" d="M90 438V396" style="stroke:var(--dg-pink-line);stroke-width:2"/>
+          <path class="dg-curve" d="M370 438V396" style="stroke:var(--dg-pink-line);stroke-width:2"/>
+          <path class="dg-curve" d="M690 438V396" style="stroke:var(--dg-pink-line);stroke-width:2"/>
+          <text class="dg-math" x="26" y="456" style="font-size:16px;font-weight:650;fill:var(--dg-amber-line)">K</text>
+          <path class="dg-curve" d="M38 456H770" style="stroke:var(--dg-amber-line);stroke-width:2"/>
+          <path class="dg-curve" d="M170 456V396" style="stroke:var(--dg-amber-line);stroke-width:2"/>
+          <path class="dg-curve" d="M450 456V396" style="stroke:var(--dg-amber-line);stroke-width:2"/>
+          <path class="dg-curve" d="M770 456V396" style="stroke:var(--dg-amber-line);stroke-width:2"/>
+          <text class="dg-math" x="26" y="474" style="font-size:16px;font-weight:650;fill:var(--dg-blue-line)">V</text>
+          <path class="dg-curve" d="M38 474H850" style="stroke:var(--dg-blue-line);stroke-width:2"/>
+          <path class="dg-curve" d="M250 474V396" style="stroke:var(--dg-blue-line);stroke-width:2"/>
+          <path class="dg-curve" d="M530 474V396" style="stroke:var(--dg-blue-line);stroke-width:2"/>
+          <path class="dg-curve" d="M850 474V396" style="stroke:var(--dg-blue-line);stroke-width:2"/>
+          <rect class="dg-box dg-box--amber" x="90" y="126" width="760" height="40" rx="8"/>
+          <text x="470" y="146" style="font-size:15px">Concat</text>
+          <path class="dg-arrow" d="M470 126 L470 102" marker-end="url(#dg-mha-head)"/>
+          <rect class="dg-box dg-box--grey" x="390" y="60" width="160" height="40" rx="8"/>
+          <text x="470" y="80" style="font-size:15px">Linear <tspan class="dg-math">W</tspan><tspan class="dg-sub" dy="-6">O</tspan><tspan dy="6">​</tspan></text>
+          <path class="dg-arrow" d="M470 60 L470 22" marker-end="url(#dg-mha-head)"/>
+          <text class="dg-small dg-start" x="482" y="30" style="fill:var(--ink)">output</text>
+        </svg>
 	
 	<h2 class="material-heading">Efficiency</h2>
 	
@@ -446,7 +891,66 @@
 	  <a href="https://arxiv.org/abs/2004.05150" target="_blank" rel="noopener">Longformer</a>:
 	</p>
 	
-	<img src="../img/material/part5/longformer_comparison.webp" alt="Longformer vs Standard Transformer Efficiency" width="60%">
+        <svg class="dg" viewBox="0 0 960 430" role="img" aria-label="Two line charts of measurements from the Longformer paper, against the sequence length from about 1,000 to 16,000 tokens. Left, the time per batch: full self-attention grows from about 30 to 860 milliseconds up to 14,000 tokens; the non-vectorized Longformer-loop is far slower and leaves the chart after 6,000 tokens; Longformer-chunks reaches about 500 and Longformer-cuda about 1,000 milliseconds at 16,000 tokens. Right, the memory: full self-attention grows quadratically, from about 1,000 MiB to 13,000 MiB at 10,000 tokens and then leaves the chart, while the three Longformer versions grow linearly, to between about 2,700 and 5,000 MiB at 16,000 tokens.">
+          <text class="dg-heading" x="270" y="18">Time (ms per batch)</text>
+          <path class="dg-guide" d="M80 314H460M80 260H460M80 206H460M80 152H460M80 98H460M80 44H460" style="stroke-dasharray:none;opacity:.45"/>
+          <path class="dg-axis" d="M80 44V314H460M80 314v5M191.8 314v5M303.5 314v5M415.3 314v5M75 314h5M75 260h5M75 206h5M75 152h5M75 98h5M75 44h5"/>
+          <text class="dg-small" x="80" y="330">0</text>
+          <text class="dg-small" x="191.8" y="330">5,000</text>
+          <text class="dg-small" x="303.5" y="330">10,000</text>
+          <text class="dg-small" x="415.3" y="330">15,000</text>
+          <text class="dg-small" x="71" y="314" style="text-anchor:end">0</text>
+          <text class="dg-small" x="71" y="260" style="text-anchor:end">500</text>
+          <text class="dg-small" x="71" y="206" style="text-anchor:end">1,000</text>
+          <text class="dg-small" x="71" y="152" style="text-anchor:end">1,500</text>
+          <text class="dg-small" x="71" y="98" style="text-anchor:end">2,000</text>
+          <text class="dg-small" x="71" y="44" style="text-anchor:end">2,500</text>
+          <text class="dg-small" x="270" y="350">Sequence length (tokens)</text>
+          <path class="dg-curve dg-curve--pink" d="M102.9 310.8 L125.8 308.1 L171.6 296.7 L217.3 285.9 L263.1 274.6 L308.9 259.5 L354.7 242.7 L400.5 221.1" style="stroke-width:2.5"/>
+          <path class="dg-ink--pink" d="M97.9 310.8a5 5 0 1 0 10 0a5 5 0 1 0 -10 0ZM120.8 308.1a5 5 0 1 0 10 0a5 5 0 1 0 -10 0ZM166.6 296.7a5 5 0 1 0 10 0a5 5 0 1 0 -10 0ZM212.3 285.9a5 5 0 1 0 10 0a5 5 0 1 0 -10 0ZM258.1 274.6a5 5 0 1 0 10 0a5 5 0 1 0 -10 0ZM303.9 259.5a5 5 0 1 0 10 0a5 5 0 1 0 -10 0ZM349.7 242.7a5 5 0 1 0 10 0a5 5 0 1 0 -10 0ZM395.5 221.1a5 5 0 1 0 10 0a5 5 0 1 0 -10 0Z" style="stroke:var(--surface);stroke-width:1.2"/>
+          <path class="dg-curve dg-curve--amber" d="M102.9 270.8 L125.8 233 L171.6 146.1 L217.3 60.7 L226.3 44" style="stroke-width:2.5"/>
+          <path class="dg-ink--amber" d="M102.9 264.8l6 6l-6 6l-6 -6ZM125.8 227l6 6l-6 6l-6 -6ZM171.6 140.1l6 6l-6 6l-6 -6ZM217.3 54.7l6 6l-6 6l-6 -6Z" style="stroke:var(--surface);stroke-width:1.2"/>
+          <path class="dg-curve dg-curve--green" d="M102.9 312.4 L125.8 310.8 L171.6 297.8 L217.3 290.2 L263.1 284.3 L308.9 276.7 L354.7 265.4 L400.5 262.7 L446.2 259.5" style="stroke-width:2.5"/>
+          <path class="dg-ink--green" d="M96.9 308.4h12l-6 10ZM119.8 306.8h12l-6 10ZM165.6 293.8h12l-6 10ZM211.3 286.2h12l-6 10ZM257.1 280.3h12l-6 10ZM302.9 272.7h12l-6 10ZM348.7 261.4h12l-6 10ZM394.5 258.7h12l-6 10ZM440.2 255.5h12l-6 10Z" style="stroke:var(--surface);stroke-width:1.2"/>
+          <path class="dg-curve dg-curve--blue" d="M102.9 309.7 L125.8 304.3 L171.6 287.5 L217.3 276.7 L263.1 263.8 L308.9 251.4 L354.7 238.9 L400.5 221.7 L446.2 207.6" style="stroke-width:2.5"/>
+          <path class="dg-ink--blue" d="M98.4 305.2h9v9h-9ZM121.3 299.8h9v9h-9ZM167.1 283h9v9h-9ZM212.8 272.2h9v9h-9ZM258.6 259.3h9v9h-9ZM304.4 246.9h9v9h-9ZM350.2 234.4h9v9h-9ZM396 217.2h9v9h-9ZM441.7 203.1h9v9h-9Z" style="stroke:var(--surface);stroke-width:1.2"/>
+          <text class="dg-heading" x="750" y="18">Memory (MiB)</text>
+          <path class="dg-guide" d="M560 314H940M560 269H940M560 224H940M560 179H940M560 134H940M560 89H940M560 44H940" style="stroke-dasharray:none;opacity:.45"/>
+          <path class="dg-axis" d="M560 44V314H940M560 314v5M671.8 314v5M783.5 314v5M895.3 314v5M555 314h5M555 269h5M555 224h5M555 179h5M555 134h5M555 89h5M555 44h5"/>
+          <text class="dg-small" x="560" y="330">0</text>
+          <text class="dg-small" x="671.8" y="330">5,000</text>
+          <text class="dg-small" x="783.5" y="330">10,000</text>
+          <text class="dg-small" x="895.3" y="330">15,000</text>
+          <text class="dg-small" x="551" y="314" style="text-anchor:end">0</text>
+          <text class="dg-small" x="551" y="269" style="text-anchor:end">2,500</text>
+          <text class="dg-small" x="551" y="224" style="text-anchor:end">5,000</text>
+          <text class="dg-small" x="551" y="179" style="text-anchor:end">7,500</text>
+          <text class="dg-small" x="551" y="134" style="text-anchor:end">10,000</text>
+          <text class="dg-small" x="551" y="89" style="text-anchor:end">12,500</text>
+          <text class="dg-small" x="551" y="44" style="text-anchor:end">15,000</text>
+          <text class="dg-small" x="750" y="350">Sequence length (tokens)</text>
+          <path class="dg-curve dg-curve--pink" d="M582.9 296 L605.8 288.8 L651.6 260.7 L697.3 216.8 L743.1 156 L788.9 78.9 L809.6 44" style="stroke-width:2.5"/>
+          <path class="dg-ink--pink" d="M577.9 296a5 5 0 1 0 10 0a5 5 0 1 0 -10 0ZM600.8 288.8a5 5 0 1 0 10 0a5 5 0 1 0 -10 0ZM646.6 260.7a5 5 0 1 0 10 0a5 5 0 1 0 -10 0ZM692.3 216.8a5 5 0 1 0 10 0a5 5 0 1 0 -10 0ZM738.1 156a5 5 0 1 0 10 0a5 5 0 1 0 -10 0ZM783.9 78.9a5 5 0 1 0 10 0a5 5 0 1 0 -10 0Z" style="stroke:var(--surface);stroke-width:1.2"/>
+          <path class="dg-curve dg-curve--amber" d="M582.9 295.3 L605.8 292.6 L651.6 287 L697.3 282.3 L743.1 277.8 L788.9 271.5 L834.7 267 L880.5 262.4 L926.2 256.9" style="stroke-width:2.5"/>
+          <path class="dg-ink--amber" d="M582.9 289.3l6 6l-6 6l-6 -6ZM605.8 286.6l6 6l-6 6l-6 -6ZM651.6 281l6 6l-6 6l-6 -6ZM697.3 276.3l6 6l-6 6l-6 -6ZM743.1 271.8l6 6l-6 6l-6 -6ZM788.9 265.5l6 6l-6 6l-6 -6ZM834.7 261l6 6l-6 6l-6 -6ZM880.5 256.4l6 6l-6 6l-6 -6ZM926.2 250.9l6 6l-6 6l-6 -6Z" style="stroke:var(--surface);stroke-width:1.2"/>
+          <path class="dg-curve dg-curve--green" d="M582.9 294.4 L605.8 287.7 L651.6 280 L697.3 270.7 L743.1 261.6 L788.9 252.3 L834.7 243.1 L880.5 234 L926.2 224" style="stroke-width:2.5"/>
+          <path class="dg-ink--green" d="M576.9 290.4h12l-6 10ZM599.8 283.7h12l-6 10ZM645.6 276h12l-6 10ZM691.3 266.7h12l-6 10ZM737.1 257.6h12l-6 10ZM782.9 248.3h12l-6 10ZM828.7 239.1h12l-6 10ZM874.5 230h12l-6 10ZM920.2 220h12l-6 10Z" style="stroke:var(--surface);stroke-width:1.2"/>
+          <path class="dg-curve dg-curve--blue" d="M582.9 296.6 L605.8 294.6 L651.6 290.6 L697.3 287 L743.1 283.3 L788.9 279.3 L834.7 275.6 L880.5 271.8 L926.2 265.9" style="stroke-width:2.5"/>
+          <path class="dg-ink--blue" d="M578.4 292.1h9v9h-9ZM601.3 290.1h9v9h-9ZM647.1 286.1h9v9h-9ZM692.8 282.5h9v9h-9ZM738.6 278.8h9v9h-9ZM784.4 274.8h9v9h-9ZM830.2 271.1h9v9h-9ZM876 267.3h9v9h-9ZM921.7 261.4h9v9h-9Z" style="stroke:var(--surface);stroke-width:1.2"/>
+          <path class="dg-curve dg-curve--pink" d="M96 384h30" style="stroke-width:2.5"/>
+          <path class="dg-ink--pink" d="M106 384a5 5 0 1 0 10 0a5 5 0 1 0 -10 0Z" style="stroke:var(--surface);stroke-width:1.2"/>
+          <text class="dg-small dg-start" x="134" y="384" style="fill:var(--ink)">Full self-attention</text>
+          <path class="dg-curve dg-curve--amber" d="M300 384h30" style="stroke-width:2.5"/>
+          <path class="dg-ink--amber" d="M315 378l6 6l-6 6l-6 -6Z" style="stroke:var(--surface);stroke-width:1.2"/>
+          <text class="dg-small dg-start" x="338" y="384" style="fill:var(--ink)">Longformer-loop</text>
+          <path class="dg-curve dg-curve--green" d="M500 384h30" style="stroke-width:2.5"/>
+          <path class="dg-ink--green" d="M509 380h12l-6 10Z" style="stroke:var(--surface);stroke-width:1.2"/>
+          <text class="dg-small dg-start" x="538" y="384" style="fill:var(--ink)">Longformer-chunks</text>
+          <path class="dg-curve dg-curve--blue" d="M712 384h30" style="stroke-width:2.5"/>
+          <path class="dg-ink--blue" d="M722.5 379.5h9v9h-9Z" style="stroke:var(--surface);stroke-width:1.2"/>
+          <text class="dg-small dg-start" x="750" y="384" style="fill:var(--ink)">Longformer-cuda</text>
+          <text class="dg-small" x="480" y="416">Measurements from Beltagy, Peters and Cohan (2020), Figure 1, read from the published chart.</text>
+        </svg>
 
         <div class="hint"><div class="hint__header"><i class="fa fa-info-circle hint__icon"></i>Checkpoint</div>
         <div class="hint__body"><ul><li>What distinct roles do queries, keys and values play?</li><li>Why does self-attention need positional information?</li><li>What is gained and lost when every token can attend to every other token?</li></ul></div></div>
@@ -522,7 +1026,40 @@
 	  multiplies the activated output elementwise by a second linear projection of the input.
 	</p>
 	
-	<img src="../img/material/part5/gelu.svg" alt="GELU" width="60%">
+        <svg class="dg" viewBox="0 0 760 400" style="max-width:760px" role="img" aria-label="Three activation functions for x from -4 to 3. ReLU is 0 for negative inputs and x for positive ones. ELU follows x for positive inputs and falls smoothly towards -1 for negative ones. GELU, x times the standard normal distribution function of x, is smooth: it is close to 0 for very negative inputs, dips to about -0.17 near x = -0.75 and approaches x for large inputs.">
+          <path class="dg-guide" d="M70 316H710M70 246.3H710M70 176.5H710M70 106.7H710M70 37H710" style="stroke-dasharray:none;opacity:.45"/>
+          <path class="dg-axis" d="M70 30V330H710M70 330v5M161.4 330v5M252.9 330v5M344.3 330v5M435.7 330v5M527.1 330v5M618.6 330v5M710 330v5M65 316h5M65 246.3h5M65 176.5h5M65 106.7h5M65 37h5"/>
+          <text class="dg-small" x="70" y="346">−4</text>
+          <text class="dg-small" x="161.4" y="346">−3</text>
+          <text class="dg-small" x="252.9" y="346">−2</text>
+          <text class="dg-small" x="344.3" y="346">−1</text>
+          <text class="dg-small" x="435.7" y="346">0</text>
+          <text class="dg-small" x="527.1" y="346">1</text>
+          <text class="dg-small" x="618.6" y="346">2</text>
+          <text class="dg-small" x="710" y="346">3</text>
+          <text class="dg-small" x="61" y="316" style="text-anchor:end">−1</text>
+          <text class="dg-small" x="61" y="246.3" style="text-anchor:end">0</text>
+          <text class="dg-small" x="61" y="176.5" style="text-anchor:end">1</text>
+          <text class="dg-small" x="61" y="106.7" style="text-anchor:end">2</text>
+          <text class="dg-small" x="61" y="37" style="text-anchor:end">3</text>
+          <text class="dg-small" x="390" y="366">x</text>
+          <path class="dg-guide" d="M435.7 330V30M70 246.3H710"/>
+          <path class="dg-curve dg-curve--blue" d="M70 246.3 L435.7 246.3 L710 37" style="stroke-width:3"/>
+          <path class="dg-curve dg-curve--green" d="M70 314.8 L134 313.5 L187 311.5 L230.9 308.6 L269.3 304.7 L304.1 299.5 L333.3 293.3 L360.7 285.3 L384.5 276.2 L397.3 270.2 L410.1 263.3 L421.1 256.6 L432.1 249 L710 37" style="stroke-width:3"/>
+          <path class="dg-curve dg-curve--violet" d="M70 246.3 L166.9 246.6 L223.6 247.9 L267.5 250.5 L338.8 257 L364.4 258.1 L380.9 257.8 L397.3 256.2 L411.9 253.5 L426.6 249.5 L444.9 242.5 L463.1 233.3 L481.4 222.2 L501.5 207.9 L532.6 183 L596.6 128.3 L629.5 100.9 L666.1 71.5 L710 37.3" style="stroke-width:3"/>
+          <circle class="dg-ink--violet" cx="367" cy="258.1" r="4.5"/>
+          <path class="dg-edge" d="M367 251.1V229.2" style="stroke:var(--muted);stroke-width:1"/>
+          <text class="dg-small" x="417.3" y="221.2" style="text-anchor:end">GELU minimum: −0.17 at x ≈ −0.75</text>
+          <text x="134" y="232.3" style="font-size:14px;font-weight:650;fill:var(--dg-blue-line)">ReLU</text>
+          <text x="134" y="297.3" style="font-size:14px;font-weight:650;fill:var(--dg-green-line)">ELU</text>
+          <text x="275.7" y="275.6" style="font-size:14px;font-weight:650;fill:var(--dg-violet-line)">GELU</text>
+          <path class="dg-curve dg-curve--blue" d="M230 384h28" style="stroke-width:3"/>
+          <text class="dg-small dg-start" x="266" y="384" style="fill:var(--ink)">ReLU</text>
+          <path class="dg-curve dg-curve--green" d="M350 384h28" style="stroke-width:3"/>
+          <text class="dg-small dg-start" x="386" y="384" style="fill:var(--ink)">ELU</text>
+          <path class="dg-curve dg-curve--violet" d="M470 384h28" style="stroke-width:3"/>
+          <text class="dg-small dg-start" x="506" y="384" style="fill:var(--ink)">GELU</text>
+        </svg>
 
 	<p>
 	  Let's say a few words about <strong>layer normalization</strong>: as demonstrated in 
@@ -540,7 +1077,69 @@
 	  normalization.
 	</p>
 	
-	<img src="../img/material/part5/transformer_layer_norm.svg" alt="PostLN vs. PreLN Layer Normalization" width="60%">
+        <svg class="dg" viewBox="0 0 800 600" style="max-width:720px" role="img" aria-label="Two Transformer layers. (a) Post-LN, the original placement: the output of multi-head attention is added to the input x and the sum is normalized, then the same for the feed-forward network, so every layer normalization sits on the main path: x + F(x), then LayerNorm. (b) Pre-LN: the input of each sub-layer is normalized inside its branch, and the branch output is added to the unnormalized main path: x + F(LayerNorm(x)), so the residual path from x_l to x_l+1 has no normalization on it.">
+          <defs><marker id="dg-prepost-head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrowhead" d="M0,0 L10,5 L0,10 z"/></marker></defs>
+          <rect class="dg-dot" x="195" y="52" width="30" height="476" rx="4" style="fill:var(--line-strong);opacity:.55"/>
+          <text x="210" y="548" style="font-size:17px"><tspan class="dg-math">x</tspan><tspan class="dg-sub" dy="5">l</tspan><tspan dy="-5">​</tspan></text>
+          <path class="dg-arrow" d="M210 532 L210 448" marker-end="url(#dg-prepost-head)"/>
+          <circle class="dg-dot" cx="210" cy="440" r="5" style="fill:var(--dg-arrow)"/>
+          <path class="dg-arrow" d="M210 440 L340 412" style="stroke-width:2" marker-end="url(#dg-prepost-head)"/>
+          <rect class="dg-box dg-box--amber" x="270" y="354" width="140" height="52" rx="8"/>
+          <text x="340" y="371.5" style="font-size:14px">Multi-Head</text>
+          <text x="340" y="388.5" style="font-size:14px">Attention</text>
+          <path class="dg-arrow" d="M340 354 L270 344" style="stroke-width:2" marker-end="url(#dg-prepost-head)"/>
+          <path class="dg-arrow" d="M210 436 L210 350" marker-end="url(#dg-prepost-head)"/>
+          <rect class="dg-box dg-box--grey" x="152" y="319" width="116" height="30" rx="8"/>
+          <text x="210" y="334" style="font-size:14px">add</text>
+          <path class="dg-arrow" d="M210 319 L210 296" marker-end="url(#dg-prepost-head)"/>
+          <rect class="dg-box dg-box--green" x="152" y="265" width="116" height="30" rx="8"/>
+          <text x="210" y="280" style="font-size:14px">Layer Norm</text>
+          <path class="dg-arrow" d="M210 265 L210 238" marker-end="url(#dg-prepost-head)"/>
+          <circle class="dg-dot" cx="210" cy="230" r="5" style="fill:var(--dg-arrow)"/>
+          <path class="dg-arrow" d="M210 230 L340 206" style="stroke-width:2" marker-end="url(#dg-prepost-head)"/>
+          <rect class="dg-box dg-box--blue" x="270" y="168" width="140" height="36" rx="8"/>
+          <text x="340" y="186" style="font-size:14px">FFN</text>
+          <path class="dg-arrow" d="M340 168 L270 148" style="stroke-width:2" marker-end="url(#dg-prepost-head)"/>
+          <path class="dg-arrow" d="M210 226 L210 154" marker-end="url(#dg-prepost-head)"/>
+          <rect class="dg-box dg-box--grey" x="152" y="123" width="116" height="30" rx="8"/>
+          <text x="210" y="138" style="font-size:14px">add</text>
+          <path class="dg-arrow" d="M210 123 L210 100" marker-end="url(#dg-prepost-head)"/>
+          <rect class="dg-box dg-box--green" x="152" y="69" width="116" height="30" rx="8"/>
+          <text x="210" y="84" style="font-size:14px">Layer Norm</text>
+          <path class="dg-arrow" d="M210 69 L210 36" marker-end="url(#dg-prepost-head)"/>
+          <text x="210" y="22" style="font-size:17px"><tspan class="dg-math">x</tspan><tspan class="dg-sub" dy="5">l+1</tspan><tspan dy="-5">​</tspan></text>
+          <text class="dg-heading" x="270" y="580">(a) Post-LN</text>
+          <rect class="dg-dot" x="545" y="52" width="30" height="476" rx="4" style="fill:var(--line-strong);opacity:.55"/>
+          <text x="560" y="548" style="font-size:17px"><tspan class="dg-math">x</tspan><tspan class="dg-sub" dy="5">l</tspan><tspan dy="-5">​</tspan></text>
+          <path class="dg-arrow" d="M560 532 L560 478" marker-end="url(#dg-prepost-head)"/>
+          <circle class="dg-dot" cx="560" cy="470" r="5" style="fill:var(--dg-arrow)"/>
+          <path class="dg-arrow" d="M560 470 L690 452" style="stroke-width:2" marker-end="url(#dg-prepost-head)"/>
+          <rect class="dg-box dg-box--green" x="620" y="421" width="140" height="30" rx="8"/>
+          <text x="690" y="436" style="font-size:14px">Layer Norm</text>
+          <path class="dg-arrow" d="M690 421 L690 404" marker-end="url(#dg-prepost-head)"/>
+          <rect class="dg-box dg-box--amber" x="620" y="352" width="140" height="52" rx="8"/>
+          <text x="690" y="369.5" style="font-size:14px">Multi-Head</text>
+          <text x="690" y="386.5" style="font-size:14px">Attention</text>
+          <path class="dg-arrow" d="M690 352 L620 322" style="stroke-width:2" marker-end="url(#dg-prepost-head)"/>
+          <path class="dg-arrow" d="M560 466 L560 328" marker-end="url(#dg-prepost-head)"/>
+          <rect class="dg-box dg-box--grey" x="502" y="297" width="116" height="30" rx="8"/>
+          <text x="560" y="312" style="font-size:14px">add</text>
+          <path class="dg-arrow" d="M560 297 L560 258" marker-end="url(#dg-prepost-head)"/>
+          <circle class="dg-dot" cx="560" cy="250" r="5" style="fill:var(--dg-arrow)"/>
+          <path class="dg-arrow" d="M560 250 L690 232" style="stroke-width:2" marker-end="url(#dg-prepost-head)"/>
+          <rect class="dg-box dg-box--green" x="620" y="201" width="140" height="30" rx="8"/>
+          <text x="690" y="216" style="font-size:14px">Layer Norm</text>
+          <path class="dg-arrow" d="M690 201 L690 184" marker-end="url(#dg-prepost-head)"/>
+          <rect class="dg-box dg-box--blue" x="620" y="148" width="140" height="36" rx="8"/>
+          <text x="690" y="166" style="font-size:14px">FFN</text>
+          <path class="dg-arrow" d="M690 148 L620 112" style="stroke-width:2" marker-end="url(#dg-prepost-head)"/>
+          <path class="dg-arrow" d="M560 246 L560 118" marker-end="url(#dg-prepost-head)"/>
+          <rect class="dg-box dg-box--grey" x="502" y="87" width="116" height="30" rx="8"/>
+          <text x="560" y="102" style="font-size:14px">add</text>
+          <path class="dg-arrow" d="M560 87 L560 36" marker-end="url(#dg-prepost-head)"/>
+          <text x="560" y="22" style="font-size:17px"><tspan class="dg-math">x</tspan><tspan class="dg-sub" dy="5">l+1</tspan><tspan dy="-5">​</tspan></text>
+          <text class="dg-heading" x="620" y="580">(b) Pre-LN</text>
+        </svg>
 
 	<h2 class="material-heading">BERT and GPT</h2>
 	
@@ -574,7 +1173,58 @@
 	  reinforcement learning from human feedback (RLHF), which change the model's behaviour substantially.
 	</p>
 	
-	<img src="../img/material/part5/gpt_architecture.svg" alt="GPT Model Architecture" width="60%">
+        <svg class="dg" viewBox="0 0 900 330" role="img" aria-label="GPT is trained to predict the next word. After the words &quot;Attention is not too&quot;, likely next words such as &quot;hard&quot; and &quot;shabby&quot; should get a high probability, and unlikely ones such as &quot;road&quot; and &quot;cat&quot; a low probability.">
+          <defs><marker id="dg-gpt-head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrowhead" d="M0,0 L10,5 L0,10 z"/></marker></defs>
+          <text class="dg-heading dg-start" x="20" y="28">Training objective: predict the next word</text>
+          <rect class="dg-box dg-box--grey" x="30" y="148" width="112" height="44" rx="8"/>
+          <text x="86" y="170" style="font-size:16px">Attention</text>
+          <rect class="dg-box dg-box--grey" x="176" y="148" width="52" height="44" rx="8"/>
+          <text x="202" y="170" style="font-size:16px">is</text>
+          <rect class="dg-box dg-box--grey" x="262" y="148" width="60" height="44" rx="8"/>
+          <text x="292" y="170" style="font-size:16px">not</text>
+          <rect class="dg-box dg-box--grey" x="356" y="148" width="60" height="44" rx="8"/>
+          <text x="386" y="170" style="font-size:16px">too</text>
+          <path class="dg-arrow" d="M146 170 L172 170" marker-end="url(#dg-gpt-head)"/>
+          <path class="dg-arrow" d="M232 170 L258 170" marker-end="url(#dg-gpt-head)"/>
+          <path class="dg-arrow" d="M326 170 L352 170" marker-end="url(#dg-gpt-head)"/>
+          <rect class="dg-box dg-box--green" x="565" y="31" width="110" height="42" rx="8"/>
+          <text x="620" y="52" style="font-size:16px;font-weight:650">hard</text>
+          <path class="dg-arrow" d="M424 170 L560 52" style="stroke-width:1.8;stroke-dasharray:6 5" marker-end="url(#dg-gpt-head)"/>
+          <rect class="dg-box dg-box--green" x="565" y="95" width="110" height="42" rx="8"/>
+          <text x="620" y="116" style="font-size:16px;font-weight:650">shabby</text>
+          <path class="dg-arrow" d="M424 170 L560 116" style="stroke-width:1.8;stroke-dasharray:6 5" marker-end="url(#dg-gpt-head)"/>
+          <rect class="dg-box dg-box--pink" x="565" y="209" width="110" height="42" rx="8"/>
+          <text x="620" y="230" style="font-size:16px;font-weight:650">road</text>
+          <path class="dg-arrow" d="M424 170 L560 230" style="stroke-width:1.8;stroke-dasharray:6 5" marker-end="url(#dg-gpt-head)"/>
+          <rect class="dg-box dg-box--pink" x="565" y="273" width="110" height="42" rx="8"/>
+          <text x="620" y="294" style="font-size:16px;font-weight:650">cat</text>
+          <path class="dg-arrow" d="M424 170 L560 294" style="stroke-width:1.8;stroke-dasharray:6 5" marker-end="url(#dg-gpt-head)"/>
+          <text x="620" y="172" style="font-size:22px;fill:var(--muted)">⋮</text>
+          <text class="dg-start" x="700" y="74" style="font-size:16px;font-weight:650;fill:var(--dg-green-line)">likely</text>
+          <text class="dg-start" x="700" y="94" style="font-size:16px;font-weight:650;fill:var(--dg-green-line)">next words</text>
+          <text class="dg-start" x="700" y="252" style="font-size:16px;font-weight:650;fill:var(--dg-pink-line)">unlikely</text>
+          <text class="dg-start" x="700" y="272" style="font-size:16px;font-weight:650;fill:var(--dg-pink-line)">next words</text>
+          <text class="dg-small dg-start" x="20" y="250">The model outputs a probability</text>
+          <text class="dg-small dg-start" x="20" y="268">for every word of the vocabulary;</text>
+          <text class="dg-small dg-start" x="20" y="286">the loss is the cross-entropy with</text>
+          <text class="dg-small dg-start" x="20" y="304">the word that really comes next.</text>
+        </svg>
+
+	<p>
+	  In code, the loss is the cross-entropy between the predicted distribution and the real next token, at every
+	  position of every sequence in the batch:
+	</p>
+
+	<pre class="sh_python code-highlight"><code>import torch.nn.functional as F
+
+def gpt_loss(preds, targets):
+    """preds: logits of shape (B, T, C); targets: token ids of shape (B, T).
+
+    B = batch size, T = sequence length, C = number of token classes (the vocabulary).
+    targets[b, t] is the token that comes after position t of sequence b.
+    """
+    B, T, C = preds.shape
+    return F.cross_entropy(preds.view(B * T, C), targets.view(B * T))</code></pre>
 
 	<p>
 	  As the name suggests, the <strong>Bidirectional Encoder Representations from Transformers (BERT)</strong> 
@@ -603,7 +1253,79 @@
 	  </li>
 	</ul>
 	
-	<img src="../img/material/part5/bert_mlm_nsp.webp" alt="BERT Masked Language Model and Next Sentence Prediction" width="60%">
+        <svg class="dg" viewBox="0 0 960 500" role="img" aria-label="Masked language modelling, the main training task of BERT. In the input &quot;[CLS] Let’s stick to improvisation in this skit&quot;, 15 percent of the tokens are chosen at random; here &quot;improvisation&quot; is replaced by [MASK]. BERT reads the whole sequence in both directions, and the output at the masked position goes through a feed-forward layer and a softmax over all the words of the vocabulary; training raises the probability of the right word, here 10 percent for &quot;improvisation&quot;.">
+          <defs><marker id="dg-bertmlm-head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrowhead" d="M0,0 L10,5 L0,10 z"/></marker></defs>
+          <text class="dg-heading dg-start" x="20" y="470">Input</text>
+          <text class="dg-heading dg-start" x="20" y="400">Mask 15 % of</text>
+          <text class="dg-heading dg-start" x="20" y="420">the tokens</text>
+          <text x="236" y="470" style="font-size:14px">[CLS]</text>
+          <path class="dg-arrow" d="M236 455 L236 422" style="stroke-width:1.8" marker-end="url(#dg-bertmlm-head)"/>
+          <text x="236" y="408" style="font-size:14px">[CLS]</text>
+          <path class="dg-arrow" d="M236 393 L236 342" style="stroke-width:1.8" marker-end="url(#dg-bertmlm-head)"/>
+          <path class="dg-arrow" d="M236 258 L236 226" style="stroke-width:1.8" marker-end="url(#dg-bertmlm-head)"/>
+          <text x="322" y="470" style="font-size:14px">Let’s</text>
+          <path class="dg-arrow" d="M322 455 L322 422" style="stroke-width:1.8" marker-end="url(#dg-bertmlm-head)"/>
+          <text x="322" y="408" style="font-size:14px">Let’s</text>
+          <path class="dg-arrow" d="M322 393 L322 342" style="stroke-width:1.8" marker-end="url(#dg-bertmlm-head)"/>
+          <path class="dg-arrow" d="M322 258 L322 226" style="stroke-width:1.8" marker-end="url(#dg-bertmlm-head)"/>
+          <text x="408" y="470" style="font-size:14px">stick</text>
+          <path class="dg-arrow" d="M408 455 L408 422" style="stroke-width:1.8" marker-end="url(#dg-bertmlm-head)"/>
+          <text x="408" y="408" style="font-size:14px">stick</text>
+          <path class="dg-arrow" d="M408 393 L408 342" style="stroke-width:1.8" marker-end="url(#dg-bertmlm-head)"/>
+          <path class="dg-arrow" d="M408 258 L408 226" style="stroke-width:1.8" marker-end="url(#dg-bertmlm-head)"/>
+          <text x="494" y="470" style="font-size:14px">to</text>
+          <path class="dg-arrow" d="M494 455 L494 422" style="stroke-width:1.8" marker-end="url(#dg-bertmlm-head)"/>
+          <text x="494" y="408" style="font-size:14px">to</text>
+          <path class="dg-arrow" d="M494 393 L494 342" style="stroke-width:1.8" marker-end="url(#dg-bertmlm-head)"/>
+          <path class="dg-arrow" d="M494 258 L494 226" style="stroke-width:1.8" marker-end="url(#dg-bertmlm-head)"/>
+          <text x="594" y="470" style="font-size:14px">improvisation</text>
+          <path class="dg-arrow" d="M594 455 L594 422" style="stroke-width:1.8" marker-end="url(#dg-bertmlm-head)"/>
+          <text x="594" y="408" style="font-size:14px;font-weight:700;fill:var(--dg-violet-line)">[MASK]</text>
+          <path class="dg-arrow" d="M594 393 L594 342" style="stroke-width:1.8" marker-end="url(#dg-bertmlm-head)"/>
+          <path class="dg-arrow" d="M594 258 L594 194" marker-end="url(#dg-bertmlm-head)"/>
+          <text x="694" y="470" style="font-size:14px">in</text>
+          <path class="dg-arrow" d="M694 455 L694 422" style="stroke-width:1.8" marker-end="url(#dg-bertmlm-head)"/>
+          <text x="694" y="408" style="font-size:14px">in</text>
+          <path class="dg-arrow" d="M694 393 L694 342" style="stroke-width:1.8" marker-end="url(#dg-bertmlm-head)"/>
+          <path class="dg-arrow" d="M694 258 L694 226" style="stroke-width:1.8" marker-end="url(#dg-bertmlm-head)"/>
+          <text x="780" y="470" style="font-size:14px">this</text>
+          <path class="dg-arrow" d="M780 455 L780 422" style="stroke-width:1.8" marker-end="url(#dg-bertmlm-head)"/>
+          <text x="780" y="408" style="font-size:14px">this</text>
+          <path class="dg-arrow" d="M780 393 L780 342" style="stroke-width:1.8" marker-end="url(#dg-bertmlm-head)"/>
+          <path class="dg-arrow" d="M780 258 L780 226" style="stroke-width:1.8" marker-end="url(#dg-bertmlm-head)"/>
+          <text x="866" y="470" style="font-size:14px">skit</text>
+          <path class="dg-arrow" d="M866 455 L866 422" style="stroke-width:1.8" marker-end="url(#dg-bertmlm-head)"/>
+          <text x="866" y="408" style="font-size:14px">skit</text>
+          <path class="dg-arrow" d="M866 393 L866 342" style="stroke-width:1.8" marker-end="url(#dg-bertmlm-head)"/>
+          <path class="dg-arrow" d="M866 258 L866 226" style="stroke-width:1.8" marker-end="url(#dg-bertmlm-head)"/>
+          <text x="932" y="408" style="font-size:16px;fill:var(--muted)">…</text>
+          <rect class="dg-box dg-box--amber" x="200" y="258" width="720" height="82" rx="14"/>
+          <text class="dg-title" x="560" y="289">BERT</text>
+          <text class="dg-small" x="560" y="314" style="fill:var(--ink)">a Transformer encoder: every position sees every other position</text>
+          <rect class="dg-box dg-box--blue" x="504" y="159" width="180" height="34" rx="8"/>
+          <text x="594" y="176" style="font-size:14px">Feed-forward + softmax</text>
+          <path class="dg-arrow" d="M594 158 L594 140" marker-end="url(#dg-bertmlm-head)"/>
+          <rect class="dg-box dg-box--grey" x="534" y="18" width="64" height="24" style="stroke-width:1"/>
+          <text x="566" y="30" style="font-size:13px">0.1 %</text>
+          <text class="dg-start" x="608" y="30" style="font-size:13px">aardvark</text>
+          <rect class="dg-box dg-box--grey" x="534" y="42" width="64" height="24" style="stroke-width:1"/>
+          <text x="566" y="54" style="font-size:13px">…</text>
+          <text class="dg-start" x="608" y="54" style="font-size:13px">…</text>
+          <rect class="dg-box dg-box--pink" x="534" y="66" width="64" height="24" style="stroke-width:1"/>
+          <text x="566" y="78" style="font-size:13px;font-weight:700">10 %</text>
+          <text class="dg-start" x="608" y="78" style="font-size:13px;font-weight:700">improvisation</text>
+          <rect class="dg-box dg-box--grey" x="534" y="90" width="64" height="24" style="stroke-width:1"/>
+          <text x="566" y="102" style="font-size:13px">…</text>
+          <text class="dg-start" x="608" y="102" style="font-size:13px">…</text>
+          <rect class="dg-box dg-box--grey" x="534" y="114" width="64" height="24" style="stroke-width:1"/>
+          <text x="566" y="126" style="font-size:13px">0 %</text>
+          <text class="dg-start" x="608" y="126" style="font-size:13px">zyzzyva</text>
+          <text class="dg-small" x="520" y="68" style="text-anchor:end">all the words of</text>
+          <text class="dg-small" x="520" y="86" style="text-anchor:end">the vocabulary</text>
+          <text class="dg-heading dg-start" x="20" y="160">Use the output at the</text>
+          <text class="dg-heading dg-start" x="20" y="180">masked position to</text>
+          <text class="dg-heading dg-start" x="20" y="200">predict the masked word</text>
+        </svg>
 
 	<p>
 	  The key difference between <strong>BERT</strong> and <strong>GPT</strong> models is not just in their training objectives 
@@ -611,7 +1333,89 @@
 	  in the image below.
 	</p>
 	
-	<img src="../img/material/part5/bert_vs_gpt_attention.webp" alt="BERT vs GPT Attention Mechanisms" width="60%">
+        <svg class="dg" viewBox="0 0 960 420" role="img" aria-label="Two stacks of Transformer layers over four input embeddings E1 to E4 with outputs T1 to T4. Left, BERT: every position of a layer receives information from every position of the layer below, in both directions. Right, GPT: a position receives information only from itself and earlier positions, never from later ones.">
+          <defs><marker id="dg-bertgpt-head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrowhead" d="M0,0 L10,5 L0,10 z"/></marker></defs>
+          <rect class="dg-box dg-box--grey" x="30" y="10" width="430" height="400" rx="14" style="fill:none"/>
+          <text class="dg-heading" x="245" y="38">BERT: bidirectional</text>
+          <path class="dg-edge" d="M100 352L100 298M197 352L100 298M294 352L100 298M391 352L100 298M100 352L197 298M197 352L197 298M294 352L197 298M391 352L197 298M100 352L294 298M197 352L294 298M294 352L294 298M391 352L294 298M100 352L391 298M197 352L391 298M294 352L391 298M391 352L391 298" style="stroke:var(--dg-arrow);stroke-width:1.6"/>
+          <path class="dg-edge" d="M100 254L100 188M197 254L100 188M294 254L100 188M391 254L100 188M100 254L197 188M197 254L197 188M294 254L197 188M391 254L197 188M100 254L294 188M197 254L294 188M294 254L294 188M391 254L294 188M100 254L391 188M197 254L391 188M294 254L391 188M391 254L391 188" style="stroke:var(--dg-arrow);stroke-width:1.6"/>
+          <rect class="dg-box dg-box--amber" x="68" y="352" width="64" height="36" rx="8"/>
+          <text x="100" y="370" style="font-size:15px"><tspan class="dg-math">E</tspan><tspan class="dg-sub" dy="5">1</tspan><tspan dy="-5">​</tspan></text>
+          <ellipse class="dg-box dg-box--blue" cx="100" cy="276" rx="38" ry="22"/>
+          <text x="100" y="276" style="font-size:14px">Trm</text>
+          <ellipse class="dg-box dg-box--blue" cx="100" cy="166" rx="38" ry="22"/>
+          <text x="100" y="166" style="font-size:14px">Trm</text>
+          <path class="dg-arrow" d="M100 144 L100 95" marker-end="url(#dg-bertgpt-head)"/>
+          <rect class="dg-box dg-box--green" x="68" y="58" width="64" height="36" rx="8"/>
+          <text x="100" y="76" style="font-size:15px"><tspan class="dg-math">T</tspan><tspan class="dg-sub" dy="5">1</tspan><tspan dy="-5">​</tspan></text>
+          <rect class="dg-box dg-box--amber" x="165" y="352" width="64" height="36" rx="8"/>
+          <text x="197" y="370" style="font-size:15px"><tspan class="dg-math">E</tspan><tspan class="dg-sub" dy="5">2</tspan><tspan dy="-5">​</tspan></text>
+          <ellipse class="dg-box dg-box--blue" cx="197" cy="276" rx="38" ry="22"/>
+          <text x="197" y="276" style="font-size:14px">Trm</text>
+          <ellipse class="dg-box dg-box--blue" cx="197" cy="166" rx="38" ry="22"/>
+          <text x="197" y="166" style="font-size:14px">Trm</text>
+          <path class="dg-arrow" d="M197 144 L197 95" marker-end="url(#dg-bertgpt-head)"/>
+          <rect class="dg-box dg-box--green" x="165" y="58" width="64" height="36" rx="8"/>
+          <text x="197" y="76" style="font-size:15px"><tspan class="dg-math">T</tspan><tspan class="dg-sub" dy="5">2</tspan><tspan dy="-5">​</tspan></text>
+          <rect class="dg-box dg-box--amber" x="262" y="352" width="64" height="36" rx="8"/>
+          <text x="294" y="370" style="font-size:15px"><tspan class="dg-math">E</tspan><tspan class="dg-sub" dy="5">3</tspan><tspan dy="-5">​</tspan></text>
+          <ellipse class="dg-box dg-box--blue" cx="294" cy="276" rx="38" ry="22"/>
+          <text x="294" y="276" style="font-size:14px">Trm</text>
+          <ellipse class="dg-box dg-box--blue" cx="294" cy="166" rx="38" ry="22"/>
+          <text x="294" y="166" style="font-size:14px">Trm</text>
+          <path class="dg-arrow" d="M294 144 L294 95" marker-end="url(#dg-bertgpt-head)"/>
+          <rect class="dg-box dg-box--green" x="262" y="58" width="64" height="36" rx="8"/>
+          <text x="294" y="76" style="font-size:15px"><tspan class="dg-math">T</tspan><tspan class="dg-sub" dy="5">3</tspan><tspan dy="-5">​</tspan></text>
+          <rect class="dg-box dg-box--amber" x="359" y="352" width="64" height="36" rx="8"/>
+          <text x="391" y="370" style="font-size:15px"><tspan class="dg-math">E</tspan><tspan class="dg-sub" dy="5">4</tspan><tspan dy="-5">​</tspan></text>
+          <ellipse class="dg-box dg-box--blue" cx="391" cy="276" rx="38" ry="22"/>
+          <text x="391" y="276" style="font-size:14px">Trm</text>
+          <ellipse class="dg-box dg-box--blue" cx="391" cy="166" rx="38" ry="22"/>
+          <text x="391" y="166" style="font-size:14px">Trm</text>
+          <path class="dg-arrow" d="M391 144 L391 95" marker-end="url(#dg-bertgpt-head)"/>
+          <rect class="dg-box dg-box--green" x="359" y="58" width="64" height="36" rx="8"/>
+          <text x="391" y="76" style="font-size:15px"><tspan class="dg-math">T</tspan><tspan class="dg-sub" dy="5">4</tspan><tspan dy="-5">​</tspan></text>
+          <rect class="dg-box dg-box--grey" x="500" y="10" width="430" height="400" rx="14" style="fill:none"/>
+          <text class="dg-heading" x="715" y="38">GPT: left to right</text>
+          <path class="dg-edge" d="M570 352L570 298M570 352L667 298M667 352L667 298M570 352L764 298M667 352L764 298M764 352L764 298M570 352L861 298M667 352L861 298M764 352L861 298M861 352L861 298" style="stroke:var(--dg-arrow);stroke-width:1.6"/>
+          <path class="dg-edge" d="M570 254L570 188M570 254L667 188M667 254L667 188M570 254L764 188M667 254L764 188M764 254L764 188M570 254L861 188M667 254L861 188M764 254L861 188M861 254L861 188" style="stroke:var(--dg-arrow);stroke-width:1.6"/>
+          <rect class="dg-box dg-box--amber" x="538" y="352" width="64" height="36" rx="8"/>
+          <text x="570" y="370" style="font-size:15px"><tspan class="dg-math">E</tspan><tspan class="dg-sub" dy="5">1</tspan><tspan dy="-5">​</tspan></text>
+          <ellipse class="dg-box dg-box--blue" cx="570" cy="276" rx="38" ry="22"/>
+          <text x="570" y="276" style="font-size:14px">Trm</text>
+          <ellipse class="dg-box dg-box--blue" cx="570" cy="166" rx="38" ry="22"/>
+          <text x="570" y="166" style="font-size:14px">Trm</text>
+          <path class="dg-arrow" d="M570 144 L570 95" marker-end="url(#dg-bertgpt-head)"/>
+          <rect class="dg-box dg-box--green" x="538" y="58" width="64" height="36" rx="8"/>
+          <text x="570" y="76" style="font-size:15px"><tspan class="dg-math">T</tspan><tspan class="dg-sub" dy="5">1</tspan><tspan dy="-5">​</tspan></text>
+          <rect class="dg-box dg-box--amber" x="635" y="352" width="64" height="36" rx="8"/>
+          <text x="667" y="370" style="font-size:15px"><tspan class="dg-math">E</tspan><tspan class="dg-sub" dy="5">2</tspan><tspan dy="-5">​</tspan></text>
+          <ellipse class="dg-box dg-box--blue" cx="667" cy="276" rx="38" ry="22"/>
+          <text x="667" y="276" style="font-size:14px">Trm</text>
+          <ellipse class="dg-box dg-box--blue" cx="667" cy="166" rx="38" ry="22"/>
+          <text x="667" y="166" style="font-size:14px">Trm</text>
+          <path class="dg-arrow" d="M667 144 L667 95" marker-end="url(#dg-bertgpt-head)"/>
+          <rect class="dg-box dg-box--green" x="635" y="58" width="64" height="36" rx="8"/>
+          <text x="667" y="76" style="font-size:15px"><tspan class="dg-math">T</tspan><tspan class="dg-sub" dy="5">2</tspan><tspan dy="-5">​</tspan></text>
+          <rect class="dg-box dg-box--amber" x="732" y="352" width="64" height="36" rx="8"/>
+          <text x="764" y="370" style="font-size:15px"><tspan class="dg-math">E</tspan><tspan class="dg-sub" dy="5">3</tspan><tspan dy="-5">​</tspan></text>
+          <ellipse class="dg-box dg-box--blue" cx="764" cy="276" rx="38" ry="22"/>
+          <text x="764" y="276" style="font-size:14px">Trm</text>
+          <ellipse class="dg-box dg-box--blue" cx="764" cy="166" rx="38" ry="22"/>
+          <text x="764" y="166" style="font-size:14px">Trm</text>
+          <path class="dg-arrow" d="M764 144 L764 95" marker-end="url(#dg-bertgpt-head)"/>
+          <rect class="dg-box dg-box--green" x="732" y="58" width="64" height="36" rx="8"/>
+          <text x="764" y="76" style="font-size:15px"><tspan class="dg-math">T</tspan><tspan class="dg-sub" dy="5">3</tspan><tspan dy="-5">​</tspan></text>
+          <rect class="dg-box dg-box--amber" x="829" y="352" width="64" height="36" rx="8"/>
+          <text x="861" y="370" style="font-size:15px"><tspan class="dg-math">E</tspan><tspan class="dg-sub" dy="5">4</tspan><tspan dy="-5">​</tspan></text>
+          <ellipse class="dg-box dg-box--blue" cx="861" cy="276" rx="38" ry="22"/>
+          <text x="861" y="276" style="font-size:14px">Trm</text>
+          <ellipse class="dg-box dg-box--blue" cx="861" cy="166" rx="38" ry="22"/>
+          <text x="861" y="166" style="font-size:14px">Trm</text>
+          <path class="dg-arrow" d="M861 144 L861 95" marker-end="url(#dg-bertgpt-head)"/>
+          <rect class="dg-box dg-box--green" x="829" y="58" width="64" height="36" rx="8"/>
+          <text x="861" y="76" style="font-size:15px"><tspan class="dg-math">T</tspan><tspan class="dg-sub" dy="5">4</tspan><tspan dy="-5">​</tspan></text>
+        </svg>
 	
 	<h2 class="material-heading">Training Transformers: building on Week 4</h2>
 
@@ -660,7 +1464,97 @@
 	  a large number of parameters, and an extensive dataset.
 	</p>
 
-	<img src="../img/material/part5/vision_transformer.webp" alt="Vision Transformer" width="70%">
+        <svg class="dg" viewBox="0 0 960 470" role="img" aria-label="The Vision Transformer. An image is cut into 9 square patches. Each patch is flattened and mapped by the same linear projection to a vector, and a position embedding numbered 1 to 9 is added. An extra learnable class embedding at position 0 is put in front. The Transformer encoder processes the 10 vectors, and an MLP head turns the output at position 0 into the class of the image, such as bird, ball or car.">
+          <defs><marker id="dg-vit-head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrowhead" d="M0,0 L10,5 L0,10 z"/></marker></defs>
+          <svg x="40" y="296" width="120" height="120" viewBox="0 0 120 120"><rect class="dg-box dg-box--blue" width="120" height="120" style="stroke:none"/><circle class="dg-ink--amber" cx="90" cy="30" r="15"/><path class="dg-box dg-box--green" d="M0 78Q34 50 70 72T120 66V120H0Z" style="stroke:none"/><path class="dg-ink--green" d="M0 102Q50 76 120 96V120H0Z"/><circle class="dg-ink--green" cx="28" cy="74" r="11"/></svg>
+          <path class="dg-curve" d="M80 296V416M120 296V416M40 336H160M40 376H160" style="stroke:var(--surface);stroke-width:3"/>
+          <text class="dg-small" x="100" y="436">image, cut into patches</text>
+          <path class="dg-arrow" d="M172 376 L266 386" marker-end="url(#dg-vit-head)"/>
+          <svg x="280" y="366" width="40" height="40" viewBox="0 0 40 40"><rect class="dg-box dg-box--blue" width="120" height="120" style="stroke:none"/><circle class="dg-ink--amber" cx="90" cy="30" r="15"/><path class="dg-box dg-box--green" d="M0 78Q34 50 70 72T120 66V120H0Z" style="stroke:none"/><path class="dg-ink--green" d="M0 102Q50 76 120 96V120H0Z"/><circle class="dg-ink--green" cx="28" cy="74" r="11"/></svg>
+          <path class="dg-arrow" d="M300 362 L300 320" style="stroke-width:2" marker-end="url(#dg-vit-head)"/>
+          <svg x="348" y="366" width="40" height="40" viewBox="40 0 40 40"><rect class="dg-box dg-box--blue" width="120" height="120" style="stroke:none"/><circle class="dg-ink--amber" cx="90" cy="30" r="15"/><path class="dg-box dg-box--green" d="M0 78Q34 50 70 72T120 66V120H0Z" style="stroke:none"/><path class="dg-ink--green" d="M0 102Q50 76 120 96V120H0Z"/><circle class="dg-ink--green" cx="28" cy="74" r="11"/></svg>
+          <path class="dg-arrow" d="M368 362 L368 320" style="stroke-width:2" marker-end="url(#dg-vit-head)"/>
+          <svg x="416" y="366" width="40" height="40" viewBox="80 0 40 40"><rect class="dg-box dg-box--blue" width="120" height="120" style="stroke:none"/><circle class="dg-ink--amber" cx="90" cy="30" r="15"/><path class="dg-box dg-box--green" d="M0 78Q34 50 70 72T120 66V120H0Z" style="stroke:none"/><path class="dg-ink--green" d="M0 102Q50 76 120 96V120H0Z"/><circle class="dg-ink--green" cx="28" cy="74" r="11"/></svg>
+          <path class="dg-arrow" d="M436 362 L436 320" style="stroke-width:2" marker-end="url(#dg-vit-head)"/>
+          <svg x="484" y="366" width="40" height="40" viewBox="0 40 40 40"><rect class="dg-box dg-box--blue" width="120" height="120" style="stroke:none"/><circle class="dg-ink--amber" cx="90" cy="30" r="15"/><path class="dg-box dg-box--green" d="M0 78Q34 50 70 72T120 66V120H0Z" style="stroke:none"/><path class="dg-ink--green" d="M0 102Q50 76 120 96V120H0Z"/><circle class="dg-ink--green" cx="28" cy="74" r="11"/></svg>
+          <path class="dg-arrow" d="M504 362 L504 320" style="stroke-width:2" marker-end="url(#dg-vit-head)"/>
+          <svg x="552" y="366" width="40" height="40" viewBox="40 40 40 40"><rect class="dg-box dg-box--blue" width="120" height="120" style="stroke:none"/><circle class="dg-ink--amber" cx="90" cy="30" r="15"/><path class="dg-box dg-box--green" d="M0 78Q34 50 70 72T120 66V120H0Z" style="stroke:none"/><path class="dg-ink--green" d="M0 102Q50 76 120 96V120H0Z"/><circle class="dg-ink--green" cx="28" cy="74" r="11"/></svg>
+          <path class="dg-arrow" d="M572 362 L572 320" style="stroke-width:2" marker-end="url(#dg-vit-head)"/>
+          <svg x="620" y="366" width="40" height="40" viewBox="80 40 40 40"><rect class="dg-box dg-box--blue" width="120" height="120" style="stroke:none"/><circle class="dg-ink--amber" cx="90" cy="30" r="15"/><path class="dg-box dg-box--green" d="M0 78Q34 50 70 72T120 66V120H0Z" style="stroke:none"/><path class="dg-ink--green" d="M0 102Q50 76 120 96V120H0Z"/><circle class="dg-ink--green" cx="28" cy="74" r="11"/></svg>
+          <path class="dg-arrow" d="M640 362 L640 320" style="stroke-width:2" marker-end="url(#dg-vit-head)"/>
+          <svg x="688" y="366" width="40" height="40" viewBox="0 80 40 40"><rect class="dg-box dg-box--blue" width="120" height="120" style="stroke:none"/><circle class="dg-ink--amber" cx="90" cy="30" r="15"/><path class="dg-box dg-box--green" d="M0 78Q34 50 70 72T120 66V120H0Z" style="stroke:none"/><path class="dg-ink--green" d="M0 102Q50 76 120 96V120H0Z"/><circle class="dg-ink--green" cx="28" cy="74" r="11"/></svg>
+          <path class="dg-arrow" d="M708 362 L708 320" style="stroke-width:2" marker-end="url(#dg-vit-head)"/>
+          <svg x="756" y="366" width="40" height="40" viewBox="40 80 40 40"><rect class="dg-box dg-box--blue" width="120" height="120" style="stroke:none"/><circle class="dg-ink--amber" cx="90" cy="30" r="15"/><path class="dg-box dg-box--green" d="M0 78Q34 50 70 72T120 66V120H0Z" style="stroke:none"/><path class="dg-ink--green" d="M0 102Q50 76 120 96V120H0Z"/><circle class="dg-ink--green" cx="28" cy="74" r="11"/></svg>
+          <path class="dg-arrow" d="M776 362 L776 320" style="stroke-width:2" marker-end="url(#dg-vit-head)"/>
+          <svg x="824" y="366" width="40" height="40" viewBox="80 80 40 40"><rect class="dg-box dg-box--blue" width="120" height="120" style="stroke:none"/><circle class="dg-ink--amber" cx="90" cy="30" r="15"/><path class="dg-box dg-box--green" d="M0 78Q34 50 70 72T120 66V120H0Z" style="stroke:none"/><path class="dg-ink--green" d="M0 102Q50 76 120 96V120H0Z"/><circle class="dg-ink--green" cx="28" cy="74" r="11"/></svg>
+          <path class="dg-arrow" d="M844 362 L844 320" style="stroke-width:2" marker-end="url(#dg-vit-head)"/>
+          <rect class="dg-box dg-box--pink" x="265" y="283" width="614" height="34" rx="8"/>
+          <text x="572" y="300" style="font-size:15px">Linear projection of flattened patches</text>
+          <rect class="dg-box dg-box--violet" x="210" y="230" width="20" height="30" rx="6"/>
+          <text x="220" y="245" style="font-size:13px">0</text>
+          <rect class="dg-box dg-box--pink" x="234" y="230" width="20" height="30" rx="6"/>
+          <text x="244" y="247" style="font-size:16px;font-weight:700">*</text>
+          <path class="dg-arrow" d="M232 228 L232 192" style="stroke-width:2" marker-end="url(#dg-vit-head)"/>
+          <path class="dg-arrow" d="M300 282 L300 262" style="stroke-width:2" marker-end="url(#dg-vit-head)"/>
+          <rect class="dg-box dg-box--violet" x="278" y="230" width="20" height="30" rx="6"/>
+          <text x="288" y="245" style="font-size:13px">1</text>
+          <rect class="dg-box dg-box--pink" x="302" y="230" width="20" height="30" rx="6"/>
+          <path class="dg-arrow" d="M300 228 L300 192" style="stroke-width:2" marker-end="url(#dg-vit-head)"/>
+          <path class="dg-arrow" d="M368 282 L368 262" style="stroke-width:2" marker-end="url(#dg-vit-head)"/>
+          <rect class="dg-box dg-box--violet" x="346" y="230" width="20" height="30" rx="6"/>
+          <text x="356" y="245" style="font-size:13px">2</text>
+          <rect class="dg-box dg-box--pink" x="370" y="230" width="20" height="30" rx="6"/>
+          <path class="dg-arrow" d="M368 228 L368 192" style="stroke-width:2" marker-end="url(#dg-vit-head)"/>
+          <path class="dg-arrow" d="M436 282 L436 262" style="stroke-width:2" marker-end="url(#dg-vit-head)"/>
+          <rect class="dg-box dg-box--violet" x="414" y="230" width="20" height="30" rx="6"/>
+          <text x="424" y="245" style="font-size:13px">3</text>
+          <rect class="dg-box dg-box--pink" x="438" y="230" width="20" height="30" rx="6"/>
+          <path class="dg-arrow" d="M436 228 L436 192" style="stroke-width:2" marker-end="url(#dg-vit-head)"/>
+          <path class="dg-arrow" d="M504 282 L504 262" style="stroke-width:2" marker-end="url(#dg-vit-head)"/>
+          <rect class="dg-box dg-box--violet" x="482" y="230" width="20" height="30" rx="6"/>
+          <text x="492" y="245" style="font-size:13px">4</text>
+          <rect class="dg-box dg-box--pink" x="506" y="230" width="20" height="30" rx="6"/>
+          <path class="dg-arrow" d="M504 228 L504 192" style="stroke-width:2" marker-end="url(#dg-vit-head)"/>
+          <path class="dg-arrow" d="M572 282 L572 262" style="stroke-width:2" marker-end="url(#dg-vit-head)"/>
+          <rect class="dg-box dg-box--violet" x="550" y="230" width="20" height="30" rx="6"/>
+          <text x="560" y="245" style="font-size:13px">5</text>
+          <rect class="dg-box dg-box--pink" x="574" y="230" width="20" height="30" rx="6"/>
+          <path class="dg-arrow" d="M572 228 L572 192" style="stroke-width:2" marker-end="url(#dg-vit-head)"/>
+          <path class="dg-arrow" d="M640 282 L640 262" style="stroke-width:2" marker-end="url(#dg-vit-head)"/>
+          <rect class="dg-box dg-box--violet" x="618" y="230" width="20" height="30" rx="6"/>
+          <text x="628" y="245" style="font-size:13px">6</text>
+          <rect class="dg-box dg-box--pink" x="642" y="230" width="20" height="30" rx="6"/>
+          <path class="dg-arrow" d="M640 228 L640 192" style="stroke-width:2" marker-end="url(#dg-vit-head)"/>
+          <path class="dg-arrow" d="M708 282 L708 262" style="stroke-width:2" marker-end="url(#dg-vit-head)"/>
+          <rect class="dg-box dg-box--violet" x="686" y="230" width="20" height="30" rx="6"/>
+          <text x="696" y="245" style="font-size:13px">7</text>
+          <rect class="dg-box dg-box--pink" x="710" y="230" width="20" height="30" rx="6"/>
+          <path class="dg-arrow" d="M708 228 L708 192" style="stroke-width:2" marker-end="url(#dg-vit-head)"/>
+          <path class="dg-arrow" d="M776 282 L776 262" style="stroke-width:2" marker-end="url(#dg-vit-head)"/>
+          <rect class="dg-box dg-box--violet" x="754" y="230" width="20" height="30" rx="6"/>
+          <text x="764" y="245" style="font-size:13px">8</text>
+          <rect class="dg-box dg-box--pink" x="778" y="230" width="20" height="30" rx="6"/>
+          <path class="dg-arrow" d="M776 228 L776 192" style="stroke-width:2" marker-end="url(#dg-vit-head)"/>
+          <path class="dg-arrow" d="M844 282 L844 262" style="stroke-width:2" marker-end="url(#dg-vit-head)"/>
+          <rect class="dg-box dg-box--violet" x="822" y="230" width="20" height="30" rx="6"/>
+          <text x="832" y="245" style="font-size:13px">9</text>
+          <rect class="dg-box dg-box--pink" x="846" y="230" width="20" height="30" rx="6"/>
+          <path class="dg-arrow" d="M844 228 L844 192" style="stroke-width:2" marker-end="url(#dg-vit-head)"/>
+          <text class="dg-small" x="198" y="238" style="text-anchor:end;fill:var(--ink);font-weight:650">Patch + position</text>
+          <text class="dg-small" x="198" y="256" style="text-anchor:end;fill:var(--ink);font-weight:650">embedding</text>
+          <text class="dg-small" x="198" y="192" style="text-anchor:end">* extra learnable</text>
+          <text class="dg-small" x="198" y="210" style="text-anchor:end">[class] embedding</text>
+          <rect class="dg-box dg-box--grey" x="192" y="120" width="692" height="70" rx="12"/>
+          <text class="dg-title" x="538" y="155">Transformer encoder</text>
+          <path class="dg-arrow" d="M232 118 L232 82" marker-end="url(#dg-vit-head)"/>
+          <rect class="dg-box dg-box--amber" x="177" y="32" width="110" height="48" rx="8"/>
+          <text x="232" y="56" style="font-size:15px">MLP head</text>
+          <path class="dg-arrow" d="M289 56 L352 56" marker-end="url(#dg-vit-head)"/>
+          <rect class="dg-box dg-box--amber" x="357" y="32" width="170" height="48" rx="8"/>
+          <text x="442" y="47.5" style="font-size:14px">class: bird, ball,</text>
+          <text x="442" y="64.5" style="font-size:14px">car, …</text>
+          <text class="dg-small dg-start" x="240" y="100">output at position 0</text>
+        </svg>
 
 	<h2 class="material-heading">Transformers in Image Generation and Reinforcement Learning</h2>
 	
@@ -686,7 +1580,62 @@
 	  time, the first return-to-go is set to the return we want the agent to achieve.
 	</p>
 	
-	<img src="../img/material/part5/decision_transformer.svg" alt="Decision Transformer in RL" width="70%">
+        <svg class="dg" viewBox="0 0 900 380" style="max-width:860px" role="img" aria-label="The Decision Transformer reads a trajectory as a sequence of tokens: for each time step the return-to-go R-hat, the state s and the action a. Each token gets an embedding plus a positional encoding, a causal Transformer processes the sequence, and a linear decoder turns the output at each state token into a prediction of the action of that step.">
+          <defs><marker id="dg-dectrans-head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrowhead" d="M0,0 L10,5 L0,10 z"/></marker></defs>
+          <circle class="dg-box dg-box--grey" cx="110" cy="304" r="25"/>
+          <text x="108" y="304" style="font-size:18px"><tspan class="dg-math">R</tspan><tspan class="dg-sub" dy="5">t−1</tspan><tspan dy="-5">​</tspan></text>
+          <path class="dg-edge" d="M96 295l5 -5l5 5" style="stroke:var(--ink);stroke-width:1.6"/>
+          <path class="dg-arrow" d="M110 278 L110 248" style="stroke-width:2" marker-end="url(#dg-dectrans-head)"/>
+          <rect class="dg-box dg-box--blue" x="70" y="224" width="80" height="22" rx="5"/>
+          <path class="dg-arrow" d="M110 222 L110 198" style="stroke-width:2" marker-end="url(#dg-dectrans-head)"/>
+          <circle class="dg-box dg-box--grey" cx="210" cy="304" r="25"/>
+          <text x="208" y="304" style="font-size:18px"><tspan class="dg-math">s</tspan><tspan class="dg-sub" dy="5">t−1</tspan><tspan dy="-5">​</tspan></text>
+          <path class="dg-arrow" d="M210 278 L210 248" style="stroke-width:2" marker-end="url(#dg-dectrans-head)"/>
+          <rect class="dg-box dg-box--green" x="170" y="224" width="80" height="22" rx="5"/>
+          <path class="dg-arrow" d="M210 222 L210 198" style="stroke-width:2" marker-end="url(#dg-dectrans-head)"/>
+          <circle class="dg-box dg-box--grey" cx="310" cy="304" r="25"/>
+          <text x="308" y="304" style="font-size:18px"><tspan class="dg-math">a</tspan><tspan class="dg-sub" dy="5">t−1</tspan><tspan dy="-5">​</tspan></text>
+          <path class="dg-arrow" d="M310 278 L310 248" style="stroke-width:2" marker-end="url(#dg-dectrans-head)"/>
+          <rect class="dg-box dg-box--amber" x="270" y="224" width="80" height="22" rx="5"/>
+          <path class="dg-arrow" d="M310 222 L310 198" style="stroke-width:2" marker-end="url(#dg-dectrans-head)"/>
+          <circle class="dg-box dg-box--grey" cx="410" cy="304" r="25"/>
+          <text x="408" y="304" style="font-size:18px"><tspan class="dg-math">R</tspan><tspan class="dg-sub" dy="5">t</tspan><tspan dy="-5">​</tspan></text>
+          <path class="dg-edge" d="M396 295l5 -5l5 5" style="stroke:var(--ink);stroke-width:1.6"/>
+          <path class="dg-arrow" d="M410 278 L410 248" style="stroke-width:2" marker-end="url(#dg-dectrans-head)"/>
+          <rect class="dg-box dg-box--blue" x="370" y="224" width="80" height="22" rx="5"/>
+          <path class="dg-arrow" d="M410 222 L410 198" style="stroke-width:2" marker-end="url(#dg-dectrans-head)"/>
+          <circle class="dg-box dg-box--grey" cx="510" cy="304" r="25"/>
+          <text x="508" y="304" style="font-size:18px"><tspan class="dg-math">s</tspan><tspan class="dg-sub" dy="5">t</tspan><tspan dy="-5">​</tspan></text>
+          <path class="dg-arrow" d="M510 278 L510 248" style="stroke-width:2" marker-end="url(#dg-dectrans-head)"/>
+          <rect class="dg-box dg-box--green" x="470" y="224" width="80" height="22" rx="5"/>
+          <path class="dg-arrow" d="M510 222 L510 198" style="stroke-width:2" marker-end="url(#dg-dectrans-head)"/>
+          <circle class="dg-box dg-box--grey" cx="610" cy="304" r="25"/>
+          <text x="608" y="304" style="font-size:18px"><tspan class="dg-math">a</tspan><tspan class="dg-sub" dy="5">t</tspan><tspan dy="-5">​</tspan></text>
+          <path class="dg-arrow" d="M610 278 L610 248" style="stroke-width:2" marker-end="url(#dg-dectrans-head)"/>
+          <rect class="dg-box dg-box--amber" x="570" y="224" width="80" height="22" rx="5"/>
+          <path class="dg-arrow" d="M610 222 L610 198" style="stroke-width:2" marker-end="url(#dg-dectrans-head)"/>
+          <rect class="dg-box dg-box--grey" x="50" y="138" width="620" height="58" rx="10"/>
+          <text class="dg-title" x="360" y="167">causal Transformer</text>
+          <text class="dg-xlarge" x="26" y="167" style="fill:var(--muted)">…</text>
+          <text class="dg-xlarge" x="694" y="167" style="fill:var(--muted)">…</text>
+          <path class="dg-arrow" d="M210 136 L210 114" style="stroke-width:2" marker-end="url(#dg-dectrans-head)"/>
+          <rect class="dg-box dg-box--amber" x="170" y="90" width="80" height="22" rx="5"/>
+          <path class="dg-arrow" d="M210 88 L210 64" style="stroke-width:2" marker-end="url(#dg-dectrans-head)"/>
+          <circle class="dg-box dg-box--amber" cx="210" cy="36" r="25"/>
+          <text x="208" y="36" style="font-size:18px"><tspan class="dg-math">a</tspan><tspan class="dg-sub" dy="5">t−1</tspan><tspan dy="-5">​</tspan></text>
+          <path class="dg-arrow" d="M510 136 L510 114" style="stroke-width:2" marker-end="url(#dg-dectrans-head)"/>
+          <rect class="dg-box dg-box--amber" x="470" y="90" width="80" height="22" rx="5"/>
+          <path class="dg-arrow" d="M510 88 L510 64" style="stroke-width:2" marker-end="url(#dg-dectrans-head)"/>
+          <circle class="dg-box dg-box--amber" cx="510" cy="36" r="25"/>
+          <text x="508" y="36" style="font-size:18px"><tspan class="dg-math">a</tspan><tspan class="dg-sub" dy="5">t</tspan><tspan dy="-5">​</tspan></text>
+          <text class="dg-small dg-start" x="718" y="101">linear decoder</text>
+          <text class="dg-small dg-start" x="718" y="167">causal Transformer</text>
+          <text class="dg-small dg-start" x="718" y="227">embedding +</text>
+          <text class="dg-small dg-start" x="718" y="245">positional encoding</text>
+          <text class="dg-small dg-start" x="120" y="358" style="fill:var(--ink)">R̂: return-to-go (the reward still to collect)</text>
+          <text class="dg-small dg-start" x="470" y="358" style="fill:var(--ink)">s: state</text>
+          <text class="dg-small dg-start" x="570" y="358" style="fill:var(--ink)">a: action</text>
+        </svg>
 
         <!-- New exercise: NN Slot C, Priority 1 -->
 
@@ -1156,7 +2105,34 @@ git checkout 3adf61e1</code></pre>
 	  enabling the creation of images that are nearly indistinguishable from real photographs.
 	</p>
 	
-	<img src="../img/material/part5/generative_modeling_intro.webp" alt="Generative Modeling Introduction" width="70%">
+        <svg class="dg" viewBox="0 0 960 400" role="img" aria-label="Left, a discriminative model learns the boundary between dogs (circles) and cats (squares): it answers which class an example belongs to. Right, a generative model learns where the examples of each class lie, the distribution of the data, shown as contours; it can say how probable an example is and sample a new example, such as the new cat marked with a star.">
+          <text class="dg-heading" x="240" y="20">Discriminative model</text>
+          <text class="dg-small" x="240" y="44">learns p(y | x): which class?</text>
+          <rect class="dg-axis" x="20" y="70" width="440" height="270" rx="10"/>
+          <path class="dg-boundary" d="M160.7 70 L376.4 340"/>
+          <path class="dg-dot--a" d="M123.6 220.7a7 7 0 1 0 14 0a7 7 0 1 0 -14 0ZM98.4 249.6a7 7 0 1 0 14 0a7 7 0 1 0 -14 0ZM106.2 320a7 7 0 1 0 14 0a7 7 0 1 0 -14 0ZM207.6 258.8a7 7 0 1 0 14 0a7 7 0 1 0 -14 0ZM129.1 218.9a7 7 0 1 0 14 0a7 7 0 1 0 -14 0ZM137.4 233.2a7 7 0 1 0 14 0a7 7 0 1 0 -14 0ZM228.8 187.6a7 7 0 1 0 14 0a7 7 0 1 0 -14 0ZM145.6 177.8a7 7 0 1 0 14 0a7 7 0 1 0 -14 0ZM86.6 248.4a7 7 0 1 0 14 0a7 7 0 1 0 -14 0Z" style="stroke:var(--surface);stroke-width:1.5"/>
+          <path class="dg-dot--b" d="M344.5 138.6h13v13h-13ZM292.3 141.3h13v13h-13ZM342.8 167.4h13v13h-13ZM334.7 181.5h13v13h-13ZM318.9 175.8h13v13h-13ZM256.1 167.4h13v13h-13ZM278.7 143.3h13v13h-13ZM313 197.4h13v13h-13ZM325.8 160.9h13v13h-13Z" style="stroke:var(--surface);stroke-width:1.5"/>
+          <text class="dg-heading" x="720" y="20">Generative model</text>
+          <text class="dg-small" x="720" y="44">learns p(x | y): what does the data look like?</text>
+          <rect class="dg-axis" x="500" y="70" width="440" height="270" rx="10"/>
+          <ellipse class="dg-box dg-box--blue" cx="635.4" cy="245.5" rx="124.5" ry="66.8" transform="rotate(140.9 635.4 245.5)" style="fill:var(--dg-blue-line);fill-opacity:0.14;stroke:none"/>
+          <ellipse class="dg-box dg-box--blue" cx="635.4" cy="245.5" rx="79.3" ry="42.5" transform="rotate(140.9 635.4 245.5)" style="fill:var(--dg-blue-line);fill-opacity:0.2;stroke:none"/>
+          <ellipse class="dg-box dg-box--blue" cx="635.4" cy="245.5" rx="39.6" ry="21.3" transform="rotate(140.9 635.4 245.5)" style="fill:var(--dg-blue-line);fill-opacity:0.28;stroke:none"/>
+          <ellipse class="dg-box dg-box--amber" cx="813.1" cy="157.8" rx="113.3" ry="68" transform="rotate(-138.6 813.1 157.8)" style="fill:var(--dg-amber-line);fill-opacity:0.14;stroke:none"/>
+          <ellipse class="dg-box dg-box--amber" cx="813.1" cy="157.8" rx="72.1" ry="43.2" transform="rotate(-138.6 813.1 157.8)" style="fill:var(--dg-amber-line);fill-opacity:0.2;stroke:none"/>
+          <ellipse class="dg-box dg-box--amber" cx="813.1" cy="157.8" rx="36.1" ry="21.6" transform="rotate(-138.6 813.1 157.8)" style="fill:var(--dg-amber-line);fill-opacity:0.28;stroke:none"/>
+          <path class="dg-dot--a" d="M603.6 220.7a7 7 0 1 0 14 0a7 7 0 1 0 -14 0ZM578.4 249.6a7 7 0 1 0 14 0a7 7 0 1 0 -14 0ZM586.2 320a7 7 0 1 0 14 0a7 7 0 1 0 -14 0ZM687.6 258.8a7 7 0 1 0 14 0a7 7 0 1 0 -14 0ZM609.1 218.9a7 7 0 1 0 14 0a7 7 0 1 0 -14 0ZM617.4 233.2a7 7 0 1 0 14 0a7 7 0 1 0 -14 0ZM708.8 187.6a7 7 0 1 0 14 0a7 7 0 1 0 -14 0ZM625.6 177.8a7 7 0 1 0 14 0a7 7 0 1 0 -14 0ZM566.6 248.4a7 7 0 1 0 14 0a7 7 0 1 0 -14 0Z" style="stroke:var(--surface);stroke-width:1.5"/>
+          <path class="dg-dot--b" d="M824.5 138.6h13v13h-13ZM772.3 141.3h13v13h-13ZM822.8 167.4h13v13h-13ZM814.7 181.5h13v13h-13ZM798.9 175.8h13v13h-13ZM736.1 167.4h13v13h-13ZM758.7 143.3h13v13h-13ZM793 197.4h13v13h-13ZM805.8 160.9h13v13h-13Z" style="stroke:var(--surface);stroke-width:1.5"/>
+          <path class="dg-dot" d="M868.1 101.9 L864.9 109.5 L856.7 110.2 L862.9 115.5 L861 123.6 L868.1 119.3 L875.1 123.6 L873.2 115.5 L879.5 110.2 L871.3 109.5 Z" style="fill:var(--surface);stroke:var(--ink);stroke-width:2;stroke-linejoin:round"/>
+          <text class="dg-small dg-start" x="886.1" y="103.9" style="fill:var(--ink)">a new cat,</text>
+          <text class="dg-small dg-start" x="886.1" y="121.9" style="fill:var(--ink)">sampled</text>
+          <circle class="dg-dot--a" cx="320" cy="376" r="7"/>
+          <text class="dg-small dg-start" x="334" y="376" style="fill:var(--ink)">dog</text>
+          <rect class="dg-dot--b" x="403.5" y="369.5" width="13" height="13"/>
+          <text class="dg-small dg-start" x="424" y="376" style="fill:var(--ink)">cat</text>
+          <path class="dg-boundary" d="M486 376h30"/>
+          <text class="dg-small dg-start" x="526" y="376" style="fill:var(--ink)">class boundary</text>
+        </svg>
 
 	<p>
 	  Generative models help solve a variety of tasks, which we will explore further. 
