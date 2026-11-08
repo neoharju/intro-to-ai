@@ -815,7 +815,7 @@
           "<span class=\"math\">1</span>"
         ],
         "answer": 0,
-        "explain": "The derivative of the sigmoid cancels neatly. This gives the error-times-input form of the update, as in the line <code>d_out = (p - y) / len(X)</code> of the Week 4 bonus code."
+        "explain": "The derivative of the sigmoid cancels neatly. This gives the error-times-input form of the update, as in the line <code>G2 = (P - Y) / len(X)</code> of the Week 4 bonus code."
       },
       {
         "q": "Every weight of a hidden layer starts with the same value. What happens during training?",

@@ -1662,51 +1662,78 @@ model.most_similar("glass")</code></pre>
             <a href="#backprop-example">numerical backward pass</a> above applied the chain rule to one hidden unit by
             hand. Here is the same computation in matrix form, for the <a href="#xor">XOR problem</a> that a single
             perceptron cannot solve: two inputs, a hidden layer of four <span class="math">\tanh</span> units, a
-            sigmoid output and the cross-entropy loss. The backward pass is the chain rule applied layer by
-            layer, from the loss back to the first weights.
+            sigmoid output and the cross-entropy loss. The notation follows the core material: each row of
+            <code>X</code> is one example, and a weight matrix has one row per unit of its layer, so
+            <code>W1</code> has shape 4 &times; 2, like the 40 &times; 784 matrix of the digit network, and a layer
+            computes <span class="math">Z = X W^\top + b</span>.
           </p>
 
           <pre class="sh_python code-highlight"><code>import numpy as np
 
-X = np.array([[0, 0], [0, 1], [1, 0], [1, 1]], dtype=float)
-y = np.array([[0], [1], [1], [0]], dtype=float)                 # XOR
+X = np.array([[0, 0], [0, 1], [1, 0], [1, 1]], dtype=float)   # one example per row
+Y = np.array([[0], [1], [1], [0]], dtype=float)               # XOR
+
+def forward(W1, b1, W2, b2):
+    H = np.tanh(X @ W1.T + b1)                  # hidden layer, shape (4, 4)
+    P = 1 / (1 + np.exp(-(H @ W2.T + b2)))      # output probabilities, shape (4, 1)
+    return H, P
 
 def train(W1, b1, W2, b2, steps=5000, lr=0.5):
     for _ in range(steps):
-        # Forward pass
-        h = np.tanh(X @ W1 + b1)                                 # hidden layer, shape (4, 4)
-        p = 1 / (1 + np.exp(-(h @ W2 + b2)))                     # output probability, shape (4, 1)
+        H, P = forward(W1, b1, W2, b2)
         # Backward pass: the chain rule, layer by layer
-        d_out = (p - y) / len(X)                                 # dLoss/d(output logit)
-        d_W2, d_b2 = h.T @ d_out, d_out.sum(axis=0)
-        d_h = d_out @ W2.T * (1 - h ** 2)                        # tanh'(z) = 1 - tanh(z)^2
-        d_W1, d_b1 = X.T @ d_h, d_h.sum(axis=0)
-        # Gradient descent step
-        W1 -= lr * d_W1; b1 -= lr * d_b1; W2 -= lr * d_W2; b2 -= lr * d_b2
-    return p
+        G2 = (P - Y) / len(X)                   # dLoss/dZ2 for a sigmoid with cross-entropy
+        dW2, db2 = G2.T @ H, G2.sum(axis=0)     # weight gradient: G^T times the layer's input
+        G1 = (G2 @ W2) * (1 - H ** 2)           # back through W2, then tanh'(z) = 1 - tanh(z)^2
+        dW1, db1 = G1.T @ X, G1.sum(axis=0)
+        # Gradient descent step: the four examples form one batch
+        W1 -= lr * dW1; b1 -= lr * db1; W2 -= lr * dW2; b2 -= lr * db2
+    return W1, b1, W2, b2
 
 rng = np.random.default_rng(1)
-p = train(rng.normal(0, 1, (2, 4)), np.zeros(4), rng.normal(0, 1, (4, 1)), np.zeros(1))
-print(p.ravel().round(3))                                         # [0.    0.999 0.999 0.002]</code></pre>
+params = train(rng.normal(0, 1, (4, 2)), np.zeros(4), rng.normal(0, 1, (1, 4)), np.zeros(1))
+H, P = forward(*params)
+print(P.ravel().round(3))     # [0.    0.999 0.999 0.002]
+print(H.round(2))             # the learned hidden representation, one row per input</code></pre>
 
           <p>
-            The line <code>d_out = (p - y) / len(X)</code> is worth a second look: for a sigmoid output with the
+            The line <code>G2 = (P - Y) / len(X)</code> is worth a second look: for a sigmoid output with the
             cross-entropy loss, the derivative of the loss with respect to the output's logit is simply
             <span class="math">p - y</span>, the prediction minus the target. This is the error-times-input form
-            mentioned with the <a href="#perceptron-update">perceptron rule</a>. Everything else is matrix calculus
-            that a framework like PyTorch does for you with automatic differentiation.
+            mentioned with the <a href="#perceptron-update">perceptron rule</a>. Each layer then needs the two products
+            of the <a href="#cost-dense">extra section below</a>: <code>G2 @ W2</code> sends the error back to the
+            hidden layer, and <code>G1.T @ X</code> gives the weight gradient. A framework like PyTorch derives the same
+            products for you with automatic differentiation.
+          </p>
+
+          <h2 class="material-heading">What the hidden layer learned</h2>
+
+          <p>
+            The <a href="#xor">XOR activity</a> set two hidden units by hand: "at least one input is 1" and "both inputs
+            are 1". Gradient descent found a different representation. With seed 1, the printed matrix
+            <code>H</code> shows it: the second hidden unit is close to +1 only for the input (1, 0), the fourth only
+            for (0, 1), and both are negative for the other inputs. The output weights, <code>params[2]</code>, are
+            largest for these two units (about 7 each), so the network computes XOR as "<span class="math">x_1</span>
+            and not <span class="math">x_2</span>, or <span class="math">x_2</span> and not
+            <span class="math">x_1</span>". The other two units are large and positive for any input that contains a 1,
+            and they count less. Many hidden representations solve the same task; training finds one of them, and it
+            need not be the one a person would design.
           </p>
 
           <h2 class="material-heading">Why the starting point matters</h2>
 
           <p>
-            Try two experiments with the code above. First, change the seed to 0: this time the network gets stuck
-            on a plateau and predicts about 0.5 for two of the four inputs (in our runs, 19 of 20 seeds solved XOR).
-            Gradient descent finds <i>a</i> low point, not necessarily the best one. Second, start every weight at
-            0.5 instead of a random number. Now all hidden units compute the same thing and receive the same
-            gradient, so they stay identical forever: the network behaves as if it had one hidden unit, and it
-            cannot solve XOR. This is the symmetry that random initialization breaks, as described in
-            <a href="#training-loop">Putting the training loop together</a>.
+            Try two experiments with the code above. First, use only two hidden units, the size of the hand-set
+            solution: change <code>(4, 2)</code>, <code>np.zeros(4)</code> and <code>(1, 4)</code> in the last lines to
+            <code>(2, 2)</code>, <code>np.zeros(2)</code> and <code>(1, 2)</code>. Two units can represent XOR, yet in
+            our runs gradient descent solved it from only 52 of 100 random starts, and almost all of the other runs got
+            stuck predicting about 0.5 for two of the four inputs (seed 0 is one of them). With three units, 84 of 100
+            runs succeeded; with four, 98; with eight, all 100. The extra units are not needed to represent the
+            function, but they make it much easier to find. Second, start every weight at 0.5 instead of a random
+            number. Now all hidden units compute the same thing and receive the same gradient, so they stay identical
+            forever: the network behaves as if it had one hidden unit, and it cannot solve XOR. This is the symmetry
+            that random initialization breaks, as described in <a href="#training-loop">Putting the training loop
+            together</a>.
           </p>
 
           <h2 class="material-heading">What the universal approximation theorem says, and what it does not</h2>
