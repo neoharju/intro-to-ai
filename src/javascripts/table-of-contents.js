@@ -1,4 +1,4 @@
-import { uniqueId, kebabCase } from 'lodash-es';
+import { kebabCase } from 'lodash-es';
 
 import { navOffset, scrollToId } from './utils';
 
@@ -116,8 +116,8 @@ class TableOfContents {
       const parent = stack[stack.length - 1];
       const position = parent.children.length + 1;
       const sectionString = parent.sectionString ? `${parent.sectionString}.${position}` : `${position}`;
-      // A heading that already has an id keeps it: other pages link to such ids (../week4/#optimization).
-      const id = node.id || `${uniqueId('section-')}-${kebabCase(headingNode.text())}`;
+      // The ids come from anchors.js (headings that have an id in the page keep it).
+      const id = node.id || kebabCase(headingNode.text());
 
       const section = {
         level,

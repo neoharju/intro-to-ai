@@ -1,4 +1,4 @@
-import { uniqueId, kebabCase } from 'lodash-es';
+import { kebabCase } from 'lodash-es';
 import { scrollToId } from './utils';
 
 // "Towers of Hanoi (1p)" -> { name: "Towers of Hanoi", points: "1p" }. Also matches "(up to 5p)" and
@@ -34,7 +34,8 @@ class Exercises {
       const toggleNode = exerciseNode.find('.exercise__toggle');
       const headingNode = exerciseNode.find('.exercise__heading');
 
-      const id = `${uniqueId('exercise-')}-${kebabCase(headingNode.text())}`;
+      // The anchor comes from anchors.js, which the search uses too.
+      const id = exerciseNode.attr('data-anchor') || `exercise-${kebabCase(headingNode.text())}`;
       const { name, points } = splitPoints(headingNode.text());
 
       exerciseNode.attr('data-name', name);
