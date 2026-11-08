@@ -47,6 +47,8 @@ Compared with the original material:
   decoding).
 - **Colour themes:** light and dark, following the device's setting by default.
 - **Text size:** normal, large or extra large reading text, from the "Aa" menu in the navigation bar.
+- **Search:** the search button at the right of the navigation bar, Ctrl+K (⌘K on a Mac) or the / key
+  searches the sections and exercises of the front page and weeks 1–7, and goes to the chosen one.
 - **Zen mode:** the material without the navigation bar, page header, lecture and deadline boxes and footer
   (the lotus button or the Z key; Z or Esc leaves it).
 
@@ -109,6 +111,18 @@ The "Aa" menu (`src/javascripts/font-size-menu.js`) sets `data-font-size="large"
 which raises the root font size from 16px to 18px or 20px; `theme.js` restores it before the page is drawn.
 Everything in the page is sized in `rem`, so it follows. The navigation bar (`_navbar.scss`) is sized in `px`
 on purpose, so that it keeps its size and still fits on one line.
+
+## Search
+
+The search (`src/javascripts/search.js`, styles in `_search.scss`) needs no index file. The first time it
+opens, it fetches the pages of the navigation bar (not the quiz, whose questions are not in its HTML) and
+splits them into sections and exercises, leaving out formulas, figures and buttons, so the results always
+match the pages. Every term of the query must occur in a result; titles count more than the text. A result
+links to the anchor of its section or exercise. The anchors are made from the heading text
+(`src/javascripts/anchors.js`), the same way in the page and in the search; a heading that has an `id` in the
+HTML keeps it, so links such as `../week4/#optimization` stay valid, and the earlier addresses
+(`#section-12-…`, `#exercise-3-…`) still lead to their section or exercise. An exercise opens when its
+address is visited.
 
 ## The practice quiz
 
