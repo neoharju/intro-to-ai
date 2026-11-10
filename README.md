@@ -151,6 +151,26 @@ as `<time data-date="lecture-5">We 11/11</time>`; `npm run sync` fills in its te
 schedule, so next year's dates change in one file. `npm run sync -- --check` only reports pages that are out
 of date.
 
+## Course folder for students
+
+`starter/` is the course folder that students download from the front page as
+`files/intro-to-ai-starter.zip`: a uv project with Python 3.12 and the course's packages locked in
+`uv.lock`, a `check_setup.py` and a README. Its `pyproject.toml` lets uv take only releases that are at least
+14 days old (`exclude-newer`), also for the packages that students add, and on Linux takes PyTorch from the
+CPU-only index (about 200 MB instead of about 3 GB with the CUDA libraries). `npm run build` (or
+`npm run starter`, `scripts/starter.mjs`) packs the files of `starter/` into the zip, uncompressed and with
+fixed dates, so the same files always give the same zip; the Check workflow fails if the committed zip does
+not match them.
+
+Before a new course, update the locked versions and rebuild the zip:
+
+```bash
+cd starter
+uv lock --upgrade
+cd ..
+npm run starter
+```
+
 ## Checks
 
 Every push and pull request runs `.github/workflows/check.yml` on GitHub Actions:

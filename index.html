@@ -501,12 +501,24 @@ powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | ie
           </li>
           <li>
             <strong>A course folder</strong>:
-            Make one uv project for all the programming exercises. It uses Python 3.12, which all the
-            libraries of the course support; uv downloads it the first time if you do not have it:
+            One uv project for all the programming exercises. Download
+            <a href="files/intro-to-ai-starter.zip">intro-to-ai-starter.zip</a>, unzip it, and run these in a
+            terminal in the <code>intro-to-ai</code> folder that it makes:
+            <pre class="sh_bash code-highlight"><code>uv sync                        # installs Python 3.12 and the course packages into .venv
+uv run check_setup.py          # prints the versions and checks that they work</code></pre>
+            The folder has Python 3.12, which all the libraries of the course support (uv downloads it the
+            first time if you do not have it), and NumPy, Matplotlib, pandas and scikit-learn at the
+            versions locked in its <code>uv.lock</code>. Add what an exercise needs with
+            <code>uv add &lt;package&gt;</code>: uv takes only releases that are at least 14 days old, and on
+            Linux it takes the CPU-only build of PyTorch (Week 5), about 200 MB instead of about 3 GB with
+            the CUDA libraries. You can also make the folder yourself:
             <pre class="sh_bash code-highlight"><code>uv init --no-package --python 3.12 intro-to-ai
 cd intro-to-ai
 uv add numpy matplotlib        # add the packages that an exercise needs
 uv run python my_script.py     # run a script with the project's Python and packages</code></pre>
+            In such a folder, add PyTorch with
+            <code>uv add torch --index pytorch-cpu=https://download.pytorch.org/whl/cpu</code> to get the
+            CPU-only build too.
             uv keeps the packages in the project's own environment, the <code>.venv</code> folder, so
             they do not mix with other projects, and it lists them in <code>pyproject.toml</code>.
             Where an exercise says <code>python script.py</code>, run

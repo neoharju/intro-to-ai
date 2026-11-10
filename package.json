@@ -9,10 +9,11 @@
     "node": ">=22"
   },
   "scripts": {
-    "build": "node scripts/sync.mjs && node scripts/build.mjs",
+    "build": "node scripts/sync.mjs && node scripts/starter.mjs && node scripts/build.mjs",
     "watch": "node scripts/build.mjs --watch",
     "sync": "node scripts/sync.mjs",
     "simple": "node scripts/simple.mjs",
+    "starter": "node scripts/starter.mjs",
     "check": "node scripts/check-pages.mjs",
     "links": "node scripts/check-links.mjs"
   },
