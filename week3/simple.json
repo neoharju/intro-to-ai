@@ -206,7 +206,7 @@
   "f32f52c0": "<b>Note:</b> to get points, set your <b>team name</b> on Kaggle (Team tab) to your <b>full name</b> or to your <b>University of Helsinki username</b>. Then we can find your submission.",
   "b79d12b3": "Two points: join the Kaggle competition and send a valid solution.",
   "7699a23b": "3 more bonus points: be in the top 5 of the private leaderboard, and give a presentation of 2 minutes about your solution in class. If no person in the top 5 wants to give a presentation, places 6–10 get the opportunity, and so on.",
-  "a66c580a": "You can send submissions until Sat 5/12 (end of the day, Helsinki time). At the lecture on We 9/12, we show the final standings, and the top 5 teams give presentations.",
+  "a66c580a": "You can send submissions until <time datetime=\"2026-12-05\" data-date=\"kaggle-close\">Sat 5/12</time> (end of the day, Helsinki time). At the lecture on <time datetime=\"2026-12-09\" data-date=\"kaggle-results\">We 9/12</time>, we show the final standings, and the top 5 teams give presentations.",
   "2167bcf5": "This saying describes the main idea of metric methods well: \"Tell me who your friends are, and I'll tell you who you are.\" Algorithms in this class have almost no training phase. They only keep all of the training dataset. During prediction, they find objects that are similar to the target object.",
   "de8ee7c6": "The name of this process is <b>lazy learning</b>, because there is no real training. Metric models are also non-parametric, because they do not make explicit assumptions about the global laws of the data. For example:",
   "97ddaf81": "Linear regression assumes that the real relation is linear (with unknown coefficients that we find from the dataset).",

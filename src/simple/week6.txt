@@ -6,7 +6,7 @@ Bring these to <b>your exercise session this week</b>: <a href="../week5/#exerci
 Bring the <a href="#exercises">exercises</a> of this week to your exercise session in <a href="../week7/">Week 7</a>.
 
 == 0f373303
-The <a href="../week3/#exercises">Kaggle competition: Customer Churn</a> closes on <b>Sat 5/12</b> (end of the day, Helsinki time).
+The <a href="../week3/#exercises">Kaggle competition: Customer Churn</a> closes on <b><time datetime="2026-12-05" data-date="kaggle-close">Sat 5/12</time></b> (end of the day, Helsinki time).
 
 == 36150153
 Objectives (when you complete the course, you ...)

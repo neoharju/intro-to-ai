@@ -10,7 +10,7 @@
   "84746386": "<b>Orchestrator–workers</b>: one model divides the task at run time. It gives the parts to workers and combines their results.",
   "ffaa098f": "Bring these to <b>your exercise session this week</b>: <a href=\"../week5/#exercises\">Week 5 exercises</a>",
   "eb0fb33a": "Bring the <a href=\"#exercises\">exercises</a> of this week to your exercise session in <a href=\"../week7/\">Week 7</a>.",
-  "0f373303": "The <a href=\"../week3/#exercises\">Kaggle competition: Customer Churn</a> closes on <b>Sat 5/12</b> (end of the day, Helsinki time).",
+  "0f373303": "The <a href=\"../week3/#exercises\">Kaggle competition: Customer Churn</a> closes on <b><time datetime=\"2026-12-05\" data-date=\"kaggle-close\">Sat 5/12</time></b> (end of the day, Helsinki time).",
   "b23f157f": "can explain what an agent is. You can also explain the idea of bounded rationality",
   "cf5bed67": "can describe learning agents and agentic frameworks",
   "ae9b788b": "can explain reinforcement learning and multi-agent systems at the level of concepts",
