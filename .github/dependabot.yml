@@ -1,0 +1,36 @@
+# Weekly pull requests that update the build tools (npm), the actions of the workflows and the base images
+# of the Docker preview. A release is proposed only 14 days after it came out (cooldown): most malicious
+# releases are found and pulled from the registries within days. Security updates, if they are turned on
+# (Settings, Advanced Security), are not delayed. The Check workflow tests every pull request.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    cooldown:
+      default-days: 14
+    groups:
+      build-tools:
+        update-types: [minor, patch]
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    cooldown:
+      default-days: 14
+    groups:
+      actions:
+        patterns: ['*']
+
+  - package-ecosystem: docker
+    directory: /
+    schedule:
+      interval: weekly
+    cooldown:
+      default-days: 14
+    ignore:
+      # Node.js moves to the next LTS line by hand (the Check workflow uses the same major version).
+      - dependency-name: node
+        update-types: [version-update:semver-major]

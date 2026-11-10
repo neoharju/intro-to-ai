@@ -1,11 +1,7 @@
 # Course site image: the front-end assets are built from src/ with Node, and the static site is
-# served by an unprivileged nginx. Base images are pinned by digest; update them deliberately
-# (tag and digest together), e.g. with Dependabot or Renovate.
-ARG NODE_IMAGE=node:24.22.1-alpine3.24@sha256:06d7adf3e0ef61a13f1d28682726366f97a15aa1888c934d3ecec86c33918b53
-# The -slim variant: nginx without the optional modules and curl, which a static site does not need.
-ARG NGINX_IMAGE=nginxinc/nginx-unprivileged:1.30.6-alpine3.24-slim@sha256:5d8bb9437d74a600ec5dbf90c035451c724dc33eac8d3a71078f6f8612c345f6
-
-FROM ${NODE_IMAGE} AS build
+# served by an unprivileged nginx. Base images are pinned by digest and written out in the FROM
+# lines, where Dependabot finds them (.github/dependabot.yml) and proposes tag and digest together.
+FROM node:24.22.1-alpine3.24@sha256:06d7adf3e0ef61a13f1d28682726366f97a15aa1888c934d3ecec86c33918b53 AS build
 WORKDIR /build
 
 # Dependencies first, so editing pages or sources does not reinstall them. `npm ci` installs
@@ -23,7 +19,8 @@ RUN npm run build \
     && mkdir /site \
     && cp -R index.html LICENSE week* quiz img files fonts javascripts stylesheets /site/
 
-FROM ${NGINX_IMAGE} AS site
+# The -slim variant: nginx without the optional modules and curl, which a static site does not need.
+FROM nginxinc/nginx-unprivileged:1.30.6-alpine3.24-slim@sha256:5d8bb9437d74a600ec5dbf90c035451c724dc33eac8d3a71078f6f8612c345f6 AS site
 COPY docker/nginx.conf /etc/nginx/nginx.conf
 # Content stays owned by root: the nginx user (101) can read it but not modify it.
 COPY --from=build /site/ /usr/share/nginx/html/
