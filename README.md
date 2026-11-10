@@ -139,6 +139,14 @@ The questions are in `src/javascripts/quiz/questions.json`, 20 for each week. Ea
 question similar in length and form, so that the longest one is not a giveaway. Results are kept in the
 reader's browser only (`localStorage`, key `introai-quiz-v1`). `quiz/#week-3` opens the questions of week 3.
 
+## Glossary
+
+`glossary/index.html` defines the main terms of the course, each with a link to the section that introduces
+it (the page check verifies those links). The footer of every page and the front page link to it, and the
+search indexes it like the weeks (its footer link has `data-search`). It is not in the navigation bar, which
+is full. Its sections have no numbers: `data-unnumbered` on `#material` turns them off in the table of
+contents and the search.
+
 ## Progress
 
 Every exercise has a "Done" switch in its header (`src/javascripts/progress.js`). A week marks the done

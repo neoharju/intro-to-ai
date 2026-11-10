@@ -31,11 +31,12 @@ function clean(text) {
 
 // --- The index -------------------------------------------------------------------------------------------
 
-// The pages of the navigation bar, without the quiz (its questions are not in its HTML).
+// The pages of the navigation bar and the footer links marked data-search (the glossary), without the quiz
+// (its questions are not in its HTML).
 function sitePages() {
   const seen = new Set();
 
-  return [...document.querySelectorAll('.navbar .navbar-nav .nav-link')]
+  return [...document.querySelectorAll('.navbar .navbar-nav .nav-link, .footer a[data-search]')]
     .map(link => {
       const url = new URL(link.getAttribute('href'), window.location.href);
 
@@ -71,7 +72,9 @@ function sectionNumbers(headings) {
 
 function indexPage(page, doc) {
   const { sections, exercises } = anchors(doc);
-  const numbers = sectionNumbers(sections.map(section => section.node));
+  // A page without section numbers (the glossary: data-unnumbered) shows its titles as they are.
+  const numbered = !doc.querySelector('#material[data-unnumbered]');
+  const numbers = numbered ? sectionNumbers(sections.map(section => section.node)) : [];
   const intro = { kind: 'page', title: page.name, id: '', parts: [] };
   const sectionOf = new Map(sections.map((section, i) => [section.node, {
     kind: 'section', number: numbers[i], title: clean(section.node.textContent), id: section.id, parts: [],
