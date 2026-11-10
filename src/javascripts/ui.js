@@ -156,52 +156,6 @@ function addHeadingAnchors() {
   });
 }
 
-function formatMinutes(minutes) {
-  if (minutes < 60) {
-    return `${minutes} min read`;
-  }
-
-  const hours = Math.floor(minutes / 60);
-  const rest = minutes % 60;
-
-  return rest ? `${hours} h ${rest} min read` : `${hours} h read`;
-}
-
-function metaItem(iconClass, text) {
-  const item = document.createElement('li');
-  const icon = document.createElement('i');
-
-  icon.className = iconClass;
-  icon.setAttribute('aria-hidden', 'true');
-  item.append(icon, document.createTextNode(text));
-
-  return item;
-}
-
-// Reading time (about 200 words a minute for technical text), exercises and interactive figures.
-function fillPageMeta() {
-  const meta = document.querySelector('.page-hero__meta');
-  const material = document.getElementById('material');
-
-  if (!meta || !material) {
-    return;
-  }
-
-  const words = material.textContent.split(/\s+/).filter(Boolean).length;
-  const exercises = material.querySelectorAll('.exercise').length;
-  const figures = material.querySelectorAll('.viz').length;
-
-  meta.append(metaItem('fa-regular fa-clock', formatMinutes(Math.max(1, Math.round(words / 200)))));
-
-  if (exercises) {
-    meta.append(metaItem('fa fa-pencil', `${exercises} exercise${exercises === 1 ? '' : 's'}`));
-  }
-
-  if (figures) {
-    meta.append(metaItem('fa fa-play-circle', `${figures} interactive figure${figures === 1 ? '' : 's'}`));
-  }
-}
-
 // Cards and figures fade in the first time they scroll into view. Only elements that start below
 // the first screen are animated, and nothing is hidden when the reader prefers reduced motion. Where an
 // element starts comes from the observer's first report, which follows the browser's own layout: reading
@@ -244,7 +198,6 @@ export default function mountUi() {
   wrapDiagrams();
   mountCopyButtons();
   addHeadingAnchors();
-  fillPageMeta();
   mountScrollAids();
   mountReveal();
 }

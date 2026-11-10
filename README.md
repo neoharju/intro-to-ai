@@ -197,6 +197,11 @@ of `docker/nginx.conf` as a `<meta http-equiv>`: scripts, styles, fonts and requ
 itself. `npm run sync` takes it from `docker/nginx.conf`, so the two cannot drift apart; `frame-ancestors`
 is left out because browsers ignore it in a `<meta>`.
 
+`npm run sync` also writes the line under the title of each week (`<ul class="page-hero__meta">`): the
+reading time (about 200 words a minute) and the numbers of exercises and interactive figures, counted from
+the page, without the parts that are commented out. They are in the page itself, so they are there when it
+is first drawn.
+
 The dates of the course are in `src/schedule.json`. A date in a page or in `src/simple/weekN.txt` is written
 as `<time data-date="lecture-5">We 11/11</time>`; `npm run sync` fills in its text and its `datetime` from the
 schedule, so next year's dates change in one file. `npm run sync -- --check` only reports pages that are out

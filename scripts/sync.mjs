@@ -5,7 +5,10 @@
 //     src/partials/NAME.html, with the values of the page in src/site.json (title, scripts, simplified
 //     English), the path back to the site root and the Content-Security-Policy of docker/nginx.conf;
 //   - every <time data-date="KEY">, in the pages and in src/simple/weekN.txt, from src/schedule.json, so
-//     that a date of the course is written once.
+//     that a date of the course is written once;
+//   - the list <ul class="page-hero__meta"> in the header of a week: the reading time and the numbers of
+//     exercises and interactive figures, counted from the page, so that they are there when the page is
+//     first drawn.
 //
 //   npm run sync              rewrites the pages
 //   npm run sync -- --check   only reports the pages that are out of date (for CI); exits with 1 if any
@@ -110,6 +113,56 @@ function syncDates(text, file) {
   });
 }
 
+function readingTime(words) {
+  const minutes = Math.max(1, Math.round(words / 200));
+
+  if (minutes < 60) {
+    return `${minutes} min read`;
+  }
+
+  const hours = Math.floor(minutes / 60);
+  const rest = minutes % 60;
+
+  return rest ? `${hours} h ${rest} min read` : `${hours} h read`;
+}
+
+// The reading time (about 200 words a minute for technical text), the exercises and the interactive figures
+// of the material, from its HTML: what textContent and querySelectorAll would give in the browser.
+function syncMeta(text, page) {
+  return text.replace(/^([ \t]*)<ul class="page-hero__meta"([^>]*)>[\s\S]*?<\/ul>/m, (match, indent, attributes) => {
+    const open = text.indexOf('id="material"');
+    const start = text.indexOf('>', open) + 1;
+    const end = text.indexOf('<!-- shared:footer -->');
+
+    if (open < 0 || end < start) {
+      throw new Error(`${page}: the header has a page-hero__meta list but the page has no #material before its footer`);
+    }
+
+    // Without HTML comments: the pages keep some exercises commented out.
+    const material = text.slice(start, end).replace(/<!--[\s\S]*?-->/g, ' ');
+    const words = material
+      .replace(/<(script|style)\b[\s\S]*?<\/\1>/g, ' ')
+      .replace(/<[^>]*>/g, '')
+      .replace(/&(?:nbsp|#160);/g, ' ')
+      .replace(/&[#\w]+;/g, 'x')
+      .split(/\s+/)
+      .filter(Boolean).length;
+    const exercises = (material.match(/<div class="exercise"[\s>]/g) || []).length;
+    const figures = (material.match(/\sclass="viz(?:\s[^"]*)?"/g) || []).length;
+    const items = [
+      ['fa-regular fa-clock', readingTime(words)],
+      ...(exercises ? [['fa fa-pencil', `${exercises} exercise${exercises === 1 ? '' : 's'}`]] : []),
+      ...(figures ? [['fa fa-play-circle', `${figures} interactive figure${figures === 1 ? '' : 's'}`]] : []),
+    ];
+
+    return [
+      `${indent}<ul class="page-hero__meta"${attributes}>`,
+      ...items.map(([icon, label]) => `${indent}  <li><i class="${icon}" aria-hidden="true"></i>${label}</li>`),
+      `${indent}</ul>`,
+    ].join('\n');
+  });
+}
+
 function syncPage(text, page, config) {
   let out = text;
 
@@ -126,7 +179,7 @@ function syncPage(text, page, config) {
     out = `${out.slice(0, i + start.length)}\n${render(name, page, config).replace(/\n$/, '')}\n${out.slice(out.lastIndexOf('\n', j) + 1)}`;
   });
 
-  return syncDates(out, page);
+  return syncMeta(syncDates(out, page), page);
 }
 
 const changed = [];
