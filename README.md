@@ -95,7 +95,8 @@ load `javascripts/math.js`, which typesets them with KaTeX. Pseudocode listings 
 
 A displayed formula that is wider than the column scrolls sideways. So does a drawn diagram (`<svg class="dg">`)
 on a narrow screen: `src/javascripts/ui.js` keeps it at least 3/4 of its viewBox width in pixels, so that its
-labels stay about 10 px on a phone instead of shrinking to 5 px. Both fade out on the side where there is more.
+labels stay about 10 px on a phone instead of shrinking to 5 px. Both fade out on the side where there is more;
+`src/javascripts/scroll-fades.js` measures all of them in one batch, after the browser's own layout.
 
 ### Formulas typeset in advance
 

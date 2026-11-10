@@ -8,49 +8,14 @@
 import katex from 'katex';
 
 import { options } from './math-options';
+import watchFades from './scroll-fades';
 
 export function render(tex, node, displayMode = false) {
   katex.render(tex, node, options(displayMode));
 }
 
-// A displayed formula wider than the column scrolls sideways; a fade on the clipped side shows that
-// there is more to see. A formula changes width when the math fonts arrive, and no resize of a box
-// reports that (the formula overflows its box), so every formula is measured again once fonts have
-// loaded; a resize of the column (the window, the text size) is observed.
-const updates = new Set();
-
-if (document.fonts && 'onloadingdone' in document.fonts) {
-  document.fonts.addEventListener('loadingdone', () => updates.forEach(update => update()));
-}
-
-function watchOverflow(scroller) {
-  const update = () => {
-    if (!scroller.isConnected) {
-      updates.delete(update);
-      return;
-    }
-
-    const hidden = scroller.scrollWidth - scroller.clientWidth;
-
-    scroller.classList.toggle('fade-left', hidden > 1 && scroller.scrollLeft > 1);
-    scroller.classList.toggle('fade-right', hidden > 1 && scroller.scrollLeft < hidden - 1);
-  };
-
-  scroller.addEventListener('scroll', update, { passive: true });
-
-  if ('ResizeObserver' in window) {
-    new ResizeObserver(update).observe(scroller);
-  }
-
-  updates.add(update);
-
-  if (document.fonts) {
-    document.fonts.ready.then(update);
-  }
-
-  update();
-}
-
+// A displayed formula wider than the column scrolls sideways; a fade on the clipped side shows that there
+// is more to see (scroll-fades.js measures all of them at once, after the layout).
 export function typeset(root = document) {
   root.querySelectorAll('.math:not(.is-typeset)').forEach(node => {
     const tex = node.textContent.trim();
@@ -61,10 +26,7 @@ export function typeset(root = document) {
   });
 
   // The displayed formulas, typeset just now or in advance.
-  root.querySelectorAll('.math > .katex-display:not(.is-watched)').forEach(scroller => {
-    scroller.classList.add('is-watched');
-    watchOverflow(scroller);
-  });
+  root.querySelectorAll('.math > .katex-display').forEach(watchFades);
 }
 
 window.IntroAI = Object.assign(window.IntroAI || {}, { math: { render, typeset } });
