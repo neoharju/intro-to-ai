@@ -1,0 +1,53 @@
+// The glossary (glossary/index.html): the letters are sections and the terms subsections, so that the
+// table of contents lists them (without numbers, see table-of-contents.js) and the search finds every term.
+.glossary {
+  &__intro {
+    max-width: 46rem;
+  }
+
+  &__letters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .4rem;
+    margin: 1.25rem 0 1.5rem;
+
+    a {
+      display: inline-grid;
+      place-items: center;
+      min-width: 2.25rem;
+      height: 2.25rem;
+      font-weight: 650;
+      color: var(--ink);
+      text-decoration: none;
+      background-color: var(--surface-2);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      transition: background-color .15s, border-color .15s;
+
+      &:hover,
+      &:focus-visible {
+        background-color: var(--surface);
+        border-color: var(--primary-line);
+      }
+    }
+  }
+
+  h2.material-heading {
+    padding-bottom: .35rem;
+    border-bottom: 1px solid var(--line);
+  }
+
+  h3.material-heading {
+    margin: 1.5rem 0 .35rem;
+    font-size: 1.125rem;
+  }
+
+  h3 + p {
+    margin-bottom: .3rem;
+  }
+
+  &__where {
+    font-size: .875rem;
+    color: var(--muted);
+  }
+}

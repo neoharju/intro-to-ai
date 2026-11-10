@@ -20,6 +20,7 @@
     "week5/index.html": { "title": "Week 5", "simple": true, "scripts": ["math.js", "main.js", "week5.js"] },
     "week6/index.html": { "title": "Week 6", "simple": true, "scripts": ["math.js", "main.js", "week6.js"] },
     "week7/index.html": { "title": "Week 7", "simple": true, "scripts": ["math.js", "main.js", "week7.js"] },
-    "quiz/index.html": { "title": "Quiz", "scripts": ["math.js", "quiz.js", "main.js"] }
+    "quiz/index.html": { "title": "Quiz", "scripts": ["math.js", "quiz.js", "main.js"] },
+    "glossary/index.html": { "title": "Glossary", "scripts": ["main.js"] }
   }
 }

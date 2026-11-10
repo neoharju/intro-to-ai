@@ -26,6 +26,8 @@ class TableOfContents {
       }
     });
 
+    // The glossary (data-unnumbered) shows its letters and terms without section numbers.
+    this.numbered = !document.querySelector('#material[data-unnumbered]');
     this.addNumbers();
 
     this.sections.forEach(section => {
@@ -131,11 +133,13 @@ class TableOfContents {
       parent.children.push(section);
       stack.push(section);
 
-      headingNode.prepend(`
-        <small class="text-muted">
-          ${sectionString}.
-        </small>
-      `);
+      if (this.numbered) {
+        headingNode.prepend(`
+          <small class="text-muted">
+            ${sectionString}.
+          </small>
+        `);
+      }
     });
 
     this.sections = root.children;
@@ -147,7 +151,7 @@ class TableOfContents {
     const linkNode = $('<a></a>')
       .attr('href', section.href)
       .addClass(`table-of-contents__link table-of-contents__link--level-${level}`)
-      .text(`${section.sectionString}. ${section.title}`);
+      .text(this.numbered ? `${section.sectionString}. ${section.title}` : section.title);
 
     const newNode = $('<li></li>').append(linkNode);
 

@@ -17,7 +17,7 @@ RUN --mount=type=cache,target=/root/.npm \
 COPY . .
 RUN npm run build \
     && mkdir /site \
-    && cp -R index.html LICENSE week* quiz img files fonts javascripts stylesheets /site/
+    && cp -R index.html LICENSE week* quiz glossary img files fonts javascripts stylesheets /site/
 
 # The -slim variant: nginx without the optional modules and curl, which a static site does not need.
 FROM nginxinc/nginx-unprivileged:1.30.6-alpine3.24-slim@sha256:5d8bb9437d74a600ec5dbf90c035451c724dc33eac8d3a71078f6f8612c345f6 AS site

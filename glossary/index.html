@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!-- shared:head -->
+  <title>Introduction to Artificial Intelligence 2026 | Glossary</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="../img/favicon.svg" type="image/svg+xml">
+  <link href="../stylesheets/main.css" rel="stylesheet" />
+  <script src="../javascripts/theme.js"></script>
+  <!-- /shared:head -->
+</head>
+
+<body>
+  <div class="main-wrapper">
+    <div class="header-wrapper">
+
+      <!-- shared:navbar -->
+      <nav class="navbar navbar-expand navbar-light bg-white">
+        <a class="navbar-brand" href="https://www.mooc.fi/" alt="MOOC" target="_blank" rel="noopener">
+          <span class="icon-mooc"></span>
+        </a>
+
+        <ul class="nav navbar-nav d-none d-lg-flex">
+          <li class="nav-item">
+            <a href="../" class="nav-link">Introduction</a>
+          </li>
+          <li class="nav-item">
+            <a href="../week1/" class="nav-link">Week 1</a>
+          </li>
+          <li class="nav-item">
+            <a href="../week2/" class="nav-link">Week 2</a>
+          </li>
+          <li class="nav-item">
+            <a href="../week3/" class="nav-link">Week 3</a>
+          </li>
+          <li class="nav-item">
+            <a href="../week4/" class="nav-link">Week 4</a>
+          </li>
+          <li class="nav-item">
+            <a href="../week5/" class="nav-link">Week 5</a>
+          </li>
+          <li class="nav-item">
+            <a href="../week6/" class="nav-link">Week 6</a>
+          </li>
+          <li class="nav-item">
+            <a href="../week7/" class="nav-link">Week 7</a>
+          </li>
+          <li class="nav-item">
+            <a href="../quiz/" class="nav-link">Quiz</a>
+          </li>
+        </ul>
+
+        <div class="ms-auto navbar__buttons">
+          <div class="dropdown" id="mobile-nav-dropdown">
+            <button class="btn btn-secondary dropdown-toggle navbar__mobile-nav-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fa fa-bars"></i>
+            </button>
+
+            <div class="dropdown-menu dropdown-menu-end">
+            </div>
+          </div>
+
+          <button class="btn btn-secondary" id="table-of-contents-toggle" aria-label="Table of contents">
+            <span class="d-none d-xl-inline">Table of contents</span>
+            <i class="fa fa-ellipsis-h d-xl-none"></i>
+          </button>
+        </div>
+      </nav>
+      <!-- /shared:navbar -->
+
+    </div>
+
+    <div class="content-wrapper">
+      <header class="page-hero">
+        <div class="container">
+          <p class="page-hero__eyebrow"><b>Reference</b>90 terms &middot; weeks 1&ndash;7</p>
+          <h1 class="page-hero__title">Glossary</h1>
+        </div>
+      </header>
+
+      <div class="container material glossary" id="material" data-unnumbered>
+
+        <p class="glossary__intro">
+          Short definitions of the main terms of the course, each with a link to the section that introduces it.
+          To find every place where a term is used, search the material (<kbd>Ctrl</kbd>+<kbd>K</kbd>, or
+          <kbd>&#8984;</kbd><kbd>K</kbd> on a Mac).
+        </p>
+
+        <nav class="glossary__letters" aria-label="Letters">
+          <a href="#a">A</a> <a href="#b">B</a> <a href="#c">C</a> <a href="#d">D</a> <a href="#e">E</a> <a href="#f">F</a> <a href="#g">G</a> <a href="#h">H</a> <a href="#i">I</a> <a href="#k">K</a> <a href="#l">L</a> <a href="#m">M</a> <a href="#n">N</a> <a href="#o">O</a> <a href="#p">P</a> <a href="#q">Q</a> <a href="#r">R</a> <a href="#s">S</a> <a href="#t">T</a> <a href="#v">V</a> <a href="#x">X</a>
+        </nav>
+
+        <h2 class="material-heading">A</h2>
+        <h3 class="material-heading">A* search</h3>
+        <p>Best-first search that always expands the state with the smallest estimated total cost: the cost of the path so far plus a heuristic estimate of the cost from there to the goal. With an admissible heuristic, the path it finds is optimal.</p>
+        <p class="glossary__where">Week 1: <a href="../week1/#informed-search-and-a">Informed search and A*</a></p>
+        <h3 class="material-heading">Activation function</h3>
+        <p>The function that a neuron applies to its weighted sum, such as ReLU, the sigmoid or tanh. It has to be nonlinear: without it, any number of layers computes no more than a single linear map.</p>
+        <p class="glossary__where">Week 4: <a href="../week4/#activations">Why nonlinear activations are essential</a></p>
+        <h3 class="material-heading">Admissible heuristic</h3>
+        <p>A heuristic that never overestimates the true cost from a state to the goal.</p>
+        <p class="glossary__where">Week 1: <a href="../week1/#informed-search-and-a">Informed search and A*</a></p>
+        <h3 class="material-heading">Agent</h3>
+        <p>Anything that perceives its environment through sensors and acts on it through actuators. A rational agent chooses the action that it expects to do best by its performance measure, given what it knows.</p>
+        <p class="glossary__where">Week 6: <a href="../week6/#rational-action-under-limited-information">Rational action under limited information</a></p>
+        <h3 class="material-heading">AGI (artificial general intelligence)</h3>
+        <p>A hypothetical AI system that could do most of the cognitive tasks that people can, at least as well as people, instead of one narrow task.</p>
+        <p class="glossary__where">Week 1: <a href="../week1/#narrow-ai-general-purpose-models-and-agi">Narrow AI, general-purpose models and AGI</a></p>
+        <h3 class="material-heading">AI winter</h3>
+        <p>A period of reduced funding, investment and confidence in AI after expectations were disappointed: roughly the mid-1970s to the early 1980s, and the late 1980s to the mid-1990s. Research did not stop.</p>
+        <p class="glossary__where">Week 1: <a href="../week1/#ai-winters">AI winters: when expectations exceeded results</a></p>
+        <h3 class="material-heading">Alpha-beta pruning</h3>
+        <p>Minimax that skips the branches that cannot change the result, using the values that each player is already guaranteed (&alpha; for Max, &beta; for Min). It returns the same value as minimax with less work, the more so the better the moves are ordered.</p>
+        <p class="glossary__where">Week 1: <a href="../week1/#alpha-beta-pruning">Alpha-beta pruning</a></p>
+        <h3 class="material-heading">Attention</h3>
+        <p>A layer that computes each output as a weighted average of value vectors. The weights, a softmax of the dot products of a query with the keys, say how relevant each position is.</p>
+        <p class="glossary__where">Week 5: <a href="../week5/#attention-layer">Attention layer</a></p>
+        <h3 class="material-heading">Autoencoder</h3>
+        <p>A network trained to reproduce its input through a narrow middle layer, which makes it learn a compact code of the data without any labels.</p>
+        <p class="glossary__where">Week 4: <a href="../week4/#autoencoders">Autoencoders: learning without class labels</a></p>
+        <h2 class="material-heading">B</h2>
+        <h3 class="material-heading">Backpropagation</h3>
+        <p>The algorithm that computes the gradient of the loss with respect to every weight of a network, layer by layer from the output back to the input, with the chain rule.</p>
+        <p class="glossary__where">Week 4: <a href="../week4/#backprop">Backpropagation: calculating which changes would reduce loss</a></p>
+        <h3 class="material-heading">Bagging</h3>
+        <p>Bootstrap aggregating: every model of an ensemble is trained on a bootstrap sample of the training data (drawn with replacement), and their predictions are averaged or put to a vote. It reduces variance.</p>
+        <p class="glossary__where">Week 3: <a href="../week3/#bagging">Bagging</a></p>
+        <h3 class="material-heading">Bayes rule</h3>
+        <p>P(A | B) = P(B | A) P(A) / P(B). It turns the probability of the evidence given a hypothesis into the probability of the hypothesis given the evidence.</p>
+        <p class="glossary__where">Week 2: <a href="../week2/#bayes-rule-and-probabilistic-inference">Bayes rule and probabilistic inference</a></p>
+        <h3 class="material-heading">Bayesian network</h3>
+        <p>A directed acyclic graph whose nodes are random variables. Every node has a conditional probability table given its parents, and the product of these tables is the joint distribution of all the variables.</p>
+        <p class="glossary__where">Week 3: <a href="../week3/#building-blocks-of-a-bayesian-network">Building blocks of a Bayesian network</a></p>
+        <h3 class="material-heading">Bellman equation</h3>
+        <p>The value of a state is the expected immediate reward plus the discounted value of the next state. Value functions and Q-learning rest on it.</p>
+        <p class="glossary__where">Week 6: <a href="../week6/#values-bellman">Why value functions help with delayed reward</a></p>
+        <h3 class="material-heading">BERT</h3>
+        <p>An encoder-only Transformer, pretrained to predict masked words from the words on both sides of them. It is used for tasks that need understanding, such as classification.</p>
+        <p class="glossary__where">Week 5: <a href="../week5/#bert-and-gpt">BERT and GPT</a></p>
+        <h3 class="material-heading">Boosting</h3>
+        <p>Trains weak models one after another, each concentrating on the errors that the models before it still make, and adds them up into one strong model.</p>
+        <p class="glossary__where">Week 3: <a href="../week3/#boosting">Boosting</a></p>
+        <h3 class="material-heading">Breadth-first search</h3>
+        <p>Explores the states in the order of their distance from the start (a first-in, first-out queue). It finds a path with the fewest steps, but keeps the whole frontier in memory.</p>
+        <p class="glossary__where">Week 1: <a href="../week1/#breadth-first-and-depth-first-search">Breadth-first and depth-first search</a></p>
+        <h2 class="material-heading">C</h2>
+        <h3 class="material-heading">Chinese room</h3>
+        <p>Searle's thought experiment: a person who answers Chinese questions by following a rule book can give correct answers without understanding Chinese. Running a program (syntax) is therefore not enough for understanding (semantics).</p>
+        <p class="glossary__where">Week 1: <a href="../week1/#searle-syntax-is-not-automatically-semantics">Searle: syntax is not automatically semantics</a></p>
+        <h3 class="material-heading">Classification</h3>
+        <p>Supervised learning in which the output is a category, such as spam or not spam.</p>
+        <p class="glossary__where">Week 3: <a href="../week3/#problem-formulation">Problem formulation</a></p>
+        <h3 class="material-heading">Conditional probability</h3>
+        <p>P(A | B), the probability of A when B is known to be true: P(A and B) / P(B).</p>
+        <p class="glossary__where">Week 2: <a href="../week2/#probability-fundamentals">Probability fundamentals</a></p>
+        <h3 class="material-heading">Conditional probability table (CPT)</h3>
+        <p>In a Bayesian network, the probabilities of the values of a node for every combination of the values of its parents.</p>
+        <p class="glossary__where">Week 3: <a href="../week3/#building-blocks-of-a-bayesian-network">Building blocks of a Bayesian network</a></p>
+        <h3 class="material-heading">Convolutional neural network (CNN)</h3>
+        <p>A network for grid data such as images. Its layers slide small filters with shared weights across the input, so that a pattern is found wherever it is.</p>
+        <p class="glossary__where">Week 4: <a href="../week4/#cnn">Why images motivate convolutional networks</a></p>
+        <h2 class="material-heading">D</h2>
+        <h3 class="material-heading">Decision tree</h3>
+        <p>A tree of tests on the features: an example goes from the root down to a leaf, which gives the prediction. It is grown greedily, choosing at each node the test with the highest information gain (or a similar criterion).</p>
+        <p class="glossary__where">Week 3: <a href="../week3/#decision-trees">Decision trees</a></p>
+        <h3 class="material-heading">Depth-first search</h3>
+        <p>Follows one path as deep as possible before backing up (a last-in, first-out stack). It needs little memory but can find long paths, and without a record of the visited states it can loop.</p>
+        <p class="glossary__where">Week 1: <a href="../week1/#breadth-first-and-depth-first-search">Breadth-first and depth-first search</a></p>
+        <h3 class="material-heading">Discount factor</h3>
+        <p>The number &gamma; between 0 and 1 that weights a reward <i>k</i> steps ahead by &gamma;<sup><i>k</i></sup>, so that a reward now counts more than the same reward later.</p>
+        <p class="glossary__where">Week 6: <a href="../week6/#why-mdp">Why introduce a Markov decision process?</a></p>
+        <h2 class="material-heading">E</h2>
+        <h3 class="material-heading">Embedding</h3>
+        <p>A learned vector that represents a discrete item, such as a word or a token, so that similar items get nearby vectors.</p>
+        <p class="glossary__where">Week 4: <a href="../week4/#embeddings">From discrete identifiers to learned embeddings</a></p>
+        <h3 class="material-heading">Ensemble</h3>
+        <p>A model that combines the predictions of several models. Bagging, random forests, boosting and stacking make ensembles.</p>
+        <p class="glossary__where">Week 3: <a href="../week3/#ensembles-in-machine-learning">Ensembles in machine learning</a></p>
+        <h3 class="material-heading">Entropy</h3>
+        <p>A measure of uncertainty. For class proportions <i>p</i><sub>1</sub>, &hellip;, <i>p</i><sub><i>k</i></sub> it is &minus;&Sigma; <i>p</i><sub><i>i</i></sub> log<sub>2</sub> <i>p</i><sub><i>i</i></sub>: 0 when all examples have one class, log<sub>2</sub> <i>k</i> when all classes are equally common.</p>
+        <p class="glossary__where">Week 3: <a href="../week3/#entropy">Entropy</a></p>
+        <h3 class="material-heading">Epoch</h3>
+        <p>One pass through the whole training set.</p>
+        <p class="glossary__where">Week 4: <a href="../week4/#optimization">Epochs, batches and optimizers</a></p>
+        <h3 class="material-heading">EU AI Act</h3>
+        <p>The regulation of the European Union on AI systems (2024). It sorts them by risk: unacceptable-risk practices are prohibited, high-risk systems must meet strict requirements, limited-risk systems have transparency duties, and minimal-risk systems no specific ones.</p>
+        <p class="glossary__where">Week 7: <a href="../week7/#eu-ai-act">EU AI Act</a></p>
+        <h3 class="material-heading">Explainable AI (XAI)</h3>
+        <p>Methods that show what a prediction of a model rests on, for example which features changed it the most.</p>
+        <p class="glossary__where">Week 7: <a href="../week7/#explainable-ai-what-does-the-model-actually-use">Explainable AI: what does the model actually use?</a></p>
+        <h3 class="material-heading">Exploration and exploitation</h3>
+        <p>The choice of an agent that learns by acting: exploit the best action known so far, or explore others that may turn out better. An &epsilon;-greedy agent explores with probability &epsilon;.</p>
+        <p class="glossary__where">Week 6: <a href="../week6/#exploration">Why learning requires exploration</a></p>
+        <h2 class="material-heading">F</h2>
+        <h3 class="material-heading">Fine-tuning</h3>
+        <p>Training a pretrained model further on a smaller dataset, for a particular task.</p>
+        <p class="glossary__where">Week 5: <a href="../week5/#transfer-and-adaptation">Transfer and adaptation</a></p>
+        <h3 class="material-heading">Forward propagation</h3>
+        <p>Computing the output of a network from its input, layer by layer.</p>
+        <p class="glossary__where">Week 4: <a href="../week4/#mlp">Multilayer networks and forward propagation</a></p>
+        <h3 class="material-heading">Foundation model</h3>
+        <p>A large model pretrained on broad data, usually without labels (self-supervised), that can be adapted to many tasks.</p>
+        <p class="glossary__where">Week 5: <a href="../week5/#from-task-specific-models-to-foundation-models">From task-specific models to foundation models</a></p>
+        <h2 class="material-heading">G</h2>
+        <h3 class="material-heading">Game tree</h3>
+        <p>The positions of a game as a tree: the root is the current position, the children of a node are the positions after each legal move, and the leaves are the final positions with their values.</p>
+        <p class="glossary__where">Week 1: <a href="../week1/#game-trees">Game trees</a></p>
+        <h3 class="material-heading">GAN (generative adversarial network)</h3>
+        <p>Two networks trained against each other: a generator that turns random noise into fake examples, and a discriminator that tries to tell them from real ones.</p>
+        <p class="glossary__where">Week 5: <a href="../week5/#generative-adversarial-networks">Generative adversarial networks</a></p>
+        <h3 class="material-heading">Generalization</h3>
+        <p>How well a model does on new data that it was not trained on: the aim of learning.</p>
+        <p class="glossary__where">Week 4: <a href="../week4/#generalization">Learning the training set is not the same as learning the task</a></p>
+        <h3 class="material-heading">Generative model</h3>
+        <p>A model of how the data are distributed, which can generate new examples (and, for some models, say how probable an example is).</p>
+        <p class="glossary__where">Week 5: <a href="../week5/#generative-models">Generative models</a></p>
+        <h3 class="material-heading">GOFAI</h3>
+        <p>Good Old-Fashioned AI: the symbolic approach that represents knowledge with explicit symbols and rules and reasons by manipulating them.</p>
+        <p class="glossary__where">Week 1: <a href="../week1/#gofai-modern-ai">Good Old-Fashioned AI (GOFAI) versus modern AI</a></p>
+        <h3 class="material-heading">GPT</h3>
+        <p>A decoder-only Transformer, pretrained to predict the next token from the tokens before it. It generates text one token at a time.</p>
+        <p class="glossary__where">Week 5: <a href="../week5/#bert-and-gpt">BERT and GPT</a></p>
+        <h3 class="material-heading">Gradient descent</h3>
+        <p>Minimizes a loss by moving the parameters again and again a small step (the learning rate) against the gradient. Stochastic gradient descent takes the gradient of a mini-batch instead of the whole training set.</p>
+        <p class="glossary__where">Week 3: <a href="../week3/#model-and-learning-algorithm">Model and learning algorithm</a> &middot; Week 4: <a href="../week4/#optimization">Epochs, batches and optimizers</a></p>
+        <h2 class="material-heading">H</h2>
+        <h3 class="material-heading">Hallucination</h3>
+        <p>An output of a generative model that is fluent and convincing but false, or not supported by its sources.</p>
+        <p class="glossary__where">Week 7: <a href="../week7/#ai-hallucinations-or-convincing-but-inaccurate-outputs">AI &ldquo;hallucinations&rdquo;, or convincing but inaccurate outputs</a></p>
+        <h3 class="material-heading">Heuristic</h3>
+        <p>A rule of thumb. In search, an estimate of the cost from a state to the goal, used to decide which state to expand first.</p>
+        <p class="glossary__where">Week 1: <a href="../week1/#informed-search-and-a">Informed search and A*</a></p>
+        <h3 class="material-heading">Heuristic evaluation function</h3>
+        <p>An estimate of the value of a game position, used when minimax stops at a depth limit before the end of the game.</p>
+        <p class="glossary__where">Week 1: <a href="../week1/#depth-limited-minimax-and-heuristic-evaluation-criteria">Depth-limited minimax and heuristic evaluation criteria</a></p>
+        <h3 class="material-heading">High-risk AI system</h3>
+        <p>In the EU AI Act, a system used where it can seriously affect health, safety or fundamental rights, for example in hiring, education or credit scoring. It must meet requirements on risk management, data, documentation and human oversight.</p>
+        <p class="glossary__where">Week 7: <a href="../week7/#high-risk-ai-systems-chapter-iii">High-risk AI systems (Chapter III)</a></p>
+        <h2 class="material-heading">I</h2>
+        <h3 class="material-heading">Information gain</h3>
+        <p>How much a split reduces entropy: the entropy before the split minus the weighted entropy of the parts.</p>
+        <p class="glossary__where">Week 3: <a href="../week3/#information-gain">Information gain</a></p>
+        <h2 class="material-heading">K</h2>
+        <h3 class="material-heading">k-nearest neighbours (k-NN)</h3>
+        <p>Predicts from the <i>k</i> training examples that are closest to the new example: their most common class, or the average of their values.</p>
+        <p class="glossary__where">Week 3: <a href="../week3/#k-nearest-neighbors-knn-algorithm-fast-nearest-neighbor-search">K-nearest neighbors (KNN) algorithm</a></p>
+        <h3 class="material-heading">KV cache</h3>
+        <p>In a Transformer that generates text, the stored keys and values of the earlier tokens. Each new token then needs the query, key and value of that token only, instead of those of the whole sequence.</p>
+        <p class="glossary__where">Week 5: <a href="../week5/#why-generation-is-fast-the-kv-cache">Why generation is fast: the KV cache</a></p>
+        <h2 class="material-heading">L</h2>
+        <h3 class="material-heading">Latent space</h3>
+        <p>The space of the internal codes of a model. In a generative model, points of it map to examples, and nearby points to similar examples.</p>
+        <p class="glossary__where">Week 5: <a href="../week5/#interpolations-in-latent-space">Interpolations in latent space</a></p>
+        <h3 class="material-heading">Learning rate</h3>
+        <p>The size of the step that gradient descent takes against the gradient: too small and learning is slow, too large and it does not settle.</p>
+        <p class="glossary__where">Week 4: <a href="../week4/#optimization">Epochs, batches and optimizers</a></p>
+        <h3 class="material-heading">Linear regression</h3>
+        <p>Predicts a number as a weighted sum of the features plus a constant. The weights are usually chosen to minimize the squared error on the training data.</p>
+        <p class="glossary__where">Week 3: <a href="../week3/#mathematical-formulation">Mathematical formulation</a></p>
+        <h3 class="material-heading">Logistic regression</h3>
+        <p>A linear classifier that turns the weighted sum of the features into a probability with the sigmoid function.</p>
+        <p class="glossary__where">Week 3: <a href="../week3/#logistic-regression">Logistic regression</a></p>
+        <h3 class="material-heading">Loss function</h3>
+        <p>A number that measures how wrong the predictions are, such as the squared error or the cross-entropy. Training minimizes it.</p>
+        <p class="glossary__where">Week 4: <a href="../week4/#loss">What is the network trying to minimize?</a></p>
+        <h2 class="material-heading">M</h2>
+        <h3 class="material-heading">Markov decision process (MDP)</h3>
+        <p>A model of sequential decisions: states, actions, transition probabilities, rewards and a discount factor. The next state depends only on the current state and action (the Markov property).</p>
+        <p class="glossary__where">Week 6: <a href="../week6/#why-mdp">Why introduce a Markov decision process?</a></p>
+        <h3 class="material-heading">Minimax</h3>
+        <p>Computes the value of a game position when both players play their best: Max takes the largest value of the children, Min the smallest.</p>
+        <p class="glossary__where">Week 1: <a href="../week1/#minimax-algorithm">Minimax algorithm</a></p>
+        <h3 class="material-heading">Monte Carlo inference</h3>
+        <p>Estimating a probability by drawing many random samples from a model and counting how often the event happens.</p>
+        <p class="glossary__where">Week 3: <a href="../week3/#approximate-inference-monte-carlo">Approximate inference (Monte Carlo)</a></p>
+        <h3 class="material-heading">Multi-agent system</h3>
+        <p>Several agents that act in a shared environment, cooperating or competing; what they do together can differ from what any one of them does.</p>
+        <p class="glossary__where">Week 6: <a href="../week6/#multi-agent-systems">Multi-agent systems</a></p>
+        <h3 class="material-heading">Multi-head attention</h3>
+        <p>Several attention layers (heads) side by side, each with its own projections of the queries, keys and values, so that each can attend to a different kind of relation; their outputs are joined.</p>
+        <p class="glossary__where">Week 5: <a href="../week5/#multi-head-attention">Multi-head attention</a></p>
+        <h3 class="material-heading">Multilayer perceptron (MLP)</h3>
+        <p>A network of layers of neurons with nonlinear activations, each layer feeding the next. With a hidden layer it can learn decision boundaries that are not straight, such as XOR.</p>
+        <p class="glossary__where">Week 4: <a href="../week4/#mlp">Multilayer networks and forward propagation</a></p>
+        <h2 class="material-heading">N</h2>
+        <h3 class="material-heading">Naive Bayes classifier</h3>
+        <p>Classifies with Bayes rule, assuming that the features are conditionally independent given the class.</p>
+        <p class="glossary__where">Week 2: <a href="../week2/#naive-bayes-classification">Naive Bayes classification</a></p>
+        <h3 class="material-heading">Narrow AI</h3>
+        <p>AI built for one task or a narrow range of tasks, such as playing chess or recognizing speech.</p>
+        <p class="glossary__where">Week 1: <a href="../week1/#narrow-ai-general-purpose-models-and-agi">Narrow AI, general-purpose models and AGI</a></p>
+        <h2 class="material-heading">O</h2>
+        <h3 class="material-heading">Overfitting</h3>
+        <p>Fitting the training data, noise included, so closely that the model does worse on new data.</p>
+        <p class="glossary__where">Week 3: <a href="../week3/#model-selection-and-overfitting">Model selection and overfitting</a> &middot; Week 4: <a href="../week4/#generalization">Learning the training set is not the same as learning the task</a></p>
+        <h2 class="material-heading">P</h2>
+        <h3 class="material-heading">PEAS</h3>
+        <p>A way to specify the task of an agent: its Performance measure, Environment, Actuators and Sensors.</p>
+        <p class="glossary__where">Week 6: <a href="../week6/#specifying-a-task-with-peas">Specifying a task with PEAS</a></p>
+        <h3 class="material-heading">Perceptron</h3>
+        <p>A single neuron: a weighted sum of the inputs plus a bias, followed by a threshold. Its learning rule moves the decision boundary after each mistake.</p>
+        <p class="glossary__where">Week 4: <a href="../week4/#perceptron">The perceptron as an adjustable decision boundary</a></p>
+        <h3 class="material-heading">Policy</h3>
+        <p>The rule by which an agent chooses its action in each state: a mapping from states to actions, or to probabilities of actions.</p>
+        <p class="glossary__where">Week 6: <a href="../week6/#policies-return">From the model to the objective: policies and return</a></p>
+        <h3 class="material-heading">Positional encoding</h3>
+        <p>Information about the position of each token, added to its embedding, because attention by itself does not see the order of the tokens.</p>
+        <p class="glossary__where">Week 5: <a href="../week5/#attention-layer">Attention layer</a></p>
+        <h3 class="material-heading">Prior and posterior</h3>
+        <p>The prior is the probability of a hypothesis before the evidence; the posterior is its probability given the evidence, by Bayes rule.</p>
+        <p class="glossary__where">Week 2: <a href="../week2/#bayes-rule-and-probabilistic-inference">Bayes rule and probabilistic inference</a></p>
+        <h2 class="material-heading">Q</h2>
+        <h3 class="material-heading">Q-learning</h3>
+        <p>Learns the value Q(<i>s</i>, <i>a</i>) of taking action <i>a</i> in state <i>s</i> from single transitions: after each step, Q(<i>s</i>, <i>a</i>) moves toward the reward plus the discounted value of the best action in the next state. It needs no model of the environment.</p>
+        <p class="glossary__where">Week 6: <a href="../week6/#q-learning">Q-learning: learning an action-value estimate from one transition</a></p>
+        <h3 class="material-heading">Query, key and value</h3>
+        <p>The three vectors that attention computes from each token: the query of a position is compared with the keys of all positions, and the resulting weights average their values.</p>
+        <p class="glossary__where">Week 5: <a href="../week5/#attention-layer">Attention layer</a></p>
+        <h2 class="material-heading">R</h2>
+        <h3 class="material-heading">Random forest</h3>
+        <p>Bagging of decision trees in which each split considers only a random subset of the features, which makes the trees more different from each other.</p>
+        <p class="glossary__where">Week 3: <a href="../week3/#random-forest">Random forest</a></p>
+        <h3 class="material-heading">Recurrent neural network (RNN)</h3>
+        <p>A network that reads a sequence one element at a time and carries a hidden state from one step to the next.</p>
+        <p class="glossary__where">Week 4: <a href="../week4/#sequences">Why sequence order changes the problem</a></p>
+        <h3 class="material-heading">Regression</h3>
+        <p>Supervised learning in which the output is a number, such as a price.</p>
+        <p class="glossary__where">Week 3: <a href="../week3/#problem-formulation">Problem formulation</a></p>
+        <h3 class="material-heading">Reinforcement learning</h3>
+        <p>Learning to act from rewards: the agent is not told the correct action but finds out by trying, and its actions can pay off only much later.</p>
+        <p class="glossary__where">Week 6: <a href="../week6/#rl-foundations">Reinforcement learning: why actions require a different learning problem</a></p>
+        <h3 class="material-heading">ReLU</h3>
+        <p>The activation function max(0, <i>x</i>): zero for a negative input, the input itself otherwise.</p>
+        <p class="glossary__where">Week 4: <a href="../week4/#activations">Why nonlinear activations are essential</a></p>
+        <h3 class="material-heading">RLHF</h3>
+        <p>Reinforcement learning from human feedback: people compare the answers of a language model, a reward model learns their preferences, and reinforcement learning tunes the language model toward answers with a high reward.</p>
+        <p class="glossary__where">Week 6: <a href="../week6/#rl-human-feedback">How human feedback connects RL to language models</a></p>
+        <h3 class="material-heading">ROC AUC</h3>
+        <p>The area under the ROC curve of a classifier: the probability that a randomly chosen positive example gets a higher score than a randomly chosen negative one (0.5 is guessing, 1 is perfect).</p>
+        <p class="glossary__where">Week 3: <a href="../week3/#what-the-kaggle-score-measures-roc-auc">What the Kaggle score measures: ROC AUC</a></p>
+        <h2 class="material-heading">S</h2>
+        <h3 class="material-heading">Self-attention</h3>
+        <p>Attention in which the queries, keys and values all come from the same sequence, so that the representation of each token takes in the context of the whole sequence.</p>
+        <p class="glossary__where">Week 5: <a href="../week5/#attention-layer">Attention layer</a></p>
+        <h3 class="material-heading">Sigmoid</h3>
+        <p>The function 1 / (1 + <i>e</i><sup>&minus;<i>x</i></sup>), which squashes any number into the interval from 0 to 1. Logistic regression uses it to turn a score into a probability.</p>
+        <p class="glossary__where">Week 3: <a href="../week3/#logistic-regression">Logistic regression</a></p>
+        <h3 class="material-heading">Softmax</h3>
+        <p>Turns a vector of scores into probabilities: each score is exponentiated and divided by the sum of them all.</p>
+        <p class="glossary__where">Week 4: <a href="../week4/#activations">Why nonlinear activations are essential</a> &middot; Week 5: <a href="../week5/#attention-layer">Attention layer</a></p>
+        <h3 class="material-heading">Stacking</h3>
+        <p>An ensemble in which a meta-model learns to combine the predictions of several base models, trained on their out-of-fold predictions.</p>
+        <p class="glossary__where">Week 3: <a href="../week3/#stacking">Stacking</a></p>
+        <h3 class="material-heading">State space</h3>
+        <p>The states of a search problem, with the actions that lead from one to another. Solving the problem means finding a path from the start state to a goal state.</p>
+        <p class="glossary__where">Week 1: <a href="../week1/#formulating-problems-as-search">Formulating problems as search</a></p>
+        <h3 class="material-heading">Supervised learning</h3>
+        <p>Learning a function from examples whose correct outputs (labels) are given.</p>
+        <p class="glossary__where">Week 3: <a href="../week3/#problem-formulation">Problem formulation</a></p>
+        <h2 class="material-heading">T</h2>
+        <h3 class="material-heading">Test set and validation set</h3>
+        <p>Examples kept out of training. The validation set is used to choose between models and settings; the test set only at the end, to estimate how well the chosen model works on new data.</p>
+        <p class="glossary__where">Week 3: <a href="../week3/#model-selection-and-overfitting">Model selection and overfitting</a></p>
+        <h3 class="material-heading">Token</h3>
+        <p>A unit of text that a language model reads and writes: a word, a piece of a word or a character, which a tokenizer maps to a number.</p>
+        <p class="glossary__where">Week 5: <a href="../week5/#from-tokens-to-contextual-predictions">From tokens to contextual predictions</a></p>
+        <h3 class="material-heading">Transformer</h3>
+        <p>A neural network built of blocks that each have a self-attention layer and a feed-forward network, with residual connections and layer normalization. Today&rsquo;s language models are Transformers.</p>
+        <p class="glossary__where">Week 5: <a href="../week5/#inside-the-transformer-block">Inside the Transformer block</a></p>
+        <h3 class="material-heading">Turing test</h3>
+        <p>Turing&rsquo;s imitation game: a machine passes if a human judge, conversing with it and with a person in text, cannot reliably tell which is which.</p>
+        <p class="glossary__where">Week 1: <a href="../week1/#turing-operationalizing-intelligent-behaviour">Turing: operationalizing intelligent behaviour</a></p>
+        <h2 class="material-heading">V</h2>
+        <h3 class="material-heading">Value function</h3>
+        <p>The expected return from a state (or from a state and an action: the Q-function) when the agent follows a given policy.</p>
+        <p class="glossary__where">Week 6: <a href="../week6/#values-bellman">Why value functions help with delayed reward</a></p>
+        <h3 class="material-heading">Vision Transformer (ViT)</h3>
+        <p>A Transformer for images: the image is cut into patches, and each patch is treated as a token.</p>
+        <p class="glossary__where">Week 5: <a href="../week5/#transformers-beyond-text">Transformers beyond text</a></p>
+        <h2 class="material-heading">X</h2>
+        <h3 class="material-heading">XOR problem</h3>
+        <p>XOR is not linearly separable, so a single perceptron cannot learn it; a network with a hidden layer can.</p>
+        <p class="glossary__where">Week 4: <a href="../week4/#xor">Why one neuron cannot solve XOR</a></p>
+
+        <nav class="page-nav" aria-label="Previous and next page">
+          <a class="page-nav__link page-nav__link--prev" href="../quiz/" rel="prev">
+            <span class="page-nav__arrow" aria-hidden="true"></span>
+            <span class="page-nav__text">
+              <span class="page-nav__label">Previous &middot; Quiz</span>
+              <span class="page-nav__title">Practice quiz</span>
+            </span>
+          </a>
+        </nav>
+
+      </div>
+    </div>
+
+    <!-- shared:footer -->
+    <div class="footer-wrapper">
+      <footer class="footer">
+        <div>
+          This material is licensed under a <a rel="license"
+            href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons BY-NC-SA 4.0 License</a>.
+        </div>
+      </footer>
+    </div>
+    <!-- /shared:footer -->
+  </div>
+
+
+  <!-- shared:end -->
+  <div class="table-of-contents-layer" id="table-of-contents-layer">
+  </div>
+
+  <div class="table-of-contents" id="table-of-contents">
+    <h1 class="table-of-contents__heading">
+      Table of Contents
+    </h1>
+
+    <div class="table-of-contents__content">
+      <ul id="table-of-contents-list"></ul>
+    </div>
+  </div>
+
+  <script src="../javascripts/main.js"></script>
+  <!-- /shared:end -->
+</body>
+</html>
