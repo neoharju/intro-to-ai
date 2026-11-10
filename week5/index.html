@@ -2497,7 +2497,65 @@ git checkout 3adf61e1</code></pre>
 	  but instead learn to sample from the data distribution.
 	</p>
 	
-	<img src="../img/material/part5/gan-training-basics.svg" alt="GAN Training Fundamentals" width="70%">
+        <svg class="dg" viewBox="0 0 960 470" role="img" aria-label="The training of a GAN. Random noise z goes into the generator G, the counterfeiter, which turns it into fake examples G(z). The discriminator D, the police, gets fake examples and real examples from the training data and gives the probability that its input is real. Two updates close the loop: D is trained to call real examples real and fake ones fake, and G is trained, through the judgement of D, to make D call its fakes real. On the generator stands a cartoon counterfeiter holding a 3-euro note, on the discriminator a police officer with a magnifying glass.">
+          <defs><marker id="dg-gan-head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrowhead" d="M0,0 L10,5 L0,10 z"/></marker></defs>
+          <defs><clipPath id="dg-gan-shirt"><path d="M280 144 V129 Q280 118 291 118 H309 Q320 118 320 129 V144 Z"/></clipPath></defs>
+          <path class="" d="M280 144 V129 Q280 118 291 118 H309 Q320 118 320 129 V144 Z" style="fill:#f8fafc"/>
+          <g clip-path="url(#dg-gan-shirt)" style="stroke:#334155;stroke-width:4"><path d="M278 124 H322"/><path d="M278 132 H322"/><path d="M278 140 H322"/></g>
+          <path class="" d="M280 144 V129 Q280 118 291 118 H309 Q320 118 320 129 V144 Z" style="fill:none;stroke:var(--ink);stroke-width:1.6;stroke-linejoin:round"/>
+          <circle class="" cx="300" cy="105" r="14" style="fill:#f5c9a1;stroke:var(--ink);stroke-width:1.6;stroke-linejoin:round"/>
+          <path class="" d="M286 102 A14 14 0 0 1 314 102 Z" style="fill:#334155;stroke:var(--ink);stroke-width:1.6;stroke-linejoin:round"/>
+          <rect class="" x="284.5" y="99" width="31" height="6" rx="3" style="fill:#475569;stroke:var(--ink);stroke-width:1.6;stroke-linejoin:round"/>
+          <circle class="" cx="300" cy="87.5" r="3.6" style="fill:#ef4444;stroke:var(--ink);stroke-width:1.6;stroke-linejoin:round"/>
+          <rect class="" x="286" y="105.5" width="28" height="7.5" rx="3.8" style="fill:#111827"/>
+          <circle class="" cx="294.5" cy="109.2" r="2.3" style="fill:#fff"/>
+          <circle class="" cx="305.5" cy="109.2" r="2.3" style="fill:#fff"/>
+          <path class="" d="M295 115 Q301 119 306.5 113.5" style="fill:none;stroke:var(--ink);stroke-width:1.6;stroke-linecap:round"/>
+          <path class="" d="M315 130 L324 122" style="fill:none;stroke:var(--ink);stroke-width:3;stroke-linecap:round"/>
+          <g transform="rotate(-12 336 114)"><rect x="320" y="104" width="32" height="19" rx="2.5" style="fill:#bbf7d0;stroke:#15803d;stroke-width:1.5"/><text x="336" y="114" style="font-size:11px;font-weight:800;fill:#166534">3 &#8364;</text></g>
+          <path class="" d="M715 219 V204 Q715 193 726 193 H744 Q755 193 755 204 V219 Z" style="fill:#1e40af;stroke:var(--ink);stroke-width:1.6;stroke-linejoin:round"/>
+          <path class="" d="M731 193 L735 202 L739 193 Z" style="fill:#f8fafc"/>
+          <circle class="" cx="744" cy="204" r="3.4" style="fill:#f59e0b;stroke:#b45309;stroke-width:1"/>
+          <circle class="" cx="735" cy="180" r="14" style="fill:#f5c9a1;stroke:var(--ink);stroke-width:1.6;stroke-linejoin:round"/>
+          <path class="" d="M719 174 L722 162 H748 L751 174 Z" style="fill:#1e3a8a;stroke:var(--ink);stroke-width:1.6;stroke-linejoin:round"/>
+          <rect class="" x="719" y="171.5" width="32" height="4.5" rx="1" style="fill:#0f172a"/>
+          <circle class="" cx="735" cy="167" r="2.8" style="fill:#f59e0b"/>
+          <path class="" d="M718 175 Q735 180 752 175 Z" style="fill:#111827"/>
+          <circle class="" cx="730" cy="183" r="1.9" style="fill:var(--ink)"/>
+          <circle class="" cx="740" cy="183" r="1.9" style="fill:var(--ink)"/>
+          <path class="" d="M727 189.5 Q731 185.5 735 188.5 Q739 185.5 743 189.5 Q739 191.5 735 190 Q731 191.5 727 189.5 Z" style="fill:#78350f"/>
+          <path class="" d="M720 205 L710 195" style="fill:none;stroke:#78350f;stroke-width:3.5;stroke-linecap:round"/>
+          <circle class="" cx="704" cy="189" r="8.5" style="fill:#bae6fd;fill-opacity:.6;stroke:#475569;stroke-width:2.5"/>
+          <rect class="dg-box dg-box--grey" x="20" y="153" width="150" height="74" rx="12"/>
+          <text class="dg-title" x="95" y="179">Noise</text>
+          <text class="dg-small" x="95" y="203" style="fill:var(--ink)">random <tspan class="dg-math">z</tspan></text>
+          <rect class="dg-box dg-box--amber" x="210" y="144" width="180" height="92" rx="12"/>
+          <text class="dg-title" x="300" y="168">Generator G</text>
+          <text class="dg-small" x="300" y="192" style="fill:var(--ink)">the counterfeiter:</text>
+          <text class="dg-small" x="300" y="213" style="fill:var(--ink)">makes fakes</text>
+          <rect class="dg-box dg-box--pink" x="425" y="153" width="170" height="74" rx="12"/>
+          <text class="dg-title" x="510" y="179">Fake examples</text>
+          <text class="dg-small" x="510" y="203" style="fill:var(--ink)"><tspan class="dg-math">G</tspan>(<tspan class="dg-math">z</tspan>)</text>
+          <rect class="dg-box dg-box--blue" x="425" y="303" width="170" height="74" rx="12"/>
+          <text class="dg-title" x="510" y="329">Real examples</text>
+          <text class="dg-small" x="510" y="353" style="fill:var(--ink)"><tspan class="dg-math">x</tspan>, from the data</text>
+          <rect class="dg-box dg-box--violet" x="645" y="219" width="180" height="92" rx="12"/>
+          <text class="dg-title" x="735" y="243">Discriminator D</text>
+          <text class="dg-small" x="735" y="267" style="fill:var(--ink)">the police:</text>
+          <text class="dg-small" x="735" y="288" style="fill:var(--ink)">spots fakes</text>
+          <path class="dg-arrow" d="M172 190 L208 190" marker-end="url(#dg-gan-head)"/>
+          <path class="dg-arrow" d="M392 190 L422 190" marker-end="url(#dg-gan-head)"/>
+          <path class="dg-arrow" d="M597 202 L643 240" marker-end="url(#dg-gan-head)"/>
+          <path class="dg-arrow" d="M597 328 L643 290" marker-end="url(#dg-gan-head)"/>
+          <path class="dg-arrow" d="M827 265 L851 265" marker-end="url(#dg-gan-head)"/>
+          <text class="dg-small" x="905" y="247" style="fill:var(--ink)">real or fake?</text>
+          <text class="dg-small" x="905" y="269"><tspan class="dg-math">D</tspan> = P(real)</text>
+          <text class="dg-small" x="905" y="288">between 0 and 1</text>
+          <path class="dg-arrow" d="M905 306 V435 H735 V317" style="stroke:var(--dg-violet-line);stroke-dasharray:6 5" marker-end="url(#dg-gan-head)"/>
+          <text class="dg-small" x="760" y="452" style="fill:var(--dg-violet-line)">update D: call real examples real and fakes fake</text>
+          <path class="dg-arrow" d="M905 229 V40 H372 V138" style="stroke:var(--dg-amber-line);stroke-dasharray:6 5" marker-end="url(#dg-gan-head)"/>
+          <text class="dg-small" x="640" y="24" style="fill:var(--dg-amber-line)">update G, through D: make D call the fakes real</text>
+        </svg>
 	
 	<p>
 	  A classical analogy for how GANs learn is the scenario of a counterfeiter and a policeman. 
