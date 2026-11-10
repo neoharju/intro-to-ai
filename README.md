@@ -132,6 +132,19 @@ The questions are in `src/javascripts/quiz/questions.json`, 20 for each week. Ea
 question similar in length and form, so that the longest one is not a giveaway. Results are kept in the
 reader's browser only (`localStorage`, key `introai-quiz-v1`). `quiz/#week-3` opens the questions of week 3.
 
+## Shared parts and dates
+
+The head, the navigation bar, the footer and the scripts at the end of every page are written once, in
+`src/partials/`, and copied into the pages by `npm run sync` (also part of `npm run build`): it rewrites the
+regions between `<!-- shared:NAME -->` and `<!-- /shared:NAME -->`, with the title, the scripts and the
+simplified-English setting of each page from `src/site.json`. Edit the partials or `src/site.json`, not the
+regions in the pages. The pages themselves stay plain HTML, so GitHub Pages serves them as they are.
+
+The dates of the course are in `src/schedule.json`. A date in a page or in `src/simple/weekN.txt` is written
+as `<time data-date="lecture-5">We 11/11</time>`; `npm run sync` fills in its text and its `datetime` from the
+schedule, so next year's dates change in one file. `npm run sync -- --check` only reports pages that are out
+of date.
+
 ## Rebuild the assets
 
 The shared JavaScript, CSS and fonts in `javascripts/`, `stylesheets/` and `fonts/vendor/` are built from

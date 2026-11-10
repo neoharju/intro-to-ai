@@ -9,8 +9,9 @@
     "node": ">=22"
   },
   "scripts": {
-    "build": "node scripts/build.mjs",
+    "build": "node scripts/sync.mjs && node scripts/build.mjs",
     "watch": "node scripts/build.mjs --watch",
+    "sync": "node scripts/sync.mjs",
     "simple": "node scripts/simple.mjs"
   },
   "dependencies": {
