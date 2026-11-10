@@ -130,12 +130,15 @@ red-green or pink contrasts), so check a new colour with a colour-blindness simu
 ## Moving between pages
 
 In browsers with cross-document view transitions (Chrome, Edge, Safari 18.2 and later), the old page stays
-on screen until the new one is ready, and then the header changes in 0.15 s: the title and the week label
-morph into the new ones and the navigation bar stays where it is (`src/stylesheets/_hero.scss`). The network
-behind the title goes on from page to page instead of starting again: `src/javascripts/hero.js` keeps its
-nodes for the tab in `sessionStorage` when a page is left, and the next page carries on from them. From a
-page scrolled down, or to a section further down, the page crossfades as a whole. Other browsers, and
-readers who prefer reduced motion, change pages as before.
+on screen until the new one is ready, and then the header changes in 0.15 s: the title, the week label and
+the line under the title morph into the new ones and the navigation bar stays where it is
+(`src/stylesheets/_hero.scss`). The network behind the title goes on from page to page instead of starting
+again: `javascripts/hero.js`, loaded in the `<head>`, puts it in as soon as the header is parsed, so it is
+there in the first frame of the new page, and it carries on from the nodes that the last page kept for the
+tab in `sessionStorage`. It is drawn in a field of the same size on every page (at least 384 px high, more
+than any header), so a shorter header shows less of it rather than a squeezed one. From a page scrolled
+down, or to a section further down, the page crossfades as a whole. Other browsers, and readers who prefer
+reduced motion, change pages as before.
 
 A page of the site is fetched in advance when the reader points at a link to it for 65 ms, touches it or
 moves to it with the keyboard (`src/javascripts/prefetch.js`), so that it is already in the browser's cache

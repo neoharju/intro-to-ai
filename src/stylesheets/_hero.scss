@@ -11,12 +11,14 @@
     linear-gradient(180deg, #f8fafc, #fff);
   border-bottom: 1px solid var(--line);
 
+  // The network's field is as high on every page (hero.js): at least 384 px, more than any header, so that
+  // a shorter header shows less of the same network instead of a squeezed one.
   &__canvas {
     position: absolute;
-    inset: 0;
+    inset: 0 0 auto;
     z-index: -1;
     width: 100%;
-    height: 100%;
+    height: max(100%, 384px);
     pointer-events: none;
     // Fade the network out towards the text on the left.
     -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, .35) 40%, #000 75%);
@@ -188,18 +190,16 @@
 
 // Moving from page to page, in browsers with cross-document view transitions (Chrome, Edge, Safari 18.2):
 // the old page stays on screen until the new one is ready, and then the header changes in 0.15 s. The
-// title and the week label morph into the new ones, the network behind them goes on (hero.js), and the
-// navigation bar stays where it is; the rest of the page crossfades. Other browsers change page as before.
+// title, the week label and the line under the title morph into the new ones, and the navigation bar stays
+// where it is. The network behind them is not part of the morph: the new page draws it from its first frame
+// where the old one left it (hero.js), so the crossfade of the rest of the page leaves it as it is. Other
+// browsers change page as before.
 @view-transition {
   navigation: auto;
 }
 
 .header-wrapper {
   view-transition-name: site-header;
-}
-
-.page-hero__canvas {
-  view-transition-name: hero-network;
 }
 
 .page-hero__eyebrow {
@@ -210,11 +210,15 @@
   view-transition-name: hero-title;
 }
 
-// The header off screen, on the old or the new page (hero.js, theme.js): no morph.
+.page-hero__meta {
+  view-transition-name: hero-meta;
+}
+
+// The header off screen, on the old or the new page (hero.js): no morph.
 .no-hero-morph {
-  .page-hero__canvas,
   .page-hero__eyebrow,
-  .page-hero__title {
+  .page-hero__title,
+  .page-hero__meta {
     view-transition-name: none;
   }
 }
@@ -229,9 +233,28 @@
 ::view-transition-old(hero-title),
 ::view-transition-new(hero-title),
 ::view-transition-old(hero-eyebrow),
-::view-transition-new(hero-eyebrow) {
+::view-transition-new(hero-eyebrow),
+::view-transition-old(hero-meta),
+::view-transition-new(hero-meta) {
   width: auto;
   height: auto;
+}
+
+// The parts of the line under the title that scripts add (the simplified-English switch, the exercises
+// done) fade in instead of appearing at once.
+.page-hero__simple,
+.page-hero__progress {
+  animation: hero-meta-in .2s var(--ease) both;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+@keyframes hero-meta-in {
+  from {
+    opacity: 0;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

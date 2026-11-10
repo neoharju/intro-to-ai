@@ -1,6 +1,7 @@
 // Builds javascripts/main.js, the interactive figures of each week (javascripts/week1.js, ...), the
-// formula typesetting (javascripts/math.js), the practice quiz (javascripts/quiz.js), the colour theme
-// (javascripts/theme.js, loaded in the <head>), stylesheets/main.css and fonts/vendor/* from src/.
+// formula typesetting (javascripts/math.js), the practice quiz (javascripts/quiz.js), the colour theme and
+// the header animation (javascripts/theme.js and hero.js, loaded in the <head>), stylesheets/main.css and
+// fonts/vendor/* from src/.
 // The outputs are committed: GitHub Pages serves this branch as-is, without a build step.
 //
 //   npm run build          one-off build
@@ -62,6 +63,7 @@ const options = {
     'javascripts/math': 'src/javascripts/math.js',
     'javascripts/quiz': 'src/javascripts/quiz.js',
     'javascripts/theme': 'src/javascripts/theme.js',
+    'javascripts/hero': 'src/javascripts/hero.js',
     'stylesheets/main': 'src/stylesheets/main.scss',
   },
   outdir: '.',

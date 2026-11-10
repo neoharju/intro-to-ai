@@ -12,7 +12,6 @@ import Solutions from './solutions';
 import TableOfContents from './table-of-contents';
 import Navigation from './navigation';
 import mountUi from './ui';
-import mountHero from './hero';
 import mountThemeMenu from './theme-menu';
 import mountFontSizeMenu from './font-size-menu';
 import mountZen from './zen';
@@ -60,7 +59,6 @@ $(() => {
 
   highlightCode();
   mountUi();
-  mountHero();
   mountThemeMenu();
   mountFontSizeMenu();
   mountZen();

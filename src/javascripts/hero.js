@@ -1,9 +1,13 @@
-import { prefersReducedMotion } from './utils';
-
-// A slowly drifting network of nodes behind the page title. It is drawn only while the header is on
-// screen, and stays still when the reader prefers reduced motion. It goes on from page to page: when the
-// reader leaves a page, the nodes are kept for this tab (sessionStorage), and the next page carries on
-// from them, moved on by the time that the change of page took, instead of starting again.
+// A slowly drifting network of nodes behind the page title (javascripts/hero.js, loaded in the <head>).
+//
+// It is drawn before the page is first shown: the script waits in the <head> for the header to be parsed
+// and puts its canvas in at once, so a page reached through a view transition (see _hero.scss) already has
+// its network in the first frame. It goes on from page to page: when the reader leaves a page, the nodes are
+// kept for this tab (sessionStorage), and the next page carries on from them, moved on by the time that the
+// change of page took. The network lives in a field of the same size on every page (the canvas is at least
+// 384 px high, more than any header: _hero.scss), of which a shorter header simply shows less, so the nodes
+// keep their places. It is drawn only while the header is on screen, and stays still when the reader
+// prefers reduced motion.
 const LINK_DISTANCE = 130;
 const KEY = 'introai-hero-v1';
 const FRAME = 1000 / 60;
@@ -19,13 +23,7 @@ function saved() {
   }
 }
 
-export default function mountHero() {
-  const hero = document.querySelector('.page-hero');
-
-  if (!hero) {
-    return;
-  }
-
+function mountHero(hero) {
   const canvas = document.createElement('canvas');
   const context = canvas.getContext('2d');
 
@@ -37,7 +35,7 @@ export default function mountHero() {
   canvas.setAttribute('aria-hidden', 'true');
   hero.prepend(canvas);
 
-  const still = prefersReducedMotion();
+  const still = Boolean(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
   let width = 0;
   let height = 0;
   let nodes = [];
@@ -64,10 +62,28 @@ export default function mountHero() {
     };
   }
 
-  // Fits the nodes to a new size of the header: they keep their places relative to it (those of the
-  // previous page, the first time), and nodes are added or dropped so that the density stays the same.
+  function step() {
+    nodes.forEach(node => {
+      node.x += node.vx;
+      node.y += node.vy;
+
+      if (node.x < 0 || node.x > width) {
+        node.vx = -node.vx;
+        node.x = Math.min(width, Math.max(0, node.x));
+      }
+
+      if (node.y < 0 || node.y > height) {
+        node.vy = -node.vy;
+        node.y = Math.min(height, Math.max(0, node.y));
+      }
+    });
+  }
+
+  // Fits the nodes to a new size of the field: they keep their places (those of the previous page, the first
+  // time; scaled only if the field itself changed, as when the window is resized), and nodes are added or
+  // dropped so that the density stays the same.
   function fitNodes(oldWidth, oldHeight) {
-    const count = Math.round(Math.min(64, Math.max(18, width * height / 9000)));
+    const count = Math.round(Math.min(96, Math.max(18, width * height / 9000)));
     let fromWidth = oldWidth;
     let fromHeight = oldHeight;
     let steps = 0;
@@ -80,7 +96,7 @@ export default function mountHero() {
       previous = null;
     }
 
-    if (fromWidth && fromHeight) {
+    if (fromWidth && fromHeight && (Math.abs(fromWidth - width) > 1 || Math.abs(fromHeight - height) > 1)) {
       nodes.forEach(node => {
         node.x *= width / fromWidth;
         node.y *= height / fromHeight;
@@ -127,23 +143,6 @@ export default function mountHero() {
     });
   }
 
-  function step() {
-    nodes.forEach(node => {
-      node.x += node.vx;
-      node.y += node.vy;
-
-      if (node.x < 0 || node.x > width) {
-        node.vx = -node.vx;
-        node.x = Math.min(width, Math.max(0, node.x));
-      }
-
-      if (node.y < 0 || node.y > height) {
-        node.vy = -node.vy;
-        node.y = Math.min(height, Math.max(0, node.y));
-      }
-    });
-  }
-
   function tick() {
     frame = 0;
 
@@ -157,17 +156,16 @@ export default function mountHero() {
   }
 
   function start() {
-    if (!still && !frame) {
+    if (!still && !frame && width) {
       frame = window.requestAnimationFrame(tick);
     }
   }
 
   function resize() {
-    const rect = hero.getBoundingClientRect();
+    const rect = canvas.getBoundingClientRect();
     const ratio = Math.min(2, window.devicePixelRatio || 1);
-    const resized = Math.abs(rect.width - width) > 1 || Math.abs(rect.height - height) > 1;
 
-    if (!resized) {
+    if (Math.abs(rect.width - width) <= 1 && Math.abs(rect.height - height) <= 1) {
       return;
     }
 
@@ -181,55 +179,16 @@ export default function mountHero() {
     context.setTransform(ratio, 0, 0, ratio, 0, 0);
     fitNodes(oldWidth, oldHeight);
     draw();
+    start();
   }
 
-  // The first size comes from the observer, after the browser's layout and before the first paint:
-  // measuring now would lay out the whole page while it is still being set up.
+  // The first size comes from the observer, after the browser's first layout and before the first paint.
   if ('ResizeObserver' in window) {
-    new ResizeObserver(resize).observe(hero);
+    new ResizeObserver(resize).observe(canvas);
   } else {
     window.requestAnimationFrame(resize);
     window.addEventListener('resize', resize);
   }
-
-  // Leaving the page (a link, the history, a reload): the next page carries on from here.
-  window.addEventListener('pagehide', () => {
-    if (still || !nodes.length) {
-      return;
-    }
-
-    try {
-      window.sessionStorage.setItem(KEY, JSON.stringify({
-        time: Date.now(),
-        width,
-        height,
-        nodes: nodes.map(node => [node.x, node.y, node.vx, node.vy, node.radius].map(value => Math.round(value * 1000) / 1000)),
-      }));
-    } catch (error) {
-      // No storage: the next page starts afresh.
-    }
-  });
-
-  // The header morphs into the next page's header only when it is on screen (see the view transitions in
-  // _hero.scss): leaving a page scrolled further down, the page crossfades as a whole. (Arriving at a
-  // section further down is handled in theme.js.)
-  window.addEventListener('pageswap', event => {
-    if (event.viewTransition && !visible) {
-      document.documentElement.classList.add('no-hero-morph');
-    }
-  });
-
-  // Back to this page from the browser's memory (the back button): carry on from the page that was left.
-  window.addEventListener('pageshow', event => {
-    if (event.persisted && !still) {
-      previous = saved();
-
-      if (previous && width && height) {
-        fitNodes(width, height);
-        draw();
-      }
-    }
-  });
 
   if ('IntersectionObserver' in window) {
     new IntersectionObserver(entries => {
@@ -247,5 +206,70 @@ export default function mountHero() {
     }
   });
 
-  start();
+  // Leaving the page (a link, the history, a reload): the next page carries on from here. When the header
+  // is off screen, the header of the next page does not morph from it (_hero.scss).
+  window.addEventListener('pageswap', event => {
+    if (event.viewTransition && !visible) {
+      document.documentElement.classList.add('no-hero-morph');
+    }
+  });
+
+  window.addEventListener('pagehide', () => {
+    if (still || !nodes.length) {
+      return;
+    }
+
+    try {
+      window.sessionStorage.setItem(KEY, JSON.stringify({
+        time: Date.now(),
+        width,
+        height,
+        nodes: nodes.map(node => [node.x, node.y, node.vx, node.vy, node.radius].map(value => Math.round(value * 1000) / 1000)),
+      }));
+    } catch (error) {
+      // No storage: the next page starts afresh.
+    }
+  });
+
+  // Back to this page from the browser's memory (the back button): carry on from the page that was left.
+  window.addEventListener('pageshow', event => {
+    if (event.persisted && !still) {
+      previous = saved();
+
+      if (previous && width && height) {
+        fitNodes(width, height);
+        draw();
+      }
+    }
+  });
+}
+
+// Arriving at a section further down (an address with #...) through a view transition: the header of the new
+// page is off screen, so it does not morph from the header of the old one; the page crossfades as a whole.
+window.addEventListener('pagereveal', event => {
+  if (event.viewTransition && window.location.hash) {
+    const root = document.documentElement;
+
+    root.classList.add('no-hero-morph');
+    event.viewTransition.finished.then(() => root.classList.remove('no-hero-morph'), () => {});
+  }
+});
+
+// The header as soon as the parser has made it, before the page is first drawn.
+const hero = document.querySelector('.page-hero');
+
+if (hero) {
+  mountHero(hero);
+} else {
+  const watcher = new MutationObserver(() => {
+    const found = document.querySelector('.page-hero');
+
+    if (found) {
+      watcher.disconnect();
+      mountHero(found);
+    }
+  });
+
+  watcher.observe(document.documentElement, { childList: true, subtree: true });
+  document.addEventListener('DOMContentLoaded', () => watcher.disconnect(), { once: true });
 }
