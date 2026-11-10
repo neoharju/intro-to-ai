@@ -130,11 +130,12 @@ export default function mountHero() {
     draw();
   }
 
-  resize();
-
+  // The first size comes from the observer, after the browser's layout and before the first paint:
+  // measuring now would lay out the whole page while it is still being set up.
   if ('ResizeObserver' in window) {
     new ResizeObserver(resize).observe(hero);
   } else {
+    window.requestAnimationFrame(resize);
     window.addEventListener('resize', resize);
   }
 

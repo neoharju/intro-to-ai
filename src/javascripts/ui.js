@@ -18,7 +18,9 @@ function onScrollFrame(callback) {
 
   window.addEventListener('scroll', schedule, { passive: true });
   window.addEventListener('resize', schedule);
-  run();
+  // The first time in the next frame too: measuring now would lay out the page while it is still being
+  // set up, and again after.
+  schedule();
 }
 
 // Reading progress along the bottom edge of the navigation bar, and a back-to-top button that
@@ -201,29 +203,40 @@ function fillPageMeta() {
 }
 
 // Cards and figures fade in the first time they scroll into view. Only elements that start below
-// the first screen are animated, and nothing is hidden when the reader prefers reduced motion.
+// the first screen are animated, and nothing is hidden when the reader prefers reduced motion. Where an
+// element starts comes from the observer's first report, which follows the browser's own layout: reading
+// the positions here would lay out the whole page while it is still being set up.
 function mountReveal() {
   if (prefersReducedMotion() || !('IntersectionObserver' in window)) {
     return;
   }
 
-  const candidates = document.querySelectorAll('.material .hint, .material .viz, .material .table-wrap');
-  const fold = window.innerHeight;
-  const below = Array.from(candidates).filter(node => node.getBoundingClientRect().top > fold);
-
+  const placed = new WeakSet();
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
+      const node = entry.target;
+
+      if (!placed.has(node)) {
+        placed.add(node);
+
+        // Below the first screen: hidden until it scrolls into view. Otherwise it stays as it is.
+        if (!entry.isIntersecting && entry.boundingClientRect.top > window.innerHeight) {
+          node.classList.add('reveal');
+        } else {
+          observer.unobserve(node);
+        }
+
+        return;
+      }
+
       if (entry.isIntersecting) {
-        entry.target.classList.add('is-visible');
-        observer.unobserve(entry.target);
+        node.classList.add('is-visible');
+        observer.unobserve(node);
       }
     });
   }, { rootMargin: '0px 0px -6% 0px' });
 
-  below.forEach(node => {
-    node.classList.add('reveal');
-    observer.observe(node);
-  });
+  document.querySelectorAll('.material .hint, .material .viz, .material .table-wrap').forEach(node => observer.observe(node));
 }
 
 export default function mountUi() {
