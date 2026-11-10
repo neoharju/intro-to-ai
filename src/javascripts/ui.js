@@ -118,6 +118,48 @@ function wrapTables() {
   });
 }
 
+// A box that scrolls sideways fades out on the side where there is more to see (see scroll-fades in
+// _diagrams.scss). Its content is watched too: it can change size after the fonts have loaded.
+function watchFades(scroller) {
+  const update = () => {
+    const hidden = scroller.scrollWidth - scroller.clientWidth;
+
+    scroller.classList.toggle('fade-left', hidden > 1 && scroller.scrollLeft > 1);
+    scroller.classList.toggle('fade-right', hidden > 1 && scroller.scrollLeft < hidden - 1);
+  };
+
+  scroller.addEventListener('scroll', update, { passive: true });
+
+  if ('ResizeObserver' in window) {
+    const observer = new ResizeObserver(update);
+
+    observer.observe(scroller);
+    observer.observe(scroller.firstElementChild || scroller);
+  }
+
+  update();
+}
+
+// A drawn diagram (svg.dg) is never narrower than 3/4 of its viewBox in px, so that its labels (13 units)
+// stay about 10 px on a phone instead of shrinking to 5 px; it scrolls sideways in its box when the column
+// is narrower than that.
+function wrapDiagrams() {
+  document.querySelectorAll('.material svg.dg').forEach(svg => {
+    const width = svg.viewBox && svg.viewBox.baseVal ? svg.viewBox.baseVal.width : 0;
+    const wrapper = document.createElement('div');
+
+    if (!width) {
+      return;
+    }
+
+    wrapper.className = 'dg-scroll';
+    svg.style.minWidth = `${Math.round(width * 0.75)}px`;
+    svg.parentNode.insertBefore(wrapper, svg);
+    wrapper.append(svg);
+    watchFades(wrapper);
+  });
+}
+
 // A "#" permalink after each numbered section heading (the ids come from table-of-contents.js).
 // It is hidden from assistive technology: the table of contents already offers the same links.
 function addHeadingAnchors() {
@@ -207,6 +249,7 @@ function mountReveal() {
 
 export default function mountUi() {
   wrapTables();
+  wrapDiagrams();
   mountCopyButtons();
   addHeadingAnchors();
   fillPageMeta();

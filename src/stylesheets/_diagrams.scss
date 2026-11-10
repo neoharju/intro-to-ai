@@ -1,6 +1,25 @@
 // Static teaching diagrams written into the pages: the river-crossing states and the Towers of Hanoi
 // (inline SVG drawn with the classes below) and tic-tac-toe boards (plain HTML). Every colour is a
 // custom property, so the diagrams follow the page theme.
+
+// A box that scrolls sideways fades out on the side where there is more to see (the classes come from
+// math.js for formulas and from ui.js for diagrams).
+@mixin scroll-fades($fade: 2.5rem) {
+  &.fade-right {
+    -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - #{$fade}), transparent);
+    mask-image: linear-gradient(90deg, #000 calc(100% - #{$fade}), transparent);
+  }
+
+  &.fade-left {
+    -webkit-mask-image: linear-gradient(270deg, #000 calc(100% - #{$fade}), transparent);
+    mask-image: linear-gradient(270deg, #000 calc(100% - #{$fade}), transparent);
+  }
+
+  &.fade-left.fade-right {
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 $fade, #000 calc(100% - #{$fade}), transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 $fade, #000 calc(100% - #{$fade}), transparent);
+  }
+}
 :root {
   --wgc-bank: #eef7ee;
   --wgc-river: #dbeafe;
@@ -331,6 +350,21 @@
   --dg-arrow: #64748b;
   --dg-class-a: #2878a5;
   --dg-class-b: #e07b28;
+}
+
+// On a narrow screen a drawn diagram keeps its labels readable: ui.js wraps it in this box and gives it a
+// minimum width of 3/4 of its viewBox in px (labels of 13 units stay about 10 px); the box scrolls sideways
+// when that is wider than the column.
+.dg-scroll {
+  margin: 1.5rem 0 1.75rem;
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  @include scroll-fades;
+
+  > .dg {
+    margin: 0 auto;
+  }
 }
 
 .dg {

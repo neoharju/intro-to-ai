@@ -93,6 +93,10 @@ their own in `<div class="math">…</div>` (add `math--key` to set a key equatio
 load `javascripts/math.js`, which typesets them with KaTeX. Pseudocode listings use
 `<pre class="sh_pseudo"><code>…</code></pre>`, highlighted by the grammar in `src/javascripts/pseudocode.js`.
 
+A displayed formula that is wider than the column scrolls sideways. So does a drawn diagram (`<svg class="dg">`)
+on a narrow screen: `src/javascripts/ui.js` keeps it at least 3/4 of its viewBox width in pixels, so that its
+labels stay about 10 px on a phone instead of shrinking to 5 px. Both fade out on the side where there is more.
+
 ## Colour themes
 
 The pages have a light and a dark theme, chosen from the menu in the navigation bar ("Match the system"
