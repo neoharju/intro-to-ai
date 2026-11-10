@@ -173,8 +173,14 @@ npm run check
 
 `CHROMIUM_PATH=/path/to/chromium npm run check` uses a Chromium that is already installed.
 
+Every Monday, `.github/workflows/links.yml` asks every link to another site whether it still answers
+(`npm run links`, `scripts/check-links.mjs`). If a link is broken (404, 410, a name that does not resolve,
+an expired certificate), the open issue labelled `links` lists it, and the issue is closed when all links
+work again. Sites that turn robots away (401, 403, 429) are listed but do not count as broken.
+
 The actions in the workflows are pinned to commits (with the version in a comment), and every job gets
-only the permissions it needs.
+only the permissions it needs. A fork runs scheduled workflows only after Actions are enabled in its
+Actions tab, and opens issues only if Issues are on (Settings, General, Features).
 
 ## Rebuild the assets
 

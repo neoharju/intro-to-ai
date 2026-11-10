@@ -1,0 +1,58 @@
+# Every Monday: asks every link to another site whether it still answers (scripts/check-links.mjs). If one
+# is broken, the open issue labelled "links" lists them (it is opened if there is none); when all links work
+# again, that issue is closed. Sites that turn robots away (401, 403, 429) only show in the list.
+name: Links
+
+on:
+  schedule:
+    - cron: '23 5 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  links:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - name: Check out
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24
+          package-manager-cache: false
+
+      # The check uses only Node.js itself: no packages are installed.
+      - name: Check the links
+        id: links
+        continue-on-error: true
+        run: node scripts/check-links.mjs --report=links.md
+
+      - name: Open, update or close the issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+          OUTCOME: ${{ steps.links.outcome }}
+        run: |
+          open=$(gh issue list --repo "$GITHUB_REPOSITORY" --label links --state open --json number --jq '.[0].number // empty')
+          if [ "$OUTCOME" = failure ]; then
+            # Without a report the check itself failed: show it as a failed run.
+            [ -s links.md ] || exit 1
+            gh label create links --repo "$GITHUB_REPOSITORY" --color d93f0b \
+              --description "Links to other sites that stopped working" 2>/dev/null || true
+            if [ -n "$open" ]; then
+              gh issue edit "$open" --repo "$GITHUB_REPOSITORY" --body-file links.md
+            else
+              gh issue create --repo "$GITHUB_REPOSITORY" --label links \
+                --title "Broken links in the course material" --body-file links.md
+            fi
+          elif [ -n "$open" ]; then
+            gh issue close "$open" --repo "$GITHUB_REPOSITORY" --comment "Every link worked in the check of $(date -u +%F)."
+          fi
