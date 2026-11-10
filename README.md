@@ -97,6 +97,20 @@ A displayed formula that is wider than the column scrolls sideways. So does a dr
 on a narrow screen: `src/javascripts/ui.js` keeps it at least 3/4 of its viewBox width in pixels, so that its
 labels stay about 10 px on a phone instead of shrinking to 5 px. Both fade out on the side where there is more.
 
+### Formulas typeset in advance
+
+`npm run prerender` (`scripts/prerender.mjs`) builds `_site/`, the files that GitHub Pages publishes from this
+branch, with every formula of the pages and of the simplified English typeset by KaTeX in advance, with the
+settings of `math.js` (`src/javascripts/math-options.js`). A page then shows its formulas at once: at a 4x
+slower CPU, as on a mid-range phone, `math.js` takes 12-200 ms instead of 200-770 ms per week. The typeset
+formulas are the same as those typeset in the browser, and the gzipped pages grow by 0-22 KB.
+
+`.github/workflows/pages.yml` builds `_site/` on every push and publishes it once GitHub Pages is set to
+publish from the workflow: in the repository's Settings, Pages, set Source to "GitHub Actions" (once). Until
+then GitHub Pages publishes the branch as it is, the formulas are typeset in the browser as before, and the
+workflow only builds the site, which still fails if a formula cannot be typeset. The Check workflow also
+loads the built site.
+
 ## Colour themes
 
 The pages have a light and a dark theme, chosen from the menu in the navigation bar ("Match the system"

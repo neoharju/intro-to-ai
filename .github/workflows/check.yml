@@ -56,3 +56,9 @@ jobs:
 
       - name: Every page loads without problems
         run: npm run check
+
+      # The site that the Pages workflow publishes, with the formulas typeset in advance.
+      - name: The same with the formulas typeset in advance
+        run: |
+          npm run prerender
+          npm run check -- --root=_site

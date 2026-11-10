@@ -1,0 +1,73 @@
+# Builds the site with its formulas typeset in advance (scripts/prerender.mjs, npm run prerender), so that
+# the pages show their formulas at once instead of typesetting up to 300 of them in the browser, and
+# publishes it once GitHub Pages is set to publish from this workflow (Settings, Pages, Source: GitHub
+# Actions). Until then the site is published from the branch as before, and this workflow only builds it,
+# which still checks that every formula can be typeset. See "Formulas typeset in advance" in README.md.
+name: Pages
+
+on:
+  push:
+    branches: [gh-pages]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# One deployment at a time; a newer push waits for the running one instead of cancelling it.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Check out
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24
+          package-manager-cache: false
+
+      - name: Install the build tools
+        run: npm ci --no-audit --no-fund
+
+      - name: Typeset the formulas in advance
+        run: npm run prerender
+
+      - name: Upload the site
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Does GitHub Pages publish from this workflow?
+        id: source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          source=$(gh api "repos/$GITHUB_REPOSITORY/pages" --jq .build_type)
+          echo "type=$source" >> "$GITHUB_OUTPUT"
+          if [ "$source" != workflow ]; then
+            echo "::notice::GitHub Pages publishes from the branch ($source). Set Settings, Pages, Source to GitHub Actions to publish the site with its formulas typeset in advance."
+          fi
+
+      - name: Deploy
+        id: deployment
+        if: steps.source.outputs.type == 'workflow'
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1

@@ -12,6 +12,7 @@
 //
 //   npx playwright install chromium     once, for the browser
 //   npm run check
+//   npm run check -- --root=_site       the site with the formulas typeset in advance (npm run prerender)
 //
 // CHROMIUM_PATH=/path/to/chromium npm run check runs another Chromium instead.
 import { createReadStream } from 'node:fs';
@@ -21,8 +22,11 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { chromium } from 'playwright';
 
-const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const site = JSON.parse(await readFile(path.join(root, 'src', 'site.json'), 'utf8'));
+const repo = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const site = JSON.parse(await readFile(path.join(repo, 'src', 'site.json'), 'utf8'));
+// The directory that is served: the repository, or with --root=DIR another copy of the site.
+const rootArgument = process.argv.find(arg => arg.startsWith('--root='));
+const root = rootArgument ? path.resolve(rootArgument.slice('--root='.length)) : repo;
 const DESKTOP = { width: 1280, height: 900 };
 const PHONE = { width: 390, height: 844 };
 
