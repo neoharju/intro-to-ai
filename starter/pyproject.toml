@@ -1,0 +1,32 @@
+# The course folder of Introduction to Artificial Intelligence 2026: one uv project for all the
+# programming exercises. `uv sync` installs Python 3.12 and the packages below at the versions in uv.lock.
+[project]
+name = "intro-to-ai"
+version = "2026.0.0"
+description = "Python setup for the exercises of Introduction to Artificial Intelligence 2026"
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "matplotlib>=3.11.2",
+    "numpy>=2.5.4",
+    "pandas>=3.1.0",
+    "scikit-learn>=1.9.1",
+]
+
+[tool.uv]
+# The folder is not a package to build: uv only keeps its environment.
+package = false
+# Only releases that are at least 14 days old, also when you `uv add` a package: most malicious releases
+# are found and removed from PyPI within days.
+exclude-newer = "14 days"
+
+# PyTorch (Week 5): on Linux, the default build brings the CUDA libraries, about 3 GB to download. This
+# folder takes the CPU-only build instead (about 200 MB), which is all the exercises need. macOS and Windows
+# get theirs from PyPI.
+[tool.uv.sources]
+torch = [{ index = "pytorch-cpu", marker = "sys_platform == 'linux'" }]
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
