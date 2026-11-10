@@ -661,7 +661,8 @@ export function pointerPosition(canvas, event) {
 // stop the loop.
 export function createLoop(figure, tick) {
   let running = false;
-  let visible = true;
+  // Not on screen until the observer says so: a figure built further down does not draw a frame.
+  let visible = !('IntersectionObserver' in window);
   let frameId = 0;
   let last = 0;
   const listeners = [];
