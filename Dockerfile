@@ -21,7 +21,7 @@ RUN --mount=type=cache,target=/root/.npm \
 COPY . .
 RUN npm run build \
     && mkdir /site \
-    && cp -R index.html LICENSE week* img files fonts javascripts stylesheets /site/
+    && cp -R index.html LICENSE week* quiz img files fonts javascripts stylesheets /site/
 
 FROM ${NGINX_IMAGE} AS site
 COPY docker/nginx.conf /etc/nginx/nginx.conf
