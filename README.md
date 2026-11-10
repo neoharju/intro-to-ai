@@ -178,6 +178,12 @@ Every Monday, `.github/workflows/links.yml` asks every link to another site whet
 an expired certificate), the open issue labelled `links` lists it, and the issue is closed when all links
 work again. Sites that turn robots away (401, 403, 429) are listed but do not count as broken.
 
+Every day, `.github/workflows/upstream.yml` compares the original course
+([materiaalit/intro-to-ai](https://github.com/materiaalit/intro-to-ai), branch `gh-pages`) with the last
+commit merged here, recorded in `.github/upstream-commit`. If the course has changed, the open issue
+labelled `upstream` lists the new commits and the files they change. After merging them, write the newest
+merged commit into `.github/upstream-commit`; the next run closes the issue.
+
 Dependabot (`.github/dependabot.yml`) proposes weekly updates of the npm packages, the actions and the
 Docker base images, each release only 14 days after it came out (most malicious releases are found and
 pulled within days). The actions in the workflows are pinned to commits (with the version in a comment),

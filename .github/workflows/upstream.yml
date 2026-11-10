@@ -1,0 +1,72 @@
+# Every day: has the original course (materiaalit/intro-to-ai, branch gh-pages) changed since the commit in
+# .github/upstream-commit, the last one merged here? If it has, the open issue labelled "upstream" lists the
+# new commits and the files they change (it is opened if there is none). After merging them, write the
+# newest merged commit into .github/upstream-commit; the next run closes the issue.
+name: Upstream
+
+on:
+  schedule:
+    - cron: '41 6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  upstream:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      issues: write
+    env:
+      UPSTREAM: materiaalit/intro-to-ai
+      BRANCH: gh-pages
+    steps:
+      - name: Check out
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          sparse-checkout: .github
+
+      - name: Compare with the last merged commit
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          merged=$(tr -d '[:space:]' < .github/upstream-commit)
+          latest=$(git ls-remote "https://github.com/$UPSTREAM.git" "refs/heads/$BRANCH" | cut -f1)
+          if [ -z "$latest" ]; then
+            echo "::error::$UPSTREAM has no branch $BRANCH."
+            exit 1
+          fi
+          open=$(gh issue list --repo "$GITHUB_REPOSITORY" --label upstream --state open --json number --jq '.[0].number // empty')
+          if [ "$latest" = "$merged" ]; then
+            echo "Nothing new in $UPSTREAM since ${merged:0:7}."
+            if [ -n "$open" ]; then
+              gh issue close "$open" --repo "$GITHUB_REPOSITORY" --comment "Merged up to ${merged:0:7}."
+            fi
+            exit 0
+          fi
+          gh api "repos/$UPSTREAM/compare/$merged...$latest" > compare.json
+          # An @name in a commit message would notify that person from this issue, so it is broken up.
+          {
+            echo "The original course ([$UPSTREAM](https://github.com/$UPSTREAM), branch \`$BRANCH\`) has changed since \`${merged:0:7}\`, the last commit merged here ([all changes](https://github.com/$UPSTREAM/compare/$merged...$latest))."
+            echo
+            echo "### Commits"
+            echo
+            jq -r '.commits[] | "- [`\(.sha[0:7])`](\(.html_url)) \(.commit.author.date[0:10]): \(.commit.message | split("\n")[0] | gsub("@"; "@​"))"' compare.json
+            echo
+            echo "### Files"
+            echo
+            jq -r '.files[] | "- `\(.filename)` (+\(.additions) −\(.deletions))"' compare.json
+            echo
+            echo "After merging, write the newest merged commit (\`$latest\` for all of the above) into \`.github/upstream-commit\`. The next run then closes this issue."
+          } > body.md
+          gh label create upstream --repo "$GITHUB_REPOSITORY" --color 1d76db \
+            --description "Changes in the original course to merge" 2>/dev/null || true
+          if [ -n "$open" ]; then
+            gh issue edit "$open" --repo "$GITHUB_REPOSITORY" --body-file body.md
+          else
+            gh issue create --repo "$GITHUB_REPOSITORY" --label upstream \
+              --title "The original course has changed" --body-file body.md
+          fi
