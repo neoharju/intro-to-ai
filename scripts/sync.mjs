@@ -3,7 +3,7 @@
 //
 //   - the regions between <!-- shared:NAME --> and <!-- /shared:NAME --> (head, navbar, footer, end) from
 //     src/partials/NAME.html, with the values of the page in src/site.json (title, scripts, simplified
-//     English) and the path back to the site root;
+//     English), the path back to the site root and the Content-Security-Policy of docker/nginx.conf;
 //   - every <time data-date="KEY">, in the pages and in src/simple/weekN.txt, from src/schedule.json, so
 //     that a date of the course is written once.
 //
@@ -24,6 +24,25 @@ const read = file => readFile(path.join(root, file), 'utf8');
 const site = JSON.parse(await read('src/site.json'));
 const schedule = JSON.parse(await read('src/schedule.json'));
 const partials = Object.fromEntries(await Promise.all(REGIONS.map(async name => [name, await read(`src/partials/${name}.html`)])));
+
+// The Content-Security-Policy that docker/nginx.conf sends, for a <meta> in the head of every page: GitHub
+// Pages cannot send headers. Browsers ignore frame-ancestors, report-uri and sandbox in a <meta> (and warn
+// about them), so they are left out.
+function metaPolicy(conf) {
+  const header = conf.match(/add_header\s+Content-Security-Policy\s+"([^"]+)"/);
+
+  if (!header) {
+    throw new Error('docker/nginx.conf: no Content-Security-Policy header');
+  }
+
+  return header[1]
+    .split(';')
+    .map(directive => directive.trim())
+    .filter(directive => directive && !/^(?:frame-ancestors|report-uri|sandbox)\b/.test(directive))
+    .join('; ');
+}
+
+const policy = metaPolicy(await read('docker/nginx.conf'));
 
 function escapeHtml(text) {
   return text.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
@@ -55,6 +74,7 @@ function render(name, page, config) {
     siteTitle: escapeHtml(site.title),
     title: escapeHtml(config.title),
     root: prefix,
+    csp: escapeHtml(policy),
     simpleMeta: config.simple ? '  <meta name="introai-simple" content="simple.json">' : '',
     navItems: navItems(page, prefix),
     scripts: config.scripts.map(script => `  <script src="${prefix}javascripts/${script}"></script>`).join('\n'),

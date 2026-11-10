@@ -140,6 +140,11 @@ regions between `<!-- shared:NAME -->` and `<!-- /shared:NAME -->`, with the tit
 simplified-English setting of each page from `src/site.json`. Edit the partials or `src/site.json`, not the
 regions in the pages. The pages themselves stay plain HTML, so GitHub Pages serves them as they are.
 
+GitHub Pages cannot send security headers, so the head of every page carries the Content-Security-Policy
+of `docker/nginx.conf` as a `<meta http-equiv>`: scripts, styles, fonts and requests only from the site
+itself. `npm run sync` takes it from `docker/nginx.conf`, so the two cannot drift apart; `frame-ancestors`
+is left out because browsers ignore it in a `<meta>`.
+
 The dates of the course are in `src/schedule.json`. A date in a page or in `src/simple/weekN.txt` is written
 as `<time data-date="lecture-5">We 11/11</time>`; `npm run sync` fills in its text and its `datetime` from the
 schedule, so next year's dates change in one file. `npm run sync -- --check` only reports pages that are out
