@@ -305,11 +305,11 @@ How nanoGPT selects the next token: it divides the scores of the model (logits) 
 == 3efa0328
 Hugging Face hid most details of the implementation behind <code>pipeline()</code>. With NanoGPT, you can run the same pretrained GPT-2 checkpoint through a small implementation. You can examine its model code and its sampling code.
 
-== 6ce09828
-Clone NanoGPT and check out the fixed version for the course:
+== 5fc0c851
+In your course folder, clone NanoGPT and check out the fixed version for the course:
 
-== 1a512282
-Use a new Python environment, and install the packages that this exercise needs:
+== adb7d8d6
+Add the packages that this exercise needs. uv finds the course project in the folder above:
 
 == fa415e57
 Make two continuations with the smallest pretrained GPT-2 model:
@@ -332,8 +332,8 @@ Use your own prompt, and compare <code>temperature=0.3</code> with <code>tempera
 == 6267e2e3
 Fine-tuning adapts a pretrained model to a new dataset: it continues the training with a smaller learning rate. You will follow the Shakespeare fine-tuning example that is already in NanoGPT. We use the GPT-2 model with 124 million parameters, not the GPT-2 XL model of the example, so that the exercise can run on a CPU. Keep the run short.
 
-== fa878cf0
-Use the same NanoGPT directory and Python environment as in the previous exercise. Prepare the Tiny Shakespeare dataset, which is included:
+== 8c89c51b
+Use the same NanoGPT directory in your course folder as in the previous exercise. Prepare the Tiny Shakespeare dataset, which is included:
 
 == 07383b73
 Before the fine-tuning, make a baseline sample:

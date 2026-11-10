@@ -490,13 +490,34 @@
 
         <ul>
           <li>
-            <strong>Python 3</strong>:
-            Required for the programming exercises. Check your version with
-            <code>python3 --version</code> (or <code>python --version</code> on
-            Windows). Use Python 3.10 or newer if possible.
-            Download from
-            <a href="https://www.python.org/downloads/" target="_blank" rel="noopener">python.org</a>
-            if you do not already have it.
+            <strong>uv</strong>:
+            A package and project manager for Python, much faster than <code>pip</code>. It also
+            installs Python itself, so you do not need to install Python separately. Install it with
+            one command:
+            <pre class="sh_bash code-highlight"><code># macOS and Linux
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Windows (PowerShell)
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"</code></pre>
+            Then open a new terminal, so that it finds the <code>uv</code> command. The
+            <a href="https://docs.astral.sh/uv/getting-started/installation/" target="_blank" rel="noopener">uv installation guide</a>
+            has other ways to install it (Homebrew, WinGet, pipx).
+          </li>
+          <li>
+            <strong>A course folder</strong>:
+            Make one uv project for all the programming exercises. It uses Python 3.12, which all the
+            libraries of the course support; uv downloads it the first time if you do not have it:
+            <pre class="sh_bash code-highlight"><code>uv init --no-package --python 3.12 intro-to-ai
+cd intro-to-ai
+uv add numpy matplotlib        # add the packages that an exercise needs
+uv run python my_script.py     # run a script with the project's Python and packages</code></pre>
+            uv keeps the packages in the project's own environment, the <code>.venv</code> folder, so
+            they do not mix with other projects, and it lists them in <code>pyproject.toml</code>.
+            Where an exercise says <code>python script.py</code>, run
+            <code>uv run python script.py</code> in the course folder or in a folder inside it, or
+            activate the environment once (<code>source .venv/bin/activate</code> on macOS and Linux,
+            <code>.venv\Scripts\activate</code> on Windows) and use <code>python</code> as usual. Where a
+            guide says <code>pip install &lt;package&gt;</code>, use <code>uv add &lt;package&gt;</code>.
           </li>
           <li>
             <strong>Visual Studio Code</strong> (recommended):
@@ -505,23 +526,15 @@
             <a href="https://code.visualstudio.com/" target="_blank" rel="noopener">code.visualstudio.com</a>,
             then add the official
             <a href="https://marketplace.visualstudio.com/items?itemName=ms-python.python" target="_blank" rel="noopener">Python extension</a>.
-            You may use another editor if you prefer.
+            Open the course folder in VS Code: it uses the project's <code>.venv</code> as the Python
+            interpreter (if it does not, choose it with <i>Python: Select Interpreter</i>). You may use
+            another editor if you prefer.
           </li>
           <li>
             <strong>Terminal / command line</strong>:
-            Many exercises use short commands (<code>pip</code>, <code>git</code>,
+            Many exercises use short commands (<code>uv</code>, <code>git</code>,
             running scripts). On macOS and Linux, use Terminal. On Windows, use
             PowerShell, Command Prompt, or the terminal built into VS Code.
-          </li>
-          <li>
-            <strong>pip and virtual environments</strong>:
-            Install packages with <code>pip</code>. For exercises that need extra
-            libraries (for example PyTorch or Transformers), create a fresh
-            virtual environment so course packages do not mix with other projects:
-            <pre class="sh_bash code-highlight"><code>python3 -m venv .venv
-source .venv/bin/activate          # macOS / Linux
-# .venv\Scripts\activate           # Windows
-python -m pip install &lt;packages&gt;</code></pre>
           </li>
           <li>
             <strong>Git</strong>:
@@ -539,12 +552,12 @@ python -m pip install &lt;packages&gt;</code></pre>
         </h2>
 
         <p>
-          After installing Python and VS Code, open a terminal and confirm that
-          these work:
+          After installing uv, VS Code and Git and making the course folder, open a terminal in the
+          course folder and confirm that these work:
         </p>
 
-        <pre class="sh_bash code-highlight"><code>python3 --version
-python3 -m pip --version
+        <pre class="sh_bash code-highlight"><code>uv --version
+uv run python --version        # Python 3.12
 git --version</code></pre>
 
         <p>

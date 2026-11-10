@@ -407,8 +407,8 @@ We discussed agentic frameworks as concepts. Now we build one that you can run. 
 == 65947bd7
 <i>Safety note: a <code>CodeAgent</code> writes Python code and runs it on your computer. smolagents limits what that code can import, but its local executor is not a security sandbox. Do not give the agent web tools (for example with <code>add_base_tools=True</code>, which adds web search and the visit of web pages), unless it runs in a container or with <code>executor_type="docker"</code>. The reason: text on a web page can tell the model to write harmful code. Keep your token in the <code>HF_TOKEN</code> environment variable, not in your code.</i>
 
-== c3c32f97
-Install with <code>pip install smolagents</code>, get a free HF token and run the code above. Read the trace that it prints. The agent shows its reasoning (its "Thoughts") and the code that it decides to run.
+== d670d49b
+Add it to your course folder with <code>uv add smolagents</code>, get a free HF token and run the code above with <code>uv run python</code>. Read the trace that it prints. The agent shows its reasoning (its "Thoughts") and the code that it decides to run.
 
 == b7ae82bb
 Add your own tool. This is a Python function with the decorator <code>@tool</code> that does a simple task, for example to convert a temperature between Celsius and Fahrenheit, or to count the vowels in a string:
@@ -548,8 +548,8 @@ The memory for the weights of a model is approximately the number of parameters,
 == 2ed466d0
 The Ollama server that you installed in Week 5 also gives an API at <code>http://localhost:11434</code>. It has an endpoint under <code>/v1</code> that is compatible with OpenAI. The <code>llama-server</code> of llama.cpp and LM Studio give the same type of endpoint. Code that uses this interface works in the same way when the model runs on your laptop or in the cloud. For agents, select a model that was trained for tool calling (the model library of Ollama marks these models with the tag <i>tools</i>), for example <code>ollama pull qwen3:8b</code> (approximately 5&nbsp;GB). Small models with 1 to 4 billion parameters can call simple tools, but they make more mistakes in tasks with many steps. A tip for the exercise above: the free tier of Hugging Face has only a small inference credit each month (US$&nbsp;0.10 when we wrote this). But smolagents can also use a local model through a server that is compatible with OpenAI.
 
-== 7320c05d
-Frameworks hide the loop of the tool-agent diagram on this page. Here you see the full loop: the model proposes tool calls, and the code validates and executes them. This agent can read the Markdown notes in one folder and nothing more. Install the client with <code>pip install openai</code>, pull a model, put some <code>.md</code> files in a folder with the name <code>notes</code>, and run the script.
+== 6cfa4036
+Frameworks hide the loop of the tool-agent diagram on this page. Here you see the full loop: the model proposes tool calls, and the code validates and executes them. This agent can read the Markdown notes in one folder and nothing more. Add the client to your course folder with <code>uv add openai</code>, pull a model, put some <code>.md</code> files in a folder with the name <code>notes</code>, and run the script with <code>uv run python</code>.
 
 == 274ca10e
 All the defences of the text are in this script. The tool layer decides what can occur, not the model: <code>read_note</code> resolves the path and refuses all paths outside the folder, also tricks with <code>../</code> and symbolic links. Unknown tools and incorrect arguments become error messages that the model can read and correct. The step budget stops an agent that repeats without end. We did a test against a scripted server that asked for <code>../secret.md</code>, for a tool with the name <code>delete_everything</code>, and with arguments that were not JSON. The script refused all three.

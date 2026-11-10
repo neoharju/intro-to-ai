@@ -700,8 +700,8 @@ agent.run("Could you give me the 118th number in the Fibonacci sequence?")</code
 							</p>
 
 							<ol>
-								<li> Install with <code>pip install smolagents</code>, get a free HF token, and
-									run the code above. Read the printed trace — the agent will show its
+								<li> Add it to your course folder with <code>uv add smolagents</code>, get a free HF
+									token, and run the code above with <code>uv run python</code>. Read the printed trace — the agent will show its
 									reasoning (its "Thoughts") and the code it decides to run.
 								<li> Add your own tool — a Python function decorated with <code>@tool</code>
 									that does something simple, e.g. converts a temperature between Celsius and
@@ -1160,8 +1160,9 @@ agent.run("What is 24 degrees Celsius in Fahrenheit?")</code></pre>
 					<p>
 						Frameworks hide the loop of this page's tool-agent diagram. Here it is in full: the model proposes
 						tool calls, and the code validates and executes them. This agent can read the Markdown notes in
-						one folder and nothing else. Install the client with <code>pip install openai</code>, pull a model,
-						put a few <code>.md</code> files into a folder called <code>notes</code>, and run the script.
+						one folder and nothing else. Add the client to your course folder with <code>uv add openai</code>, pull a model,
+						put a few <code>.md</code> files into a folder called <code>notes</code>, and run the script with
+						<code>uv run python</code>.
 					</p>
 
 					<pre class="sh_python code-highlight"><code>import json

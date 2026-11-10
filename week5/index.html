@@ -1803,12 +1803,14 @@ generator("In this course, we will teach you how to", max_new_tokens=20, do_samp
 
               <ol>
                 <li>
-                  In a fresh Python environment, install the required libraries:
-                  <pre class="sh_bash code-highlight"><code>python -m pip install torch transformers</code></pre>
+                  In your course folder (see <a href="../#what-you-need">What you need</a>), add the
+                  required libraries:
+                  <pre class="sh_bash code-highlight"><code>uv add torch transformers</code></pre>
                 </li>
                 <li>
-                  Save and run the following program. The model runs on the CPU by
-                  default:
+                  Save the following program in the course folder, for example as
+                  <code>gpt2_generate.py</code>, and run it with
+                  <code>uv run python gpt2_generate.py</code>. The model runs on the CPU by default:
                   <pre class="sh_python code-highlight"><code>from transformers import pipeline, set_seed
 
 set_seed(42)
@@ -1889,19 +1891,19 @@ for result in generator(
 
               <ol>
                 <li>
-                  Clone NanoGPT and check out the fixed course version:
+                  In your course folder, clone NanoGPT and check out the fixed course version:
                   <pre class="sh_bash code-highlight"><code>git clone https://github.com/karpathy/nanoGPT.git
 cd nanoGPT
 git checkout 3adf61e1</code></pre>
                 </li>
                 <li>
-                  Use a fresh Python environment and install the packages needed for
-                  this exercise:
-                  <pre class="sh_bash code-highlight"><code>python -m pip install torch numpy transformers tiktoken</code></pre>
+                  Add the packages needed for this exercise (uv finds the course project in the
+                  folder above):
+                  <pre class="sh_bash code-highlight"><code>uv add torch numpy transformers tiktoken</code></pre>
                 </li>
                 <li>
                   Generate two continuations with the smallest pretrained GPT-2 model:
-                  <pre class="sh_bash code-highlight"><code>python sample.py --init_from=gpt2 --device=cpu --dtype=float32 \
+                  <pre class="sh_bash code-highlight"><code>uv run python sample.py --init_from=gpt2 --device=cpu --dtype=float32 \
   --start="Artificial intelligence will" --num_samples=2 \
   --max_new_tokens=100 --temperature=0.8 --top_k=50</code></pre>
                   The checkpoint is downloaded automatically the first time.
@@ -1958,18 +1960,18 @@ git checkout 3adf61e1</code></pre>
 
               <ol>
                 <li>
-                  From the same NanoGPT directory and Python environment used in the
+                  From the same NanoGPT directory, inside your course folder, as in the
                   previous exercise, prepare the included Tiny Shakespeare dataset:
-                  <pre class="sh_bash code-highlight"><code>python data/shakespeare/prepare.py</code></pre>
+                  <pre class="sh_bash code-highlight"><code>uv run python data/shakespeare/prepare.py</code></pre>
                 </li>
                 <li>
                   Before fine-tuning, generate a baseline sample:
-                  <pre class="sh_bash code-highlight"><code>python sample.py --init_from=gpt2 --device=cpu --dtype=float32 \
+                  <pre class="sh_bash code-highlight"><code>uv run python sample.py --init_from=gpt2 --device=cpu --dtype=float32 \
   --start="ROMEO:" --num_samples=1 --max_new_tokens=100</code></pre>
                 </li>
                 <li>
                   Fine-tune the small GPT-2 checkpoint for a short run:
-                  <pre class="sh_bash code-highlight"><code>python train.py config/finetune_shakespeare.py \
+                  <pre class="sh_bash code-highlight"><code>uv run python train.py config/finetune_shakespeare.py \
   --init_from=gpt2 --device=cpu --compile=False --dtype=float32 \
   --block_size=128 --batch_size=1 --gradient_accumulation_steps=1 \
   --max_iters=20 --eval_interval=10 --eval_iters=10</code></pre>
@@ -1979,7 +1981,7 @@ git checkout 3adf61e1</code></pre>
                 </li>
                 <li>
                   Generate text from the fine-tuned checkpoint using the same prompt:
-                  <pre class="sh_bash code-highlight"><code>python sample.py --out_dir=out-shakespeare --device=cpu \
+                  <pre class="sh_bash code-highlight"><code>uv run python sample.py --out_dir=out-shakespeare --device=cpu \
   --dtype=float32 --start="ROMEO:" --num_samples=1 \
   --max_new_tokens=100</code></pre>
                 </li>
