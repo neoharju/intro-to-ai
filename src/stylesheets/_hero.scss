@@ -185,3 +185,57 @@
     }
   }
 }
+
+// Moving from page to page, in browsers with cross-document view transitions (Chrome, Edge, Safari 18.2):
+// the old page stays on screen until the new one is ready, and then the header changes in 0.15 s. The
+// title and the week label morph into the new ones, the network behind them goes on (hero.js), and the
+// navigation bar stays where it is; the rest of the page crossfades. Other browsers change page as before.
+@view-transition {
+  navigation: auto;
+}
+
+.header-wrapper {
+  view-transition-name: site-header;
+}
+
+.page-hero__canvas {
+  view-transition-name: hero-network;
+}
+
+.page-hero__eyebrow {
+  view-transition-name: hero-eyebrow;
+}
+
+.page-hero__title {
+  view-transition-name: hero-title;
+}
+
+// The header off screen, on the old or the new page (hero.js, theme.js): no morph.
+.no-hero-morph {
+  .page-hero__canvas,
+  .page-hero__eyebrow,
+  .page-hero__title {
+    view-transition-name: none;
+  }
+}
+
+::view-transition-group(*),
+::view-transition-old(*),
+::view-transition-new(*) {
+  animation-duration: .15s;
+}
+
+// The titles keep their own size while they crossfade (a shorter or longer title is not stretched).
+::view-transition-old(hero-title),
+::view-transition-new(hero-title),
+::view-transition-old(hero-eyebrow),
+::view-transition-new(hero-eyebrow) {
+  width: auto;
+  height: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  @view-transition {
+    navigation: none;
+  }
+}

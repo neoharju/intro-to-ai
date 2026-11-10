@@ -91,3 +91,13 @@ window.IntroAI = Object.assign(window.IntroAI || {}, {
 });
 
 apply();
+
+// Arriving at a section further down (an address with #...) through a view transition: the header of the
+// new page is off screen, so it does not morph from the header of the old one (_hero.scss); the page
+// crossfades as a whole. This has to run before the first paint, hence here.
+window.addEventListener('pagereveal', event => {
+  if (event.viewTransition && window.location.hash) {
+    root.classList.add('no-hero-morph');
+    event.viewTransition.finished.then(() => root.classList.remove('no-hero-morph'), () => {});
+  }
+});

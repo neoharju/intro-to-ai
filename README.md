@@ -127,6 +127,16 @@ Code listings are coloured with the `--code-*` tokens of each theme: bold blue k
 strings and grey italic comments. They were chosen to stay distinct with colour vision deficiencies (no
 red-green or pink contrasts), so check a new colour with a colour-blindness simulator before changing them.
 
+## Moving between pages
+
+In browsers with cross-document view transitions (Chrome, Edge, Safari 18.2 and later), the old page stays
+on screen until the new one is ready, and then the header changes in 0.15 s: the title and the week label
+morph into the new ones and the navigation bar stays where it is (`src/stylesheets/_hero.scss`). The network
+behind the title goes on from page to page instead of starting again: `src/javascripts/hero.js` keeps its
+nodes for the tab in `sessionStorage` when a page is left, and the next page carries on from them. From a
+page scrolled down, or to a section further down, the page crossfades as a whole. Other browsers, and
+readers who prefer reduced motion, change pages as before.
+
 ## Text size
 
 The "Aa" menu (`src/javascripts/font-size-menu.js`) sets `data-font-size="large"` or `"xlarge"` on `<html>`,

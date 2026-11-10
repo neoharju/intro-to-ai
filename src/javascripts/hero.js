@@ -1,8 +1,23 @@
 import { prefersReducedMotion } from './utils';
 
 // A slowly drifting network of nodes behind the page title. It is drawn only while the header is on
-// screen, and stays still when the reader prefers reduced motion.
+// screen, and stays still when the reader prefers reduced motion. It goes on from page to page: when the
+// reader leaves a page, the nodes are kept for this tab (sessionStorage), and the next page carries on
+// from them, moved on by the time that the change of page took, instead of starting again.
 const LINK_DISTANCE = 130;
+const KEY = 'introai-hero-v1';
+const FRAME = 1000 / 60;
+
+// The nodes that the previous page left, or null.
+function saved() {
+  try {
+    const data = JSON.parse(window.sessionStorage.getItem(KEY));
+
+    return data && Array.isArray(data.nodes) && data.width > 0 && data.height > 0 ? data : null;
+  } catch (error) {
+    return null;
+  }
+}
 
 export default function mountHero() {
   const hero = document.querySelector('.page-hero');
@@ -28,6 +43,8 @@ export default function mountHero() {
   let nodes = [];
   let visible = true;
   let frame = 0;
+  // The still picture is always the same one; a moving network carries on from the previous page.
+  let previous = still ? null : saved();
 
   // A fixed seed, so the still picture is the same on every visit.
   let seed = 7;
@@ -36,17 +53,50 @@ export default function mountHero() {
     return (seed - 1) / 2147483646;
   };
 
-  function createNodes() {
-    const count = Math.round(Math.min(64, Math.max(18, width * height / 9000)));
-
-    nodes = Array.from({ length: count }, (value, index) => ({
+  function createNode(index) {
+    return {
       x: random() * width,
       y: random() * height,
       vx: (random() - 0.5) * 0.18,
       vy: (random() - 0.5) * 0.18,
       radius: 1.2 + random() * 1.6,
       accent: index % 9 === 0,
-    }));
+    };
+  }
+
+  // Fits the nodes to a new size of the header: they keep their places relative to it (those of the
+  // previous page, the first time), and nodes are added or dropped so that the density stays the same.
+  function fitNodes(oldWidth, oldHeight) {
+    const count = Math.round(Math.min(64, Math.max(18, width * height / 9000)));
+    let fromWidth = oldWidth;
+    let fromHeight = oldHeight;
+    let steps = 0;
+
+    if (previous) {
+      nodes = previous.nodes.map(([x, y, vx, vy, radius], index) => ({ x, y, vx, vy, radius, accent: index % 9 === 0 }));
+      fromWidth = previous.width;
+      fromHeight = previous.height;
+      steps = Math.min(600, Math.max(0, Math.round((Date.now() - previous.time) / FRAME)));
+      previous = null;
+    }
+
+    if (fromWidth && fromHeight) {
+      nodes.forEach(node => {
+        node.x *= width / fromWidth;
+        node.y *= height / fromHeight;
+      });
+    }
+
+    nodes = nodes.slice(0, count);
+
+    while (nodes.length < count) {
+      nodes.push(createNode(nodes.length));
+    }
+
+    // The time that the change of page took.
+    for (let i = 0; i < steps; i++) {
+      step();
+    }
   }
 
   function draw() {
@@ -121,12 +171,15 @@ export default function mountHero() {
       return;
     }
 
+    const oldWidth = width;
+    const oldHeight = height;
+
     width = rect.width;
     height = rect.height;
     canvas.width = Math.round(width * ratio);
     canvas.height = Math.round(height * ratio);
     context.setTransform(ratio, 0, 0, ratio, 0, 0);
-    createNodes();
+    fitNodes(oldWidth, oldHeight);
     draw();
   }
 
@@ -138,6 +191,45 @@ export default function mountHero() {
     window.requestAnimationFrame(resize);
     window.addEventListener('resize', resize);
   }
+
+  // Leaving the page (a link, the history, a reload): the next page carries on from here.
+  window.addEventListener('pagehide', () => {
+    if (still || !nodes.length) {
+      return;
+    }
+
+    try {
+      window.sessionStorage.setItem(KEY, JSON.stringify({
+        time: Date.now(),
+        width,
+        height,
+        nodes: nodes.map(node => [node.x, node.y, node.vx, node.vy, node.radius].map(value => Math.round(value * 1000) / 1000)),
+      }));
+    } catch (error) {
+      // No storage: the next page starts afresh.
+    }
+  });
+
+  // The header morphs into the next page's header only when it is on screen (see the view transitions in
+  // _hero.scss): leaving a page scrolled further down, the page crossfades as a whole. (Arriving at a
+  // section further down is handled in theme.js.)
+  window.addEventListener('pageswap', event => {
+    if (event.viewTransition && !visible) {
+      document.documentElement.classList.add('no-hero-morph');
+    }
+  });
+
+  // Back to this page from the browser's memory (the back button): carry on from the page that was left.
+  window.addEventListener('pageshow', event => {
+    if (event.persisted && !still) {
+      previous = saved();
+
+      if (previous && width && height) {
+        fitNodes(width, height);
+        draw();
+      }
+    }
+  });
 
   if ('IntersectionObserver' in window) {
     new IntersectionObserver(entries => {
