@@ -16,6 +16,10 @@
     "week1/index.html": { "title": "Week 1", "simple": true, "scripts": ["math.js", "main.js", "week1.js"] },
     "week2/index.html": { "title": "Week 2", "simple": true, "scripts": ["math.js", "main.js", "week2.js"] },
     "week3/index.html": { "title": "Week 3", "simple": true, "scripts": ["math.js", "main.js", "week3.js"] },
+    "week4/index.html": { "title": "Week 4", "simple": true, "scripts": ["math.js", "main.js", "week4.js"] },
+    "week5/index.html": { "title": "Week 5", "simple": true, "scripts": ["math.js", "main.js", "week5.js"] },
+    "week6/index.html": { "title": "Week 6", "simple": true, "scripts": ["math.js", "main.js", "week6.js"] },
+    "week7/index.html": { "title": "Week 7", "simple": true, "scripts": ["math.js", "main.js", "week7.js"] },
     "quiz/index.html": { "title": "Quiz", "scripts": ["math.js", "quiz.js", "main.js"] }
   }
 }
