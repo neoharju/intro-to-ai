@@ -137,6 +137,10 @@ nodes for the tab in `sessionStorage` when a page is left, and the next page car
 page scrolled down, or to a section further down, the page crossfades as a whole. Other browsers, and
 readers who prefer reduced motion, change pages as before.
 
+A page of the site is fetched in advance when the reader points at a link to it for 65 ms, touches it or
+moves to it with the keyboard (`src/javascripts/prefetch.js`), so that it is already in the browser's cache
+when the click comes. Nothing is fetched when the reader has asked the browser to save data.
+
 ## Text size
 
 The "Aa" menu (`src/javascripts/font-size-menu.js`) sets `data-font-size="large"` or `"xlarge"` on `<html>`,
