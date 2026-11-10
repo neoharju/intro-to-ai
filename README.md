@@ -68,8 +68,9 @@ npm run simple -- --extract week3   # the blocks of a page and their fingerprint
 npm run simple -- --check           # stale entries, and lost formulas, links, code or numbers
 ```
 
-`--extract` and `--check` need Playwright. When the text of a page changes, `--check` lists the entries
-whose original no longer exists; until they are updated, those blocks show their original text.
+`--extract` and `--check` load the pages in Chromium (see [Checks](#checks)). When the text of a page
+changes, `--check` lists the entries whose original no longer exists; until they are updated, those blocks
+show their original text.
 
 ## Preview locally
 
@@ -149,6 +150,31 @@ The dates of the course are in `src/schedule.json`. A date in a page or in `src/
 as `<time data-date="lecture-5">We 11/11</time>`; `npm run sync` fills in its text and its `datetime` from the
 schedule, so next year's dates change in one file. `npm run sync -- --check` only reports pages that are out
 of date.
+
+## Checks
+
+Every push and pull request runs `.github/workflows/check.yml` on GitHub Actions:
+
+- `npm run build` and `npm run simple` must leave the repository unchanged: the committed assets, shared
+  parts, dates and `weekN/simple.json` are what the sources build;
+- `npm run simple -- --check`: no simplified-English entry has lost its original;
+- `npm run check` (`scripts/check-pages.mjs`) loads every page in Chromium, on a desktop and at phone width
+  (390 px), with the simplified English off and on. It fails on errors in the console, uncaught
+  exceptions, requests that the Content-Security-Policy blocks, formulas that KaTeX cannot typeset,
+  duplicate ids, links to pages, files or anchors that do not exist, and pages wider than the phone.
+
+To run the page checks locally:
+
+```bash
+npm ci
+npx playwright install chromium
+npm run check
+```
+
+`CHROMIUM_PATH=/path/to/chromium npm run check` uses a Chromium that is already installed.
+
+The actions in the workflows are pinned to commits (with the version in a comment), and every job gets
+only the permissions it needs.
 
 ## Rebuild the assets
 

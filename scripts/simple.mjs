@@ -10,8 +10,9 @@
 //   The simplified HTML of the block. It can take several lines.
 //
 // "1a2b3c4d" is the fingerprint of the block's original text (from --extract). Lines starting with
-// "#" are comments. --extract and --check load the pages in a browser and need Playwright
-// (npm install --no-save playwright); compiling needs nothing.
+// "#" are comments. --extract and --check load the pages in a browser: Playwright (a dev dependency) and
+// its Chromium (npx playwright install chromium; CHROMIUM_PATH=... uses another one). Compiling needs
+// nothing.
 import { createServer } from 'node:http';
 import { readdir, readFile, writeFile } from 'node:fs/promises';
 import { createRequire } from 'node:module';
@@ -70,7 +71,7 @@ async function withPages(run) {
   try {
     playwright = require('playwright');
   } catch (error) {
-    throw new Error('--extract and --check need Playwright: npm install --no-save playwright');
+    throw new Error('--extract and --check need Playwright: npm ci, then npx playwright install chromium');
   }
 
   const types = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.woff2': 'font/woff2' };
@@ -92,7 +93,7 @@ async function withPages(run) {
 
   await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
 
-  const browser = await playwright.chromium.launch();
+  const browser = await playwright.chromium.launch(process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {});
 
   try {
     await run(async week => {

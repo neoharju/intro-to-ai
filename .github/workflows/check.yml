@@ -1,0 +1,58 @@
+# On every push and pull request: the committed files are what the sources build, and every page loads in
+# Chromium without errors (scripts/check-pages.mjs). See "Checks" in README.md.
+name: Check
+
+on:
+  push:
+    branches: [gh-pages]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: check-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Check out
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24
+          package-manager-cache: false
+
+      # Exactly the versions in package-lock.json; .npmrc turns install scripts off.
+      - name: Install the build tools
+        run: npm ci --no-audit --no-fund
+
+      - name: Rebuild the assets, the shared parts and the simplified English
+        run: |
+          npm run build
+          npm run simple
+
+      - name: The committed files are what the sources build
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            git status --short
+            echo "::error::Run npm run build and npm run simple, and commit the result."
+            exit 1
+          fi
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps --only-shell chromium
+
+      - name: The simplified English still matches the pages
+        run: npm run simple -- --check
+
+      - name: Every page loads without problems
+        run: npm run check
