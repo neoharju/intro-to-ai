@@ -18,6 +18,7 @@ import mountFontSizeMenu from './font-size-menu';
 import mountZen from './zen';
 import mountSimplify, { extract as extractSimple } from './simplify';
 import mountSearch from './search';
+import mountProgress from './progress';
 import { applyAnchors, revealHash } from './anchors';
 
 // The page modules use the jQuery globals, as they did when jQuery came from a CDN.
@@ -64,6 +65,7 @@ $(() => {
   mountZen();
   mountSimplify();
   mountSearch();
+  mountProgress();
   revealHash();
   // For scripts/simple.mjs --extract.
   window.IntroAI = Object.assign(window.IntroAI || {}, { simple: { extract: extractSimple } });

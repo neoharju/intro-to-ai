@@ -139,6 +139,14 @@ The questions are in `src/javascripts/quiz/questions.json`, 20 for each week. Ea
 question similar in length and form, so that the longest one is not a giveaway. Results are kept in the
 reader's browser only (`localStorage`, key `introai-quiz-v1`). `quiz/#week-3` opens the questions of week 3.
 
+## Progress
+
+Every exercise has a "Done" switch in its header (`src/javascripts/progress.js`). A week marks the done
+exercises in its list of exercises and counts them in its page header, and the front page shows a table of
+the weeks under the course schedule: the exercises marked done and the questions answered in the practice
+quiz. Like the quiz results, the marks stay in the browser (`localStorage`, key `introai-progress-v1`, by
+the stable anchors of the exercises); nothing is sent anywhere.
+
 ## Shared parts and dates
 
 The head, the navigation bar, the footer and the scripts at the end of every page are written once, in

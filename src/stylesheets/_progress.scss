@@ -1,0 +1,126 @@
+// Progress through the course (progress.js): the Done switch of an exercise, the done exercises in the
+// list of a week, the count in the page header and the table on the front page.
+
+.exercise__header {
+  display: flex;
+  align-items: center;
+
+  > .exercise__toggle {
+    flex: 1;
+    min-width: 0;
+  }
+}
+
+.exercise__done {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+  margin-right: 1rem;
+  padding: .3rem .7rem;
+  font-size: .8125rem;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--muted);
+  background-color: transparent;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: color .15s, background-color .15s, border-color .15s;
+
+  .fa {
+    opacity: .4;
+  }
+
+  &:hover {
+    color: var(--ink);
+    border-color: var(--muted);
+  }
+
+  &[aria-pressed="true"] {
+    color: var(--green);
+    background-color: var(--green-soft);
+    border-color: var(--green);
+
+    .fa {
+      opacity: 1;
+    }
+  }
+
+  // On a phone, the check mark alone (the button keeps its name for screen readers).
+  @include media-breakpoint-down(sm) {
+    margin-right: .75rem;
+    padding: .4rem .55rem;
+
+    .exercise__done-label {
+      display: none;
+    }
+  }
+}
+
+.exercise.is-done {
+  box-shadow: inset 3px 0 0 var(--green), var(--shadow-sm);
+
+  &:hover {
+    box-shadow: inset 3px 0 0 var(--green), var(--shadow);
+  }
+}
+
+.exercise-list__link.is-done .exercise-list__number {
+  color: var(--green);
+  background-color: var(--green-soft);
+}
+
+.page-hero__progress.is-complete,
+.page-hero__progress.is-complete .fa {
+  color: var(--green);
+}
+
+// The front page: "Your progress", after the course schedule.
+.progress-overview {
+  margin: 1.5rem 0 2rem;
+
+  &__title {
+    margin: 0 0 .35rem;
+    font-size: 1.125rem;
+    font-weight: 650;
+  }
+
+  &__note {
+    font-size: .9375rem;
+    color: var(--muted);
+  }
+
+  &__none {
+    color: var(--faint);
+  }
+
+  // A bar after the count: the share of the week's exercises that are done.
+  &__bar {
+    display: inline-block;
+    width: 5rem;
+    height: .4rem;
+    margin-left: .6rem;
+    vertical-align: .15em;
+    overflow: hidden;
+    background-color: var(--surface-3);
+    border-radius: 999px;
+
+    > span {
+      display: block;
+      height: 100%;
+      background-color: var(--green);
+    }
+  }
+
+  &__reset {
+    margin-top: .75rem;
+  }
+}
+
+@media print {
+  .exercise__done,
+  .progress-overview {
+    display: none !important;
+  }
+}

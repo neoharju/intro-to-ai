@@ -92,7 +92,8 @@ export default function mountQuiz(root) {
       const score = correct(ids);
       const answered = ids.filter(id => id in results).length;
 
-      return el('li', {},
+      // The id makes quiz/#week-3 an anchor of the page too (route() below opens that week).
+      return el('li', { id: `week-${week.week}` },
         el('button', { type: 'button', class: 'quiz-deck', onClick: () => startWeek(week.week) },
           el('span', { class: 'quiz-deck__week', text: `Week ${week.week}` }),
           el('span', { class: 'quiz-deck__title', text: week.title }),
