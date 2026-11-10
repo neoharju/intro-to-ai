@@ -5,7 +5,7 @@
 import Collapse from 'bootstrap/js/src/collapse.js';
 import { kebabCase } from 'lodash-es';
 
-import { navOffset, scrollToId } from './utils';
+import { navOffset, prepareJump, scrollToId } from './utils';
 
 function claim(base, taken) {
   let id = base;
@@ -83,6 +83,7 @@ export function reveal(id, instant = false) {
   }
 
   if (instant) {
+    prepareJump(target);
     window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - navOffset(), behavior: 'auto' });
   } else {
     // The same short animation as the links of the table of contents.

@@ -133,10 +133,9 @@ async function open(page, { viewport, simple = false }) {
       .catch(() => problems.push('the simplified English did not turn on'));
   }
 
-  // Work that the page left for an idle moment (figures further down, for example).
-  await tab.evaluate(() => new Promise(resolve => {
-    (window.requestIdleCallback || setTimeout)(() => resolve(), { timeout: 3000 });
-  }));
+  // The interactive figures further down are built when the browser is idle.
+  await tab.waitForFunction(() => !document.querySelector('figure.viz[data-viz]:not(.is-ready)'), null, { timeout: 10000 })
+    .catch(() => problems.push('an interactive figure was not built'));
   await tab.waitForTimeout(300);
 
   return { context, tab, problems };

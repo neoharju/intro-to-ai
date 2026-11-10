@@ -25,12 +25,20 @@ export function readingAnchor() {
   return node && material && material.contains(node) ? { node, top: node.getBoundingClientRect().top } : null;
 }
 
+// Before a jump to `target`: the interactive figures above it are built now (viz/lib.js builds a figure
+// only when it comes near the screen), so that the target does not move while the page scrolls to it.
+export function prepareJump(target) {
+  document.dispatchEvent(new CustomEvent('introai:jump', { detail: { target } }));
+}
+
 export function scrollToId(id) {
   const target = document.getElementById(id);
 
   if (!target) {
     return;
   }
+
+  prepareJump(target);
 
   const top = target.getBoundingClientRect().top + window.scrollY - navOffset();
 

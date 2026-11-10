@@ -39,7 +39,9 @@ Compared with the original material:
 - **Design:** a new look (Inter font, a sticky top bar, a header for each week, cards for hints and
   exercises, a table of contents that highlights the current section) and interactive figures in every
   week, from search algorithms and alpha-beta pruning to attention and Q-learning. The figures run the
-  algorithms described in the text, in the browser; their code is in `src/javascripts/viz/`.
+  algorithms described in the text, in the browser; their code is in `src/javascripts/viz/`. A figure is
+  built when it comes near the screen or when the browser is idle (`mountAll` in `viz/lib.js`), so it does
+  not hold up the loading of the page, and its animation runs only while it is on screen.
 - **Practice quiz:** `quiz/` has 20 multiple-choice questions for each week, each with an explanation.
 - **Extra sections on cost and performance:** Weeks 4 and 5 end with optional sections on time and memory
   complexity (from the perceptron and dense layers to attention and the KV cache) and on performance

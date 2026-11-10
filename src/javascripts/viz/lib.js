@@ -441,21 +441,106 @@ export function frame(figure, title) {
 
 // Mounts every figure on the page that has a builder in `builders`. A figure whose builder throws
 // stays hidden (see _viz.scss), so the page never shows a broken frame.
-export function mountAll(builders) {
-  document.querySelectorAll('figure.viz[data-viz]').forEach(figure => {
-    const build = builders[figure.dataset.viz];
+//
+// Building every figure at load holds the page up (0.1 s for Week 3 on a slow phone), so only the figures
+// above or near the screen are built at once. Each of the others is built when it comes within AHEAD px of
+// the screen, when the browser is idle after the load, before a jump to a section below it (the event
+// 'introai:jump', from utils.js) and before printing. A figure is empty until it is built and then grows by
+// 600-1400 px; a figure built above the reading area scrolls the page by as much, so that what the reader
+// sees stays in place. After a reload or a step back in the history, the browser restores the old scroll
+// position for the old layout, so then every figure is built at once, as before.
+const AHEAD = 600;
 
-    if (!build) {
+export function mountAll(builders) {
+  const pending = new Set([...document.querySelectorAll('figure.viz[data-viz]')].filter(figure => builders[figure.dataset.viz]));
+  const navigation = window.performance && performance.getEntriesByType ? performance.getEntriesByType('navigation')[0] : null;
+  const restored = !navigation || navigation.type !== 'navigate';
+  let observer = null;
+
+  const header = () => {
+    const bar = document.querySelector('.header-wrapper');
+
+    return bar ? bar.getBoundingClientRect().height : 0;
+  };
+
+  function build(figure) {
+    if (!pending.delete(figure)) {
       return;
     }
 
+    if (observer) {
+      observer.unobserve(figure);
+    }
+
+    const above = figure.offsetParent !== null && figure.getBoundingClientRect().top < header();
+    const height = figure.offsetHeight;
+    const root = document.documentElement;
+
+    // Browsers with scroll anchoring would move the page too: only one of the two may.
+    root.style.overflowAnchor = 'none';
+
     try {
-      build(figure);
+      builders[figure.dataset.viz](figure);
       figure.classList.add('is-ready');
     } catch (error) {
       console.error(`Interactive figure "${figure.dataset.viz}" failed:`, error);
     }
+
+    if (above && figure.offsetHeight !== height) {
+      window.scrollTo(window.scrollX, window.scrollY + figure.offsetHeight - height);
+    }
+
+    root.style.overflowAnchor = '';
+  }
+
+  if (restored || !('IntersectionObserver' in window)) {
+    pending.forEach(build);
+    return;
+  }
+
+  // Above or near the screen: now. With an address like #section, the page is already scrolled there.
+  [...pending]
+    .filter(figure => figure.offsetParent !== null && figure.getBoundingClientRect().top < window.innerHeight + AHEAD)
+    .forEach(build);
+
+  observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        build(entry.target);
+      }
+    });
+  }, { rootMargin: `${AHEAD}px 0px` });
+  pending.forEach(figure => observer.observe(figure));
+
+  document.addEventListener('introai:jump', event => {
+    const { target } = event.detail;
+
+    [...pending]
+      .filter(figure => figure.compareDocumentPosition(target) & Node.DOCUMENT_POSITION_FOLLOWING)
+      .forEach(build);
   });
+
+  window.addEventListener('beforeprint', () => pending.forEach(build));
+
+  // The rest one at a time, whenever the browser has nothing else to do.
+  const idle = window.requestIdleCallback
+    ? callback => window.requestIdleCallback(callback, { timeout: 3000 })
+    : callback => window.setTimeout(callback, 200);
+
+  const next = () => {
+    const [figure] = pending;
+
+    if (figure) {
+      build(figure);
+      idle(next);
+    }
+  };
+
+  if (document.readyState === 'complete') {
+    idle(next);
+  } else {
+    window.addEventListener('load', () => idle(next), { once: true });
+  }
 }
 
 // --- Theme changes ----------------------------------------------------------------------------
