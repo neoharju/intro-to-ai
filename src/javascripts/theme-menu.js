@@ -1,63 +1,28 @@
 // The colour theme menu in the navigation bar: match the system, light or dark. The
 // choice itself is applied and remembered by theme.js (in the <head>); this only offers it. The menu is
-// a Bootstrap dropdown, like the menu of the narrow navigation bar.
+// a dropdown (dropdown.js), like the menu of the narrow navigation bar.
 const OPTIONS = [
   { choice: 'system', label: 'Match the system', icon: 'fa-desktop' },
   { choice: 'light', label: 'Light', icon: 'fa-sun' },
   { choice: 'dark', label: 'Dark', icon: 'fa-moon' },
 ];
-const THEME_ICONS = { light: 'fa-sun', dark: 'fa-moon' };
-
-function icon(name) {
-  const node = document.createElement('i');
-
-  node.className = `fa ${name}`;
-  node.setAttribute('aria-hidden', 'true');
-
-  return node;
-}
-
 export default function mountThemeMenu() {
   const theme = window.IntroAI && window.IntroAI.theme;
-  const buttons = document.querySelector('.navbar__buttons');
+  const toggle = document.querySelector('.theme-menu__toggle');
 
-  if (!theme || !buttons) {
+  if (!theme || !toggle) {
     return;
   }
 
-  const toggle = document.createElement('button');
+  // The menu is in the navigation bar of every page (src/partials/navbar.html); an item names its choice in
+  // data-choice. The button shows the sun or the moon by CSS (_navbar.scss), from the theme in use.
+  const items = [...document.querySelectorAll('.theme-menu .theme-menu__item[data-choice]')]
+    .map(item => ({ item, option: OPTIONS.find(option => option.choice === item.dataset.choice) }))
+    .filter(({ option }) => option);
 
-  toggle.type = 'button';
-  toggle.className = 'btn btn-secondary theme-menu__toggle';
-  toggle.setAttribute('data-bs-toggle', 'dropdown');
-  toggle.setAttribute('aria-expanded', 'false');
-  toggle.setAttribute('aria-label', 'Colour theme');
-  toggle.title = 'Colour theme';
-
-  const menu = document.createElement('div');
-
-  menu.className = 'dropdown-menu dropdown-menu-end theme-menu__list';
-
-  const items = OPTIONS.map(option => {
-    const item = document.createElement('button');
-
-    item.type = 'button';
-    item.className = 'dropdown-item theme-menu__item';
-    item.append(icon(option.icon), document.createTextNode(option.label), icon('fa-check menu-check'));
-    item.addEventListener('click', () => theme.set(option.choice));
-    menu.append(item);
-
-    return { item, option };
-  });
-
-  const wrapper = document.createElement('div');
-
-  wrapper.className = 'dropdown theme-menu';
-  wrapper.append(toggle, menu);
-  buttons.insertBefore(wrapper, document.getElementById('table-of-contents-toggle') || null);
+  items.forEach(({ item, option }) => item.addEventListener('click', () => theme.set(option.choice)));
 
   function update() {
-    toggle.replaceChildren(icon(THEME_ICONS[theme.resolved()] || 'fa-sun'));
     items.forEach(({ item, option }) => item.setAttribute('aria-pressed', String(option.choice === theme.get())));
   }
 

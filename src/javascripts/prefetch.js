@@ -1,6 +1,9 @@
 // Fetches a page of the site in advance when the reader points at a link to it (for 65 ms), touches it or
-// moves to it with the keyboard, so that the page is in the browser's cache when the click comes. Only pages
-// of this site are fetched, each once, and nothing when the reader has asked to save data.
+// moves to it with the keyboard, so that the page is in memory when the click comes (router.js keeps it, and
+// lets the browser fetch the scripts that page needs). Each page is fetched once, and nothing is fetched in
+// advance when the reader has asked to save data.
+import { preload } from './router';
+
 const DELAY = 65;
 
 export default function mountPrefetch() {
@@ -10,14 +13,11 @@ export default function mountPrefetch() {
     return;
   }
 
-  const here = new URL(window.location.href);
-  const done = new Set([here.origin + here.pathname]);
-  const hint = document.createElement('link');
-  const linkHints = Boolean(hint.relList && hint.relList.supports && hint.relList.supports('prefetch'));
+  const done = new Set();
   let timer = 0;
 
-  // The page that a link leads to, if it is a page of this site (not a file, not this page).
-  function pageOf(target) {
+  // The address of the link at `target`, if it may lead to another page of this site.
+  function linkOf(target) {
     const link = target instanceof Element ? target.closest('a[href]') : null;
 
     if (!link || link.target === '_blank' || link.hasAttribute('download')) {
@@ -25,37 +25,28 @@ export default function mountPrefetch() {
     }
 
     const url = new URL(link.href, window.location.href);
-    const page = url.origin + url.pathname;
 
-    if (url.origin !== here.origin || done.has(page) || !/\/(?:index\.html)?$/.test(url.pathname)) {
+    url.hash = '';
+
+    if (url.origin !== window.location.origin || url.pathname === window.location.pathname || done.has(url.href)) {
       return null;
     }
 
-    return page;
+    return url.href;
   }
 
-  function prefetch(page) {
-    done.add(page);
-
-    if (linkHints) {
-      const link = document.createElement('link');
-
-      link.rel = 'prefetch';
-      link.href = page;
-      document.head.append(link);
-    } else {
-      // Safari has no prefetch hints: an ordinary request fills the cache too.
-      window.fetch(page, { credentials: 'same-origin' }).catch(() => {});
-    }
+  function prefetch(address) {
+    done.add(address);
+    preload(address);
   }
 
   document.addEventListener('pointerover', event => {
-    const page = pageOf(event.target);
+    const address = linkOf(event.target);
 
     window.clearTimeout(timer);
 
-    if (page) {
-      timer = window.setTimeout(() => prefetch(page), DELAY);
+    if (address) {
+      timer = window.setTimeout(() => prefetch(address), DELAY);
     }
   }, { passive: true });
 
@@ -63,10 +54,10 @@ export default function mountPrefetch() {
 
   ['touchstart', 'focusin'].forEach(type => {
     document.addEventListener(type, event => {
-      const page = pageOf(event.target);
+      const address = linkOf(event.target);
 
-      if (page) {
-        prefetch(page);
+      if (address) {
+        prefetch(address);
       }
     }, { passive: true });
   });

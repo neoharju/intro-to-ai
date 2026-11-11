@@ -4,6 +4,7 @@
 // when the browser allows it; the quiz works without them. Formulas are typeset with
 // window.IntroAI.math (javascripts/math.js, loaded before this script).
 import WEEKS from './quiz/questions.json';
+import { definePageScript, pageSignal } from './page';
 import { navOffset, prefersReducedMotion } from './utils';
 import { el } from './viz/lib';
 
@@ -326,6 +327,10 @@ export default function mountQuiz(root) {
     }
   }
 
+  // Listeners on the document and the window end with the page (page.js): the reader may go on to another
+  // page of the site without leaving the document.
+  const signal = pageSignal();
+
   // Keys 1-4 or A-D answer, Enter or N moves on, while a question is on screen.
   document.addEventListener('keydown', event => {
     const target = event.target;
@@ -345,7 +350,7 @@ export default function mountQuiz(root) {
       event.preventDefault();
       run.next();
     }
-  });
+  }, { signal });
 
   // quiz/#week-3 opens week 3 directly, also from a link on this page.
   function route() {
@@ -358,12 +363,15 @@ export default function mountQuiz(root) {
     }
   }
 
-  window.addEventListener('hashchange', route);
+  window.addEventListener('hashchange', route, { signal });
   route();
 }
 
-const root = document.getElementById('quiz');
+// Now, and again whenever the reader comes back to the quiz (router.js).
+definePageScript('quiz', () => {
+  const root = document.getElementById('quiz');
 
-if (root) {
-  mountQuiz(root);
-}
+  if (root) {
+    mountQuiz(root);
+  }
+});

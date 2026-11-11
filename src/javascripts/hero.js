@@ -10,7 +10,12 @@
 // prefers reduced motion.
 const LINK_DISTANCE = 130;
 const KEY = 'introai-hero-v1';
+// The nodes move a step every 1/60 s, whatever the refresh rate of the screen (a 120 Hz screen would
+// otherwise run them twice as fast), and the network is drawn 30 times a second: a node moves at most 0.2 px
+// between two drawings, too little to see the difference, and the work (drawing, and handing the canvas
+// to the screen, about 3 ms a frame without a GPU) is halved, or more on faster screens.
 const FRAME = 1000 / 60;
+const DRAW_EVERY = 1000 / 30;
 
 // The nodes that the previous page left, or null.
 function saved() {
@@ -41,6 +46,9 @@ function mountHero(hero) {
   let nodes = [];
   let visible = true;
   let frame = 0;
+  // The time of the last drawing, and the steps not yet taken.
+  let drawn = 0;
+  let owed = 0;
   // The still picture is always the same one; a moving network carries on from the previous page.
   let previous = still ? null : saved();
 
@@ -143,16 +151,30 @@ function mountHero(hero) {
     });
   }
 
-  function tick() {
+  function tick(time) {
     frame = 0;
 
     if (!visible || document.hidden) {
+      drawn = 0;
       return;
     }
 
-    step();
-    draw();
     frame = window.requestAnimationFrame(tick);
+
+    // The first frame after a pause draws at once; a little early is better than a skipped frame (2 ms).
+    if (drawn && time - drawn < DRAW_EVERY - 2) {
+      return;
+    }
+
+    // At most a second of steps after a long pause (the browser was busy).
+    owed = Math.min(60, owed + (drawn ? (time - drawn) / FRAME : 1));
+    drawn = time;
+
+    for (; owed >= 1; owed -= 1) {
+      step();
+    }
+
+    draw();
   }
 
   function start() {

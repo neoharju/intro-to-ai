@@ -1,0 +1,31 @@
+// The few Bootstrap utility classes that the pages and scripts use, as Bootstrap's utility API writes them
+// (the whole API is 67 kB of classes that nothing uses). To use another utility class, add it here; the
+// responsive ones come after the others, as in Bootstrap, so that they win.
+.d-none {
+  display: none !important;
+}
+
+.ms-auto {
+  margin-left: auto !important;
+}
+
+.bg-white {
+  --#{$prefix}bg-opacity: 1;
+  background-color: rgba(var(--#{$prefix}white-rgb), var(--#{$prefix}bg-opacity)) !important;
+}
+
+@include media-breakpoint-up(lg) {
+  .d-lg-flex {
+    display: flex !important;
+  }
+}
+
+@include media-breakpoint-up(xl) {
+  .d-xl-inline {
+    display: inline !important;
+  }
+
+  .d-xl-none {
+    display: none !important;
+  }
+}

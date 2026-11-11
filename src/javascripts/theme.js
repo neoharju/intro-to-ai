@@ -86,6 +86,14 @@ try {
   // Blocked storage: nothing to restore.
 }
 
+// For the stylesheet: scripts run (the controls of the navigation bar that need them are shown), and the
+// keys of the search to show (⌘ K on a Mac).
+root.classList.add('js');
+
+if (/Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent)) {
+  root.setAttribute('data-mac', '');
+}
+
 window.IntroAI = Object.assign(window.IntroAI || {}, {
   theme: { choices: CHOICES, get: () => choice, resolved, set },
 });

@@ -687,7 +687,7 @@ This is a simple exercise to make sure that you understand BFS and DFS.
 For each case, show the contents of the node list (queue or stack) at each step of the search. So that all students get the same result, we agree to add nodes to the list in alphabetical order.
 
 == e485314d
-<img width="30%" src="../img/exercises/ex1/Drawing-9537dcb8.png" align="right"> Look at the (cute) network on the right.
+<img width="30%" src="../img/exercises/ex1/Drawing-9537dcb8.webp" align="right" loading="lazy" decoding="async" style="aspect-ratio: 667 / 902"> Look at the (cute) network on the right.
 
 == 43c1069f
 Simulate (with pencil and paper) breadth-first search from node A, when the goal node is H.
@@ -780,7 +780,7 @@ Yes, Min almost had three Os on the top row. But Max could easily stop that plan
 To analyse games and optimal strategies, we introduce the concept of a <b>game tree</b>. A game tree is similar to a search tree. (Remember: also study the lecture slides, not only this material. Some topics are possibly only in one of them.) The nodes of the game tree are the different states of the game. The "children" of each node N are the possible states that we can get to from the state of N. In board games, the state of the game is the board position and which player moves next.
 
 == e8bc6d46
-For example, look at the game tree below. It does not start at the root of the game. It starts in the middle of the game, because the full tree is much too large to show. <br> <img width="80%" src="../img/diagrams/tictactoe-tree-905ef5b4.png"> <br> The game continues from the board position in the root node, with the number (1) at the top. It is the turn of Min to put an O in one of the three empty cells. The nodes (2)--(4) show the board positions after each of the three choices. In the next step, each node has two possible choices for Max to put an X. Thus, the tree branches again.
+For example, look at the game tree below. It does not start at the root of the game. It starts in the middle of the game, because the full tree is much too large to show. <br> <img width="80%" src="../img/diagrams/tictactoe-tree-905ef5b4.webp" loading="lazy" decoding="async" style="aspect-ratio: 1024 / 768"> <br> The game continues from the board position in the root node, with the number (1) at the top. It is the turn of Min to put an O in one of the three empty cells. The nodes (2)--(4) show the board positions after each of the three choices. In the next step, each node has two possible choices for Max to put an X. Thus, the tree branches again.
 
 == 6462a3b8
 The game stops when a player gets a row of three, or when there are no more empty cells. From the start position above, the game always ends with a row of three.
@@ -801,7 +801,7 @@ Up to now, we found these values. The value of node (2) is -1: if we get to such
 Last, Min is an experienced player, so she can get to the same conclusion. Thus, she has only one real option: she gives Max a small, mischievous smile and plays the O in the middle of the board.
 
 == 0d433e56
-The diagram below shows the value of each node, and the optimal play from the turn of Min in the root node. <br> <img width="80%" src="../img/diagrams/tictactoe-values-71fdd825.png">
+The diagram below shows the value of each node, and the optimal play from the turn of Min in the root node. <br> <img width="80%" src="../img/diagrams/tictactoe-values-71fdd825.webp" loading="lazy" decoding="async" style="aspect-ratio: 1024 / 768">
 
 == 7f576e97
 The value of the root node is the <b>value of the game</b>. It tells us who wins (and by how much, if the result is not only a win or a loss). Max wins if the value of the game is +1. Min wins if the value is -1. If the value is 0, the game ends in a draw. This is all based on the assumption that both players select what is best for them.
@@ -867,7 +867,7 @@ This is the meaning of <code>alpha</code> and <code>beta</code>. Look at the mov
 When the recursion starts at the root node, we use the minimum value of the game as <code>alpha</code> and the maximum value as <code>beta</code>. For example, in tic-tac-toe and chess, the result is a win, a draw or a loss (values 1, 0 and -1). Thus, we use <code>alpha = -1</code> and <code>beta = 1</code>. If we do not know the range of possible values before, we start with <code>alpha = -∞</code> and <code>beta = ∞</code>.
 
 == 180fd3d1
-To really understand the beauty of alpha-beta pruning, it is useful to do some examples. This is one more tic-tac-toe example. <br> <img width="80%" src="../img/diagrams/tictactoe-alphabeta-e8cb918f.png"> <br>
+To really understand the beauty of alpha-beta pruning, it is useful to do some examples. This is one more tic-tac-toe example. <br> <img width="80%" src="../img/diagrams/tictactoe-alphabeta-e8cb918f.webp" loading="lazy" decoding="async" style="aspect-ratio: 1024 / 768"> <br>
 
 == d4aac2e9
 Simulate the algorithm, and make sure that it really prunes the two grey branches. Thus, it is not fully correct to show their minimax values, because the algorithm never calculates them.

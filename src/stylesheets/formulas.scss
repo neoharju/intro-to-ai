@@ -1,0 +1,12 @@
+// The formulas (stylesheets/math.css, built from this file): KaTeX's stylesheet and the site's own rules for formulas. Only the
+// pages that have formulas load it (those that load math.js: scripts/sync.mjs links it in their <head>), so
+// the front page and the glossary do without its 30 kB.
+@import "katex/dist/katex.css";
+
+@import "bootstrap/scss/functions";
+@import "variables";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/mixins";
+@import "mixins";
+
+@import "math";

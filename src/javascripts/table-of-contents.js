@@ -2,32 +2,62 @@ import { kebabCase } from 'lodash-es';
 
 import { navOffset, scrollToId } from './utils';
 
+// The drawer and its button stay from page to page (router.js): mount() sets them up once, and build() makes
+// the list of the current page (again for every page that the router shows).
 class TableOfContents {
   mount() {
-    this.headingNodes = $('.material-heading');
-    this.rootNode = $('#table-of-contents');
-    this.listNode = $('#table-of-contents-list');
-    this.layerNode = $('#table-of-contents-layer');
-    this.toggleNode = $('#table-of-contents-toggle');
+    this.rootNode = document.getElementById('table-of-contents');
+    this.listNode = document.getElementById('table-of-contents-list');
+    this.layerNode = document.getElementById('table-of-contents-layer');
+    this.toggleNode = document.getElementById('table-of-contents-toggle');
 
-    this.closeNode = $('<button type="button" class="table-of-contents__close" aria-label="Close table of contents">&times;</button>');
+    if (!this.rootNode || !this.listNode) {
+      return;
+    }
 
-    this.rootNode.attr({ role: 'dialog', 'aria-modal': 'true', 'aria-label': 'Table of contents' });
-    this.rootNode.find('.table-of-contents__heading').append(this.closeNode);
-    this.toggleNode.attr({ 'aria-controls': 'table-of-contents', 'aria-expanded': 'false' });
+    this.closeNode = document.createElement('button');
+    this.closeNode.type = 'button';
+    this.closeNode.className = 'table-of-contents__close';
+    this.closeNode.setAttribute('aria-label', 'Close table of contents');
+    this.closeNode.textContent = '\u00d7';
 
-    this.rootNode.on('click', '.table-of-contents__link', this.onClickTableOfContentsLink.bind(this));
-    this.layerNode.on('click', this.hide.bind(this));
-    this.closeNode.on('click', this.hide.bind(this));
-    this.toggleNode.on('click', this.show.bind(this));
-    $(document).on('keydown', e => {
-      if (e.key === 'Escape' && this.isVisible()) {
+    Object.entries({ role: 'dialog', 'aria-modal': 'true', 'aria-label': 'Table of contents' })
+      .forEach(([name, value]) => this.rootNode.setAttribute(name, value));
+    this.rootNode.querySelector('.table-of-contents__heading').append(this.closeNode);
+    this.toggleNode.setAttribute('aria-controls', 'table-of-contents');
+    this.toggleNode.setAttribute('aria-expanded', 'false');
+
+    this.rootNode.addEventListener('click', event => {
+      const link = event.target.closest('.table-of-contents__link');
+
+      if (link) {
+        this.onClickTableOfContentsLink(event, link);
+      }
+    });
+    this.layerNode.addEventListener('click', () => this.hide());
+    this.closeNode.addEventListener('click', () => this.hide());
+    this.toggleNode.addEventListener('click', () => this.show());
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape' && this.isVisible()) {
         this.hide();
       }
     });
+  }
 
+  // The list of the current page.
+  build() {
+    if (!this.listNode) {
+      return;
+    }
+
+    if (this.isVisible()) {
+      this.hide();
+    }
+
+    this.headingNodes = [...document.querySelectorAll('.material-heading')];
     // The glossary (data-unnumbered) shows its letters and terms without section numbers.
     this.numbered = !document.querySelector('#material[data-unnumbered]');
+    this.listNode.replaceChildren();
     this.addNumbers();
 
     this.sections.forEach(section => {
@@ -36,28 +66,28 @@ class TableOfContents {
   }
 
   isVisible() {
-    return this.rootNode.hasClass('table-of-contents--visible');
+    return Boolean(this.rootNode) && this.rootNode.classList.contains('table-of-contents--visible');
   }
 
   show() {
     this.markCurrentSection();
-    this.layerNode.addClass('table-of-contents-layer--visible');
-    this.rootNode.addClass('table-of-contents--visible');
-    this.toggleNode.attr('aria-expanded', 'true');
-    $('body').addClass('has-drawer');
-    this.closeNode.trigger('focus');
+    this.layerNode.classList.add('table-of-contents-layer--visible');
+    this.rootNode.classList.add('table-of-contents--visible');
+    this.toggleNode.setAttribute('aria-expanded', 'true');
+    document.body.classList.add('has-drawer');
+    this.closeNode.focus();
   }
 
   hide() {
-    const hadFocus = this.rootNode[0].contains(document.activeElement);
+    const hadFocus = this.rootNode.contains(document.activeElement);
 
-    this.layerNode.removeClass('table-of-contents-layer--visible');
-    this.rootNode.removeClass('table-of-contents--visible');
-    this.toggleNode.attr('aria-expanded', 'false');
-    $('body').removeClass('has-drawer');
+    this.layerNode.classList.remove('table-of-contents-layer--visible');
+    this.rootNode.classList.remove('table-of-contents--visible');
+    this.toggleNode.setAttribute('aria-expanded', 'false');
+    document.body.classList.remove('has-drawer');
 
     if (hadFocus) {
-      this.toggleNode.trigger('focus');
+      this.toggleNode.focus();
     }
   }
 
@@ -67,36 +97,33 @@ class TableOfContents {
     const line = navOffset() + 8;
     let current = null;
 
-    this.headingNodes.each((index, node) => {
+    this.headingNodes.forEach(node => {
       if (node.getBoundingClientRect().top <= line) {
         current = node;
       }
     });
 
-    const links = this.listNode.find('.table-of-contents__link');
+    const links = [...this.listNode.querySelectorAll('.table-of-contents__link')];
 
-    links.removeClass('is-current').removeAttr('aria-current');
+    links.forEach(link => {
+      link.classList.remove('is-current');
+      link.removeAttribute('aria-current');
+    });
 
-    if (current) {
-      const link = links.filter((index, node) => node.getAttribute('href') === `#${current.id}`);
+    const link = current && links.find(node => node.getAttribute('href') === `#${current.id}`);
 
-      link.addClass('is-current').attr('aria-current', 'location');
+    if (link) {
+      const content = this.rootNode.querySelector('.table-of-contents__content');
 
-      if (link[0]) {
-        const content = this.rootNode.find('.table-of-contents__content')[0];
-
-        content.scrollTop = link[0].offsetTop - content.clientHeight / 3;
-      }
+      link.classList.add('is-current');
+      link.setAttribute('aria-current', 'location');
+      content.scrollTop = link.offsetTop - content.clientHeight / 3;
     }
   }
 
-  onClickTableOfContentsLink(e) {
-    e.preventDefault();
-
-    const id = e.currentTarget.getAttribute('href').substring(1);
-
-    scrollToId(id);
-
+  onClickTableOfContentsLink(event, link) {
+    event.preventDefault();
+    scrollToId(link.getAttribute('href').substring(1));
     this.hide();
   }
 
@@ -107,8 +134,7 @@ class TableOfContents {
     const root = { level: 0, sectionString: '', children: [] };
     const stack = [root];
 
-    this.headingNodes.each((index, node) => {
-      const headingNode = $(node);
+    this.headingNodes.forEach(node => {
       const level = parseInt(node.nodeName.substring(1));
 
       while (stack[stack.length - 1].level >= level) {
@@ -119,22 +145,22 @@ class TableOfContents {
       const position = parent.children.length + 1;
       const sectionString = parent.sectionString ? `${parent.sectionString}.${position}` : `${position}`;
       // The ids come from anchors.js (headings that have an id in the page keep it).
-      const id = node.id || kebabCase(headingNode.text());
+      const id = node.id || kebabCase(node.textContent);
 
       const section = {
         level,
         sectionString,
-        title: headingNode.text(),
+        title: node.textContent,
         href: `#${id}`,
         children: []
       };
 
-      headingNode.attr('id', id);
+      node.id = id;
       parent.children.push(section);
       stack.push(section);
 
       if (this.numbered) {
-        headingNode.prepend(`
+        node.insertAdjacentHTML('afterbegin', `
           <small class="text-muted">
             ${sectionString}.
           </small>
@@ -147,18 +173,17 @@ class TableOfContents {
 
   constructTableOfContents(parentNode, section) {
     const level = section.sectionString.split('.').length - 1;
+    const linkNode = document.createElement('a');
+    const newNode = document.createElement('li');
 
-    const linkNode = $('<a></a>')
-      .attr('href', section.href)
-      .addClass(`table-of-contents__link table-of-contents__link--level-${level}`)
-      .text(this.numbered ? `${section.sectionString}. ${section.title}` : section.title);
-
-    const newNode = $('<li></li>').append(linkNode);
-
+    linkNode.setAttribute('href', section.href);
+    linkNode.className = `table-of-contents__link table-of-contents__link--level-${level}`;
+    linkNode.textContent = this.numbered ? `${section.sectionString}. ${section.title}` : section.title;
+    newNode.append(linkNode);
     parentNode.append(newNode);
 
     if (section.children.length > 0) {
-      const newParentNode = $('<ul></ul>');
+      const newParentNode = document.createElement('ul');
 
       newNode.append(newParentNode);
 

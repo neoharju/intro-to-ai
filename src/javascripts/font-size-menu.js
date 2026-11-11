@@ -19,59 +19,14 @@ function current() {
   return OPTIONS.some(option => option.size === size) ? size : 'normal';
 }
 
-function el(tag, className, text) {
-  const node = document.createElement(tag);
-
-  node.className = className;
-
-  if (text) {
-    node.textContent = text;
-  }
-
-  return node;
-}
-
 export default function mountFontSizeMenu() {
-  const buttons = document.querySelector('.navbar__buttons');
+  // The menu is in the navigation bar of every page (src/partials/navbar.html); an item names its size in
+  // data-size.
+  const items = [...document.querySelectorAll('.font-size-menu .font-size-menu__item[data-size]')]
+    .map(item => ({ item, option: OPTIONS.find(option => option.size === item.dataset.size) }))
+    .filter(({ option }) => option);
 
-  if (!buttons) {
-    return;
-  }
-
-  const toggle = el('button', 'btn btn-secondary font-size-menu__toggle');
-
-  toggle.type = 'button';
-  toggle.setAttribute('data-bs-toggle', 'dropdown');
-  toggle.setAttribute('aria-expanded', 'false');
-  toggle.setAttribute('aria-label', 'Text size');
-  toggle.title = 'Text size';
-
-  const glyph = el('span', 'font-size-menu__glyph', 'Aa');
-
-  glyph.setAttribute('aria-hidden', 'true');
-  toggle.append(glyph);
-
-  const menu = el('div', 'dropdown-menu dropdown-menu-end font-size-menu__list');
-
-  const items = OPTIONS.map(option => {
-    const item = el('button', 'dropdown-item font-size-menu__item');
-    const sample = el('span', `font-size-menu__sample font-size-menu__sample--${option.size}`, 'A');
-    const check = el('i', 'fa fa-check menu-check');
-
-    item.type = 'button';
-    sample.setAttribute('aria-hidden', 'true');
-    check.setAttribute('aria-hidden', 'true');
-    item.append(sample, document.createTextNode(option.label), check);
-    item.addEventListener('click', () => set(option.size));
-    menu.append(item);
-
-    return { item, option };
-  });
-
-  const wrapper = el('div', 'dropdown font-size-menu');
-
-  wrapper.append(toggle, menu);
-  buttons.insertBefore(wrapper, buttons.querySelector('.theme-menu') || document.getElementById('table-of-contents-toggle'));
+  items.forEach(({ item, option }) => item.addEventListener('click', () => set(option.size)));
 
   function update() {
     items.forEach(({ item, option }) => item.setAttribute('aria-pressed', String(option.size === current())));

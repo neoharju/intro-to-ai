@@ -1,4 +1,5 @@
 import watchFades from './scroll-fades';
+import { onPageEnd } from './page';
 import { prefersReducedMotion } from './utils';
 
 function onScrollFrame(callback) {
@@ -21,6 +22,8 @@ function onScrollFrame(callback) {
   // The first time in the next frame too: measuring now would lay out the page while it is still being
   // set up, and again after.
   schedule();
+
+  return schedule;
 }
 
 // Reading progress along the bottom edge of the navigation bar, and a back-to-top button that
@@ -47,7 +50,7 @@ function mountScrollAids() {
   });
   document.body.append(backToTop);
 
-  onScrollFrame(() => {
+  return onScrollFrame(() => {
     const max = document.documentElement.scrollHeight - window.innerHeight;
     const progress = max > 0 ? Math.min(1, window.scrollY / max) : 0;
 
@@ -191,13 +194,20 @@ function mountReveal() {
   }, { rootMargin: '0px 0px -6% 0px' });
 
   document.querySelectorAll('.material .hint, .material .viz, .material .table-wrap').forEach(node => observer.observe(node));
+  onPageEnd(() => observer.disconnect());
 }
 
+// Once for the visit: the parts that stay from page to page (router.js). Returns a function that measures the
+// reading progress again (after the router has changed the page).
+export function mountUiOnce() {
+  return mountScrollAids();
+}
+
+// For every page: its tables, diagrams, code blocks, headings and cards.
 export default function mountUi() {
   wrapTables();
   wrapDiagrams();
   mountCopyButtons();
   addHeadingAnchors();
-  mountScrollAids();
   mountReveal();
 }

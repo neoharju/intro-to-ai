@@ -1,0 +1,20 @@
+// Mixins of the site's own (no CSS of their own), for main.scss and math.scss.
+
+// A box that scrolls sideways fades out on the side where there is more to see (the classes come from
+// math.js for formulas and from ui.js for diagrams).
+@mixin scroll-fades($fade: 2.5rem) {
+  &.fade-right {
+    -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - #{$fade}), transparent);
+    mask-image: linear-gradient(90deg, #000 calc(100% - #{$fade}), transparent);
+  }
+
+  &.fade-left {
+    -webkit-mask-image: linear-gradient(270deg, #000 calc(100% - #{$fade}), transparent);
+    mask-image: linear-gradient(270deg, #000 calc(100% - #{$fade}), transparent);
+  }
+
+  &.fade-left.fade-right {
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 $fade, #000 calc(100% - #{$fade}), transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 $fade, #000 calc(100% - #{$fade}), transparent);
+  }
+}

@@ -1,10 +1,25 @@
 // Page header band with the week number and title. The canvas behind it (a slowly drifting network
 // of nodes) is added by hero.js.
+//
+// The header stays from page to page (router.js): only its text changes, and the network goes on behind it.
+// So it has the same height on every page (the height of the tallest header, the front page's, at that
+// width; a header that needs more on a very narrow screen or with a larger text size grows), and its text
+// starts at the same place: a new title replaces the old one where it stands. The old and the new text are
+// in the same cell of a grid while they cross-fade.
 .page-hero {
+  --hero-height: 20.75rem;
+
   position: relative;
   isolation: isolate;
+  display: grid;
+  align-content: start;
+  min-height: var(--hero-height);
   overflow: hidden;
   padding: 3.25rem 0 2.5rem;
+
+  > .container {
+    grid-area: 1 / 1;
+  }
   background:
     radial-gradient(60rem 22rem at 85% -20%, rgba(82, 138, 252, .16), transparent 70%),
     radial-gradient(40rem 18rem at 0% 120%, rgba(255, 171, 14, .12), transparent 70%),
@@ -56,6 +71,12 @@
   &__title {
     max-width: 22em;
     margin: 0;
+
+    // The router moves the focus here when it changes page (for screen readers); it is not a control.
+    &:focus {
+      outline: none;
+    }
+
     font-size: 2.75rem;
     font-weight: 780;
     line-height: 1.12;
@@ -121,6 +142,8 @@
 
 @include media-breakpoint-down(md) {
   .page-hero {
+    --hero-height: 21.5rem;
+
     padding: 2.25rem 0 1.75rem;
 
     &__title {
@@ -214,8 +237,10 @@
   view-transition-name: hero-meta;
 }
 
-// The header off screen, on the old or the new page (hero.js): no morph.
-.no-hero-morph {
+// The header off screen, on the old or the new page (hero.js): no morph. Nor for the text that the router
+// is fading out (two elements with the same name would cancel a transition).
+.no-hero-morph,
+.page-hero > .is-leaving {
   .page-hero__eyebrow,
   .page-hero__title,
   .page-hero__meta {
@@ -238,6 +263,12 @@
 ::view-transition-new(hero-meta) {
   width: auto;
   height: auto;
+}
+
+// The material that the router has started to show, while the rest of the page is on its way: at least a
+// screen high, so that the footer does not come up for a moment.
+.material[data-loading] {
+  min-height: 100vh;
 }
 
 // The parts of the line under the title that scripts add (the simplified-English switch, the exercises

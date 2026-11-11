@@ -7,6 +7,8 @@
 //
 // Nothing is sent anywhere. Stored as { weeks: { week3: { total: 12, done: ['exercise-…', …] } } }, by the
 // stable anchors of the exercises (anchors.js), so a mark stays with its exercise when others are added.
+import { pageSignal } from './page';
+
 const KEY = 'introai-progress-v1';
 const QUIZ_KEY = 'introai-quiz-v1';
 
@@ -128,9 +130,9 @@ function mountWeek(week) {
 function mountOverview(container) {
   // The weeks, from the navigation bar.
   const weeks = [...document.querySelectorAll('.navbar .nav-link')]
-    .map(link => ({ label: link.textContent.trim(), match: link.getAttribute('href').match(/^(week([1-7]))\/$/) }))
+    .map(link => ({ label: link.textContent.trim(), href: link.href, match: new URL(link.href).pathname.match(/\/(week([1-7]))\/$/) }))
     .filter(week => week.match)
-    .map(({ label, match }) => ({ label, key: match[1], number: match[2] }));
+    .map(({ label, href, match }) => ({ label, href, key: match[1], number: match[2] }));
 
   function render() {
     const data = load();
@@ -149,7 +151,7 @@ function mountOverview(container) {
     table.append(el('thead'), body);
     table.firstChild.append(head);
 
-    weeks.forEach(({ label, key, number }) => {
+    weeks.forEach(({ label, href, key, number }) => {
       const row = el('tr');
       const week = el('td');
       const exercises = el('td');
@@ -159,7 +161,7 @@ function mountOverview(container) {
       const link = el('a', '', label);
       const quizLink = el('a', '', answers.length ? `${answers.length} answered, ${correct} correct` : 'not started');
 
-      link.href = `${key}/`;
+      link.href = href;
       week.append(link);
 
       if (entry && entry.total) {
@@ -205,12 +207,12 @@ function mountOverview(container) {
 
   render();
 
-  // Marks made in another tab.
+  // Marks made in another tab, while this page is shown.
   window.addEventListener('storage', event => {
     if (event.key === KEY || event.key === QUIZ_KEY || event.key === null) {
       render();
     }
-  });
+  }, { signal: pageSignal() });
 }
 
 export default function mountProgress() {

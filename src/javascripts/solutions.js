@@ -1,74 +1,24 @@
-import { uniqueId, kebabCase } from 'lodash-es';
-import { scrollToId } from './utils';
+import { kebabCase, uniqueId } from 'lodash-es';
 
+import { numberHeadings } from './exercises';
+
+// The model solutions (folded like the exercises, collapse.js): ids for their bodies and toggles, and
+// "Solution:" before their headings.
 class Solutions {
   mount() {
+    document.querySelectorAll('.solution').forEach(solutionNode => {
+      const headingNode = solutionNode.querySelector('.solution__heading');
+      const text = headingNode ? headingNode.textContent : '';
+      const id = `${uniqueId('solution-')}-${kebabCase(text)}`;
 
-    this.headingNodes = $('.solution h1, .solution h2');
-    this.solutionNodes = $('.solution');
-    this.solutionListNode = $('#solution-list');
-
-    this.addIds();
-    this.addNumbers();
-  }
-
-  addIds() {
-    this.solutionNodes.each(function() {
-      const solutionNode = $(this);
-      const collapseNode = solutionNode.find('.collapse');
-      const toggleNode = solutionNode.find('.solution__toggle');
-      const headingNode = solutionNode.find('.solution__heading');
-
-      const id = `${uniqueId('solution-')}-${kebabCase(headingNode.text())}`;
-
-      solutionNode.attr('data-name', headingNode.text());
-      solutionNode.attr('data-href', `#${id}`);
-      solutionNode.attr('id', `${id}-root`);
-      collapseNode.attr('id', id);
-      toggleNode.attr('href', `#${id}`);
-    });
-  }
-
-  addNumbers() {
-    let indices = [];
-    const solutionNames = [];
-
-    this.headingNodes.each(function() {
-      const headingNode = $(this);
-      const hIndex = parseInt(this.nodeName.substring(1)) - 1;
-
-      if(hIndex === 0) {
-        const solutionNode = headingNode.closest('.solution');
-
-        solutionNames.push({
-          name: solutionNode.data('name'),
-          href: solutionNode.data('href')
-        });
-      }
-
-      if (indices.length - 1 > hIndex) {
-        indices = indices.slice(0, hIndex + 1 );
-      }
-
-      if (indices[hIndex] == undefined) {
-        indices[hIndex] = 0;
-      }
-
-      indices[hIndex]++;
-
-      headingNode.prepend(`
-        <small class="text-muted">
-          Solution:
-        </small>
-      `);
+      solutionNode.setAttribute('data-name', text);
+      solutionNode.setAttribute('data-href', `#${id}`);
+      solutionNode.id = `${id}-root`;
+      solutionNode.querySelectorAll('.collapse').forEach(node => { node.id = id; });
+      solutionNode.querySelectorAll('.solution__toggle').forEach(node => node.setAttribute('href', `#${id}`));
     });
 
-    this.solutionNames = solutionNames;
-  }
-
-  onClicksolutionLink(e) {
-    const id = `${e.target.getAttribute('href').substring(1)}-root`;
-    scrollToId(id);
+    numberHeadings([...document.querySelectorAll('.solution h1, .solution h2')], () => 'Solution:');
   }
 }
 

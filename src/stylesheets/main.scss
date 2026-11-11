@@ -2,7 +2,10 @@
 // font files they reference).
 @import "@fontsource-variable/inter/index.css";
 @import "@fontsource-variable/inter/wght-italic.css";
-@import "katex/dist/katex.css";
+
+// A stand-in for Inter while it loads: the fonts every device has, scaled to Inter's widths and heights, so that
+// the text does not move when Inter arrives (_fallback-font.scss).
+@import "fallback-font";
 
 // The icons the pages use.
 @import "icons";
@@ -14,21 +17,23 @@
 @import "bootstrap/scss/variables-dark";
 @import "bootstrap/scss/maps";
 @import "bootstrap/scss/mixins";
-@import "bootstrap/scss/utilities";
-$utilities: map-get-multiple($utilities, ("display", "margin-start", "background-color"));
+@import "mixins";
 @import "bootstrap/scss/root";
 @import "bootstrap/scss/reboot";
 @import "bootstrap/scss/type";
 @import "bootstrap/scss/images";
 @import "bootstrap/scss/containers";
-@import "bootstrap/scss/grid";
 @import "bootstrap/scss/tables";
+// Only the two button colours that the pages use (Bootstrap makes 16 otherwise).
+$all-theme-colors: $theme-colors;
+$theme-colors: map-get-multiple($theme-colors, ("primary", "secondary"));
 @import "bootstrap/scss/buttons";
+$theme-colors: $all-theme-colors;
 @import "bootstrap/scss/transitions";
 @import "bootstrap/scss/dropdown";
 @import "bootstrap/scss/nav";
 @import "bootstrap/scss/navbar";
-@import "bootstrap/scss/utilities/api";
+@import "utilities";
 
 @import "tokens";
 @import "compat";
@@ -44,7 +49,6 @@ $utilities: map-get-multiple($utilities, ("display", "margin-start", "background
 @import "table-of-contents";
 @import "page-nav";
 @import "diagrams";
-@import "math";
 @import "bonus";
 @import "concepts";
 @import "ui";

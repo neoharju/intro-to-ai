@@ -1,5 +1,5 @@
 import { GOAL, ITEMS, NAMES, START, bfs, label, moves, neighbours, side } from './river-core';
-import { button, createLoop, el, frame, prefersReducedMotion, stat, svg } from './lib';
+import { button, createLoop, el, frame, observeResize, prefersReducedMotion, stat, svg } from './lib';
 
 // The scene: two banks with the river in between; every item has a fixed place on either bank. The
 // compact layout is for narrow screens, where the wide one would shrink its labels too much.
@@ -350,7 +350,5 @@ export default function mountRiver(figure) {
   restart();
   render();
 
-  if ('ResizeObserver' in window) {
-    new ResizeObserver(chooseLayout).observe(sceneStage);
-  }
+  observeResize(sceneStage, chooseLayout);
 }

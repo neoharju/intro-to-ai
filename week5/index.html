@@ -9,7 +9,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="introai-simple" content="simple.json">
   <link rel="icon" href="../img/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="../fonts/vendor/inter-latin-wght-normal-NRMW37G5.woff2" as="font" type="font/woff2" crossorigin>
   <link href="../stylesheets/main.css" rel="stylesheet" />
+  <link href="../stylesheets/math.css" rel="stylesheet" />
   <script src="../javascripts/theme.js"></script>
   <script src="../javascripts/hero.js"></script>
   <!-- /shared:head -->
@@ -56,15 +58,26 @@
         </ul>
 
         <div class="ms-auto navbar__buttons">
+          <button class="btn btn-secondary search-btn navbar__js" type="button" aria-label="Search the material (Ctrl+K)" aria-keyshortcuts="Control+K Meta+K /" title="Search the material (Ctrl+K or /)"><i class="fa fa-search" aria-hidden="true"></i><span class="search-btn__label">Search</span><kbd class="search-btn__kbd" aria-hidden="true"><span class="search-btn__keys">Ctrl K</span><span class="search-btn__keys search-btn__keys--mac">⌘ K</span></kbd></button>
           <div class="dropdown" id="mobile-nav-dropdown">
             <button class="btn btn-secondary dropdown-toggle navbar__mobile-nav-toggle" data-bs-toggle="dropdown" aria-expanded="false">
               <i class="fa fa-bars"></i>
             </button>
 
             <div class="dropdown-menu dropdown-menu-end">
+              <a class="dropdown-item" href="../">Introduction</a>
+              <a class="dropdown-item" href="../week1/">Week 1</a>
+              <a class="dropdown-item" href="../week2/">Week 2</a>
+              <a class="dropdown-item" href="../week3/">Week 3</a>
+              <a class="dropdown-item" href="../week4/">Week 4</a>
+              <a class="dropdown-item" href="./" aria-current="page">Week 5</a>
+              <a class="dropdown-item" href="../week6/">Week 6</a>
+              <a class="dropdown-item" href="../week7/">Week 7</a>
+              <a class="dropdown-item" href="../quiz/">Quiz</a>
             </div>
           </div>
 
+          <button type="button" class="btn btn-secondary zen-toggle navbar__js" title="Zen mode (Z)" aria-label="Zen mode" aria-pressed="false"><i class="fa fa-spa" aria-hidden="true"></i></button><div class="dropdown font-size-menu navbar__js"><button class="btn btn-secondary font-size-menu__toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Text size" title="Text size"><span class="font-size-menu__glyph" aria-hidden="true">Aa</span></button><div class="dropdown-menu dropdown-menu-end font-size-menu__list"><button class="dropdown-item font-size-menu__item" type="button" data-size="normal"><span class="font-size-menu__sample font-size-menu__sample--normal" aria-hidden="true">A</span>Normal<i class="fa fa-check menu-check" aria-hidden="true"></i></button><button class="dropdown-item font-size-menu__item" type="button" data-size="large"><span class="font-size-menu__sample font-size-menu__sample--large" aria-hidden="true">A</span>Large<i class="fa fa-check menu-check" aria-hidden="true"></i></button><button class="dropdown-item font-size-menu__item" type="button" data-size="xlarge"><span class="font-size-menu__sample font-size-menu__sample--xlarge" aria-hidden="true">A</span>Extra large<i class="fa fa-check menu-check" aria-hidden="true"></i></button></div></div><div class="dropdown theme-menu navbar__js"><button type="button" class="btn btn-secondary theme-menu__toggle" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Colour theme" title="Colour theme"><i class="fa fa-sun theme-menu__icon theme-menu__icon--light" aria-hidden="true"></i><i class="fa fa-moon theme-menu__icon theme-menu__icon--dark" aria-hidden="true"></i></button><div class="dropdown-menu dropdown-menu-end theme-menu__list"><button type="button" class="dropdown-item theme-menu__item" data-choice="system"><i class="fa fa-desktop" aria-hidden="true"></i>Match the system<i class="fa fa-check menu-check" aria-hidden="true"></i></button><button type="button" class="dropdown-item theme-menu__item" data-choice="light"><i class="fa fa-sun" aria-hidden="true"></i>Light<i class="fa fa-check menu-check" aria-hidden="true"></i></button><button type="button" class="dropdown-item theme-menu__item" data-choice="dark"><i class="fa fa-moon" aria-hidden="true"></i>Dark<i class="fa fa-check menu-check" aria-hidden="true"></i></button></div></div>
           <button class="btn btn-secondary" id="table-of-contents-toggle" aria-label="Table of contents">
             <span class="d-none d-xl-inline">Table of contents</span>
             <i class="fa fa-ellipsis-h d-xl-none"></i>
@@ -123,7 +136,14 @@
           <div class="exercise-list__header">
             Exercises
           </div>
-          <div class="exercise-list__content" id="exercise-list"></div>
+          <div class="exercise-list__content" id="exercise-list">
+            <a class="exercise-list__link" href="#exercises" aria-label="Exercise 1: Running a Real Transformer in Three Lines (programming) (1p)"><span class="exercise-list__number">1</span><span class="exercise-list__name">Running a Real Transformer in Three Lines (programming)</span><span class="points-pill">1p</span></a>
+            <a class="exercise-list__link" href="#exercises" aria-label="Exercise 2: Running a Local Language Model with Ollama (0.5p)"><span class="exercise-list__number">2</span><span class="exercise-list__name">Running a Local Language Model with Ollama</span><span class="points-pill">0.5p</span></a>
+            <a class="exercise-list__link" href="#exercises" aria-label="Exercise 3: NanoGPT: Generating Text with a Pre-trained Model (1p)"><span class="exercise-list__number">3</span><span class="exercise-list__name">NanoGPT: Generating Text with a Pre-trained Model</span><span class="points-pill">1p</span></a>
+            <a class="exercise-list__link" href="#exercises" aria-label="Exercise 4: Bonus Exercise 4: NanoGPT Fine-Tuning on Shakespeare (0p)"><span class="exercise-list__number">4</span><span class="exercise-list__name">Bonus Exercise 4: NanoGPT Fine-Tuning on Shakespeare</span><span class="points-pill">0p</span></a>
+            <a class="exercise-list__link" href="#exercises" aria-label="Exercise 5: Exploring a Simple Autoencoder with TensorFlow (2p)"><span class="exercise-list__number">5</span><span class="exercise-list__name">Exploring a Simple Autoencoder with TensorFlow</span><span class="points-pill">2p</span></a>
+            <a class="exercise-list__link" href="#exercises" aria-label="Exercise 6: Detecting AI-Generated Images (1.5p)"><span class="exercise-list__number">6</span><span class="exercise-list__name">Detecting AI-Generated Images</span><span class="points-pill">1.5p</span></a>
+          </div>
 
         </div>
 
@@ -2240,8 +2260,8 @@ git checkout 3adf61e1</code></pre>
 	  transitioning generated object.
 	</p>
 
-	<img src="../img/material/part5/latent_interpolation.webp" 
-	     alt="Latent Space Interpolation" width="70%">
+	<img src="../img/material/part5/latent_interpolation-1200.webp" srcset="../img/material/part5/latent_interpolation-1200.webp 1200w, ../img/material/part5/latent_interpolation.webp 2082w" sizes="(min-width: 992px) 583px, 70vw" 
+	     alt="Latent Space Interpolation" width="70%" loading="lazy" decoding="async" style="aspect-ratio: 2082 / 820">
 
 	<p>
 	  In the example above, we considered movement along a straight line, but in practice, 
@@ -2363,7 +2383,7 @@ git checkout 3adf61e1</code></pre>
 	  in a blurry image.
 	</p>
 	
-	<img src="../img/material/part5/super-resolution.webp" alt="Super-resolution example using SRGAN" width="70%"/>
+	<img src="../img/material/part5/super-resolution-1200.webp" srcset="../img/material/part5/super-resolution-1200.webp 1200w, ../img/material/part5/super-resolution.webp 2542w" sizes="(min-width: 992px) 583px, 70vw" alt="Super-resolution example using SRGAN" width="70%" loading="lazy" decoding="async" style="aspect-ratio: 2542 / 1216">
 
 	<p>
 	  Generative models can be used to <strong>fill in missing parts of images</strong>. 
@@ -2372,7 +2392,7 @@ git checkout 3adf61e1</code></pre>
 	  This feature is already available in some modern smartphones.
 	</p>
 	
-	<img src="../img/material/part5/image-inpainting.webp" alt="Example of image inpainting using generative models" width="70%"/>
+	<img src="../img/material/part5/image-inpainting-1200.webp" srcset="../img/material/part5/image-inpainting-1200.webp 1200w, ../img/material/part5/image-inpainting.webp 1616w" sizes="(min-width: 992px) 583px, 70vw" alt="Example of image inpainting using generative models" width="70%" loading="lazy" decoding="async" style="aspect-ratio: 1616 / 1084">
 
 	<p>
 	  In recent years, models that generate images based on textual descriptions 
@@ -2400,7 +2420,7 @@ git checkout 3adf61e1</code></pre>
 	  </li>
 	</ul>
 	
-	<img src="../img/material/part5/text-to-image-generation.webp" alt="Example of text-to-image generation" width="70%"/>
+	<img src="../img/material/part5/text-to-image-generation-1200.webp" srcset="../img/material/part5/text-to-image-generation-1200.webp 1200w, ../img/material/part5/text-to-image-generation.webp 2560w" sizes="(min-width: 992px) 583px, 70vw" alt="Example of text-to-image generation" width="70%" loading="lazy" decoding="async" style="aspect-ratio: 2560 / 512">
 
 	<p>
 	  There are now dedicated databases for AI-generated images:
@@ -2444,7 +2464,7 @@ git checkout 3adf61e1</code></pre>
 	  For example, removing an object from an image and instructing the model on what should be drawn in its place.
 	</p>
 	
-	<img src="../img/material/part5/ai-image-editing.webp" alt="AI-powered image editing" width="70%"/>
+	<img src="../img/material/part5/ai-image-editing-1200.webp" srcset="../img/material/part5/ai-image-editing-1200.webp 1200w, ../img/material/part5/ai-image-editing.webp 2560w" sizes="(min-width: 992px) 583px, 70vw" alt="AI-powered image editing" width="70%" loading="lazy" decoding="async" style="aspect-ratio: 2560 / 512">
 
 	<p>
 	  Based on this technology, several image editors with built-in generative models have emerged:
@@ -3118,9 +3138,11 @@ print(streaming_attention(Q[1], K, V).round(3))   # bank's output again: [0.683 
     </div>
   </div>
 
-  <script src="../javascripts/math.js"></script>
-  <script src="../javascripts/main.js"></script>
-  <script src="../javascripts/week5.js"></script>
+  <script src="../javascripts/katex.js"></script>
+  <script type="module" src="../javascripts/math.js"></script>
+  <script src="../javascripts/highlight.js"></script>
+  <script type="module" src="../javascripts/main.js"></script>
+  <script type="module" src="../javascripts/week5.js"></script>
   <!-- /shared:end -->
 
 

@@ -14,110 +14,111 @@ function splitPoints(heading) {
     : { name: text, points: undefined };
 }
 
+function span(className, text) {
+  const node = document.createElement('span');
+
+  node.className = className;
+  node.textContent = text;
+
+  return node;
+}
+
+// "Exercise 1.2:" before the headings of the exercises (an exercise may have sub-headings, <h2>).
+export function numberHeadings(headings, label) {
+  let indices = [];
+
+  headings.forEach(heading => {
+    const hIndex = parseInt(heading.nodeName.substring(1)) - 1;
+
+    if (indices.length - 1 > hIndex) {
+      indices = indices.slice(0, hIndex + 1);
+    }
+
+    if (indices[hIndex] === undefined) {
+      indices[hIndex] = 0;
+    }
+
+    indices[hIndex]++;
+
+    heading.insertAdjacentHTML('afterbegin', `
+          <small class="text-muted">
+            ${label(indices)}
+          </small>
+        `);
+  });
+}
+
 class Exercises {
   mount() {
-    $('#exercise-list').on('click', '.exercise-list__link', this.onClickExerciseLink.bind(this));
+    this.exerciseNodes = [...document.querySelectorAll('.exercise')];
+    this.exerciseListNode = document.getElementById('exercise-list');
 
-    this.headingNodes = $('.exercise h1, .exercise h2');
-    this.exerciseNodes = $('.exercise');
-    this.exerciseListNode = $('#exercise-list');
+    if (this.exerciseListNode) {
+      this.exerciseListNode.addEventListener('click', event => {
+        const link = event.target.closest('.exercise-list__link');
+
+        if (link) {
+          scrollToId(`${link.getAttribute('href').substring(1)}-root`);
+        }
+      });
+    }
 
     this.addIds();
-    this.addNumbers();
-    this.renderExecisesList();
+    // One entry per exercise heading (<h1>), in the order of the page.
+    this.exerciseNames = [...document.querySelectorAll('.exercise h1')]
+      .map(heading => heading.closest('.exercise'))
+      .map(node => ({ name: node.getAttribute('data-name'), points: node.getAttribute('data-points'), href: node.getAttribute('data-href') }));
+    numberHeadings([...document.querySelectorAll('.exercise h1, .exercise h2')], indices => `Exercise ${indices.join('.')}:`);
+    this.renderExercisesList();
   }
 
   addIds() {
-    this.exerciseNodes.each(function() {
-      const exerciseNode = $(this);
-      const collapseNode = exerciseNode.find('.collapse');
-      const toggleNode = exerciseNode.find('.exercise__toggle');
-      const headingNode = exerciseNode.find('.exercise__heading');
-
+    this.exerciseNodes.forEach(exerciseNode => {
+      const headingNode = exerciseNode.querySelector('.exercise__heading');
+      const headingText = headingNode ? headingNode.textContent : '';
       // The anchor comes from anchors.js, which the search uses too.
-      const id = exerciseNode.attr('data-anchor') || `exercise-${kebabCase(headingNode.text())}`;
-      const { name, points } = splitPoints(headingNode.text());
+      const id = exerciseNode.getAttribute('data-anchor') || `exercise-${kebabCase(headingText)}`;
+      const { name, points } = splitPoints(headingText);
 
-      exerciseNode.attr('data-name', name);
-      exerciseNode.attr('data-points', points);
-      exerciseNode.attr('data-href', `#${id}`);
-      exerciseNode.attr('id', `${id}-root`);
-      collapseNode.attr('id', id);
-      toggleNode.attr('href', `#${id}`);
+      exerciseNode.setAttribute('data-name', name);
 
       if (points) {
-        headingNode.empty().append(
-          document.createTextNode(`${name} `),
-          $('<span class="points-pill"></span>').text(points)
-        );
+        exerciseNode.setAttribute('data-points', points);
+      }
+
+      exerciseNode.setAttribute('data-href', `#${id}`);
+      exerciseNode.id = `${id}-root`;
+      exerciseNode.querySelectorAll('.collapse').forEach(node => { node.id = id; });
+      exerciseNode.querySelectorAll('.exercise__toggle').forEach(node => node.setAttribute('href', `#${id}`));
+
+      if (points && headingNode) {
+        headingNode.replaceChildren(document.createTextNode(`${name} `), span('points-pill', points));
       }
     });
-  }
-
-  addNumbers() {
-    let indices = [];
-    const exerciseNames = [];
-
-    this.headingNodes.each(function() {
-      const headingNode = $(this);
-      const hIndex = parseInt(this.nodeName.substring(1)) - 1;
-
-      if(hIndex === 0) {
-        const exerciseNode = headingNode.closest('.exercise');
-
-        exerciseNames.push({
-          name: exerciseNode.attr('data-name'),
-          points: exerciseNode.attr('data-points'),
-          href: exerciseNode.attr('data-href')
-        });
-      }
-
-      if (indices.length - 1 > hIndex) {
-        indices = indices.slice(0, hIndex + 1 );
-      }
-
-      if (indices[hIndex] == undefined) {
-        indices[hIndex] = 0;
-      }
-
-      indices[hIndex]++;
-
-      headingNode.prepend(`
-        <small class="text-muted">
-          Exercise ${indices.join('.')}:
-        </small>
-      `);
-    });
-
-    this.exerciseNames = exerciseNames;
-  }
-
-  onClickExerciseLink(e) {
-    const id = `${e.currentTarget.getAttribute('href').substring(1)}-root`;
-
-    scrollToId(id);
   }
 
   // Built with DOM nodes rather than an HTML string: the names come from heading text.
-  renderExecisesList() {
-    const links = this.exerciseNames.map((exercise, index) => {
+  renderExercisesList() {
+    if (!this.exerciseListNode) {
+      return;
+    }
+
+    this.exerciseListNode.replaceChildren(...this.exerciseNames.map((exercise, index) => {
       const label = `Exercise ${index + 1}: ${exercise.name}${exercise.points ? ` (${exercise.points})` : ''}`;
-      const linkNode = $('<a data-bs-toggle="collapse" class="exercise-list__link"></a>')
-        .attr('href', exercise.href)
-        .attr('aria-label', label)
-        .append(
-          $('<span class="exercise-list__number"></span>').text(index + 1),
-          $('<span class="exercise-list__name"></span>').text(exercise.name)
-        );
+      const link = document.createElement('a');
+
+      link.setAttribute('data-bs-toggle', 'collapse');
+      link.className = 'exercise-list__link';
+      link.setAttribute('href', exercise.href);
+      link.setAttribute('aria-label', label);
+      link.append(span('exercise-list__number', String(index + 1)), span('exercise-list__name', exercise.name));
 
       if (exercise.points) {
-        linkNode.append($('<span class="points-pill"></span>').text(exercise.points));
+        link.append(span('points-pill', exercise.points));
       }
 
-      return linkNode;
-    });
-
-    this.exerciseListNode.empty().append(links);
+      return link;
+    }));
   }
 }
 

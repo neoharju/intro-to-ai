@@ -2,7 +2,7 @@
 // gets the same anchor on every visit, and a link from another page (a search result, for example) can
 // name a section before that page has run its scripts. The search computes the anchors of the pages it
 // reads with this same function, so the two always agree.
-import Collapse from 'bootstrap/js/src/collapse.js';
+import { isOpen, setOpen } from './collapse';
 import { kebabCase } from 'lodash-es';
 
 import { navOffset, prepareJump, scrollToId } from './utils';
@@ -75,8 +75,9 @@ export function reveal(id, instant = false) {
   if (exercise) {
     const body = exercise.querySelector('.collapse');
 
-    if (body && !body.classList.contains('show')) {
-      Collapse.getOrCreateInstance(body, { toggle: false }).show();
+    // At once: the page is about to scroll to it.
+    if (body && !isOpen(body)) {
+      setOpen(body, true, { animate: false });
     }
 
     target = exercise;

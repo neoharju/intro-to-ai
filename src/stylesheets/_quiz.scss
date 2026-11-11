@@ -464,3 +464,8 @@
     font-size: 1.1rem;
   }
 }
+
+// The decks written into the page (scripts/sync.mjs) need quiz.js; without scripts only the <noscript> note.
+html:not(.js) .quiz-home {
+  display: none;
+}

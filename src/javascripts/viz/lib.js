@@ -2,6 +2,11 @@
 // a high-DPI canvas that follows the width of its container, the colours, a seeded random number
 // generator, an animation loop that only runs while its figure is on screen, and a small line chart
 // with a hover/keyboard read-out.
+//
+// Everything that a figure sets up outside itself (observers, listeners on window or document, animation
+// loops, entries in the theme registries below) ends with its page view (page.js): the site changes page
+// without leaving the document, so a figure of a page that the reader has left must not stay alive.
+import { onPageEnd, pageSignal, restoringScroll } from '../page';
 
 // Categorical slots (validated for colour-vision deficiencies, up to three classes in one plot), the
 // neutrals, the colours of roles (walls, mud, highlights), and the ends of a sequential blue ramp. The
@@ -407,7 +412,10 @@ export function legend(items) {
     const swatch = el('i', { 'aria-hidden': 'true', style: swatchStyle(item) });
 
     if (typeof item.style === 'function') {
-      themed.swatches.add({ swatch, item });
+      const entry = { swatch, item };
+
+      themed.swatches.add(entry);
+      onPageEnd(() => themed.swatches.delete(entry));
     }
 
     return el('li', {}, swatch, item.label);
@@ -453,9 +461,18 @@ const AHEAD = 600;
 
 export function mountAll(builders) {
   const pending = new Set([...document.querySelectorAll('figure.viz[data-viz]')].filter(figure => builders[figure.dataset.viz]));
-  const navigation = window.performance && performance.getEntriesByType ? performance.getEntriesByType('navigation')[0] : null;
-  const restored = !navigation || navigation.type !== 'navigate';
+  const restored = restoringScroll();
+  const signal = pageSignal();
   let observer = null;
+
+  // The reader has moved on to another page: the figures that were not built yet never will be.
+  onPageEnd(() => {
+    pending.clear();
+
+    if (observer) {
+      observer.disconnect();
+    }
+  });
 
   const header = () => {
     const bar = document.querySelector('.header-wrapper');
@@ -518,9 +535,9 @@ export function mountAll(builders) {
     [...pending]
       .filter(figure => figure.compareDocumentPosition(target) & Node.DOCUMENT_POSITION_FOLLOWING)
       .forEach(build);
-  });
+  }, { signal });
 
-  window.addEventListener('beforeprint', () => pending.forEach(build));
+  window.addEventListener('beforeprint', () => pending.forEach(build), { signal });
 
   // The rest one at a time, whenever the browser has nothing else to do.
   const idle = window.requestIdleCallback
@@ -539,7 +556,7 @@ export function mountAll(builders) {
   if (document.readyState === 'complete') {
     idle(next);
   } else {
-    window.addEventListener('load', () => idle(next), { once: true });
+    window.addEventListener('load', () => idle(next), { once: true, signal });
   }
 }
 
@@ -552,6 +569,20 @@ const themed = { canvases: new Set(), swatches: new Set(), listeners: new Set() 
 
 export function onThemeChange(listener) {
   themed.listeners.add(listener);
+  onPageEnd(() => themed.listeners.delete(listener));
+}
+
+// A ResizeObserver on `target` for as long as its page is shown.
+export function observeResize(target, callback) {
+  if (!('ResizeObserver' in window)) {
+    window.addEventListener('resize', () => callback([]), { signal: pageSignal() });
+    return;
+  }
+
+  const observer = new ResizeObserver(callback);
+
+  observer.observe(target);
+  onPageEnd(() => observer.disconnect());
 }
 
 function recolor(root, swaps) {
@@ -609,7 +640,10 @@ export function createCanvas(parent, { aspect = 0.5, minHeight = 180, maxHeight 
   parent.append(canvas);
 
   if (onResize) {
-    themed.canvases.add({ view, onResize });
+    const entry = { view, onResize };
+
+    themed.canvases.add(entry);
+    onPageEnd(() => themed.canvases.delete(entry));
   }
 
   // The first sizing does not call onResize: the caller has not received `view` yet.
@@ -636,12 +670,7 @@ export function createCanvas(parent, { aspect = 0.5, minHeight = 180, maxHeight 
   };
 
   view.resize = resize;
-
-  if ('ResizeObserver' in window) {
-    new ResizeObserver(() => resize()).observe(parent);
-  } else {
-    window.addEventListener('resize', () => resize());
-  }
+  observeResize(parent, () => resize());
 
   resize(false);
 
@@ -711,13 +740,26 @@ export function createLoop(figure, tick) {
   }
 
   if ('IntersectionObserver' in window) {
-    new IntersectionObserver(entries => {
+    const observer = new IntersectionObserver(entries => {
       visible = entries[entries.length - 1].isIntersecting;
       schedule();
-    }, { rootMargin: '100px' }).observe(figure);
+    }, { rootMargin: '100px' });
+
+    observer.observe(figure);
+    onPageEnd(() => observer.disconnect());
   }
 
-  document.addEventListener('visibilitychange', schedule);
+  document.addEventListener('visibilitychange', schedule, { signal: pageSignal() });
+
+  // The page is left: no more frames.
+  onPageEnd(() => {
+    running = false;
+
+    if (frameId) {
+      window.cancelAnimationFrame(frameId);
+      frameId = 0;
+    }
+  });
 
   return {
     start,

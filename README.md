@@ -29,9 +29,9 @@ The course staff's own updates are included up to commit `7947a94` of the origin
 
 Compared with the original material:
 
-- **Front-end dependencies:** jQuery, Bootstrap, highlight.js and Font Awesome are upgraded and, like the
-  Inter font and KaTeX (for the formulas), served from this repository instead of third-party CDNs. The shared
-  JavaScript and CSS are built from `src/`.
+- **Front-end dependencies:** Bootstrap (its CSS only), highlight.js and Font Awesome are upgraded and, like the
+  Inter font and KaTeX (for the formulas), served from this repository instead of third-party CDNs; jQuery and
+  Bootstrap's JavaScript are gone (see "Performance"). The shared JavaScript and CSS are built from `src/`.
 - **Docker preview:** a `Dockerfile` and `compose.yaml` to preview the site locally.
 - **Corrections in weeks 1–7:** factual errors and broken code examples are corrected.
 - **Removed:** the original course's Google Analytics tracking, cookie banner and disabled login form,
@@ -90,8 +90,9 @@ The site is served at <http://localhost:4567>.
 
 Formulas are written in TeX in the pages, inline in `<span class="math">…</span>` and displayed on a line of
 their own in `<div class="math">…</div>` (add `math--key` to set a key equation on a card). Pages with formulas
-load `javascripts/math.js`, which typesets them with KaTeX. Pseudocode listings use
-`<pre class="sh_pseudo"><code>…</code></pre>`, highlighted by the grammar in `src/javascripts/pseudocode.js`.
+load `javascripts/katex.js` (KaTeX) and `javascripts/math.js`, which typesets them, and `stylesheets/math.css`.
+Pseudocode listings use `<pre class="sh_pseudo"><code>…</code></pre>`, highlighted by the grammar in
+`src/javascripts/pseudocode.js`; code listings are highlighted by `javascripts/highlight.js`.
 
 A displayed formula that is wider than the column scrolls sideways. So does a drawn diagram (`<svg class="dg">`)
 on a narrow screen: `src/javascripts/ui.js` keeps it at least 3/4 of its viewBox width in pixels, so that its
@@ -104,7 +105,10 @@ labels stay about 10 px on a phone instead of shrinking to 5 px. Both fade out o
 branch, with every formula of the pages and of the simplified English typeset by KaTeX in advance, with the
 settings of `math.js` (`src/javascripts/math-options.js`). A page then shows its formulas at once: at a 4x
 slower CPU, as on a mid-range phone, `math.js` takes 12-200 ms instead of 200-770 ms per week. The typeset
-formulas are the same as those typeset in the browser, and the gzipped pages grow by 0-22 KB.
+formulas are the same as those typeset in the browser, and the gzipped pages grow by 0-22 KB. The code listings
+are highlighted in advance too, with the same highlight.js settings (`src/javascripts/highlight-languages.js`),
+and the published pages no longer load `katex.js` (77 kB compressed) and `highlight.js` (12 kB); only the
+practice quiz, which typesets its questions in the browser, keeps KaTeX.
 
 `.github/workflows/pages.yml` builds `_site/` on every push and publishes it once GitHub Pages is set to
 publish from the workflow: in the repository's Settings, Pages, set Source to "GitHub Actions" (once). Until
@@ -129,20 +133,39 @@ red-green or pink contrasts), so check a new colour with a colour-blindness simu
 
 ## Moving between pages
 
-In browsers with cross-document view transitions (Chrome, Edge, Safari 18.2 and later), the old page stays
-on screen until the new one is ready, and then the header changes in 0.15 s: the title, the week label and
-the line under the title morph into the new ones and the navigation bar stays where it is
-(`src/stylesheets/_hero.scss`). The network behind the title goes on from page to page instead of starting
-again: `javascripts/hero.js`, loaded in the `<head>`, puts it in as soon as the header is parsed, so it is
-there in the first frame of the new page, and it carries on from the nodes that the last page kept for the
-tab in `sessionStorage`. It is drawn in a field of the same size on every page (at least 384 px high, more
-than any header), so a shorter header shows less of it rather than a squeezed one. From a page scrolled
-down, or to a section further down, the page crossfades as a whole. Other browsers, and readers who prefer
-reduced motion, change pages as before.
+The site changes page without leaving the document (`src/javascripts/router.js`). The navigation bar, the
+header with its animated network, the footer and the table-of-contents drawer stay; only the page changes:
+
+1. **At once**, from `pages.json` (written by `npm run sync`, about 5 kB compressed, fetched when the browser
+   is idle after the first page): the title and the line under it cross-fade in the header (0.28 s) while
+   the network goes on drawing behind them, and the top of the material (the lecture and deadline boxes,
+   the list of exercises, the learning objectives) replaces the old material.
+2. **As soon as the page has arrived** (usually already in memory, see below): the rest of the material is put
+   in below what the reader sees, in slices whose size adapts to the speed of the device, so that the
+   network in the header keeps moving; the page's scripts that are not loaded yet are loaded (each only once
+   per visit), and the page is set up a step a frame.
+
+The header has the same height on every page (`--hero-height` in `_hero.scss`, the height of the front
+page's header at that width), and its text starts at the same place, so a new title replaces the old one
+where it stands. Back and forward return to the remembered scroll position of each page, also after a
+reload. Every page stays an ordinary HTML document: an address opened directly, or anything unexpected (a
+failed request, a page that is not one of the site's), is an ordinary page load, and in browsers with
+cross-document view transitions such a load still morphs the header (`_hero.scss`, `hero.js`).
+
+Because pages are no longer unloaded, everything a page sets up for its own material (listeners on `window`
+or `document`, observers, animation loops) ends with it: `src/javascripts/page.js` gives each page view an
+`AbortSignal` (`pageSignal()`, `onPageEnd()`), and the scripts that only some pages load (`math.js`,
+`quiz.js`, `weekN.js`) register how they set up a page with `definePageScript`, so that the router can set
+up a page again without loading them twice. `npm run check` visits every page in turn this way.
 
 A page of the site is fetched in advance when the reader points at a link to it for 65 ms, touches it or
-moves to it with the keyboard (`src/javascripts/prefetch.js`), so that it is already in the browser's cache
-when the click comes. Nothing is fetched when the reader has asked the browser to save data.
+moves to it with the keyboard (`src/javascripts/prefetch.js`); the router keeps it in memory, and lets the
+browser fetch the scripts that page will need. Nothing is fetched in advance when the reader has asked the
+browser to save data.
+
+KaTeX itself is in `javascripts/katex.js`, apart from `math.js`: the site that the Pages workflow publishes
+has its formulas typeset in advance, so `scripts/prerender.mjs` removes `katex.js` (260 kB) from every page
+but the quiz. Where formulas are typeset in the browser, the router typesets each slice before it goes in.
 
 ## Text size
 
@@ -237,6 +260,7 @@ Every push and pull request runs `.github/workflows/check.yml` on GitHub Actions
 - `npm run build` and `npm run simple` must leave the repository unchanged: the committed assets, shared
   parts, dates and `weekN/simple.json` are what the sources build;
 - `npm run simple -- --check`: no simplified-English entry has lost its original;
+- `npm run budgets`: every script and stylesheet is within its size budget (see "Performance");
 - `npm run check` (`scripts/check-pages.mjs`) loads every page in Chromium, on a desktop and at phone width
   (390 px), with the simplified English off and on. It fails on errors in the console, uncaught
   exceptions, requests that the Content-Security-Policy blocks, formulas that KaTeX cannot typeset,
@@ -268,6 +292,43 @@ Docker base images, each release only 14 days after it came out (most malicious 
 pulled within days). The actions in the workflows are pinned to commits (with the version in a comment),
 and every job gets only the permissions it needs. A fork runs scheduled workflows only after Actions are enabled in its
 Actions tab, and opens issues only if Issues are on (Settings, General, Features).
+
+## Performance
+
+What a reader downloads and what the browser does, and how to keep it small:
+
+- **No jQuery, no Bootstrap JavaScript.** The exercises fold open with `src/javascripts/collapse.js` (a closed
+  exercise is `hidden="until-found"`, so the browser's search in the page finds text in it and opens it), and
+  the menus of the navigation bar are `src/javascripts/dropdown.js`; both keep Bootstrap's classes, so its CSS
+  still draws them. `main.js` went from 196 kB to 53 kB (69 to 18 kB compressed).
+- **ES modules.** The scripts of the pages are modules (`<script type="module">`); what several of them use
+  (`page.js`, the figure toolkit `viz/lib.js`, …) is in `javascripts/chunks/` and is loaded once however many
+  weeks the reader opens. `katex.js` and `highlight.js` are plain scripts that the pages with formulas or code
+  load before the modules (and that the published site does without).
+- **Stylesheets.** `stylesheets/main.css` has only the Bootstrap parts and utility classes that the pages use
+  (`src/stylesheets/_utilities.scss`: add a utility class there to use it); KaTeX's styles are in
+  `stylesheets/math.css`, linked only by the pages with formulas.
+- **No layout shifts.** The controls of the navigation bar, the list of exercises of a week and the decks of
+  the quiz are written into the pages (`npm run sync`) instead of being added by scripts; Inter is preloaded,
+  and until it arrives the text is drawn in "Inter Fallback", Arial scaled to Inter's metrics
+  (`src/stylesheets/_fallback-font.scss`). Pictures below the first screen load when they come near, with
+  their space kept (`aspect-ratio`); diagrams are lossless WebP and photos come in a 1200 px version.
+- **Figures and header.** The decision regions of the k-NN figure are computed without allocations into one
+  `ImageData` (12 times faster). The network in the header moves by time, not by frame (it ran twice as fast
+  on 120 Hz screens), and is drawn 30 times a second.
+- **Service worker** (`src/sw.js`, written to `sw.js` by `npm run sync`). GitHub Pages lets files be cached
+  for 10 minutes only; the service worker keeps them, so that a returning reader loads nothing that has not
+  changed, and the pages they have opened can be read offline. Its version is a hash of the site's content, so
+  any change publishes a new one, which replaces all stored files; the open page then changes page with
+  ordinary page loads. To take it away, publish a `sw.js` that deletes the caches
+  (`caches.keys()` → `caches.delete`) and calls `self.registration.unregister()`.
+- **Budgets.** `npm run budgets` (`scripts/check-budgets.mjs`, part of the Check workflow) fails when a script
+  or stylesheet grows over its compressed size limit, or what a week loads on a first visit goes over 75 kB.
+  Raise a limit there, on purpose, when the growth is worth it.
+
+Tried and left out, measured: KaTeX's MathML-only output (four times smaller formulas, but browsers draw
+aligned equations and limits badly without a math font) and `content-visibility: auto` on the material (30-40 %
+less layout, but positions remembered for back, forward and reload no longer land on the same text).
 
 ## Rebuild the assets
 

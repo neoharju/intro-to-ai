@@ -62,30 +62,25 @@ function samePage(url) {
 }
 
 export default function mountSearch() {
-  const buttons = document.querySelector('.navbar__buttons');
+  // The button is in the navigation bar of every page (src/partials/navbar.html).
+  const button = document.querySelector('.navbar__buttons .search-btn');
   const dialog = el('dialog', 'search');
 
-  // Without <dialog> (very old browsers) there is no search button.
-  if (!buttons || typeof dialog.showModal !== 'function') {
+  if (!button) {
     return;
   }
 
-  const mac = /Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent);
-  const shortcut = mac ? '⌘ K' : 'Ctrl K';
+  // Without <dialog> (very old browsers) there is no search.
+  if (typeof dialog.showModal !== 'function') {
+    button.hidden = true;
+    return;
+  }
 
-  // The button in the navigation bar.
-  const button = el('button', 'btn btn-secondary search-btn');
-  const icon = el('i', 'fa fa-search');
-  const kbd = el('kbd', 'search-btn__kbd', shortcut);
-
-  button.type = 'button';
-  button.setAttribute('aria-label', `Search the material (${mac ? '⌘K' : 'Ctrl+K'})`);
-  button.setAttribute('aria-keyshortcuts', 'Control+K Meta+K /');
-  button.title = `Search the material (${mac ? '⌘K' : 'Ctrl+K'} or /)`;
-  icon.setAttribute('aria-hidden', 'true');
-  kbd.setAttribute('aria-hidden', 'true');
-  button.append(icon, el('span', 'search-btn__label', 'Search'), kbd);
-  buttons.prepend(button);
+  // On a Mac, ⌘K (the keys shown on the button follow from data-mac, set by theme.js).
+  if (document.documentElement.hasAttribute('data-mac')) {
+    button.setAttribute('aria-label', 'Search the material (⌘K)');
+    button.title = 'Search the material (⌘K or /)';
+  }
 
   // The dialog.
   const field = el('div', 'search__field');
@@ -256,6 +251,9 @@ export default function mountSearch() {
       }
 
       reveal(entry.id);
+    } else if (window.IntroAI && window.IntroAI.router) {
+      // Without leaving the document (router.js).
+      window.IntroAI.router.go(entry.url);
     } else {
       window.location.href = entry.url;
     }

@@ -40,7 +40,45 @@ export function scrollToId(id) {
 
   prepareJump(target);
 
-  const top = target.getBoundingClientRect().top + window.scrollY - navOffset();
+  // Measured again in every frame: figures built on the way (viz/lib.js) may move the target.
+  animateScroll(() => target.getBoundingClientRect().top + window.scrollY - navOffset());
+}
 
-  $('html, body').stop().animate({ scrollTop: top }, prefersReducedMotion() ? 0 : 500);
+// Scrolls the window to `to` (a position, or a function that gives it, asked again in every frame) in 0.5 s,
+// easing in and out (as the site did with jQuery): the browser's own smooth scrolling takes up to 1.5 s for a
+// long way. The reader's own scrolling (wheel, touch, keys) stops it.
+let scrolling = 0;
+
+export function animateScroll(to, duration = 500) {
+  window.cancelAnimationFrame(scrolling);
+
+  const target = typeof to === 'function' ? to : () => to;
+  const from = window.scrollY;
+
+  if (prefersReducedMotion() || Math.abs(target() - from) < 2) {
+    window.scrollTo(0, target());
+    return;
+  }
+
+  const start = performance.now();
+  const stop = () => {
+    window.cancelAnimationFrame(scrolling);
+    ['wheel', 'touchstart', 'keydown'].forEach(type => window.removeEventListener(type, stop));
+  };
+
+  ['wheel', 'touchstart', 'keydown'].forEach(type => window.addEventListener(type, stop, { passive: true }));
+
+  const frame = now => {
+    const progress = Math.min(1, (now - start) / duration);
+
+    window.scrollTo(0, from + (target() - from) * (0.5 - Math.cos(progress * Math.PI) / 2));
+
+    if (progress < 1) {
+      scrolling = window.requestAnimationFrame(frame);
+    } else {
+      stop();
+    }
+  };
+
+  scrolling = window.requestAnimationFrame(frame);
 }

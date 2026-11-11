@@ -48,6 +48,9 @@ jobs:
             exit 1
           fi
 
+      - name: Every file is within its performance budget
+        run: npm run budgets
+
       - name: Install Chromium
         run: npx playwright install --with-deps --only-shell chromium
 
@@ -61,4 +64,5 @@ jobs:
       - name: The same with the formulas typeset in advance
         run: |
           npm run prerender
+          npm run budgets -- --root=_site
           npm run check -- --root=_site

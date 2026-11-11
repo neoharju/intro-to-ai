@@ -1,6 +1,6 @@
 import {
   CLASS_COLORS, COLORS, button, checkbox, createCanvas, createRandom, el, fmt, frame, legend, marker,
-  pointerPosition, segmented, slider, withAlpha,
+  pointerPosition, rgbOf, segmented, slider, withAlpha,
 } from './lib';
 
 const CLASS_NAMES = ['A', 'B', 'C'];
@@ -46,6 +46,53 @@ export function classify(points, u, k, distance) {
   const label = tied.length === 1 ? tied[0] : neighbours.find(n => tied.includes(n.point.label)).point.label;
 
   return { neighbours, votes, label, tie: tied.length > 1 };
+}
+
+// The label that classify() gives u, without its allocations: the decision regions classify about 10 000
+// points per drawing. The k nearest are kept in two small arrays in the order that classify's stable sort
+// gives (a point goes after those at the same distance), so ties are broken in the same way. Euclidean
+// distances are compared squared (the same order, without Math.hypot, which is slow).
+export function labelOf(points, u, k, metric, nearD = new Float64Array(16), nearL = new Int8Array(16)) {
+  const manhattan = metric === 'manhattan';
+  let count = 0;
+
+  for (let p = 0; p < points.length; p++) {
+    const ddx = points[p].x - u.x;
+    const ddy = points[p].y - u.y;
+    const d = manhattan ? Math.abs(ddx) + Math.abs(ddy) : ddx * ddx + ddy * ddy;
+
+    if (count === k && d >= nearD[count - 1]) {
+      continue;
+    }
+
+    let i = count < k ? count++ : count - 1;
+
+    while (i > 0 && nearD[i - 1] > d) {
+      nearD[i] = nearD[i - 1];
+      nearL[i] = nearL[i - 1];
+      i -= 1;
+    }
+
+    nearD[i] = d;
+    nearL[i] = points[p].label;
+  }
+
+  const votes = [0, 0, 0];
+
+  for (let i = 0; i < count; i++) {
+    votes[nearL[i]] += 1;
+  }
+
+  const best = Math.max(votes[0], votes[1], votes[2]);
+
+  // A tie: the class of the nearest neighbour among the tied classes.
+  for (let i = 0; i < count; i++) {
+    if (votes[nearL[i]] === best) {
+      return nearL[i];
+    }
+  }
+
+  return 0;
 }
 
 export default function mountKnn(figure) {
@@ -109,7 +156,8 @@ export default function mountKnn(figure) {
   const dx = px => X_RANGE[0] + (px / view.width) * (X_RANGE[1] - X_RANGE[0]);
   const dy = py => Y_RANGE[0] + (1 - py / view.height) * (Y_RANGE[1] - Y_RANGE[0]);
 
-  // The class predicted for every 6 x 6 pixel block, drawn as a pale tint.
+  // The class predicted for every 6 x 6 pixel block, drawn as a pale tint (16 % opaque), written into one
+  // ImageData: about 10 000 blocks.
   function regionImage(width, height) {
     if (regionCache) {
       return regionCache;
@@ -119,20 +167,34 @@ export default function mountKnn(figure) {
     const rows = Math.ceil(height / 6);
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
-    const distance = DISTANCES[metric];
+    const image = ctx.createImageData(cols, rows);
+    const data = image.data;
+    const tints = CLASS_COLORS.map(color => rgbOf(color));
+    const alpha = Math.round(0.16 * 255);
+    const nearD = new Float64Array(16);
+    const nearL = new Int8Array(16);
+    const kk = Math.min(k, points.length);
+    const u = { x: 0, y: 0 };
 
     canvas.width = cols;
     canvas.height = rows;
 
-    for (let j = 0; j < rows; j++) {
-      for (let i = 0; i < cols; i++) {
-        const u = { x: dx(((i + 0.5) / cols) * width), y: dy(((j + 0.5) / rows) * height) };
+    for (let j = 0, o = 0; j < rows; j++) {
+      u.y = dy(((j + 0.5) / rows) * height);
 
-        ctx.fillStyle = withAlpha(CLASS_COLORS[classify(points, u, Math.min(k, points.length), distance).label], 0.16);
-        ctx.fillRect(i, j, 1, 1);
+      for (let i = 0; i < cols; i++, o += 4) {
+        u.x = dx(((i + 0.5) / cols) * width);
+
+        const [r, g, b] = tints[labelOf(points, u, kk, metric, nearD, nearL)];
+
+        data[o] = r;
+        data[o + 1] = g;
+        data[o + 2] = b;
+        data[o + 3] = alpha;
       }
     }
 
+    ctx.putImageData(image, 0, 0);
     regionCache = canvas;
 
     return canvas;

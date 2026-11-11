@@ -5,7 +5,11 @@
 //   - a formula that KaTeX could not typeset (shown in red) or that was not typeset at all;
 //   - two elements with the same id, or a link to a page, a file or an anchor (#id, ../week4/#id) that is
 //     not there;
-//   - a page wider than a phone (390 px), with the simplified English off and on.
+//   - a page wider than a phone (390 px), with the simplified English off and on;
+//   - a page that the router (src/javascripts/router.js) does not show as a page load would: every page is
+//     visited in turn from the first one without leaving the document, and must then have its title, its
+//     header, its figures and formulas, no duplicate ids and no errors, under the same navigation bar and
+//     header animation.
 //
 // The pages are served as GitHub Pages serves them: as files, without the headers of docker/nginx.conf, so
 // the policy that applies is the <meta> in each page.
@@ -283,11 +287,65 @@ for (const [page, result] of results) {
   }
 }
 
+// Changing page without leaving the document, through every page and back to the first.
+{
+  const order = Object.keys(site.pages);
+  const { context, tab, problems } = await open(order[0], { viewport: DESKTOP });
+  let loads = 0;
+
+  tab.on('load', () => loads++);
+  await tab.evaluate(() => {
+    document.querySelector('.page-hero__canvas').dataset.check = 'kept';
+    document.querySelector('.navbar').dataset.check = 'kept';
+  });
+
+  for (const page of [...order.slice(1), order[0]]) {
+    const before = problems.length;
+    const address = base + page.replace(/index\.html$/, '');
+
+    await tab.evaluate(url => window.IntroAI.router.go(url), address);
+    await tab.waitForFunction(url => window.location.href === url
+      && !document.querySelector('#material[data-loading], .page-hero > .is-leaving, figure.viz[data-viz]:not(.is-ready)'), address, { timeout: 15000 })
+      .catch(() => problems.push('the page was not shown, or a figure was not built'));
+
+    const seen = await inspect(tab);
+    const state = await tab.evaluate(() => ({
+      title: document.title,
+      kept: document.querySelector('.page-hero__canvas')?.dataset.check === 'kept' && document.querySelector('.navbar').dataset.check === 'kept',
+      headers: document.querySelectorAll('.page-hero > .container').length,
+    }));
+
+    if (!state.title.endsWith(`| ${site.pages[page].title}`)) {
+      problems.push(`the title is "${state.title}"`);
+    }
+
+    if (!state.kept || state.headers !== 1) {
+      problems.push('the navigation bar or the header animation was replaced');
+    }
+
+    seen.untypeset.forEach(tex => problems.push(`formula not typeset: ${tex}`));
+    seen.duplicates.forEach(id => problems.push(`duplicate id: ${id}`));
+
+    if (loads) {
+      problems.push('the browser loaded the page');
+    }
+
+    console.log(`${problems.length > before ? '✗' : '✓'} changing page to ${page}`);
+    problems.slice(before).forEach(problem => console.log(`    ${problem}`));
+
+    if (problems.length > before) {
+      failures.push(`changing page to ${page}`);
+    }
+  }
+
+  await context.close();
+}
+
 await browser.close();
 server.close();
 
 if (failures.length) {
-  console.error(`\n${failures.length} of ${results.size} pages have problems.`);
+  console.error(`\nProblems: ${failures.join(', ')}.`);
   process.exit(1);
 }
 

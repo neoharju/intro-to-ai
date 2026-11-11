@@ -5,6 +5,8 @@
 // again when it is scrolled, when its size changes, and when fonts have loaded (a formula changes width then,
 // although its box does not). Nothing here reads document.fonts.ready: in Chrome that alone lays out the
 // whole page at once (0.3-0.7 s on a long week at a 4x slower CPU).
+import { onPageEnd } from './page';
+
 const boxes = new Set();
 let observer = null;
 let queued = false;
@@ -62,6 +64,10 @@ export default function watchFades(box) {
     }
   }
 
-  // The first report comes after the next layout.
+  // The first report comes after the next layout. The box goes with its page (page.js).
   observer.observe(box);
+  onPageEnd(() => {
+    observer.unobserve(box);
+    boxes.delete(box);
+  });
 }

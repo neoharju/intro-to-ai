@@ -9,6 +9,7 @@
 // or the part of a list item before or after its nested list) and is found by a fingerprint of the
 // original text, so the pages need no extra markup, and a
 // block whose original text changes keeps its original until its simplified text is updated.
+import { pageSignal } from './page';
 import { readingAnchor } from './utils';
 
 const KEY = 'introai-simple';
@@ -126,13 +127,22 @@ export function extract() {
   };
 }
 
+// Sets up the switch for the current page; the router calls it again for every page it shows.
 export default function mountSimplify() {
   const meta = document.querySelector('meta[name="introai-simple"]');
   const heroMeta = document.querySelector('.page-hero__meta');
+  const signal = pageSignal();
+
+  // A page that the router replaced may have left its text simplified.
+  document.documentElement.removeAttribute('data-simple');
 
   if (!meta || !heroMeta) {
     return;
   }
+
+  // The address of the simplified text, fixed now: the router changes the page's address before it
+  // changes the page.
+  const source = new URL(meta.content, window.location.href).href;
 
   const button = document.createElement('button');
 
@@ -154,10 +164,10 @@ export default function mountSimplify() {
 
   async function load() {
     if (!entries) {
-      const response = await fetch(meta.content, { cache: 'no-cache' });
+      const response = await fetch(source, { cache: 'no-cache' });
 
       if (!response.ok) {
-        throw new Error(`${meta.content}: ${response.status}`);
+        throw new Error(`${source}: ${response.status}`);
       }
 
       entries = (await response.json()).blocks;
@@ -201,10 +211,11 @@ export default function mountSimplify() {
     });
   }
 
+  // The formulas of the swapped text (a Promise: KaTeX may have to be loaded first).
   function typeset() {
-    if (window.IntroAI && window.IntroAI.math) {
-      window.IntroAI.math.typeset(document.getElementById('material'));
-    }
+    return window.IntroAI && window.IntroAI.math
+      ? window.IntroAI.math.typeset(document.getElementById('material'))
+      : Promise.resolve();
   }
 
   async function set(next, { remember = true } = {}) {
@@ -216,6 +227,12 @@ export default function mountSimplify() {
 
     try {
       const table = next ? await load() : null;
+
+      // The reader went on to another page meanwhile.
+      if (signal.aborted) {
+        return;
+      }
+
       const anchor = readingAnchor();
 
       if (next) {
@@ -225,7 +242,7 @@ export default function mountSimplify() {
         swapped = [];
       }
 
-      typeset();
+      await typeset();
       on = next;
       document.documentElement.toggleAttribute('data-simple', on);
       button.setAttribute('aria-pressed', String(on));

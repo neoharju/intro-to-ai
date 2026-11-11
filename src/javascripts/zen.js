@@ -30,19 +30,12 @@ function icon(name) {
 }
 
 export default function mountZen() {
-  const buttons = document.querySelector('.navbar__buttons');
+  // The button is in the navigation bar of every page (src/partials/navbar.html).
+  const toggle = document.querySelector('.navbar__buttons .zen-toggle');
 
-  if (!buttons) {
+  if (!toggle) {
     return;
   }
-
-  const toggle = document.createElement('button');
-
-  toggle.type = 'button';
-  toggle.className = 'btn btn-secondary zen-toggle';
-  toggle.title = 'Zen mode (Z)';
-  toggle.setAttribute('aria-label', 'Zen mode');
-  toggle.append(icon('fa-spa'));
 
   const exit = document.createElement('button');
 
@@ -56,7 +49,6 @@ export default function mountZen() {
   toast.className = 'zen-toast';
   toast.setAttribute('role', 'status');
 
-  buttons.insertBefore(toggle, buttons.querySelector('.font-size-menu, .theme-menu') || document.getElementById('table-of-contents-toggle'));
   document.body.append(exit, toast);
 
   let toastTimer = 0;

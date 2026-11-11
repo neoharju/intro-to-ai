@@ -133,5 +133,13 @@
 
   .exercise .collapse {
     display: block !important;
+    content-visibility: visible !important;
   }
+}
+
+// A closed exercise or solution, in browsers that support hidden="until-found" (collapse.js): hidden by the
+// attribute (content-visibility: hidden), so that the browser's search in the page finds its text and opens
+// it, instead of by Bootstrap's display: none.
+.has-until-found .collapse[hidden="until-found"]:not(.show) {
+  display: block;
 }

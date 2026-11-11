@@ -222,3 +222,26 @@
   &--large { font-size: 15px; }
   &--xlarge { font-size: 18px; }
 }
+
+// The controls that need JavaScript (search, zen mode, text size, colour theme) are written into every page,
+// so that the bar does not change when the scripts set them up; theme.js marks <html> with the class "js"
+// before the page is drawn, and without scripts they are not shown.
+html:not(.js) .navbar__js {
+  display: none !important;
+}
+
+// The keys of the search on a Mac (theme.js sets data-mac) and elsewhere.
+.search-btn__keys--mac,
+[data-mac] .search-btn__keys:not(.search-btn__keys--mac) {
+  display: none;
+}
+
+[data-mac] .search-btn__keys--mac {
+  display: inline;
+}
+
+// The colour theme button shows the sun or the moon of the theme in use (data-theme, from theme.js).
+[data-theme="dark"] .theme-menu__icon--light,
+:root:not([data-theme="dark"]) .theme-menu__icon--dark {
+  display: none;
+}
