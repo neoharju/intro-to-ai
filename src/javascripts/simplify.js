@@ -1,7 +1,7 @@
 // Simplified English: every week has a second version of its text, written in simple English (about
 // 80% ASD-STE100 Issue 9) for readers whose first language is not English. The "Simplified English"
-// button in the page header swaps it in, block by block, and back again; the choice is remembered in
-// localStorage when the browser allows it.
+// switch in the navigation bar (src/partials/navbar.html, shown on the pages that have such a version) swaps
+// it in, block by block, and back again; the choice is remembered in localStorage when the browser allows it.
 //
 // The simplified text of a week is weekN/simple.json, compiled from src/simple/weekN.txt by
 // scripts/simple.mjs. A page that has one names it in <meta name="introai-simple" content="simple.json">.
@@ -128,35 +128,32 @@ export function extract() {
 }
 
 // Sets up the switch for the current page; the router calls it again for every page it shows.
+// Sets up the switch for the current page; the router calls it again for every page it shows. The switch
+// stays in the navigation bar from page to page: its listener ends with the page (page.js).
 export default function mountSimplify() {
   const meta = document.querySelector('meta[name="introai-simple"]');
-  const heroMeta = document.querySelector('.page-hero__meta');
+  const button = document.querySelector('.navbar .simple-toggle');
   const signal = pageSignal();
 
   // A page that the router replaced may have left its text simplified.
   document.documentElement.removeAttribute('data-simple');
 
-  if (!meta || !heroMeta) {
+  if (!button) {
+    return;
+  }
+
+  // Only the pages with a simplified version have the switch.
+  button.hidden = !meta;
+  button.disabled = false;
+  button.setAttribute('aria-pressed', 'false');
+
+  if (!meta) {
     return;
   }
 
   // The address of the simplified text, fixed now: the router changes the page's address before it
   // changes the page.
   const source = new URL(meta.content, window.location.href).href;
-
-  const button = document.createElement('button');
-
-  button.type = 'button';
-  button.className = 'simple-toggle';
-  button.setAttribute('aria-pressed', 'false');
-  button.title = 'Show this week in simplified English (and back)';
-  button.innerHTML = '<span class="simple-toggle__switch" aria-hidden="true"></span><span>Simplified English</span>';
-
-  const item = document.createElement('li');
-
-  item.className = 'page-hero__simple';
-  item.append(button);
-  heroMeta.append(item);
 
   let entries = null;
   let swapped = [];
@@ -265,7 +262,7 @@ export default function mountSimplify() {
     }
   }
 
-  button.addEventListener('click', () => set(!on));
+  button.addEventListener('click', () => set(!on), { signal });
 
   let saved = null;
 

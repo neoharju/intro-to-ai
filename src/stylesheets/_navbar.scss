@@ -48,8 +48,13 @@
     }
   }
 
-  // Bootstrap 5 shifted the breakpoint mixins: down(lg) is what down(md) was in Bootstrap 4.
-  @include media-breakpoint-down(lg) {
+  // The week links fit in the bar from 1200px (with the buttons beside them); narrower, they are in the menu
+  // of the bar (#mobile-nav-dropdown). Bootstrap 5 shifted the breakpoint mixins: down(xl) is below 1200px.
+  .navbar__links {
+    display: none;
+  }
+
+  @include media-breakpoint-down(xl) {
     #mobile-nav-dropdown {
       display: inline-block !important;
     }
@@ -63,7 +68,11 @@
   // share the free space equally, so the links sit in the middle of the bar. On narrower screens the
   // first column keeps 80px and the buttons keep their full width, so nothing overlaps or wraps; the
   // links then sit slightly off centre.
-  @include media-breakpoint-up(lg) {
+  @include media-breakpoint-up(xl) {
+    .navbar__links {
+      display: flex;
+    }
+
     display: grid;
     grid-template-columns: minmax(80px, 1fr) auto minmax(max-content, 1fr);
 
@@ -103,9 +112,9 @@
     }
   }
 
-  // Up to 1200px the week links and the buttons only fit on one line with a little less padding
-  // around the links (and with the table of contents button showing just its icon).
-  @include media-breakpoint-only(lg) {
+  // From 1200 to 1400px the week links and the buttons only fit on one line with a little less padding
+  // around the links (and the buttons showing just their icons, below).
+  @include media-breakpoint-only(xl) {
     --bs-navbar-nav-link-padding-x: 8px;
 
     .navbar-nav .nav-link {
@@ -244,4 +253,129 @@ html:not(.js) .navbar__js {
 [data-theme="dark"] .theme-menu__icon--light,
 :root:not([data-theme="dark"]) .theme-menu__icon--dark {
   display: none;
+}
+
+// The "Simplified English" switch (simplify.js), before the search, on the pages that have a simplified version:
+// a button of the bar with a small switch in it. The knob moves right and the track turns blue while the
+// simplified text is shown. Sized in px, like the rest of the bar.
+.navbar .navbar__buttons .simple-toggle {
+  gap: 8px;
+  padding-left: 9px;
+  font-weight: 600;
+
+  &:disabled {
+    cursor: progress;
+  }
+}
+
+.simple-toggle__switch {
+  position: relative;
+  flex: none;
+  width: 30px;
+  height: 18px;
+  background-color: var(--line-strong);
+  border-radius: 999px;
+  transition: background-color .15s;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 12px;
+    height: 12px;
+    background-color: var(--surface);
+    border-radius: 50%;
+    box-shadow: var(--shadow-sm);
+    transition: transform .15s var(--ease);
+  }
+}
+
+.simple-toggle[aria-pressed="true"] .simple-toggle__switch {
+  background-color: var(--primary);
+
+  &::after {
+    transform: translateX(12px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .simple-toggle__switch,
+  .simple-toggle__switch::after {
+    transition: none;
+  }
+}
+
+// What the buttons of the bar show at each width, so that the bar always fits on one line (measured with
+// the simplified-English switch, the widest case: a week page):
+//
+//   1600px and up    the week links; every button with its label, the search with its keys
+//   1400-1599px      the week links; labels, but the table of contents as an icon
+//   1200-1399px      the week links; icons only (and the switch of the simplified English without its label)
+//   768-1199px       the week links in the menu (☰); labels but the table of contents
+//   below 768px      the menu; icons only
+//   below 576px      smaller buttons, closer together; below 360px, no logo
+.simple-toggle__label,
+.search-btn__label,
+.search-btn__kbd,
+.toc-toggle__label {
+  display: none;
+}
+
+@media (min-width: 768px) and (max-width: 1199.98px), (min-width: 1400px) {
+  .simple-toggle__label,
+  .navbar .navbar__buttons .search-btn .search-btn__label {
+    display: inline;
+  }
+}
+
+@media (min-width: 1600px) {
+  .navbar .navbar__buttons .search-btn {
+    min-width: 190px;
+
+    .search-btn__kbd {
+      display: inline;
+    }
+  }
+
+  .toc-toggle__label {
+    display: inline;
+  }
+
+  .toc-toggle__icon {
+    display: none;
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  .navbar {
+    .navbar-brand {
+      margin-right: 8px;
+    }
+
+    .navbar__buttons {
+      gap: 4px;
+
+      .btn {
+        justify-content: center;
+        width: 34px;
+        padding: 0;
+      }
+
+      .simple-toggle {
+        width: auto;
+        padding: 0 7px;
+      }
+    }
+  }
+}
+
+@media (max-width: 359.98px) {
+  .navbar {
+    padding: 0 12px;
+
+    .navbar-brand {
+      display: none;
+    }
+  }
 }

@@ -56,6 +56,13 @@
     -webkit-backdrop-filter: blur(6px);
     backdrop-filter: blur(6px);
 
+    // The text after the pill is larger than the pill's capitals, so on the same baseline its capitals and
+    // digits reach higher: "of 7" looked 0.9 px above the centre of "WEEK 3". Moved down by as much.
+    > span {
+      position: relative;
+      top: .07em;
+    }
+
     > b {
       padding: .1rem .5rem;
       font-size: .6875rem;
@@ -114,11 +121,6 @@
     }
   }
 
-  // The "Simplified English" switch (simplify.js), after the reading time and counts.
-  &__simple {
-    margin-left: auto;
-  }
-
   &__actions {
     display: flex;
     flex-wrap: wrap;
@@ -152,61 +154,6 @@
 
     &__lead {
       font-size: 1rem;
-    }
-  }
-}
-
-.simple-toggle {
-  display: inline-flex;
-  align-items: center;
-  gap: .5rem;
-  padding: .3rem .75rem .3rem .4rem;
-  font-size: .8125rem;
-  font-weight: 600;
-  color: var(--text);
-  background-color: var(--overlay-bg);
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  cursor: pointer;
-  transition: border-color .15s, background-color .15s;
-
-  &:hover {
-    border-color: var(--line-strong);
-  }
-
-  &:disabled {
-    cursor: progress;
-  }
-
-  // A small switch: the knob moves right and the track turns blue when the simplified text is shown.
-  &__switch {
-    position: relative;
-    flex: none;
-    width: 1.9rem;
-    height: 1.1rem;
-    background-color: var(--line-strong);
-    border-radius: 999px;
-    transition: background-color .15s;
-
-    &::after {
-      content: "";
-      position: absolute;
-      top: .15rem;
-      left: .15rem;
-      width: .8rem;
-      height: .8rem;
-      background-color: var(--surface);
-      border-radius: 50%;
-      box-shadow: var(--shadow-sm);
-      transition: transform .15s var(--ease);
-    }
-  }
-
-  &[aria-pressed="true"] &__switch {
-    background-color: var(--primary);
-
-    &::after {
-      transform: translateX(.8rem);
     }
   }
 }
@@ -269,23 +216,6 @@
 // screen high, so that the footer does not come up for a moment.
 .material[data-loading] {
   min-height: 100vh;
-}
-
-// The parts of the line under the title that scripts add (the simplified-English switch, the exercises
-// done) fade in instead of appearing at once.
-.page-hero__simple,
-.page-hero__progress {
-  animation: hero-meta-in .2s var(--ease) both;
-
-  @media (prefers-reduced-motion: reduce) {
-    animation: none;
-  }
-}
-
-@keyframes hero-meta-in {
-  from {
-    opacity: 0;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {

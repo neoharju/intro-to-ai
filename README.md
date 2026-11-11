@@ -57,8 +57,8 @@ Compared with the original material:
 ## Simplified English
 
 Every week can have a second version of its text in simplified English (about 80% ASD-STE100 Issue 9),
-for students whose first language is not English. The "Simplified English" switch in the page header
-swaps it in and back, block by block (`src/javascripts/simplify.js`); formulas, code, figures and
+for students whose first language is not English. The "Simplified English" switch in the navigation bar
+(before the search, on the pages that have a simplified version) swaps it in and back, block by block (`src/javascripts/simplify.js`); formulas, code, figures and
 headings stay as they are. The text is written in `src/simple/weekN.txt`, one entry per paragraph, list
 item, table cell or caption, keyed by a fingerprint of the original text, and compiled into
 `weekN/simple.json`. A week with a simplified version has `<meta name="introai-simple" content="simple.json">`
@@ -205,7 +205,7 @@ contents and the search.
 ## Progress
 
 Every exercise has a "Done" switch in its header (`src/javascripts/progress.js`). A week marks the done
-exercises in its list of exercises and counts them in its page header, and the front page shows a table of
+exercises in its list of exercises and counts them under its title ("2 of 5 done"), and the front page shows a table of
 the weeks under the course schedule: the exercises marked done and the questions answered in the practice
 quiz. Like the quiz results, the marks stay in the browser (`localStorage`, key `introai-progress-v1`, by
 the stable anchors of the exercises); nothing is sent anywhere.
@@ -224,9 +224,9 @@ itself. `npm run sync` takes it from `docker/nginx.conf`, so the two cannot drif
 is left out because browsers ignore it in a `<meta>`.
 
 `npm run sync` also writes the line under the title of each week (`<ul class="page-hero__meta">`): the
-reading time (about 200 words a minute) and the numbers of exercises and interactive figures, counted from
-the page, without the parts that are commented out. They are in the page itself, so they are there when it
-is first drawn.
+reading time (about 200 words a minute) and the number of exercises, counted from the page, without the
+parts that are commented out, and how many of them are done (written as none; `progress.js` fills in the
+reader's number). They are in the page itself, so they are there when it is first drawn.
 
 The dates of the course are in `src/schedule.json`. A date in a page or in `src/simple/weekN.txt` is written
 as `<time data-date="lecture-5">We 11/11</time>`; `npm run sync` fills in its text and its `datetime` from the

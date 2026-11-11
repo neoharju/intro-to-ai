@@ -6,9 +6,9 @@
 //     English), the path back to the site root and the Content-Security-Policy of docker/nginx.conf;
 //   - every <time data-date="KEY">, in the pages and in src/simple/weekN.txt, from src/schedule.json, so
 //     that a date of the course is written once;
-//   - the list <ul class="page-hero__meta"> in the header of a week: the reading time and the numbers of
-//     exercises and interactive figures, counted from the page, so that they are there when the page is
-//     first drawn;
+//   - the list <ul class="page-hero__meta"> in the header of a week: the reading time, the number of
+//     exercises, counted from the page, and how many of them are done (none here: progress.js fills in the
+//     reader's number), so that they are there when the page is first drawn;
 //   - the first view of the practice quiz (quiz/index.html: the decks of the weeks, as quiz.js shows them before
 //     any question is answered), so that the page does not grow when quiz.js shows them;
 //   - the list of exercises at the top of a week (<div id="exercise-list">), from the headings of its
@@ -117,6 +117,8 @@ function render(name, page, config) {
     // The formulas' stylesheet, on the pages that typeset formulas (math.js).
     mathStyles: config.scripts.includes('math.js') ? `  <link href="${prefix}stylesheets/math.css" rel="stylesheet" />` : '',
     navItems: navItems(page, prefix),
+    // The simplified-English switch, on the pages that have a simplified version.
+    simpleHidden: config.simple ? '' : ' hidden',
     mobileNavItems: mobileNavItems(page, prefix),
     // The scripts of the page are ES modules (scripts/build.mjs), but for KaTeX and highlight.js, plain scripts
     // that run before them.
@@ -190,16 +192,15 @@ function syncMeta(text, page) {
       .split(/\s+/)
       .filter(Boolean).length;
     const exercises = (material.match(/<div class="exercise"[\s>]/g) || []).length;
-    const figures = (material.match(/\sclass="viz(?:\s[^"]*)?"/g) || []).length;
     const items = [
       ['fa-regular fa-clock', readingTime(words)],
       ...(exercises ? [['fa fa-pencil', `${exercises} exercise${exercises === 1 ? '' : 's'}`]] : []),
-      ...(figures ? [['fa fa-play-circle', `${figures} interactive figure${figures === 1 ? '' : 's'}`]] : []),
+      ...(exercises ? [['fa fa-check', `0 of ${exercises} done`, 'page-hero__progress']] : []),
     ];
 
     return [
       `${indent}<ul class="page-hero__meta"${attributes}>`,
-      ...items.map(([icon, label]) => `${indent}  <li><i class="${icon}" aria-hidden="true"></i>${label}</li>`),
+      ...items.map(([icon, label, className]) => `${indent}  <li${className ? ` class="${className}"` : ''}><i class="${icon}" aria-hidden="true"></i>${label}</li>`),
       `${indent}</ul>`,
     ].join('\n');
   });

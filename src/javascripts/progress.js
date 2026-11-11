@@ -1,7 +1,7 @@
 // Progress through the course, kept only in this browser (localStorage), like the quiz results:
 //
 //   - a week puts a "Done" switch in the header of every exercise, marks the done exercises in its list of
-//     exercises and says in its page header how many are done;
+//     exercises and says under the title of the page how many are done;
 //   - the front page shows a table of the weeks: the exercises marked done (for the weeks where the reader
 //     has marked any) and the questions answered in the practice quiz.
 //
@@ -69,10 +69,14 @@ function mountWeek(week) {
   const ids = exercises.map(node => node.getAttribute('data-anchor'));
   // Marks of exercises that no longer exist are dropped.
   const done = new Set(((data.weeks[week] || {}).done || []).filter(id => ids.includes(id)));
+  // "2 of 7 done", under the title, after the number of exercises (written into the page by scripts/sync.mjs,
+  // with none done, so that nothing moves when it is filled in). The first one in the document: while the
+  // router changes page, the header of the new page comes before the old one (router.js).
   const meta = document.querySelector('.page-hero__meta');
-  const summary = el('li', 'page-hero__progress');
+  let summary = meta && meta.querySelector('.page-hero__progress');
 
-  if (meta) {
+  if (meta && !summary) {
+    summary = el('li', 'page-hero__progress');
     meta.append(summary);
   }
 
@@ -91,8 +95,10 @@ function mountWeek(week) {
       }
     });
 
-    summary.replaceChildren(icon('fa-check'), document.createTextNode(`${done.size} of ${ids.length} done`));
-    summary.classList.toggle('is-complete', done.size === ids.length);
+    if (summary) {
+      summary.replaceChildren(icon('fa-check'), document.createTextNode(`${done.size} of ${ids.length} done`));
+      summary.classList.toggle('is-complete', done.size === ids.length);
+    }
   }
 
   exercises.forEach(node => {

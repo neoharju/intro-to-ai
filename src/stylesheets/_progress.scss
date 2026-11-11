@@ -71,9 +71,15 @@
   background-color: var(--green-soft);
 }
 
+// "2 of 7 done" under the title of a week (progress.js), green when all are done.
 .page-hero__progress.is-complete,
 .page-hero__progress.is-complete .fa {
   color: var(--green);
+}
+
+// Without scripts, the number of exercises done is not known.
+html:not(.js) .page-hero__progress {
+  display: none;
 }
 
 // The front page: "Your progress", after the course schedule.

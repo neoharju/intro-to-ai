@@ -13,19 +13,3 @@
   --#{$prefix}bg-opacity: 1;
   background-color: rgba(var(--#{$prefix}white-rgb), var(--#{$prefix}bg-opacity)) !important;
 }
-
-@include media-breakpoint-up(lg) {
-  .d-lg-flex {
-    display: flex !important;
-  }
-}
-
-@include media-breakpoint-up(xl) {
-  .d-xl-inline {
-    display: inline !important;
-  }
-
-  .d-xl-none {
-    display: none !important;
-  }
-}
