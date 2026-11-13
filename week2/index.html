@@ -95,7 +95,7 @@
           <p class="page-hero__eyebrow"><b>Week 2</b><span>of 7</span></p>
           <h1 class="page-hero__title">Probabilistic inference</h1>
           <ul class="page-hero__meta" aria-label="About this page">
-            <li><i class="fa-regular fa-clock" aria-hidden="true"></i>23 min read</li>
+            <li><i class="fa-regular fa-clock" aria-hidden="true"></i>30 min read</li>
             <li><i class="fa fa-pencil" aria-hidden="true"></i>4 exercises</li>
             <li class="page-hero__progress"><i class="fa fa-check" aria-hidden="true"></i>0 of 4 done</li>
           </ul>
@@ -302,6 +302,79 @@
 
         <!-- Exercise 2.1 -->
 
+        <div class="solution">
+          <div class="solution__header">
+            <a data-bs-toggle="collapse" class="solution__toggle">
+              <i class="fa fa-magic solution__icon"></i>
+              <h1 class="solution__heading">Example solution</h1>
+
+              <i class="fa fa-caret-down solution__arrow"></i>
+            </a>
+          </div>
+
+          <div class="collapse">
+            <div class="solution__body">
+
+              <ol>
+                <li>
+                  Because the outcomes are independent, we can use the product rule to
+                  obtain
+                  <div class="math">
+                    P(\text{both outcomes are 6}) = P(\text{first outcome is 6}) \times P(\text{second outcome is 6}) = \frac{1}{6} \times \frac{1}{2} = \frac{1}{12} \approx 0.083
+                  </div>
+                </li>
+                <li>
+                  <div class="math">
+                    P(\text{neither outcome is 6}) = P(\text{first is not 6}) \times P(\text{second is not 6}) = \frac{5}{6} \times \frac{1}{2} = \frac{5}{12} \approx 0.417
+                  </div>
+                </li>
+                <li>
+                  Let's denote the result of the two dice with the pair <span class="math">(m, n)</span>, where <span class="math">m</span> is the
+                  outcome of the first (fair) die, and <span class="math">n</span> is the outcome of the second (loaded) die.
+                  Together the outcomes define the elementary event. The sum equals nine in the
+                  following elementary events: <span class="math">(3, 6)</span>, <span class="math">(4, 5)</span>, <span class="math">(5, 4)</span>, <span class="math">(6, 3)</span>. Note that the results
+                  <span class="math">(3, 6)</span> and <span class="math">(6, 3)</span> are distinct elementary events.
+                  <br><br>
+                  The result is obtained by summing up the probabilities of the aforementioned
+                  elementary events:
+                  <div class="math">
+                    P((3, 6)) + P((4, 5)) + P((5, 4)) + P((6, 3)) = \frac{1}{6} \times \frac{1}{2} + \frac{1}{6} \times \frac{1}{10} + \frac{1}{6} \times \frac{1}{10} + \frac{1}{6} \times \frac{1}{10} = \frac{8}{60} \approx 0.133
+                  </div>
+                </li>
+                <li>
+                  Denote by <span class="math">A</span> the event "the sum of the outcomes equals 9", and by <span class="math">B</span> the event
+                  "at least one outcome is 6". Since the conditional probability is given by
+                  <span class="math">P(A \mid B) = P(A, B) / P(B)</span>, we start by calculating <span class="math">P(A, B)</span> and
+                  <span class="math">P(B)</span>.
+                  <br><br>
+                  The elementary events where both <span class="math">A</span> and <span class="math">B</span> occur are
+                  <span class="math">(3, 6)</span> and <span class="math">(6, 3)</span>. Thus,
+                  <div class="math">
+                    P(A, B) = \frac{1}{6} \times \frac{1}{2} + \frac{1}{6} \times \frac{1}{10} = \frac{6}{60}
+                  </div>
+                  Event <span class="math">B</span>, on the other hand, is the complement of event
+                  "neither outcome is 6" from item 2 above, so we can get its probability
+                  easiest by applying the rule <span class="math">P(B) = 1 - P(\neg B)</span>, to get
+                  <span class="math">P(B) = 1 - 5/12 = 7/12</span>.
+                  <br><br>
+                  Thus we get the conditional probability by substituting into the formula
+                  <div class="math">
+                    P(A \mid B) = \frac{P(A, B)}{P(B)} = \frac{6/60}{7/12} = \frac{6}{35} \approx 0.171
+                  </div>
+                </li>
+                <li>
+                  With the notation of the previous item, we get
+                  <div class="math">
+                    P(B \mid A) = \frac{P(A, B)}{P(A)} = \frac{6/60}{8/60} = \frac{6}{8} = 0.75
+                  </div>
+                  where <span class="math">P(A) = 8/60</span> was calculated in item 3 above.
+                </li>
+              </ol>
+
+            </div>
+          </div>
+        </div>
+
 
 	      
 
@@ -354,6 +427,118 @@
         </div>
 
         <!-- Exercise 2.2 -->
+
+        <div class="solution">
+          <div class="solution__header">
+            <a data-bs-toggle="collapse" class="solution__toggle">
+              <i class="fa fa-magic solution__icon"></i>
+              <h1 class="solution__heading">Example solution</h1>
+
+              <i class="fa fa-caret-down solution__arrow"></i>
+            </a>
+          </div>
+
+          <div class="collapse">
+            <div class="solution__body">
+
+              <ol>
+                <li>
+                  The "distribution of the outcomes" means a list of probabilities for
+                  each possible outcome (here: sums of the two dice). The sum can take
+                  any value between 2, ..., 12. With a fair die, each elementary event
+                  <span class="math">(m, n)</span> has probability <span class="math">1/6 \times 1/6 = 1/36</span>, so the distribution is
+                  obtained by counting how many elementary events correspond to each
+                  possible sum and multiplying this by <span class="math">1/36</span>:
+                  <div class="math">
+                    \bigl[P(\text{sum is 2}), \ldots, P(\text{sum is 12})\bigr] = \Bigl[\frac{1}{36}, \frac{2}{36}, \frac{3}{36}, \frac{4}{36}, \frac{5}{36}, \frac{6}{36}, \frac{5}{36}, \frac{4}{36}, \frac{3}{36}, \frac{2}{36}, \frac{1}{36}\Bigr]
+                  </div>
+                </li>
+                <li>
+                  With the loaded die, the elementary events have different
+                  probabilities, so a simple counting and multiplication won't do.
+                  Every event <span class="math">(m, n)</span> where <span class="math">m &lt; 6</span> and <span class="math">n &lt; 6</span> has probability <span class="math">1/10 \times 1/10 = 1/100</span>.
+                  Every event <span class="math">(m, n)</span> where <span class="math">m &lt; 6</span> and <span class="math">n = 6</span>, or <span class="math">m = 6</span> and <span class="math">n &lt; 6</span>,
+                  has probability <span class="math">1/10 \times 1/2 = 1/20</span>. And finally, the event
+                  <span class="math">(6, 6)</span> has probability <span class="math">1/2 \times 1/2 = 1/4</span>.
+                  <br><br>
+                  We now get, for example, the probability that the sum is 9 from
+                  <div class="math">
+                    P((3, 6)) + P((4, 5)) + P((5, 4)) + P((6, 3)) = \frac{1}{20} + \frac{1}{100} + \frac{1}{100} + \frac{1}{20} = \frac{12}{100} = 0.12
+                  </div>
+                  The complete distribution is given by
+                  <div class="math">
+                    \bigl[P(\text{sum is 2}), \ldots, P(\text{sum is 12})\bigr] = \Bigl[\frac{1}{100}, \frac{2}{100}, \frac{3}{100}, \frac{4}{100}, \frac{5}{100}, \frac{14}{100}, \frac{13}{100}, \frac{12}{100}, \frac{11}{100}, \frac{10}{100}, \frac{25}{100}\Bigr]
+                  </div>
+                  To make sure we haven't messed up (who, me?), we can sum up the
+                  probabilities to check that the total is 1.0; i.e.,
+                  <span class="math">1+2+3+4+5+14+13+12+11+10+25=100</span>. Yes!
+                </li>
+                <li>
+                  Here we can apply the Bayes formula:
+                  <div class="math">
+                    P(\text{loaded die} \mid \text{the sum is 10}) = \frac{P(\text{the sum is 10} \mid \text{loaded die}) \times P(\text{loaded die})}{P(\text{the sum is 10})}
+                  </div>
+                  The first term in the numerator was calculated in the previous item, and
+                  the other term is known to be <span class="math">1/2</span> by assumption. However, we'll have to
+                  calculate the annoying denominator by splitting it into two alternative
+                  ways to get the sum 10:
+                  <div class="math">
+                    \begin{aligned}
+                    P(\text{sum is 10}) &= P(\text{sum is 10} \mid \text{fair die}) \times P(\text{fair die}) + P(\text{sum is 10} \mid \text{loaded die}) \times P(\text{loaded die}) \\
+                    &= \frac{3}{36} \times \frac{1}{2} + \frac{11}{100} \times \frac{1}{2} = \frac{29}{300} \approx 0.0967
+                    \end{aligned}
+                  </div>
+                  In case you have difficulty following these calculations, please
+                  take a look at the additional material on Bayes rule above.
+                  Note that the numerical values of both of the conditional
+                  probabilities in the above expression come from the two
+                  distributions we calculated in items 1 &amp; 2.
+                  <br><br>
+                  Substituting these values into the Bayes rule we get
+                  <div class="math">
+                    P(\text{loaded die} \mid \text{sum is 10}) = \frac{11/100 \times 1/2}{29/300} = \frac{33}{58} \approx 0.569
+                  </div>
+                  When calculating the conditional probability <span class="math">P(\text{fair die} \mid \text{sum is 10})</span> by the Bayes rule, we'll end up with the very same
+                  denominator, whose value we already calculated to be <span class="math">29/300</span>,
+                  and thus we get:
+                  <div class="math">
+                    P(\text{fair die} \mid \text{sum is 10}) = \frac{3/36 \times 1/2}{29/300} = \frac{25}{58} \approx 0.431
+                  </div>
+                  The sum of the probabilities of the loaded and the fair die is
+                  <span class="math">33/58 + 25/58 = 1</span> as it should!
+                  <br><br>
+                  <i>Note:</i> The end result of the above calculation is that
+                  observing that the sum is 10 has almost no effect on our belief about
+                  which die was chosen: before the observation, our prior probability
+                  for the loaded die was 0.5, and after the observation, our posterior
+                  probability is 0.569. You can think about what outcome would have
+                  changed our belief the most.
+                </li>
+                <li>
+                  Following the hint, it'll be enough to check whether
+                  <div class="math">
+                    \frac{P(\text{loaded die} \mid k \text{ times 6})}{P(\text{fair die} \mid k \text{ times 6})} &gt; 99
+                  </div>
+                  The posterior probability ratio can be obtained by applying the
+                  Bayes rule to both of the conditional probabilities above:
+                  <div class="math">
+                    \frac{P(k \text{ times 6} \mid \text{loaded die}) \times P(\text{loaded die}) \,/\, \cancel{P(k \text{ times 6})}}{P(k \text{ times 6} \mid \text{fair die}) \times P(\text{fair die}) \,/\, \cancel{P(k \text{ times 6})}}
+                  </div>
+                  where the annoying denominator cancels. Since the prior probabilities
+                  are the same (0.5), they too cancel (which doesn't happen in general).
+                  What is left is the ratio of the likelihood terms:
+                  <div class="math">
+                    \frac{P(k \text{ times 6} \mid \text{loaded die})}{P(k \text{ times 6} \mid \text{fair die})} = \frac{(1/2)^k}{(1/6)^k} = 3^k
+                  </div>
+                  The smallest <span class="math">k</span> for which <span class="math">3^k &gt; 99</span> is <span class="math">k = 5</span> (<span class="math">3^4 = 81</span>, <span class="math">3^5 = 243</span>). Thus, five
+                  rolls are required until the posterior probability of the loaded die
+                  is greater than 99%.
+                </li>
+              </ol>
+
+            </div>
+          </div>
+        </div>
 
         <h1 class="material-heading">
           Probabilistic Inference
@@ -752,6 +937,85 @@
         </div>
 
         <!-- Exercise 2.3 -->
+
+        <div class="solution">
+          <div class="solution__header">
+            <a data-bs-toggle="collapse" class="solution__toggle">
+              <i class="fa fa-magic solution__icon"></i>
+              <h1 class="solution__heading">Example solution</h1>
+
+              <i class="fa fa-caret-down solution__arrow"></i>
+            </a>
+          </div>
+
+          <div class="collapse">
+            <div class="solution__body">
+
+              <ol>
+                <li>
+                  Dividing the occurrence counts by the total number of words
+                  in each class gives
+                  <table class="table">
+                    <thead>
+                      <tr><th scope="col">word</th><th scope="col" class="num">spam</th><th scope="col" class="num">ham</th></tr>
+                    </thead>
+                    <tbody>
+                      <tr><td><code>million</code></td><td class="num">0.001629</td><td class="num">0.000320</td></tr>
+                      <tr><td><code>dollars</code></td><td class="num">0.000303</td><td class="num">0.000388</td></tr>
+                      <tr><td><code>adclick</code></td><td class="num">0.000532</td><td class="num">0.000001</td></tr>
+                      <tr><td><code>conferences</code></td><td class="num">0.000001</td><td class="num">0.000039</td></tr>
+                    </tbody>
+                  </table>
+                  where we used the lower bound 0.000001 in case of zero counts.
+                </li>
+                <li>
+                  First of all, we can use <span class="math">P(\text{Word} \neq \text{‘million’}) = 1 - P(\text{Word} = \text{‘million’})</span>.
+                  The probability on the right
+                  needs to be computed by the same technique as we've applied
+                  to obtain the annoying denominator in Bayes rule calculations,
+                  i.e., dividing it into the two possible ways to get the word
+                  <code>million</code>:
+                  <div class="math">
+                    \begin{aligned}
+                    P(\text{Word} = \text{‘million’}) &= P(\text{spam})\, P(\text{Word} = \text{‘million’} \mid \text{spam}) + P(\text{ham})\, P(\text{Word} = \text{‘million’} \mid \text{ham}) \\
+                    &\approx 0.5 \times 0.001629 + 0.5 \times 0.000320 \approx 0.000974
+                    \end{aligned}
+                  </div>
+                  Thus, we get <span class="math">P(\text{Word} \neq \text{‘million’}) \approx 1 - 0.000974 = 0.999026</span>.
+                </li>
+                <li>
+                  <div class="math">
+                    P(\text{spam} \mid \text{‘million’}) = \frac{P(\text{spam})\, P(\text{‘million’} \mid \text{spam})}{P(\text{‘million’})} \approx \frac{0.5 \times 0.001629}{0.000974} \approx 0.836
+                  </div>
+                  This is a straightforward application of the Bayes rule where
+                  the annoying denominator was known from the previous item.
+                  If you are still uncertain about this, please review the
+                  material on Bayes rule and the references given in
+                  Probability Fundamentals above.
+                </li>
+                <li>
+                  In this case, it is most convenient to use the trick for
+                  avoiding the computation of the annoying denominator (see above).
+                  Hence, we'll calculate the ratio of posterior probabilities
+                  <div class="math">
+                    \begin{aligned}
+                    R &= \frac{P(\text{spam} \mid \text{‘million’}, \text{‘dollars’}, \text{‘adclick’}, \text{‘conferences’})}{P(\text{ham} \mid \text{‘million’}, \text{‘dollars’}, \text{‘adclick’}, \text{‘conferences’})} \\
+                    &= \frac{P(\text{spam})\, P(\text{‘million’} \mid \text{spam})\, P(\text{‘dollars’} \mid \text{spam})\, P(\text{‘adclick’} \mid \text{spam})\, P(\text{‘conferences’} \mid \text{spam})}{P(\text{ham})\, P(\text{‘million’} \mid \text{ham})\, P(\text{‘dollars’} \mid \text{ham})\, P(\text{‘adclick’} \mid \text{ham})\, P(\text{‘conferences’} \mid \text{ham})} \\
+                    &= \frac{0.5 \times 0.001629 \times 0.000303 \times 0.000532 \times 0.000001}{0.5 \times 0.000320 \times 0.000388 \times 0.000001 \times 0.000039} \approx 54.23
+                    \end{aligned}
+                  </div>
+                  Note that 54.23 is clearly not the required <i>probability</i>. To get
+                  the probability from the ratio <span class="math">R</span>, we use the formula
+                  <span class="math">P = R / (1 + R)</span>:
+                  <div class="math">
+                    P(\text{spam} \mid \text{‘million’}, \text{‘dollars’}, \text{‘adclick’}, \text{‘conferences’}) \approx \frac{54.23}{1 + 54.23} \approx 0.982
+                  </div>
+                </li>
+              </ol>
+
+            </div>
+          </div>
+        </div>
 	      
 
         <h3 class="material-heading">

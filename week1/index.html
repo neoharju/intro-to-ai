@@ -95,7 +95,7 @@
           <p class="page-hero__eyebrow"><b>Week 1</b><span>of 7</span></p>
           <h1 class="page-hero__title">Philosophy, problem solving as search, games</h1>
           <ul class="page-hero__meta" aria-label="About this page">
-            <li><i class="fa-regular fa-clock" aria-hidden="true"></i>57 min read</li>
+            <li><i class="fa-regular fa-clock" aria-hidden="true"></i>1 h 2 min read</li>
             <li><i class="fa fa-pencil" aria-hidden="true"></i>7 exercises</li>
             <li class="page-hero__progress"><i class="fa fa-check" aria-hidden="true"></i>0 of 7 done</li>
           </ul>
@@ -1001,6 +1001,78 @@
 
         <!-- Exercise 1.1 -->
 
+        <div class="solution">
+          <div class="solution__header">
+            <a data-bs-toggle="collapse" class="solution__toggle">
+              <i class="fa fa-magic solution__icon"></i>
+              <h1 class="solution__heading">Example solution</h1>
+
+              <i class="fa fa-caret-down solution__arrow"></i>
+            </a>
+          </div>
+
+          <div class="collapse">
+            <div class="solution__body">
+
+              <p>
+                Most of the articles tend to be quite technical and focused
+                on a narrow sub-problem.
+              </p>
+
+              <p>
+                The technical background required often includes maths such as
+                formal logic and probability calculus, and computer science
+                topics such as algorithms and data structures.
+              </p>
+
+              <p>
+                To take a concrete example, we can take a look at the article
+                <a href="https://doi.org/10.1609/aaai.v31i1.10941">Polynomial Optimization Methods for Matrix Factorization</a>
+                by P.-W. Wang, C.-L. Li, and J.Z. Kolter, which appeared in the
+                AAAI-17 conference.
+              </p>
+
+              <ol>
+                <li>
+                  The article presents new algorithms for factorizing matrices
+                  (representing big matrices as products of smaller matrices)
+                  that are based on certain optimization techniques. Matrix
+                  factorization can be used in various machine learning scenarios.
+                  For example, many state-of-the-art recommender systems that
+                  predict user ratings of items such as movies or music include
+                  matrix factorization as a key component. Improving matrix
+                  factorization algorithms will thus eventually lead to better
+                  movie and music recommendations.
+                </li>
+                <li>
+                  The article is clearly relevant to the course topics
+                  (machine learning and recommendation systems in particular).
+                </li>
+                <li>
+                  Based on this article alone, AI research would appear to
+                  differ only slightly from mathematics research. The emphasis
+                  on practical solutions and empirical evaluation is a feature
+                  characteristic of AI and ML research.
+                </li>
+                <li>
+                  The paper uses advanced multivariate calculus tools. From an
+                  algorithmic point of view, there is actually nothing intricate
+                  (basically a few loops), and the maths background is the area
+                  where further studies would be required to get the details.
+                </li>
+                <li>
+                  The article doesn't mention consciousness or any other
+                  "philosophical" issues at all. The problem is clearly
+                  constrained as that of minimizing a function. The progress
+                  in AI that this paper makes is quantitative, not
+                  qualitative.
+                </li>
+              </ol>
+
+            </div>
+          </div>
+        </div>
+
 
 
         <div class="hint">
@@ -1354,6 +1426,63 @@
 
         <!-- Exercise 1.2 -->
 
+        <div class="solution">
+          <div class="solution__header">
+            <a data-bs-toggle="collapse" class="solution__toggle">
+              <i class="fa fa-magic solution__icon"></i>
+              <h1 class="solution__heading">Example solution</h1>
+
+              <i class="fa fa-caret-down solution__arrow"></i>
+            </a>
+          </div>
+
+          <div class="collapse">
+            <div class="solution__body">
+
+              <p>
+                Here is the traversal order: each row gives the node that is
+                visited and the node list after its neighbors have been added
+                (the front of the queue or the top of the stack first). Nodes
+                that have already been visited are left out of the lists; the
+                pseudocode above adds them too, but skips them when they come up.
+              </p>
+
+              <table class="table">
+                <caption>Breadth-first search (queue)</caption>
+                <thead>
+                  <tr><th scope="col">visited</th><th scope="col">node list</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>A</td><td>[B]</td></tr>
+                  <tr><td>B</td><td>[C, F]</td></tr>
+                  <tr><td>C</td><td>[F, E, I]</td></tr>
+                  <tr><td>F</td><td>[E, I, D, G]</td></tr>
+                  <tr><td>E</td><td>[I, D, G]</td></tr>
+                  <tr><td>I</td><td>[D, G]</td></tr>
+                  <tr><td>D</td><td>[G]</td></tr>
+                  <tr><td>G</td><td>[H]</td></tr>
+                  <tr><td>H</td><td>goal found</td></tr>
+                </tbody>
+              </table>
+
+              <table class="table">
+                <caption>Depth-first search (stack)</caption>
+                <thead>
+                  <tr><th scope="col">visited</th><th scope="col">node list</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>A</td><td>[B]</td></tr>
+                  <tr><td>B</td><td>[F, C]</td></tr>
+                  <tr><td>F</td><td>[G, D, C]</td></tr>
+                  <tr><td>G</td><td>[H, D, C]</td></tr>
+                  <tr><td>H</td><td>goal found</td></tr>
+                </tbody>
+              </table>
+
+            </div>
+          </div>
+        </div>
+
         <p>
           As we discussed above while drinking red wine, search algorithms don't
           necessarily feel like being very cool AI methods. However, as the
@@ -1428,6 +1557,78 @@
         </div>
 
         <!-- Exercise 1.3 -->
+
+        <div class="solution">
+          <div class="solution__header">
+            <a data-bs-toggle="collapse" class="solution__toggle">
+              <i class="fa fa-magic solution__icon"></i>
+              <h1 class="solution__heading">Example solution</h1>
+
+              <i class="fa fa-caret-down solution__arrow"></i>
+            </a>
+          </div>
+
+          <div class="collapse">
+            <div class="solution__body">
+
+              <ol>
+                <li>
+                  Here's the state diagram (from <a href="https://en.wikipedia.org/wiki/Tower_of_Hanoi">Wikipedia: Tower of Hanoi</a>):
+                  <br><br>
+                  <img width=62% src="../img/diagrams/880px-Tower_of_Hanoi-3.svg-e071d97d.webp" alt="The 27 states of the Towers of Hanoi with three discs, from aaa at the top to bbb and ccc at the bottom corners, with an edge for every allowed move." loading="lazy" decoding="async" style="aspect-ratio: 880 / 747">
+                  <br><br>
+                  The first letter in a three-letter sequence encodes the
+                  position of the smallest disc (<code>a</code> = peg 1 on the
+                  left, <code>b</code> = peg 2 in the middle, <code>c</code> =
+                  peg 3 on the right), the second letter encodes the position of
+                  the middle disc, and the third letter encodes the position of
+                  the largest disc. Thus, there is a transition from the
+                  starting state <code>aaa</code> to states <code>baa</code> and
+                  <code>caa</code>, where the smallest disc is moved to the middle
+                  or the right-most peg respectively.
+                </li>
+                <li>
+                  BFS visits the states in the following order:
+                  <code>aaa [start], baa, caa, bca, cba, aca, cca, aba, bba,
+                  ccb, bbc, acb, bcb, abc, cbc, abb, bab, acc, cac,
+                  bbb, cbb, aab, cab, bcc, ccc [goal]</code>.
+                  Minor differences are possible due to different ordering of
+                  the neighbors of each node.
+                </li>
+                <li>
+                  DFS visits the states in the following order:
+                  <code>aaa [start], caa, cba, bba, bbc, cbc, cac, bac, bcc, ccc
+                  [goal]</code>.
+                  Here the order in which the neighbors are considered can have a
+                  significant effect on the result. In the worst case, all other
+                  nodes are visited before expanding the goal node.
+                </li>
+                <li>
+                  <i>a)</i> The path produced by BFS is the one with the least
+                  possible transitions, seven. The path produced by DFS, on the
+                  other hand, is the same as the sequence of states visited by
+                  DFS, which is nine transitions in length.
+                  <i>b)</i> BFS visited 25 states altogether while DFS only visited
+                  10 states. So BFS visits many more states but produces a shorter
+                  path.
+                </li>
+                <li>
+                  The number of states visited by BFS varies only slightly, and
+                  the path that it produces is always the same (since the shortest
+                  path is unique). However, DFS can either go straight to the
+                  goal by visiting only the states that are on the shortest path,
+                  or it can visit almost all states in the state space, and
+                  produce the maximally long path from the start to the goal.
+                </li>
+              </ol>
+
+              <p>
+                On the bonus exercise, see the Wikipedia page mentioned above.
+              </p>
+
+            </div>
+          </div>
+        </div>
 
 
         <!-- TOC: Travel Planner removed (was Ex 1.4)
@@ -2002,6 +2203,37 @@
 
         <!-- Exercise 1.6 -->
 
+        <div class="solution">
+          <div class="solution__header">
+            <a data-bs-toggle="collapse" class="solution__toggle">
+              <i class="fa fa-magic solution__icon"></i>
+              <h1 class="solution__heading">Example solution</h1>
+
+              <i class="fa fa-caret-down solution__arrow"></i>
+            </a>
+          </div>
+
+          <div class="collapse">
+            <div class="solution__body">
+
+              <p>
+                Here's the game tree with the values of each node.
+              </p>
+
+              <img width=80% src="../img/exercises/ex2/tree_Ex2_2-90b2e222.webp" alt="The game tree from the position of the exercise, with the value of every node. The root has value -1: Min wins by playing in the bottom-right corner, node 4." loading="lazy" decoding="async" style="aspect-ratio: 1200 / 826">
+
+              <p>
+                As you can see, Max has all the reason to be serious since by
+                playing in the bottom-right corner (Node (4)), Min can guarantee a
+                win (just follow the orange arrows). The inevitable victory of Min
+                can also be seen from the value of the game at the root node which
+                is &minus;1.
+              </p>
+
+            </div>
+          </div>
+        </div>
+
 	  
 
 
@@ -2283,6 +2515,69 @@
         </div>
 
         <!-- Exercise 1.7 -->
+
+        <div class="solution">
+          <div class="solution__header">
+            <a data-bs-toggle="collapse" class="solution__toggle">
+              <i class="fa fa-magic solution__icon"></i>
+              <h1 class="solution__heading">Example solution</h1>
+
+              <i class="fa fa-caret-down solution__arrow"></i>
+            </a>
+          </div>
+
+          <div class="collapse">
+            <div class="solution__body">
+
+              <p>
+                As was stated in the exercise, the recursion is started by calling
+                <code>min_value</code> for the root node (Node (1) below) with
+                arguments <code>alpha=-1, beta=1</code>. These values are then
+                passed to the child nodes, starting with the leftmost child
+                (Node (2)), and from it further down all the way to the leaf
+                node (5). The return value, which is passed up to the parent
+                node (3), is &minus;1 since in this case, Min wins with three Os
+                in a row. Strictly speaking, this already causes pruning to occur
+                in Node (3): it is a Min node, and thus it updates its beta value,
+                and the beta value becomes &minus;1. The test
+                <code>alpha &gt;= beta</code> (line 6 in the pseudocode, here
+                &minus;1 &ge; &minus;1) triggers the return condition. However,
+                the effect is null since there wouldn't have been any other
+                children of Node (3) anyway.
+              </p>
+
+              <img width=60% src="../img/exercises/ex2/alphabeta_Ex2_3-3ed29945.webp" alt="The part of the game tree that alpha-beta pruning visits, with alpha = -1 and beta = -1 at the root, whose other branches are pruned." loading="lazy" decoding="async" style="aspect-ratio: 1140 / 974">
+
+              <p>
+                Next, Node (3) returns the value &minus;1 to its parent, Node (2).
+                As a Max node, Node (2) would update its alpha value but since the
+                value returned by the child is &minus;1 which is already the same
+                as the current alpha value, no update occurs (line 5 in the
+                pseudocode). The processing of nodes (4) and (6) is analogous to
+                that of nodes (3) and (5) respectively.
+              </p>
+
+              <p>
+                Interesting things start to happen in the root node when the value
+                &minus;1 is returned from Node (2). The root node is a Min node and
+                it updates its beta value to be <code>beta=-1</code> (line 5 in the
+                pseudocode), and therefore, the test <code>alpha &gt;= beta</code>
+                (&minus;1 &ge; &minus;1) again triggers pruning and the other
+                branches of the tree need not be traversed at all!
+              </p>
+
+              <p>
+                The optimal game play can now be obtained by always choosing the
+                child node with the minimum (maximum) value in Min (Max)
+                nodes <i>among the child nodes that were visited</i>. The result is
+                guaranteed to be the same as that of the Minimax algorithm, i.e.,
+                optimal play for both players. For Max this is bad news: it's Min's
+                victory even best-out-of-three...
+              </p>
+
+            </div>
+          </div>
+        </div>
 	
 	      
 
@@ -2358,6 +2653,30 @@
         </div>
 
         <!-- Exercise 1.8 -->
+
+        <div class="solution">
+          <div class="solution__header">
+            <a data-bs-toggle="collapse" class="solution__toggle">
+              <i class="fa fa-magic solution__icon"></i>
+              <h1 class="solution__heading">Example solution</h1>
+
+              <i class="fa fa-caret-down solution__arrow"></i>
+            </a>
+          </div>
+
+          <div class="collapse">
+            <div class="solution__body">
+
+              <p>
+                Example solution in Python:
+                <a href="../files/AlphaBeta_model_python.zip">AlphaBeta_model_python.zip</a>.
+                Its <code>src</code> folder replaces the one in the
+                <code>AlphaBeta</code> folder of the exercise.
+              </p>
+
+            </div>
+          </div>
+        </div>
 
 
         <!-- Bonus Exercise 9 -->

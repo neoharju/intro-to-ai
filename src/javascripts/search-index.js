@@ -3,7 +3,7 @@
 // The index is built in the browser the first time the search opens: the pages of the navigation bar are
 // fetched (from the browser cache when they were visited) and split into their sections and exercises,
 // with the anchors of anchors.js. The results therefore always match the pages, and there is no index
-// file to rebuild. Formulas, figures and buttons are left out of the text.
+// file to rebuild. Formulas, figures, buttons and the example solutions are left out of the text.
 import { anchors } from './anchors';
 
 const SVG_NS = 'http://www.w3.org/2000/svg';
@@ -94,7 +94,10 @@ function indexPage(page, doc) {
         continue;
       }
 
-      if (child.nodeType !== 1 || child.namespaceURI === SVG_NS || SKIP.has(child.tagName) || child.classList.contains('math')) {
+      // The model solutions are left out too: a result would show the answer in its excerpt, and lead to a
+      // section where the answer is folded away.
+      if (child.nodeType !== 1 || child.namespaceURI === SVG_NS || SKIP.has(child.tagName)
+        || child.classList.contains('math') || child.classList.contains('solution')) {
         continue;
       }
 

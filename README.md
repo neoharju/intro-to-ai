@@ -24,7 +24,7 @@ copy is for non-commercial use only.
 
 ## What I changed
 
-The course staff's own updates are included up to commit `7947a94` of the original `gh-pages` branch
+The course staff's own updates are included up to commit `14853c2` of the original `gh-pages` branch
 (November 2026).
 
 Compared with the original material:
@@ -186,8 +186,8 @@ on purpose, so that it keeps its size and still fits on one line.
 
 The search (`src/javascripts/search.js`, styles in `_search.scss`) needs no index file. The first time it
 opens, it fetches the pages of the navigation bar (not the quiz, whose questions are not in its HTML) and
-splits them into sections and exercises, leaving out formulas, figures and buttons, so the results always
-match the pages. Every term of the query must occur in a result; titles count more than the text. A result
+splits them into sections and exercises, leaving out formulas, figures, buttons and the folded example
+solutions (whose answers would show in the results), so the results always match the pages. Every term of the query must occur in a result; titles count more than the text. A result
 links to the anchor of its section or exercise. The anchors are made from the heading text
 (`src/javascripts/anchors.js`), the same way in the page and in the search; a heading that has an `id` in the
 HTML keeps it, so links such as `../week4/#optimization` stay valid, and the earlier addresses
