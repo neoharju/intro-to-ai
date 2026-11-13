@@ -100,7 +100,7 @@ one breaks after a relation or an operation (=, +, ×) onto further lines, a mul
 `displayHtml` in `src/javascripts/math-options.js`), each of which can break too, and what still does not
 fit (a single fraction wider than a phone) is made just small enough. Words in a formula (`\text{…}`) and
 lists after commas break like text, so inline formulas stay inside a phone's column too. `npm run check`
-opens every exercise and fails if a formula needs scrolling sideways.
+opens every exercise and solution and fails if a formula needs scrolling sideways.
 
 A drawn diagram (`<svg class="dg">`) on a narrow screen scrolls sideways instead: `src/javascripts/ui.js` keeps it
 at least 3/4 of its viewBox width in pixels, so that its labels stay about 10 px on a phone instead of shrinking
@@ -187,8 +187,9 @@ on purpose, so that it keeps its size and still fits on one line.
 The search (`src/javascripts/search.js`, styles in `_search.scss`) needs no index file. The first time it
 opens, it fetches the pages of the navigation bar (not the quiz, whose questions are not in its HTML) and
 splits them into sections and exercises, leaving out formulas, figures, buttons and the folded example
-solutions (whose answers would show in the results), so the results always match the pages. Every term of the query must occur in a result; titles count more than the text. A result
-links to the anchor of its section or exercise. The anchors are made from the heading text
+solutions (whose answers would show in the results), so the results always match the pages. Every term of the
+query must occur in a result; titles count more than the text. A result links to the anchor of its section or
+exercise. The anchors are made from the heading text
 (`src/javascripts/anchors.js`), the same way in the page and in the search; a heading that has an `id` in the
 HTML keeps it, so links such as `../week4/#optimization` stay valid, and the earlier addresses
 (`#section-12-…`, `#exercise-3-…`) still lead to their section or exercise. An exercise opens when its

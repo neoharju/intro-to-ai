@@ -12,6 +12,8 @@
 // its natural state, then the measures, then the changes.
 import { onPageEnd } from './page';
 
+// How many times a formula that is still too wide is made smaller again (fit).
+const ROUNDS = 4;
 const watched = new Set();
 let observer = null;
 let queued = false;
@@ -40,14 +42,23 @@ function fit(list) {
     .filter(math => math.querySelector(':scope > .katex-rows') && fitOf(math) < 1)
     .forEach(math => math.classList.add('is-narrow'));
 
-  maths
-    .map(math => [math, fitOf(math)])
-    .forEach(([math, share]) => {
-      if (share < 1) {
-        // A little less than exact, against rounding.
-        math.style.fontSize = `${Math.floor(share * 995) / 10}%`;
-      }
+  // A formula does not always become exactly as much narrower as its font size: browsers round font sizes
+  // and glyph widths, the more so in the small parts of a formula (a fraction, an index). So it is measured
+  // again after each change, and made smaller again until it fits: a few rounds at most, each measuring all
+  // the formulas before changing any.
+  let wide = maths;
+
+  for (let round = 0; round < ROUNDS && wide.length; round++) {
+    const shares = wide.map(math => [math, fitOf(math)]).filter(([, share]) => share < 1);
+
+    shares.forEach(([math, share]) => {
+      const size = parseFloat(math.style.fontSize) || 100;
+
+      // A little less than exact, against rounding.
+      math.style.fontSize = `${Math.floor(size * share * 9.95) / 10}%`;
     });
+    wide = shares.map(([math]) => math);
+  }
 }
 
 function fitAll() {

@@ -171,10 +171,11 @@ function inspect(tab) {
 
 // The page scrolls sideways at phone width: the elements that stick out (and that no scroller contains).
 // Displayed formulas that are wider than their column (what is shown of them: the environment or its rows), with
-// every exercise and every <details> open, as a reader opens them. Last of the checks of a page: it opens them.
+// every exercise, solution and <details> open, as a reader opens them. Last of the checks of a page: it opens them.
 async function wideFormulas(tab) {
   await tab.evaluate(() => {
-    document.querySelectorAll('.exercise__toggle[aria-expanded="false"]').forEach(toggle => toggle.click());
+    document.querySelectorAll('.exercise__toggle[aria-expanded="false"], .solution__toggle[aria-expanded="false"]')
+      .forEach(toggle => toggle.click());
     document.querySelectorAll('details:not([open]) > summary').forEach(summary => summary.click());
   });
   // The formulas that came into view are fitted after the next layout (math-fit.js).
