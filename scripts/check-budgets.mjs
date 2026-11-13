@@ -24,7 +24,8 @@ const BUDGETS = {
   'javascripts/theme.js': 1 * KB,
   'javascripts/hero.js': 2.5 * KB,
   'javascripts/main.js': 22 * KB,
-  'javascripts/math.js': 1 * KB,
+  // Raised from 1 kB: it keeps displayed formulas inside the column (math-fit.js, breakable text).
+  'javascripts/math.js': 2 * KB,
   'javascripts/quiz.js': 30 * KB,
   'javascripts/highlight.js': 15 * KB,
   'javascripts/katex.js': 90 * KB,

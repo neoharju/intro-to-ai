@@ -4,10 +4,15 @@
 // when a formula appears later (the practice quiz, the simplified English of a week).
 import katex from 'katex';
 
-import { options } from './math-options';
+import { displayHtml, options } from './math-options';
 
+// A displayed formula also gets its rows, if it is a multi-line environment (math-options.js).
 function render(tex, node, displayMode = false) {
-  katex.render(tex, node, options(displayMode));
+  if (displayMode) {
+    node.innerHTML = displayHtml(katex, tex);
+  } else {
+    katex.render(tex, node, options(false));
+  }
 }
 
 // Typesets every formula under `root` that is not typeset yet. The TeX stays in data-tex.

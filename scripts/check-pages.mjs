@@ -5,7 +5,8 @@
 //   - a formula that KaTeX could not typeset (shown in red) or that was not typeset at all;
 //   - two elements with the same id, or a link to a page, a file or an anchor (#id, ../week4/#id) that is
 //     not there;
-//   - a page wider than a phone (390 px), with the simplified English off and on;
+//   - a page wider than a phone (390 px), with the simplified English off and on, and a displayed formula that
+//     needs scrolling sideways, on a phone or on a desktop (src/javascripts/math-fit.js keeps them in the column);
 //   - a page that the router (src/javascripts/router.js) does not show as a page load would: every page is
 //     visited in turn from the first one without leaving the document, and must then have its title, its
 //     header, its figures and formulas, no duplicate ids and no errors, under the same navigation bar and
@@ -169,6 +170,24 @@ function inspect(tab) {
 }
 
 // The page scrolls sideways at phone width: the elements that stick out (and that no scroller contains).
+// Displayed formulas that are wider than their column (what is shown of them: the environment or its rows), with
+// every exercise and every <details> open, as a reader opens them. Last of the checks of a page: it opens them.
+async function wideFormulas(tab) {
+  await tab.evaluate(() => {
+    document.querySelectorAll('.exercise__toggle[aria-expanded="false"]').forEach(toggle => toggle.click());
+    document.querySelectorAll('details:not([open]) > summary').forEach(summary => summary.click());
+  });
+  // The formulas that came into view are fitted after the next layout (math-fit.js).
+  await tab.waitForTimeout(800);
+
+  return tab.evaluate(() => [...document.querySelectorAll('div.math, p.math')]
+    .filter(math => math.offsetParent !== null)
+    .filter(math => (math.classList.contains('is-narrow')
+      ? [...math.querySelectorAll(':scope > .katex-rows > .katex-display')]
+      : [...math.querySelectorAll(':scope > .katex-display')]).some(box => box.scrollWidth > box.clientWidth + 1))
+    .map(math => `a formula needs scrolling sideways: ${(math.getAttribute('data-tex') || '').trim().slice(0, 60)}`));
+}
+
 function overflow(tab) {
   return tab.evaluate(() => {
     const width = document.documentElement.clientWidth;
@@ -214,6 +233,7 @@ for (const [page, config] of Object.entries(site.pages)) {
   seen.katex.forEach(error => add(`formula error: ${error}`, 'desktop'));
   seen.untypeset.forEach(tex => add(`formula not typeset: ${tex}`, 'desktop'));
   seen.duplicates.forEach(id => add(`duplicate id: ${id}`, 'desktop'));
+  (await wideFormulas(desktop.tab)).forEach(line => add(line, 'desktop'));
   await desktop.context.close();
 
   const links = new Set(seen.links);
@@ -233,6 +253,9 @@ for (const [page, config] of Object.entries(site.pages)) {
       simpleSeen.links.forEach(link => links.add(link));
     }
 
+    (await wideFormulas(phone.tab)).forEach(line => add(line, view));
+    // With everything open, nothing may reach past the edge of the phone either.
+    (await overflow(phone.tab)).forEach(line => add(`with every exercise open: ${line}`, view));
     await phone.context.close();
   }
 

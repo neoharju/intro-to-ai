@@ -1,8 +1,32 @@
-// Formulas typeset by math.js (KaTeX). A displayed formula scrolls sideways when it is wider than the
-// text column, instead of overflowing it on a phone.
+// Formulas typeset by math.js (KaTeX). A displayed formula is never wider than the text column (math-fit.js):
+// it breaks after a relation or an operation onto further lines, centred, the rows of a multi-line environment
+// replace it when it is too wide (is-narrow), and what still does not fit is made smaller. The scrolling box
+// is only a fallback for browsers without ResizeObserver.
 div.math, p.math {
   margin: 1.1rem 0 1.35rem;
   text-align: center;
+
+  // KaTeX keeps a displayed formula on one line; the breakable pieces it writes may go onto the next.
+  .katex-display > .katex {
+    white-space: normal;
+  }
+
+  // The rows of a multi-line environment (math-options.js), shown instead of it when it is too wide.
+  > .katex-rows {
+    display: none;
+  }
+
+  &.is-narrow > .katex-display {
+    display: none;
+  }
+
+  &.is-narrow > .katex-rows {
+    display: block;
+
+    > .katex-display + .katex-display {
+      margin-top: .35rem;
+    }
+  }
 
   // The scrolling box is KaTeX's own display element, so that the card of a key equation keeps its
   // border while the formula scrolls inside it (math.js adds the fade classes).
@@ -31,4 +55,22 @@ div.math--key {
 // to the surrounding text, this also holds in the smaller text of captions and notes.
 .katex {
   font-size: 1.24em;
+}
+
+// Words in a formula (\text{…}) at its top level may break between them, like the text around them (math.js
+// makes their spaces ordinary ones): an inline formula such as P(\text{the sum of the outcomes equals 9}) is
+// then never wider than a phone. Text inside a fraction, an index or any other stacked part stays on one line
+// (KaTeX places those parts itself).
+.katex .katex-base:has(> .mord.text),
+.katex .katex-base:has(> wbr) {
+  width: auto;
+}
+
+// After a comma at the top level (math.js puts a <wbr> there).
+.katex .katex-base:has(> wbr) {
+  white-space: normal;
+}
+
+.katex .katex-base > .mord.text {
+  white-space: normal;
 }

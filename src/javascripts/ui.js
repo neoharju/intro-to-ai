@@ -114,11 +114,13 @@ function mountCopyButtons() {
 }
 
 // Wide tables scroll sideways inside their frame instead of widening the page on small screens.
+// A table of the page without a class of its own is not a framed table: it only gets a box that scrolls when it
+// is wider than the column, without a frame.
 function wrapTables() {
-  document.querySelectorAll('.material table.table').forEach(table => {
+  document.querySelectorAll('.material table.table, .material table:not([class])').forEach(table => {
     const wrapper = document.createElement('div');
 
-    wrapper.className = 'table-wrap';
+    wrapper.className = table.classList.contains('table') ? 'table-wrap' : 'table-scroll';
     table.parentNode.insertBefore(wrapper, table);
     wrapper.append(table);
   });

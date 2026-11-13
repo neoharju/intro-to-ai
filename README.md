@@ -94,10 +94,18 @@ load `javascripts/katex.js` (KaTeX) and `javascripts/math.js`, which typesets th
 Pseudocode listings use `<pre class="sh_pseudo"><code>…</code></pre>`, highlighted by the grammar in
 `src/javascripts/pseudocode.js`; code listings are highlighted by `javascripts/highlight.js`.
 
-A displayed formula that is wider than the column scrolls sideways. So does a drawn diagram (`<svg class="dg">`)
-on a narrow screen: `src/javascripts/ui.js` keeps it at least 3/4 of its viewBox width in pixels, so that its
-labels stay about 10 px on a phone instead of shrinking to 5 px. Both fade out on the side where there is more;
-`src/javascripts/scroll-fades.js` measures all of them in one batch, after the browser's own layout.
+A displayed formula is never wider than the column, on a phone either (`src/javascripts/math-fit.js`): a long
+one breaks after a relation or an operation (=, +, ×) onto further lines, a multi-line environment
+(`\begin{aligned}`) that is too wide shows its rows one by one instead (typeset beside it, by
+`displayHtml` in `src/javascripts/math-options.js`), each of which can break too, and what still does not
+fit (a single fraction wider than a phone) is made just small enough. Words in a formula (`\text{…}`) and
+lists after commas break like text, so inline formulas stay inside a phone's column too. `npm run check`
+opens every exercise and fails if a formula needs scrolling sideways.
+
+A drawn diagram (`<svg class="dg">`) on a narrow screen scrolls sideways instead: `src/javascripts/ui.js` keeps it
+at least 3/4 of its viewBox width in pixels, so that its labels stay about 10 px on a phone instead of shrinking
+to 5 px. It fades out on the side where there is more; `src/javascripts/scroll-fades.js` measures all of them in
+one batch, after the browser's own layout.
 
 ### Formulas typeset in advance
 

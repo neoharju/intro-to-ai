@@ -15,6 +15,7 @@
 import { loadScript } from './load-script';
 import { SCRIPTS } from './scripts-url';
 import { definePageScript } from './page';
+import watchFit from './math-fit';
 import watchFades from './scroll-fades';
 
 // The address of katex.js, next to this script.
@@ -34,10 +35,38 @@ function loadKatex() {
   });
 }
 
-// A displayed formula wider than the column scrolls sideways; a fade on the clipped side shows that there
-// is more to see (scroll-fades.js measures all of them at once, after the layout).
+// A displayed formula is kept inside the column (math-fit.js): it breaks over lines, shows the rows of its
+// environment, or as a last resort gets smaller. Should a box still be wider (a browser without
+// ResizeObserver), it scrolls sideways with a fade on the clipped side (scroll-fades.js).
+// KaTeX writes the spaces of \text{…} as non-breaking spaces. Between the words of a text at the top level of
+// a formula they become ordinary spaces, so that the text may break there (_math.scss) instead of reaching past
+// the edge of a phone; the spaces at the ends (\text{ if }) stay as they are. A formula may also break after a
+// comma at its top level (a list such as P(\text{spam} \mid \text{‘million’}, \text{‘dollars’}, …)).
+function breakableText(root) {
+  root.querySelectorAll('.katex-base > .mpunct').forEach(comma => {
+    if (!(comma.nextSibling && comma.nextSibling.nodeName === 'WBR')) {
+      comma.after(document.createElement('wbr'));
+    }
+  });
+
+  root.querySelectorAll('.katex-base > .mord.text').forEach(text => {
+    const walker = document.createTreeWalker(text, NodeFilter.SHOW_TEXT);
+
+    for (let node = walker.nextNode(); node; node = walker.nextNode()) {
+      if (node.data.includes('\u00a0')) {
+        node.data = node.data.replace(/(\S)\u00a0+(?=\S)/g, '$1 ');
+      }
+    }
+  });
+}
+
 function watchDisplays(root) {
-  root.querySelectorAll('.math > .katex-display').forEach(watchFades);
+  breakableText(root);
+
+  root.querySelectorAll('.math > .katex-display').forEach(box => {
+    watchFit(box.parentElement);
+    watchFades(box);
+  });
 }
 
 export function typeset(root = document) {

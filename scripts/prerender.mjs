@@ -19,7 +19,7 @@ import { fileURLToPath } from 'node:url';
 import katex from 'katex';
 
 import hljs, { languageOf, skipped } from '../src/javascripts/highlight-languages.js';
-import { options } from '../src/javascripts/math-options.js';
+import { displayHtml, options } from '../src/javascripts/math-options.js';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const out = path.join(root, '_site');
@@ -67,7 +67,9 @@ function typeset(html, where) {
     let body;
 
     try {
-      body = katex.renderToString(tex, { ...options(tag !== 'span'), throwOnError: true });
+      body = tag === 'span'
+        ? katex.renderToString(tex, { ...options(false), throwOnError: true })
+        : displayHtml(katex, tex, { throwOnError: true });
     } catch (error) {
       throw new Error(`${where}: ${error.message}\n  TeX: ${tex}`);
     }
