@@ -18,6 +18,7 @@
 // forward return to the same place, also after a reload (history.scrollRestoration is "manual").
 import { reveal } from './anchors';
 import { nextPageView, remountPageScript, restoringScroll } from './page';
+import { loadSimple, loadedSimple, simpleWanted, simplifyBefore } from './simplify';
 import { prefersReducedMotion } from './utils';
 import { SCRIPTS } from './scripts-url';
 
@@ -107,7 +108,14 @@ export function preload(address) {
     return;
   }
 
-  loadManifest();
+  // With the simplified English on, its text too (simplify.js), so that the page can be shown in it at once.
+  loadManifest().then(() => {
+    const simple = simpleOf(page);
+
+    if (simple) {
+      loadSimple(simple).catch(() => {});
+    }
+  });
   fetchPage(page).then(html => {
     const base = new URL(page, ROOT.origin);
 
@@ -158,6 +166,14 @@ function loadScript(src, module = false) {
 // --- The parts of the page ---------------------------------------------------------------------------------
 
 // The text of some nodes, to tell whether the top of a page is still the one in pages.json.
+// The address of the simplified English of a page (pages.json), if it has one and the reader has it on.
+function simpleOf(page) {
+  const base = new URL(page, ROOT.origin);
+  const entry = manifest && manifest.pages[relativeKey(base)];
+
+  return entry && entry.simple && simpleWanted() ? new URL(entry.simple, base).href : null;
+}
+
 function textOf(nodes) {
   return nodes.map(node => node.textContent).join('').replace(/\s+/g, ' ').trim();
 }
@@ -383,6 +399,8 @@ export default function mountRouter({ pageSteps, onNavigate, onPageShown }) {
   // The text of the top of the material and of the header that showShell put in.
   let shellText = null;
   let shellHero = null;
+  // Whether showShell put the top of the material in in simplified English.
+  let shellSimple = false;
 
   rememberLoadedScripts();
   rememberStylesheets();
@@ -395,7 +413,12 @@ export default function mountRouter({ pageSteps, onNavigate, onPageShown }) {
   function showShell(page) {
     const entry = manifest && manifest.pages[relativeKey(new URL(page, ROOT.origin))];
 
-    if (!entry) {
+    // With the simplified English on, the top of the page is shown only in it: until its text has arrived, the
+    // page waits for it (showPage).
+    const simple = simpleOf(page);
+    const table = simple && loadedSimple(simple);
+
+    if (!entry || (simple && !table)) {
       return false;
     }
 
@@ -409,8 +432,14 @@ export default function mountRouter({ pageSteps, onNavigate, onPageShown }) {
     const template = document.createElement('template');
 
     template.innerHTML = entry.intro;
+    shellText = textOf([...template.content.childNodes]);
+    shellSimple = Boolean(table);
+
+    if (table) {
+      simplifyBefore(template.content, simple, table);
+    }
+
     material.replaceChildren(template.content);
-    shellText = textOf([...material.childNodes]);
     window.scrollTo(0, 0);
     fadeIn(material);
     focusTitle();
@@ -427,15 +456,25 @@ export default function mountRouter({ pageSteps, onNavigate, onPageShown }) {
       throw new Error('not a page of the course');
     }
 
-    await addStylesheets(doc, base);
+    // With the simplified English on, its text goes in with the page, each part before it is shown (simplify.js).
+    const meta = doc.querySelector('meta[name="introai-simple"]');
+    const simple = meta && simpleWanted() ? new URL(meta.getAttribute('content'), base).href : null;
+    const [table] = await Promise.all([
+      simple ? loadSimple(simple).catch(() => null) : null,
+      addStylesheets(doc, base),
+    ]);
 
     if (stale()) {
       return;
     }
 
+    const simplify = root => {
+      if (table) {
+        simplifyBefore(root, simple, table);
+      }
+    };
     const intro = introOf(theirs);
     const rest = [...theirs.childNodes].slice(intro.length);
-    const sameIntro = shell && shellText === textOf(intro);
 
     if (!shell) {
       nextPageView(restoreY !== null);
@@ -449,8 +488,13 @@ export default function mountRouter({ pageSteps, onNavigate, onPageShown }) {
 
     document.title = doc.title;
     syncHead(doc);
+
+    // The top that showShell put in stays if it is the page's own, in the same English.
+    const sameIntro = shell && shellText === textOf(intro) && shellSimple === Boolean(table);
+
     setMaterial(material, { className: theirs.className, data: dataOf(theirs) });
     shellText = null;
+    shellSimple = false;
 
     // To a remembered position or to a section, the whole page is needed at once (and the header is off
     // screen); to the top of the page, the rest comes in slices below what the reader sees.
@@ -481,11 +525,20 @@ export default function mountRouter({ pageSteps, onNavigate, onPageShown }) {
 
       const typeset = fragment => window.IntroAI && window.IntroAI.katex && window.IntroAI.katex.typeset(fragment);
 
-      if (!(await appendInSlices(material, sameIntro ? rest : [...theirs.childNodes], { prepare: typeset, stale }))) {
+      const prepare = fragment => {
+        simplify(fragment);
+        typeset(fragment);
+      };
+
+      if (!(await appendInSlices(material, sameIntro ? rest : [...theirs.childNodes], { prepare, stale }))) {
         return;
       }
     } else {
-      material.append(...(sameIntro ? rest : [...theirs.childNodes]));
+      const fragment = document.createDocumentFragment();
+
+      fragment.append(...(sameIntro ? rest : [...theirs.childNodes]));
+      simplify(fragment);
+      material.append(fragment);
     }
 
     // The page's own scripts, in their order: loaded the first time (they set up the page when they run),
@@ -580,6 +633,12 @@ export default function mountRouter({ pageSteps, onNavigate, onPageShown }) {
 
     const id = ++navigation;
     const html = fetchPage(page);
+    const simple = simpleOf(page);
+
+    // The simplified English, if the reader has it on, comes with the page.
+    if (simple) {
+      loadSimple(simple).catch(() => {});
+    }
 
     if (push) {
       saveScroll();

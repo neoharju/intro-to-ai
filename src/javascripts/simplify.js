@@ -14,6 +14,15 @@ import { readingAnchor } from './utils';
 
 const KEY = 'introai-simple';
 
+// The simplified text of the weeks, fetched once a visit: its address -> the request, and the tables that have
+// arrived ({ fingerprint: html }), for the router, which puts the text in before the page is shown.
+const requests = new Map();
+const tables = new Map();
+
+// The swaps that the router made in the text of the current page view while it came in (simplifyBefore), for
+// mountSimplify, which can then turn them back.
+let early = null;
+
 // Elements whose own text is a block of the material.
 const BLOCKS = 'p, li, td, th, dd, dt, figcaption, blockquote, div, summary, details';
 
@@ -96,6 +105,94 @@ function html(nodes) {
   return box.innerHTML.replace(/\s+/g, ' ').trim();
 }
 
+// Replaces the own text of every block in `root` (the material, or a part of the next page that is not in
+// the document yet) that has a simplified version; returns how to undo it.
+function swapIn(root, table) {
+  const done = [];
+
+  blocks(root).forEach(({ element, nodes: original }) => {
+    const simple = table[fingerprint(plainText(original))];
+
+    if (simple === undefined) {
+      return;
+    }
+
+    const template = document.createElement('template');
+    const anchor = original[original.length - 1].nextSibling;
+
+    template.innerHTML = simple;
+
+    const replacement = [...template.content.childNodes];
+
+    original.forEach(node => node.remove());
+    replacement.forEach(node => element.insertBefore(node, anchor));
+    done.push({ element, original, replacement });
+  });
+
+  return done;
+}
+
+// Puts the original text back, the last swap first.
+function swapOut(done) {
+  [...done].reverse().forEach(({ element, original, replacement }) => {
+    const anchor = replacement.length ? replacement[replacement.length - 1].nextSibling : null;
+
+    replacement.forEach(node => node.remove());
+    original.forEach(node => element.insertBefore(node, anchor));
+  });
+}
+
+// Whether the reader has the simplified English on (the choice is kept in localStorage).
+export function simpleWanted() {
+  try {
+    return window.localStorage.getItem(KEY) === 'on';
+  } catch (error) {
+    return false;
+  }
+}
+
+// The simplified text of a week (the address of its simple.json), fetched once a visit.
+export function loadSimple(source) {
+  if (!requests.has(source)) {
+    const request = fetch(source, { cache: 'no-cache' })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`${source}: ${response.status}`);
+        }
+
+        return response.json();
+      })
+      .then(data => {
+        tables.set(source, data.blocks);
+        return data.blocks;
+      });
+
+    // A failed request is tried again next time.
+    request.catch(() => requests.delete(source));
+    requests.set(source, request);
+  }
+
+  return requests.get(source);
+}
+
+// The simplified text of a week if it has arrived, or null.
+export function loadedSimple(source) {
+  return tables.get(source) || null;
+}
+
+// For the router: puts the simplified text (`table`, from `source`) into a part of the next page before it is
+// shown, so that the reader never sees the page in the original first. Called after the router has started the
+// page view (page.js); mountSimplify takes the swaps over.
+export function simplifyBefore(root, source, table) {
+  const signal = pageSignal();
+
+  if (!early || early.signal !== signal || early.source !== source) {
+    early = { signal, source, done: [] };
+  }
+
+  early.done.push(...swapIn(root, table));
+}
+
 // For authoring (scripts/simple.mjs --extract): every block with its fingerprint and original HTML,
 // and the text of the material that is in no block (which would stay unsimplified).
 export function extract() {
@@ -127,7 +224,6 @@ export function extract() {
   };
 }
 
-// Sets up the switch for the current page; the router calls it again for every page it shows.
 // Sets up the switch for the current page; the router calls it again for every page it shows. The switch
 // stays in the navigation bar from page to page: its listener ends with the page (page.js).
 export default function mountSimplify() {
@@ -155,58 +251,8 @@ export default function mountSimplify() {
   // changes the page.
   const source = new URL(meta.content, window.location.href).href;
 
-  let entries = null;
   let swapped = [];
   let on = false;
-
-  async function load() {
-    if (!entries) {
-      const response = await fetch(source, { cache: 'no-cache' });
-
-      if (!response.ok) {
-        throw new Error(`${source}: ${response.status}`);
-      }
-
-      entries = (await response.json()).blocks;
-    }
-
-    return entries;
-  }
-
-  // Replaces the own text of every block that has a simplified version; returns how to undo it.
-  function swapIn(table) {
-    const done = [];
-
-    blocks().forEach(({ element, nodes: original }) => {
-      const simple = table[fingerprint(plainText(original))];
-
-      if (simple === undefined) {
-        return;
-      }
-
-      const template = document.createElement('template');
-      const anchor = original[original.length - 1].nextSibling;
-
-      template.innerHTML = simple;
-
-      const replacement = [...template.content.childNodes];
-
-      original.forEach(node => node.remove());
-      replacement.forEach(node => element.insertBefore(node, anchor));
-      done.push({ element, original, replacement, anchor });
-    });
-
-    return done;
-  }
-
-  function swapOut(done) {
-    done.forEach(({ element, original, replacement }) => {
-      const anchor = replacement.length ? replacement[replacement.length - 1].nextSibling : null;
-
-      replacement.forEach(node => node.remove());
-      original.forEach(node => element.insertBefore(node, anchor));
-    });
-  }
 
   // The formulas of the swapped text (a Promise: KaTeX may have to be loaded first).
   function typeset() {
@@ -223,7 +269,7 @@ export default function mountSimplify() {
     button.disabled = true;
 
     try {
-      const table = next ? await load() : null;
+      const table = next ? await loadSimple(source) : null;
 
       // The reader went on to another page meanwhile.
       if (signal.aborted) {
@@ -233,7 +279,7 @@ export default function mountSimplify() {
       const anchor = readingAnchor();
 
       if (next) {
-        swapped = swapIn(table);
+        swapped = swapIn(document.getElementById('material'), table);
       } else {
         swapOut(swapped);
         swapped = [];
@@ -264,15 +310,16 @@ export default function mountSimplify() {
 
   button.addEventListener('click', () => set(!on), { signal });
 
-  let saved = null;
-
-  try {
-    saved = window.localStorage.getItem(KEY);
-  } catch (error) {
-    // No saved choice.
-  }
-
-  if (saved === 'on') {
+  if (early && early.signal === signal && early.source === source) {
+    // The router put the simplified text in as the page came in.
+    swapped = early.done;
+    on = true;
+    document.documentElement.setAttribute('data-simple', '');
+    button.setAttribute('aria-pressed', 'true');
+  } else if (simpleWanted()) {
+    // The first page of a visit: its text is swapped now.
     set(true, { remember: false });
   }
+
+  early = null;
 }

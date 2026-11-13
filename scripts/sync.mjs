@@ -279,7 +279,7 @@ function syncExerciseList(text, page) {
   });
 }
 
-// What pages.json holds for a page: its title, its header and the top of its material.
+// What pages.json holds for a page: its title, its header, the top of its material and its simplified English.
 function shellOf(text, page, config) {
   const hero = text.match(/<header class="(page-hero[^"]*)">\s*<div class="container">([\s\S]*?)<\/div>\s*<\/header>/);
 
@@ -304,6 +304,8 @@ function shellOf(text, page, config) {
     hero: { className: hero[1], html: compact(hero[2]) },
     material: { className, data },
     intro: compact(intro),
+    // The simplified English of the page (src/javascripts/simplify.js), for the router to fetch with the page.
+    ...(config.simple ? { simple: 'simple.json' } : {}),
   };
 }
 

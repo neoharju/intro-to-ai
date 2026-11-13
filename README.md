@@ -62,7 +62,9 @@ for students whose first language is not English. The "Simplified English" switc
 headings stay as they are. The text is written in `src/simple/weekN.txt`, one entry per paragraph, list
 item, table cell or caption, keyed by a fingerprint of the original text, and compiled into
 `weekN/simple.json`. A week with a simplified version has `<meta name="introai-simple" content="simple.json">`
-in its head.
+in its head. With the switch on, a week that the reader moves to (see "Moving between pages") comes in
+simplified English from the start: the router fetches its `simple.json` with the page (once a visit) and puts the
+simplified text into each part of the page before it is shown.
 
 ```bash
 npm run simple                      # compile src/simple/*.txt
