@@ -117,6 +117,8 @@ function render(name, page, config) {
     // The formulas' stylesheet, on the pages that typeset formulas (math.js).
     mathStyles: config.scripts.includes('math.js') ? `  <link href="${prefix}stylesheets/math.css" rel="stylesheet" />` : '',
     navItems: navItems(page, prefix),
+    // The page's name on the button of the menu that replaces the links on smaller screens (navigation.js keeps it).
+    navCurrent: escapeHtml((site.nav.find(item => item.path === page.replace(/index\.html$/, '')) || { label: config.title }).label),
     // The simplified-English switch, on the pages that have a simplified version.
     simpleHidden: config.simple ? '' : ' hidden',
     mobileNavItems: mobileNavItems(page, prefix),

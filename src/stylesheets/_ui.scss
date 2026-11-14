@@ -121,9 +121,41 @@
   }
 }
 
+// The blocks of the material that are off screen are neither laid out nor painted until they come near it
+// (content-visibility: auto): a long week (Week 3 has 16 000 elements, most of them in its formulas) is laid out
+// a screen at a time instead of all at once, which saves seconds on a phone. Each block keeps the height it last
+// had when shown (contain-intrinsic-size: auto), so the page does not move when the block is skipped again; until
+// then it stands in at an estimated height. The first three blocks (the first screen) and the headings are always
+// drawn. A jump to a section and a restored scroll position lay everything out first (html.render-all: utils.js,
+// router.js, theme.js), so that they land on the right line. The clip that comes with skipping is widened
+// (overflow-clip-margin), so that focus rings and letters at the edge of a block are not cut.
+// Not the code listings and the front page's progress table, whose margins inside reach past their edges (they
+// are light anyway).
+.material > :nth-child(n + 4):not(h1, h2, h3, h4, h5, h6, .code-block, .progress-overview) {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 300px;
+  overflow-clip-margin: 8px;
+
+  &:is(p, ul, ol) {
+    contain-intrinsic-size: auto 140px;
+  }
+
+  &.math {
+    contain-intrinsic-size: auto 80px;
+  }
+}
+
+.render-all .material > * {
+  content-visibility: visible !important;
+}
+
 @media print {
   .header-wrapper, .back-to-top, .read-progress, .code-block__copy, .heading-anchor, .page-hero__canvas {
     display: none !important;
+  }
+
+  .material > * {
+    content-visibility: visible !important;
   }
 
   .reveal {

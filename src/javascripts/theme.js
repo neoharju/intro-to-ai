@@ -90,6 +90,20 @@ try {
 // keys of the search to show (⌘ K on a Mac).
 root.classList.add('js');
 
+// A reload, or back to this page from another site, at a remembered position (which router.js restores): the
+// whole material is laid out at first, so that the position lands on the same line (_ui.scss, utils.js).
+try {
+  const navigation = performance.getEntriesByType('navigation')[0];
+  const state = window.history.state;
+
+  if (navigation && navigation.type !== 'navigate' && state && state.y > 0 && !window.location.hash) {
+    root.classList.add('render-all');
+    window.addEventListener('load', () => window.setTimeout(() => root.classList.remove('render-all'), 1500), { once: true });
+  }
+} catch (error) {
+  // No navigation timing: the page is laid out as it comes.
+}
+
 if (/Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent)) {
   root.setAttribute('data-mac', '');
 }

@@ -22,8 +22,9 @@ const KB = 1024;
 // gzip, level 9: what GitHub Pages sends is about this size.
 const BUDGETS = {
   'javascripts/theme.js': 1 * KB,
-  // Raised from 2.5 kB: the intro of the first page of a visit and the wave of a change of page (1 kB more).
-  'javascripts/hero.js': 3 * KB,
+  // Raised from 2.5 kB: the intro of the first page of a visit and the wave of a change of page (1 kB more); and
+  // from 3 kB: the network drawn grouped by opacity (cheaper frames) and the intro's text never kept waiting.
+  'javascripts/hero.js': 3.25 * KB,
   'javascripts/main.js': 22 * KB,
   // Raised from 1 kB: it keeps displayed formulas inside the column (math-fit.js, breakable text).
   'javascripts/math.js': 2 * KB,

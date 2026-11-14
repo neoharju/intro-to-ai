@@ -24,8 +24,15 @@ const DRAW_EVERY = 1000 / 30;
 const INTRO = 1500;
 const PULSE = 1100;
 
+// The lines and the nodes are drawn grouped by opacity, a path for each step of it, instead of one by one: some
+// twenty strokes a frame instead of three hundred, with steps too small to see.
+const STEPS = 24;
+const MOST = 0.9;
+
 const ease = t => 1 - (1 - t) ** 3;
 const clamp = t => Math.min(1, Math.max(0, t));
+const level = alpha => Math.min(STEPS - 1, Math.floor(alpha / MOST * STEPS));
+const shade = index => ((index + 0.5) / STEPS * MOST).toFixed(3);
 
 // The nodes that the previous page left, or null.
 function saved() {
@@ -73,6 +80,10 @@ function mountHero(hero) {
   if (intro) {
     root.classList.add('hero-intro');
   }
+
+  // The groups of lines and nodes by opacity (draw), kept from frame to frame so that drawing allocates nothing.
+  const lines = Array.from({ length: STEPS }, () => []);
+  const dots = { '37, 99, 235': Array.from({ length: STEPS }, () => []), '255, 171, 14': Array.from({ length: STEPS }, () => []) };
 
   // A fixed seed, so the still picture is the same on every visit.
   let seed = 7;
@@ -168,27 +179,54 @@ function mountHero(hero) {
     const wave = pulse ? clamp((now - pulse.start) / PULSE) : 1;
     const front = ease(wave) * width * 1.15;
     const glow = (x, y) => (wave < 1 ? Math.exp(-(((Math.hypot(x - width * 0.06, y - height * 0.45) - front) / 90) ** 2)) * (1 - wave * 0.5) : 0);
-    const at = intro ? nodes.map(node => placed(node, t, focus, reach)) : nodes.map(node => ({ x: node.x, y: node.y, p: 1 }));
+    // Where the nodes are drawn: where they are, but during the intro.
+    const at = intro ? nodes.map(node => placed(node, t, focus, reach)) : nodes;
+    const far = LINK_DISTANCE * LINK_DISTANCE;
 
+    // The network fades out towards the text on the left: drawn into the opacity, as the CSS mask of the canvas did
+    // (which costs a compositing pass every frame, so it is used only during the intro, for its light and ring).
+    const fade = intro ? () => 1 : x => {
+      const u = x / width;
+
+      return u >= 0.75 ? 1 : u <= 0.4 ? 0.35 * Math.max(0, u) / 0.4 : 0.35 + 0.65 * (u - 0.4) / 0.35;
+    };
+    lines.forEach(list => { list.length = 0; });
+    canvas.classList.toggle('is-masked', Boolean(intro));
     context.clearRect(0, 0, width, height);
     context.lineWidth = 1;
 
     for (let i = 0; i < nodes.length; i++) {
       for (let j = i + 1; j < nodes.length; j++) {
-        const distance = Math.hypot(nodes[i].x - nodes[j].x, nodes[i].y - nodes[j].y);
-        const p = Math.min(at[i].p, at[j].p);
+        // Far apart in x alone, or in the square of the distance: no line (no square root for most pairs).
+        const dx = nodes[i].x - nodes[j].x;
+        const dy = nodes[i].y - nodes[j].y;
+        const p = intro ? Math.min(at[i].p, at[j].p) : 1;
 
-        if (distance < LINK_DISTANCE && p > 0) {
-          const lit = glow((at[i].x + at[j].x) / 2, (at[i].y + at[j].y) / 2);
+        if (dx < LINK_DISTANCE && dx > -LINK_DISTANCE && dx * dx + dy * dy < far && p > 0) {
+          const distance = Math.sqrt(dx * dx + dy * dy);
+          const mx = (at[i].x + at[j].x) / 2;
+          const alpha = Math.min(MOST, (0.32 + 0.5 * glow(mx, (at[i].y + at[j].y) / 2)) * (1 - distance / LINK_DISTANCE) * p * p) * fade(mx);
 
-          context.strokeStyle = `rgba(82, 138, 252, ${Math.min(0.9, (0.32 + 0.5 * lit) * (1 - distance / LINK_DISTANCE) * p * p)})`;
-          context.beginPath();
-          context.moveTo(at[i].x, at[i].y);
-          context.lineTo(at[j].x, at[j].y);
-          context.stroke();
+          if (alpha > 0.004) {
+            lines[level(alpha)].push(at[i].x, at[i].y, at[j].x, at[j].y);
+          }
         }
       }
     }
+
+    lines.forEach((list, index) => {
+      if (list.length) {
+        context.strokeStyle = `rgba(82, 138, 252, ${shade(index)})`;
+        context.beginPath();
+
+        for (let k = 0; k < list.length; k += 4) {
+          context.moveTo(list[k], list[k + 1]);
+          context.lineTo(list[k + 2], list[k + 3]);
+        }
+
+        context.stroke();
+      }
+    });
 
     if (intro) {
       // The point of light, the shockwave around it, and a streak behind every node on its way.
@@ -230,17 +268,32 @@ function mountHero(hero) {
       context.globalCompositeOperation = 'source-over';
     }
 
+    // The nodes, grouped the same way: blue ones and the amber accents.
+    Object.values(dots).forEach(groups => groups.forEach(list => { list.length = 0; }));
     nodes.forEach((node, i) => {
-      const { x, y, p } = at[i];
+      const { x, y } = at[i];
+      const p = intro ? at[i].p : 1;
       const lit = glow(x, y);
+      const alpha = (node.accent ? MOST : Math.min(MOST, 0.55 + 0.45 * lit)) * fade(x);
 
-      if (p > 0) {
-        context.fillStyle = node.accent ? 'rgba(255, 171, 14, .9)' : `rgba(37, 99, 235, ${Math.min(1, 0.55 + 0.45 * lit)})`;
-        context.beginPath();
-        context.arc(x, y, node.radius * (1 + 1.5 * lit + 1.5 * (1 - p)), 0, Math.PI * 2);
-        context.fill();
+      if (p > 0 && alpha > 0.004) {
+        dots[node.accent ? '255, 171, 14' : '37, 99, 235'][level(alpha)].push(x, y, node.radius * (1 + 1.5 * lit + 1.5 * (1 - p)));
       }
     });
+
+    Object.entries(dots).forEach(([color, groups]) => groups.forEach((list, index) => {
+      if (list.length) {
+        context.fillStyle = `rgba(${color}, ${shade(index)})`;
+        context.beginPath();
+
+        for (let k = 0; k < list.length; k += 3) {
+          context.moveTo(list[k] + list[k + 2], list[k + 1]);
+          context.arc(list[k], list[k + 1], list[k + 2], 0, Math.PI * 2);
+        }
+
+        context.fill();
+      }
+    }));
 
     if (intro && intro.start && t > INTRO) {
       intro = null;
@@ -269,6 +322,13 @@ function mountHero(hero) {
       intro.start = time;
       root.setAttribute('data-hero-intro', String(Math.round(time)));
       root.classList.add('hero-intro--go');
+      // The text is not kept waiting: if the page is not ready to bring it in soon, it is shown now (the largest
+      // text of the page, which the browser times as the moment the page is seen) while the burst goes on.
+      window.setTimeout(() => {
+        if (root.classList.contains('hero-intro') && !root.classList.contains('hero-intro--run')) {
+          root.classList.add('hero-intro--late');
+        }
+      }, 650);
     }
 
     if (drawn && time - drawn < DRAW_EVERY - 2 && !intro && !pulse) {

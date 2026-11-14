@@ -223,7 +223,9 @@ function play(element, before, { scramble = false, delay = 0 } = {}) {
   }
 
   const after = lettersOf(node);
-  const base = element.getBoundingClientRect();
+  const box = element.getBoundingClientRect();
+  // The layer is placed from the padding box, inside the border (the items of the bar have one on the left).
+  const base = { left: box.left + element.clientLeft, top: box.top + element.clientTop };
   const list = [];
   const layer = document.createElement('span');
   const style = getComputedStyle(element);
@@ -400,10 +402,11 @@ export function playIntro() {
   const container = document.querySelector('.page-hero > .container');
   const started = Number(root.getAttribute('data-hero-intro')) || performance.now();
   const late = performance.now() - started;
-  const end = () => root.classList.remove('hero-intro', 'hero-intro--run', 'hero-intro--go');
+  const end = () => root.classList.remove('hero-intro', 'hero-intro--run', 'hero-intro--go', 'hero-intro--late');
 
-  // Too late for the text to come in (a slow start: it is shown by then, _hero.scss), or not at the top of the page.
-  if (!container || prefersReducedMotion() || performance.now() > 1450 || window.scrollY > 40 || typeof container.animate !== 'function') {
+  // Too late for the text to come in (it is shown by then: hero.js, _hero.scss), or not at the top of the page.
+  if (!container || prefersReducedMotion() || root.classList.contains('hero-intro--late') || performance.now() > 1450
+    || window.scrollY > 40 || typeof container.animate !== 'function') {
     end();
     return;
   }

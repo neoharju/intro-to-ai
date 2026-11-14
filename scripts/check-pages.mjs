@@ -174,6 +174,8 @@ function inspect(tab) {
 // every exercise, solution and <details> open, as a reader opens them. Last of the checks of a page: it opens them.
 async function wideFormulas(tab) {
   await tab.evaluate(() => {
+    // Every block laid out, also those off screen that the browser skips (_ui.scss): their formulas are then fitted.
+    document.documentElement.classList.add('render-all');
     document.querySelectorAll('.exercise__toggle[aria-expanded="false"], .solution__toggle[aria-expanded="false"]')
       .forEach(toggle => toggle.click());
     document.querySelectorAll('details:not([open]) > summary').forEach(summary => summary.click());
@@ -191,6 +193,9 @@ async function wideFormulas(tab) {
 
 function overflow(tab) {
   return tab.evaluate(() => {
+    // Every block laid out, also those off screen that the browser skips (_ui.scss).
+    document.documentElement.classList.add('render-all');
+
     const width = document.documentElement.clientWidth;
 
     if (document.documentElement.scrollWidth <= width + 1) {

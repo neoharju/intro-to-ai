@@ -25,9 +25,28 @@ export function readingAnchor() {
   return node && material && material.contains(node) ? { node, top: node.getBoundingClientRect().top } : null;
 }
 
+// Lays out every block of the material for a while (_ui.scss): the blocks off screen are skipped, at an
+// estimated height, until they have been shown once, so a jump or a restored position lands on the right line
+// only if they are laid out first. They then keep their real heights (contain-intrinsic-size: auto).
+let renderAllTimer = 0;
+
+export function renderAll(ms = 1500) {
+  document.documentElement.classList.add('render-all');
+  window.clearTimeout(renderAllTimer);
+  renderAllTimer = window.setTimeout(() => document.documentElement.classList.remove('render-all'), ms);
+}
+
+// Whether an element is drawn now, not in a block that the browser skips because it is off screen (_ui.scss).
+// Measuring an element in a skipped block would lay the block out.
+export function isRendered(element) {
+  return typeof element.checkVisibility !== 'function' || element.checkVisibility({ contentVisibilityAuto: true });
+}
+
 // Before a jump to `target`: the interactive figures above it are built now (viz/lib.js builds a figure
-// only when it comes near the screen), so that the target does not move while the page scrolls to it.
+// only when it comes near the screen), and every block is laid out, so that the target does not move while
+// the page scrolls to it.
 export function prepareJump(target) {
+  renderAll();
   document.dispatchEvent(new CustomEvent('introai:jump', { detail: { target } }));
 }
 

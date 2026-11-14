@@ -148,8 +148,8 @@ for (const file of files) {
       shell.intro = typeset(shell.intro, `${file} ${page}`);
     });
     await writeFile(target, `${JSON.stringify(data)}\n`);
-  } else if (/^week\d+\/simple\.json$/.test(file)) {
-    // The simplified English: its blocks are HTML too.
+  } else if (/^(?:week\d+\/)?simple\.json$/.test(file)) {
+    // The simplified English (of the front page and the weeks): its blocks are HTML too.
     const data = JSON.parse(await readFile(path.join(root, file), 'utf8'));
 
     Object.keys(data.blocks).forEach(fingerprint => {

@@ -1,0 +1,229 @@
+# The front page in simplified English (about 80% ASD-STE100 Issue 9). See scripts/simple.mjs.
+# The table of the reader's progress (progress.js) is made by a script, so it has no entries here.
+== 216859b2
+Welcome to Introduction to AI! This is the Fall 2026 course of the Department of Computer Science at the University of Helsinki. It is an intermediate course of 5 credits. The <a href="https://www.helsinki.fi/en/programmes/master/data-science">Data Science MSc programme</a> organizes it. Students in the <a href="https://www.helsinki.fi/fi/ohjelmat/kandi/tietojenkasittelytieteen-kandiohjelma">Computer Science BSc programme</a> can also take it. All other students can take it as part of their minor subject studies.
+
+== 60dd537c
+A course of 5 credits needs approximately 18 hours of work each week. Thus, be ready to spend time and effort on it. The course is hard work.
+
+== 1b714767
+Before you start, you must know how to write programs well. You must also know the basic data structures and algorithms, and some mathematics at university level.
+
+== 9d8587aa
+Skills that you need
+
+== 0621501d
+stack, priority queue, tree traversal, heuristic search, the A* algorithm. You can learn these, for example, in the course <i>Data Structures and Algorithms</i> (<i>Tietorakenteet ja algoritmit</i>)
+
+== 83ca8526
+you can write programs well in Python
+
+== 27991b36
+the basics of discrete mathematics and linear algebra (set operations, graphs, vectors), and probability calculus. Probability with many variables helps, but you do not need it. You can learn these, for example, in the course <i>Probability calculus I</i> (<i>Todennäköisyyslaskenta I</i>)
+
+== 36150153
+Objectives (when you complete the course, you ...)
+
+== 3b90770d
+can describe the basic philosophical problems of AI (why it is difficult to define AI and consciousness, acting or thinking, the Turing test)
+
+== ae7eed4e
+can tell which AI in science fiction is realistic and which is not
+
+== 53dd12db
+can describe how "Good Old Fashioned AI" (GOFAI) is different from modern AI
+
+== 64518682
+know the most important steps in the history of AI
+
+== dc6b3a40
+can explain the idea of artificial general intelligence (AGI), and how it is different from narrow AI
+
+== 8a299694
+can show a problem as a graph, and use breadth-first search and depth-first search on it
+
+== 9820706b
+can explain informed search, and can write a program for A* search
+
+== 5eadd8ec
+can show a simple game (for example, tic-tac-toe) as a game tree
+
+== ac2121e2
+can explain the minimax algorithm and alpha-beta pruning with a depth limit, and can write programs for them
+
+== c53b400b
+can make a good heuristic evaluation function for a game (for example, chess)
+
+== 598eaf75
+can use a probabilistic model to show uncertain knowledge in a simple situation
+
+== e9ee93d3
+can use the Bayes theorem to calculate posterior probabilities from evidence in a simple situation
+
+== 68e45012
+can calculate estimates of model parameters from data, and can classify new observations
+
+== 0a8d9a60
+can describe important details of how to write programs for probabilistic classifiers
+
+== 455cb866
+can show a problem as a Bayesian network
+
+== 1b9bf692
+can use an approximate method (Monte Carlo) to do inference in a Bayesian network
+
+== 35cd5760
+can tell the difference between supervised and unsupervised machine learning
+
+== aa828c7f
+can write a program for a nearest-neighbor classifier
+
+== 55330fb8
+can calculate information gain, and use it to select where to split a decision tree
+
+== f44cc794
+can use naive Bayes as a classical classifier (for example, for handwritten digits)
+
+== fe25104d
+can explain the perceptron, and can write a program for the perceptron algorithm for a simple problem with two classes
+
+== d44b19df
+can describe backpropagation: the method that gives the gradients for optimization
+
+== e4df5ee2
+can explain the concepts of word embeddings, attention and self-attention
+
+== 19c5d04a
+can explain why we use attention, and the main idea of transformer encoders and decoders, BERT and GPT
+
+== 4572b965
+can describe typical uses of transformers for data that is not text
+
+== c502a4ec
+can tell the difference between discriminative and generative models. You can also explain latent representations, interpolation, sampling and generation
+
+== 6f420175
+can explain how a simple autoencoder that reduces the dimension learns a latent representation
+
+== 5be80912
+can describe how GANs work (the concept) and a simple use of them
+
+== 66161bad
+can explain what foundation models are, and how transfer learning changes pretrained models for new tasks
+
+== 99a2f0be
+can describe typical uses of foundation models for text, for images, and for many types of data together
+
+== b23f157f
+can explain what an agent is, and the idea of bounded rationality
+
+== ae9b788b
+can explain the concepts of reinforcement learning and multi-agent systems
+
+== 12655c74
+can discuss the concept of alignment
+
+== 86f19a55
+can discuss these topics for AI: accountability, fairness, privacy and the effect on the environment
+
+== 828ab215
+can explain the idea of explainable AI. You can also explain why causal modelling is important
+
+== d2aeeb6f
+can describe AI for science at the level of concepts
+
+== 3c9e4fdc
+can give a short description of the purpose of the EU AI Act
+
+== abe66ce6
+The course has lectures (2 x 2h each week) and exercise sessions (2h each week). First, you do the exercises yourself. Then, in the exercise sessions, we discuss the problems.
+
+== 875de207
+You do not have to go to the lectures, but they will help you.
+
+== 7459ddfc
+You get your exercise points in the exercise sessions. See <i>Grading</i> below.
+
+== 4426b669
+You must register in one of the exercise groups in the registration system. If all the groups are full, register in the overflow group. Then ask the lecturer or the TAs what to do.
+
+== 9870c029
+Sometimes something unexpected prevents you from going to your own exercise session. Then you have these options, in this order: <i>(a)</i> ask for permission to go to another group; or <i>(b)</i> send your solutions by email before the session of your group, AND tell us about the unexpected situation (note: if you are busy at work, that is <i>not</i> a valid reason). You can use option <i>b</i> to get points only two (2) times during the course.
+
+== 6523b9a6
+You must complete the exercises of each week before your exercise session in the <i>next</i> week.
+
+== 3c8467ed
+Exercises to complete before the session of this week
+
+== b5656771
+No exercises to complete
+
+== 3fe14b5e
+<a href="week5/#exercises">Week 5 exercises</a>. The Kaggle competition closes on <time datetime="2026-12-05" data-date="kaggle-close">Sat 5/12</time>, at the end of the day.
+
+== a15ce823
+<a href="week6/#exercises">Week 6 exercises</a> (Week 7 has no new exercises). We show the results of the Kaggle competition on <time datetime="2026-12-09" data-date="kaggle-results">We 9/12</time>.
+
+== 1c5171f9
+The course has no textbook. The course material is this material and the lecture slides. We put the lecture slides and other useful information on the <a href="https://moodle.helsinki.fi/course/view.php?id=74389">Moodle page</a>, in the section <i>Lecture Slides</i>.
+
+== ca840a4a
+The <a href="glossary/">glossary</a> gives short definitions of the main terms of the course. Each definition has a link to the section that first tells about the term.
+
+== 8212fa54
+But first, read the rest of this page.
+
+== 0b2ec112
+The easiest place for questions and answers is the <a href="https://moodle.helsinki.fi/mod/forum/view.php?id=4239968">Discussion Forum, QandA</a> in the Moodle of the course. The lecturer and the TAs will try to answer all questions. But we also ask other students to take part in the discussion. Often, the best explanation comes from another student, not from a professor!
+
+== b3ce6cf0
+In all discussions, be positive and help other people. Do not bully other students, and do not behave badly towards them. No question is stupid. When you make a mistake, it is often a very good opportunity to learn, also for other people.
+
+== 592df827
+The grades are from 1 to 5. Your grade comes from the exercises that you complete (approximately 33% of the grade) and from the course exam (approximately 67% of the grade). When you complete 80% of the exercises, you get all the exercise points. To pass, you must get at least 50% of the exercise points and 50% of the exam points.
+
+== c6e11b69
+You can use your exercise points in the first two separate exams after the course exam. When you register for a separate exam, you must select the type (tapa) of exam. There are two types: a course exam that uses your exercises, or a separate exam that is the only part of your grade. With the first type, your grade comes from the exercises and the exam (33% and 67%, as above). With the second type, your grade comes only from the exam.
+
+== 0580cfa0
+The exam instructions can change (for example: on campus or remote, open book or closed book). Before the exam, read the instructions on the course web page and in Moodle. <b>Important:</b> Register for a separate exam at least 10 days before the exam.
+
+== 4fa10bb0
+You do the exercises on your own computer (or in a browser tool, if the exercise tells you to). Then we discuss them in the exercise sessions, where you also get your points. See <i>Grading</i> above.
+
+== f044198b
+Before the programming exercises, install these tools. A normal student laptop is sufficient. You do not need a special GPU.
+
+== 27eb76a2
+<strong>uv</strong>: A tool that manages packages and projects for Python. It is much faster than <code>pip</code>. It also installs Python, thus you do not have to install Python yourself. Install uv with one command:
+
+== 9f145b18
+Then open a new terminal, so that the terminal finds the <code>uv</code> command. The <a href="https://docs.astral.sh/uv/getting-started/installation/" target="_blank" rel="noopener">uv installation guide</a> shows other ways to install it (Homebrew, WinGet, pipx).
+
+== 0293e8a8
+<strong>A course folder</strong>: One uv project for all the programming exercises. Download <a href="files/intro-to-ai-starter.zip">intro-to-ai-starter.zip</a> and unzip it. This makes the folder <code>intro-to-ai</code>. Open a terminal in this folder and run these commands:
+
+== c9e09f79
+The folder has Python 3.12, and all the libraries of the course work with it. (If you do not have Python 3.12, uv downloads it the first time.) The folder also has NumPy, Matplotlib, pandas and scikit-learn, at the versions in its <code>uv.lock</code> file. When an exercise needs more, add it with <code>uv add &lt;package&gt;</code>. uv only takes releases that are 14 days old or older. On Linux, it takes the PyTorch build for the CPU only (Week 5): approximately 200 MB, not approximately 3 GB with the CUDA libraries. You can also make the folder yourself:
+
+== 92cdbf64
+In a folder that you make yourself, add PyTorch with <code>uv add torch --index pytorch-cpu=https://download.pytorch.org/whl/cpu</code>. This also gives you the build for the CPU only. uv keeps the packages in the environment of the project (the <code>.venv</code> folder), so they do not mix with other projects. uv also writes them in <code>pyproject.toml</code>. When an exercise tells you to run <code>python script.py</code>, run <code>uv run python script.py</code> in the course folder (or in a folder in it). Or activate the environment one time (<code>source .venv/bin/activate</code> on macOS and Linux, <code>.venv\Scripts\activate</code> on Windows) and use <code>python</code> as usual. When a guide tells you to run <code>pip install &lt;package&gt;</code>, use <code>uv add &lt;package&gt;</code>.
+
+== fc809b64
+<strong>Visual Studio Code</strong> (recommended): A free editor that works well with Python. Install it from <a href="https://code.visualstudio.com/" target="_blank" rel="noopener">code.visualstudio.com</a>. Then add the official <a href="https://marketplace.visualstudio.com/items?itemName=ms-python.python" target="_blank" rel="noopener">Python extension</a>. Open the course folder in VS Code. VS Code then uses the <code>.venv</code> of the project as the Python interpreter. (If it does not, select it with <i>Python: Select Interpreter</i>.) You can also use a different editor.
+
+== d680f26a
+<strong>Terminal / command line</strong>: Many exercises use short commands (<code>uv</code>, <code>git</code>, or commands that run scripts). On macOS and Linux, use Terminal. On Windows, use PowerShell, Command Prompt or the terminal in VS Code.
+
+== d9036dfb
+<strong>Git</strong>: You need it when an exercise tells you to clone a repository. If <code>git --version</code> does not work in your terminal, install Git from <a href="https://git-scm.com/downloads" target="_blank" rel="noopener">git-scm.com</a>.
+
+== d3438004
+When you have installed uv, VS Code and Git, and made the course folder, open a terminal in the course folder. Then make sure that these commands work:
+
+== 8d2a9d26
+If one of them does not work, repair the installation before the first programming exercise. If you cannot continue, ask on the Moodle discussion forum or in an exercise session.
+
+== d193a449
+To continue to Week 1, use the button below. Or select a week in the navigation bar at the top of the page.

@@ -20,7 +20,7 @@ import { reveal } from './anchors';
 import { nextPageView, remountPageScript, restoringScroll } from './page';
 import { morphHero } from './hero-text';
 import { loadSimple, loadedSimple, simpleWanted, simplifyBefore } from './simplify';
-import { prefersReducedMotion } from './utils';
+import { prefersReducedMotion, renderAll } from './utils';
 import { SCRIPTS } from './scripts-url';
 
 // The root of the site: the scripts are in javascripts/ under it.
@@ -516,8 +516,13 @@ export default function mountRouter({ pageSteps, onNavigate, onPageShown, prepar
     shellSimple = false;
 
     // To a remembered position or to a section, the whole page is needed at once (and the header is off
-    // screen); to the top of the page, the rest comes in slices below what the reader sees.
+    // screen), laid out in full (_ui.scss); to the top of the page, the rest comes in slices below what the reader
+    // sees.
     const sliced = restoreY === null && !hash;
+
+    if (restoreY !== null) {
+      renderAll();
+    }
 
     if (!sameIntro) {
       material.replaceChildren();
@@ -725,6 +730,7 @@ export default function mountRouter({ pageSteps, onNavigate, onPageShown, prepar
     if (page !== current) {
       go(window.location.href, { push: false, restoreY: savedScroll(event.state) ?? 0 });
     } else if (savedScroll(event.state) !== null) {
+      renderAll();
       window.scrollTo(0, savedScroll(event.state));
     } else if (window.location.hash) {
       reveal(decodeURIComponent(window.location.hash.slice(1)), true);

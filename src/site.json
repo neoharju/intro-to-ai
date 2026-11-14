@@ -12,7 +12,7 @@
     { "label": "Quiz", "path": "quiz/" }
   ],
   "pages": {
-    "index.html": { "title": "Introduction", "scripts": ["main.js"] },
+    "index.html": { "title": "Introduction", "simple": true, "scripts": ["main.js"] },
     "week1/index.html": { "title": "Week 1", "simple": true, "scripts": ["katex.js", "math.js", "highlight.js", "main.js", "week1.js"] },
     "week2/index.html": { "title": "Week 2", "simple": true, "scripts": ["katex.js", "math.js", "highlight.js", "main.js", "week2.js"] },
     "week3/index.html": { "title": "Week 3", "simple": true, "scripts": ["katex.js", "math.js", "highlight.js", "main.js", "week3.js"] },

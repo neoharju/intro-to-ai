@@ -1,10 +1,12 @@
-// The simplified English version of the weeks (see src/javascripts/simplify.js).
+// The simplified English version of the front page and the weeks (see src/javascripts/simplify.js).
 //
-//   npm run simple                       compiles src/simple/weekN.txt into weekN/simple.json
+//   npm run simple                       compiles src/simple/weekN.txt into weekN/simple.json, and
+//                                        src/simple/index.txt (the front page) into simple.json
 //   npm run simple -- --extract week3    prints the blocks of a page with their fingerprints, to write from
+//                                        (--extract index for the front page)
 //   npm run simple -- --check            compares every simplified block with its original on the page
 //
-// A file src/simple/weekN.txt holds one entry per block that has a simplified version:
+// A file src/simple/weekN.txt (or index.txt) holds one entry per block that has a simplified version:
 //
 //   == 1a2b3c4d
 //   The simplified HTML of the block. It can take several lines.
@@ -48,18 +50,24 @@ export function parse(text, file = 'input') {
   return Object.fromEntries(Object.entries(entries).map(([fp, lines]) => [fp, lines.join('\n').replace(/\s+/g, ' ').trim()]));
 }
 
-async function weekFiles() {
-  return (await readdir(sources)).filter(name => /^week\d+\.txt$/.test(name)).sort((a, b) => parseInt(a.slice(4), 10) - parseInt(b.slice(4), 10));
+// The pages with a simplified version: the front page (index.txt) first, then the weeks in their order.
+async function pageFiles() {
+  const order = name => (name === 'index.txt' ? 0 : parseInt(name.slice(4), 10));
+
+  return (await readdir(sources)).filter(name => /^(?:week\d+|index)\.txt$/.test(name)).sort((a, b) => order(a) - order(b));
 }
 
+// The folder of a page in the site: "" for the front page, "week3" for week 3.
+const folderOf = name => (name.replace('.txt', '') === 'index' ? '' : name.replace('.txt', ''));
+
 async function compile() {
-  for (const name of await weekFiles()) {
-    const week = name.replace('.txt', '');
+  for (const name of await pageFiles()) {
+    const folder = folderOf(name);
     const blocks = parse(await readFile(path.join(sources, name), 'utf8'), name);
-    const file = path.join(root, week, 'simple.json');
+    const file = path.join(root, folder, 'simple.json');
 
     await writeFile(file, `${JSON.stringify({ version: 1, blocks }, null, 1)}\n`);
-    console.log(`${week}/simple.json: ${Object.keys(blocks).length} blocks`);
+    console.log(`${path.posix.join(folder, 'simple.json')}: ${Object.keys(blocks).length} blocks`);
   }
 }
 
@@ -96,11 +104,11 @@ async function withPages(run) {
   const browser = await playwright.chromium.launch(process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {});
 
   try {
-    await run(async week => {
+    await run(async folder => {
       const page = await browser.newPage();
 
       await page.route('**/javascripts/math.js', route => route.abort());
-      await page.goto(`http://127.0.0.1:${server.address().port}/${week}/`, { waitUntil: 'load' });
+      await page.goto(`http://127.0.0.1:${server.address().port}/${folder ? `${folder}/` : ''}`, { waitUntil: 'load' });
 
       const result = await page.evaluate(() => window.IntroAI.simple.extract());
 
@@ -114,9 +122,9 @@ async function withPages(run) {
   }
 }
 
-async function extract(week) {
+async function extract(name) {
   await withPages(async load => {
-    const { blocks, missed } = await load(week);
+    const { blocks, missed } = await load(folderOf(`${name}.txt`));
     const seen = new Set();
 
     blocks.forEach(block => {
@@ -166,10 +174,10 @@ async function check() {
   let problems = 0;
 
   await withPages(async load => {
-    for (const name of await weekFiles()) {
+    for (const name of await pageFiles()) {
       const week = name.replace('.txt', '');
       const entries = parse(await readFile(path.join(sources, name), 'utf8'), name);
-      const { blocks } = await load(week);
+      const { blocks } = await load(folderOf(name));
       const originals = Object.fromEntries(blocks.map(block => [block.fp, block.html]));
       const stale = Object.keys(entries).filter(fp => !(fp in originals));
 

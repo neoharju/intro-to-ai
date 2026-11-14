@@ -7,6 +7,10 @@
 }
 
 .navbar {
+  // The pill of the current page (navigation.js slides it from link to link).
+  --nav-pill-bg: rgba(255, 171, 14, .16);
+  --nav-pill-line: rgba(255, 171, 14, .3);
+
   position: relative;
   min-height: var(--nav-h);
   padding: 0 16px;
@@ -30,16 +34,18 @@
     display: flex;
     gap: 8px;
     padding: 8px 0;
+  }
 
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 7.2px;
-      height: 36px;
-      padding: 0 12.8px;
-      font-size: 14px;
-      border-radius: 9.6px;
-    }
+  // The buttons of the bar, and the menu of the pages (smaller screens), which comes first, after the logo.
+  .navbar__buttons .btn,
+  .navbar__mobile-nav-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 7.2px;
+    height: 36px;
+    padding: 0 12.8px;
+    font-size: 14px;
+    border-radius: 9.6px;
   }
 
   .navbar__mobile-nav-toggle {
@@ -100,16 +106,37 @@
   }
 
   .navbar-nav .nav-link {
+    position: relative;
+    z-index: 1;
     padding: 6.4px 11.2px;
     font-size: 15px;
     font-weight: 500;
     white-space: nowrap;
     border-radius: 9.6px;
     transition: color .15s, background-color .15s;
+  }
 
-    &:hover {
-      background-color: var(--surface-3);
-    }
+  .nav-item:not(.active) > .nav-link:hover {
+    background-color: var(--surface-3);
+  }
+
+  // The pill behind the current page's link: one element that slides from link to link when the page changes
+  // (navigation.js); until the script has made it (or without scripts), the link has a pill of its own.
+  .navbar__links {
+    position: relative;
+  }
+
+  .navbar__indicator {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    pointer-events: none;
+    background-color: var(--nav-pill-bg);
+    border-radius: 9.6px;
+    box-shadow: inset 0 0 0 1px var(--nav-pill-line);
+    transition: opacity .2s;
   }
 
   // From 1200 to 1400px the week links and the buttons only fit on one line with a little less padding
@@ -125,8 +152,63 @@
   .nav-item.active > .nav-link {
     font-weight: 600;
     color: var(--ink);
-    background-color: rgba(255, 171, 14, .16);
-    box-shadow: inset 0 0 0 1px rgba(255, 171, 14, .28);
+  }
+
+  .navbar__links:not(.has-indicator) .nav-item.active > .nav-link {
+    background-color: var(--nav-pill-bg);
+    box-shadow: inset 0 0 0 1px var(--nav-pill-line);
+  }
+
+  // The menu's button names the page that is shown (from 576 px; navigation.js keeps it up to date).
+  .navbar__mobile-nav-toggle {
+    gap: 7px;
+  }
+
+  .navbar__current,
+  .navbar__chevron {
+    display: none;
+  }
+
+  .navbar__chevron {
+    width: .75em;
+    color: var(--muted);
+  }
+
+  @include media-breakpoint-up(sm) {
+    .navbar__current {
+      display: inline;
+      font-weight: 600;
+    }
+
+    .navbar__chevron {
+      display: inline-block;
+    }
+  }
+
+  // The settings of reading (zen mode, text size, colour theme, contents): one group of plain buttons in a single
+  // frame, instead of four framed buttons side by side.
+  .navbar__tools {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    padding: 1px;
+    background-color: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 11px;
+
+    .btn {
+      height: 32px;
+      padding: 0 9px;
+      background-color: transparent;
+      border-color: transparent;
+      border-radius: 8.5px;
+
+      &:hover,
+      &[aria-expanded="true"],
+      &[aria-pressed="true"] {
+        background-color: var(--surface-3);
+      }
+    }
   }
 
   .navbar-brand {
@@ -161,6 +243,14 @@
     padding: 7.2px 12px;
     font-size: 15px;
     border-radius: 7.2px;
+
+    // The page that is shown, in the menu of the pages: the same pill as in the bar.
+    &[aria-current="page"] {
+      font-weight: 600;
+      color: var(--ink);
+      background-color: var(--nav-pill-bg);
+      box-shadow: inset 0 0 0 1px var(--nav-pill-line);
+    }
 
     &:active {
       color: var(--ink);
@@ -255,7 +345,7 @@ html:not(.js) .navbar__js {
   display: none;
 }
 
-// The "Simplified English" switch (simplify.js), before the search, on the pages that have a simplified version:
+// The "Simplify" switch of the simplified English (simplify.js), before the search, on the pages that have one:
 // a button of the bar with a small switch in it. The knob moves right and the track turns blue while the
 // simplified text is shown. Sized in px, like the rest of the bar.
 .navbar .navbar__buttons .simple-toggle {
@@ -311,10 +401,10 @@ html:not(.js) .navbar__js {
 //
 //   1600px and up    the week links; every button with its label, the search with its keys
 //   1400-1599px      the week links; labels, but the table of contents as an icon
-//   1200-1399px      the week links; icons only (and the switch of the simplified English without its label)
-//   768-1199px       the week links in the menu (☰); labels but the table of contents
-//   below 768px      the menu; icons only
-//   below 576px      smaller buttons, closer together; below 360px, no logo
+//   1200-1399px      the week links; the switch with its label ("Simplify"), the other buttons as icons
+//   768-1199px       the week links in the menu (☰ and the page's name); labels but the table of contents
+//   576-767px        the menu with the page's name; the switch with its label, the other buttons as icons
+//   below 576px      the menu as an icon, smaller buttons, closer together; below 360px, no logo
 .simple-toggle__label,
 .search-btn__label,
 .search-btn__kbd,
@@ -322,8 +412,13 @@ html:not(.js) .navbar__js {
   display: none;
 }
 
+@media (min-width: 576px) {
+  .simple-toggle__label {
+    display: inline;
+  }
+}
+
 @media (min-width: 768px) and (max-width: 1199.98px), (min-width: 1400px) {
-  .simple-toggle__label,
   .navbar .navbar__buttons .search-btn .search-btn__label {
     display: inline;
   }
@@ -353,6 +448,12 @@ html:not(.js) .navbar__js {
       margin-right: 8px;
     }
 
+    .navbar__mobile-nav-toggle {
+      justify-content: center;
+      width: 34px;
+      padding: 0;
+    }
+
     .navbar__buttons {
       gap: 4px;
 
@@ -362,12 +463,51 @@ html:not(.js) .navbar__js {
         padding: 0;
       }
 
+      .navbar__tools .btn {
+        width: 30px;
+      }
+
       .simple-toggle {
         width: auto;
         padding: 0 7px;
       }
     }
   }
+}
+
+// The bar lifts off the page once the page scrolls: a soft shadow under it, which grows over the first 48 px
+// (a scroll-driven animation, in the browsers that have them; elsewhere the line under the bar stays alone).
+@supports (animation-timeline: scroll()) {
+  @keyframes navbar-lift {
+    to {
+      box-shadow: 0 10px 28px -18px rgba(15, 23, 42, .45);
+    }
+  }
+
+  .header-wrapper {
+    animation: navbar-lift linear both;
+    animation-range: 0 48px;
+    animation-timeline: scroll(root);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .navbar__indicator {
+    transition: none;
+  }
+}
+
+// Text for screen readers only (the "Pages:" before the name of the page on the menu's button).
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
 }
 
 @media (max-width: 359.98px) {

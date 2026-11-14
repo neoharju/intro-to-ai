@@ -39,9 +39,13 @@
     width: 100%;
     height: max(100%, 384px);
     pointer-events: none;
-    // Fade the network out towards the text on the left.
-    -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, .35) 40%, #000 75%);
-    mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, .35) 40%, #000 75%);
+
+    // The network fades out towards the text on the left. hero.js draws the fade into the network itself; this
+    // mask (a compositing pass every frame) is only for the intro, whose light and ring would cross the text.
+    &.is-masked {
+      -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, .35) 40%, #000 75%);
+      mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, .35) 40%, #000 75%);
+    }
   }
 
   &__eyebrow {
@@ -347,6 +351,11 @@
 
 .hero-intro:not(.hero-intro--run) .page-hero > .container > * {
   animation: hero-late .5s 1.6s both;
+}
+
+// The page was not ready to bring the text in soon after the burst started (hero.js): it fades in at once.
+.hero-intro--late:not(.hero-intro--run) .page-hero > .container > * {
+  animation: hero-late .35s both;
 }
 
 .hero-intro--go .page-hero {

@@ -56,19 +56,22 @@ Compared with the original material:
 
 ## Simplified English
 
-Every week can have a second version of its text in simplified English (about 80% ASD-STE100 Issue 9),
-for students whose first language is not English. The "Simplified English" switch in the navigation bar
-(before the search, on the pages that have a simplified version) swaps it in and back, block by block (`src/javascripts/simplify.js`); formulas, code, figures and
-headings stay as they are. The text is written in `src/simple/weekN.txt`, one entry per paragraph, list
-item, table cell or caption, keyed by a fingerprint of the original text, and compiled into
-`weekN/simple.json`. A week with a simplified version has `<meta name="introai-simple" content="simple.json">`
-in its head. With the switch on, a week that the reader moves to (see "Moving between pages") comes in
-simplified English from the start: the router fetches its `simple.json` with the page (once a visit) and puts the
-simplified text into each part of the page before it is shown.
+The front page and every week can have a second version of their text in simplified English (about 80%
+ASD-STE100 Issue 9), for students whose first language is not English. The "Simplify" switch in the navigation
+bar (before the search, on the pages that have a simplified version) swaps it in and back, block by block
+(`src/javascripts/simplify.js`); formulas, code, figures and headings stay as they are. The text is written in
+`src/simple/weekN.txt` (the front page's in `src/simple/index.txt`), one entry per paragraph, list item, table
+cell or caption, keyed by a fingerprint of the original text, and compiled into `weekN/simple.json` (the front
+page's into `simple.json`). A page with a simplified version has
+`<meta name="introai-simple" content="simple.json">` in its head (`"simple": true` in `src/site.json`). With the
+switch on, a page that the reader moves to (see "Moving between pages") comes in simplified English from the
+start: the router fetches its `simple.json` with the page (once a visit) and puts the simplified text into each
+part of the page before it is shown. What a script writes into a page (the front page's table of progress) has no
+simplified version.
 
 ```bash
 npm run simple                      # compile src/simple/*.txt
-npm run simple -- --extract week3   # the blocks of a page and their fingerprints, to write from
+npm run simple -- --extract week3   # the blocks of a page and their fingerprints, to write from (index: the front page)
 npm run simple -- --check           # stale entries, and lost formulas, links, code or numbers
 ```
 
@@ -160,6 +163,21 @@ an ordinary HTML document: an address opened directly, or anything unexpected (a
 not one of the site's), is an ordinary page load, and in browsers with cross-document view transitions such a
 load still morphs the header (`_hero.scss`, `hero.js`).
 
+Because pages are no longer unloaded, everything a page sets up for its own material (listeners on `window`
+or `document`, observers, animation loops) ends with it: `src/javascripts/page.js` gives each page view an
+`AbortSignal` (`pageSignal()`, `onPageEnd()`), and the scripts that only some pages load (`math.js`,
+`quiz.js`, `weekN.js`) register how they set up a page with `definePageScript`, so that the router can set
+up a page again without loading them twice. `npm run check` visits every page in turn this way.
+
+A page of the site is fetched in advance when the reader points at a link to it for 65 ms, touches it or
+moves to it with the keyboard (`src/javascripts/prefetch.js`); the router keeps it in memory, and lets the
+browser fetch the scripts that page will need. Nothing is fetched in advance when the reader has asked the
+browser to save data.
+
+KaTeX itself is in `javascripts/katex.js`, apart from `math.js`: the site that the Pages workflow publishes
+has its formulas typeset in advance, so `scripts/prerender.mjs` removes `katex.js` (260 kB) from every page
+but the quiz. Where formulas are typeset in the browser, the router typesets each slice before it goes in.
+
 ## The header
 
 The header has the same height on every page (`--hero-height` in `_hero.scss`, the height of the front page's
@@ -181,24 +199,23 @@ The first page of a visit opens with an intro (`hero.js`, `hero-text.js`, `_hero
 network bursts out of a point of light in a spiral, with a shockwave, and connects as it settles; an aurora of
 the accent colours glows up behind it and a line of light scans the header; then the text decodes and the
 numbers count up. It starts with the first frame, so on a slow connection it is what the reader watches while
-the page arrives; the text is shown anyway after 1.6 s if the scripts are late. A click, a key, the wheel or a
-touch ends it at once, and there is none when the reader prefers reduced motion, on a reload, when going back
-or forward, or at an address with a section (`#…`).
+the page arrives. The text is never kept waiting long: the title is the largest text of a week, which browsers
+time as the moment the page is seen (Largest Contentful Paint), so if the page is not ready to bring it in within
+0.65 s of the burst, it fades in at once while the burst goes on (`hero-intro--late`), and after 1.6 s it is shown
+in any case. A click, a key, the wheel or a touch ends the intro at once, and there is none when the reader
+prefers reduced motion, on a reload, when going back or forward, or at an address with a section (`#…`).
 
-Because pages are no longer unloaded, everything a page sets up for its own material (listeners on `window`
-or `document`, observers, animation loops) ends with it: `src/javascripts/page.js` gives each page view an
-`AbortSignal` (`pageSignal()`, `onPageEnd()`), and the scripts that only some pages load (`math.js`,
-`quiz.js`, `weekN.js`) register how they set up a page with `definePageScript`, so that the router can set
-up a page again without loading them twice. `npm run check` visits every page in turn this way.
+## The navigation bar
 
-A page of the site is fetched in advance when the reader points at a link to it for 65 ms, touches it or
-moves to it with the keyboard (`src/javascripts/prefetch.js`); the router keeps it in memory, and lets the
-browser fetch the scripts that page will need. Nothing is fetched in advance when the reader has asked the
-browser to save data.
-
-KaTeX itself is in `javascripts/katex.js`, apart from `math.js`: the site that the Pages workflow publishes
-has its formulas typeset in advance, so `scripts/prerender.mjs` removes `katex.js` (260 kB) from every page
-but the quiz. Where formulas are typeset in the browser, the router typesets each slice before it goes in.
+The bar (`src/partials/navbar.html`, `_navbar.scss`, `navigation.js`) is sized in px, and fits on one line at
+every width from 320 px with every text size (the table in `_navbar.scss` says what each button shows at each
+width). From 1200 px the links of the pages are in the bar, and a pill behind the current page's link slides to
+the next one when the router changes page (a single element, moved by a transform; until the script has made it,
+the link has a pill of its own, so nothing changes when it takes over). Below 1200 px they are in a menu, whose
+button comes first after the logo and names the page that is shown ("Week 3"; from 576 px). The "Simplify" switch
+of the simplified English and the search come next, then the settings of reading (zen mode, text size, colour
+theme, table of contents) in one group. Once the page scrolls, a soft shadow lifts the bar off it (a
+scroll-driven animation; in browsers without them the line under the bar stays alone).
 
 ## Text size
 
@@ -347,9 +364,23 @@ What a reader downloads and what the browser does, and how to keep it small:
   and until it arrives the text is drawn in "Inter Fallback", Arial scaled to Inter's metrics
   (`src/stylesheets/_fallback-font.scss`). Pictures below the first screen load when they come near, with
   their space kept (`aspect-ratio`); diagrams are lossless WebP and photos come in a 1200 px version.
+- **Off-screen blocks are skipped.** The blocks of the material that are off screen are neither laid out nor
+  painted until they come near it (`content-visibility: auto` in `_ui.scss`): on a long week most of the elements
+  are in formulas (Week 3: 12 500 of 16 000), and laying them all out at once blocked a phone for seconds. Each
+  block keeps the height it last had when shown (`contain-intrinsic-size: auto`), so the page does not move when
+  it is skipped again. A jump to a section and a restored scroll position (back, forward, reload) lay everything
+  out first (`html.render-all`: `renderAll()` in `utils.js`, `router.js`, `theme.js`), so they land on the same
+  line as without skipping. The scripts that measure boxes (`math-fit.js`, `scroll-fades.js`) leave the skipped
+  ones alone (`isRendered()` in `utils.js`: measuring one would lay its block out) and measure them when they
+  come into view. On Lighthouse's mobile profile (slow 4G, a 4 times slower CPU) Week 3's blocking time went from
+  3.0 s to 0.35 s and its DOMContentLoaded from 4.2 to 2.6 s; a change of week by the router is set up in 1.0 s
+  instead of 5.1 s.
 - **Figures and header.** The decision regions of the k-NN figure are computed without allocations into one
   `ImageData` (12 times faster). The network in the header moves by time, not by frame (it ran twice as fast
-  on 120 Hz screens), and is drawn 30 times a second.
+  on 120 Hz screens), and is drawn 30 times a second: its lines and nodes grouped by opacity (some twenty
+  strokes a frame instead of three hundred, nothing allocated per frame), with the fade towards the text drawn
+  into it rather than a CSS mask, which cost a compositing pass every frame (the mask is used only during the
+  intro).
 - **Service worker** (`src/sw.js`, written to `sw.js` by `npm run sync`). GitHub Pages lets files be cached
   for 10 minutes only; the service worker keeps them, so that a returning reader loads nothing that has not
   changed, and the pages they have opened can be read offline. Its version is a hash of the site's content, so
@@ -357,12 +388,11 @@ What a reader downloads and what the browser does, and how to keep it small:
   ordinary page loads. To take it away, publish a `sw.js` that deletes the caches
   (`caches.keys()` → `caches.delete`) and calls `self.registration.unregister()`.
 - **Budgets.** `npm run budgets` (`scripts/check-budgets.mjs`, part of the Check workflow) fails when a script
-  or stylesheet grows over its compressed size limit, or what a week loads on a first visit goes over 75 kB.
+  or stylesheet grows over its compressed size limit, or what a week loads on a first visit goes over 80 kB.
   Raise a limit there, on purpose, when the growth is worth it.
 
 Tried and left out, measured: KaTeX's MathML-only output (four times smaller formulas, but browsers draw
-aligned equations and limits badly without a math font) and `content-visibility: auto` on the material (30-40 %
-less layout, but positions remembered for back, forward and reload no longer land on the same text).
+aligned equations and limits badly without a math font).
 
 ## Rebuild the assets
 

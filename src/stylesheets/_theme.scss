@@ -284,7 +284,8 @@ pre code.hljs {
 
   &__content {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+    // Never wider than the column (15rem is 300 px with the largest text size, more than a small phone has).
+    grid-template-columns: repeat(auto-fill, minmax(min(15rem, 100%), 1fr));
     gap: .6rem;
   }
 
