@@ -9,7 +9,8 @@ import mountFontSizeMenu from './font-size-menu';
 import mountZen from './zen';
 import mountSimplify, { extract as extractSimple } from './simplify';
 import mountSearch from './search';
-import mountProgress from './progress';
+import mountProgress, { prefillProgress } from './progress';
+import { playIntro } from './hero-text';
 import mountPrefetch from './prefetch';
 import mountRouter from './router';
 import { loadScript } from './load-script';
@@ -141,6 +142,8 @@ function mountSite() {
   tableOfContents.mount();
   navigation.mount();
   pageSteps.forEach(step => step());
+  // The first page of a visit: its header comes in (hero.js started the network).
+  playIntro();
   mountThemeMenu();
   mountFontSizeMenu();
   mountZen();
@@ -152,6 +155,8 @@ function mountSite() {
       document.dispatchEvent(new CustomEvent('introai:pagechange', { detail: { address } }));
     },
     onPageShown: mountUiOnce(),
+    // The header of the next page says how many of its exercises are done, before it rolls in.
+    prepareHero: prefillProgress,
   });
 
   mountServiceWorker(router);

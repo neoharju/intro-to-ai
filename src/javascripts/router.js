@@ -18,6 +18,7 @@
 // forward return to the same place, also after a reload (history.scrollRestoration is "manual").
 import { reveal } from './anchors';
 import { nextPageView, remountPageScript, restoringScroll } from './page';
+import { morphHero } from './hero-text';
 import { loadSimple, loadedSimple, simpleWanted, simplifyBefore } from './simplify';
 import { prefersReducedMotion } from './utils';
 import { SCRIPTS } from './scripts-url';
@@ -193,9 +194,19 @@ function introOf(material) {
   return nodes;
 }
 
-// The header: the old title, line and switches fade out while the new ones fade in over them (the two are
-// in the same cell of the header's grid, _hero.scss). The canvas behind them is not touched.
-function swapHero(className, html) {
+// The text of the header in `html`, as the page has it (to compare pages.json with the page).
+function heroText(html) {
+  const template = document.createElement('template');
+
+  template.innerHTML = html;
+
+  return textOf([template.content]);
+}
+
+// The header: the text of the next page (`html`, prepared by `prepare` first) rolls over the old in place
+// (hero-text.js); where it cannot, the old title, line and switches fade out while the new ones fade in over
+// them (the two are in the same cell of the header's grid, _hero.scss). The canvas behind them is not touched.
+function swapHero(className, html, prepare) {
   const hero = document.querySelector('.page-hero');
 
   if (!hero) {
@@ -207,7 +218,13 @@ function swapHero(className, html) {
 
   next.className = 'container';
   next.innerHTML = html;
+  prepare(next);
   hero.className = className;
+
+  if (old.length === 1 && morphHero(old[0], next)) {
+    return;
+  }
+
   // Before the old text: the scripts that add to the header (simplify.js, progress.js) take the first
   // .page-hero__meta of the document. The old text, later in the grid's cell, is drawn over the new while it
   // fades out.
@@ -386,7 +403,7 @@ function savedScroll(state) {
 
 // --- Changing page -----------------------------------------------------------------------------------------
 
-export default function mountRouter({ pageSteps, onNavigate, onPageShown }) {
+export default function mountRouter({ pageSteps, onNavigate, onPageShown, prepareHero = () => {} }) {
   const material = document.getElementById('material');
 
   if (!material || !document.querySelector('.page-hero') || !window.history.pushState || typeof DOMParser === 'undefined') {
@@ -424,8 +441,8 @@ export default function mountRouter({ pageSteps, onNavigate, onPageShown }) {
 
     nextPageView(false);
     document.title = entry.title;
-    swapHero(entry.hero.className, entry.hero.html);
-    shellHero = textOf([document.querySelector('.page-hero > .container:not(.is-leaving)')]);
+    swapHero(entry.hero.className, entry.hero.html, container => prepareHero(container, page));
+    shellHero = heroText(entry.hero.html);
     setMaterial(material, entry.material);
     material.setAttribute('data-loading', '');
 
@@ -476,12 +493,14 @@ export default function mountRouter({ pageSteps, onNavigate, onPageShown }) {
     const intro = introOf(theirs);
     const rest = [...theirs.childNodes].slice(intro.length);
 
+    const prepare = container => prepareHero(container, new URL(base).pathname);
+
     if (!shell) {
       nextPageView(restoreY !== null);
-      swapHero(hero.className, hero.querySelector(':scope > .container').innerHTML);
+      swapHero(hero.className, hero.querySelector(':scope > .container').innerHTML, prepare);
     } else if (textOf([hero.querySelector(':scope > .container')]) !== shellHero) {
       // pages.json and the page disagree (one of them is older): the page is right.
-      swapHero(hero.className, hero.querySelector(':scope > .container').innerHTML);
+      swapHero(hero.className, hero.querySelector(':scope > .container').innerHTML, prepare);
     }
 
     shellHero = null;

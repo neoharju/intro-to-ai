@@ -7,6 +7,7 @@
 //
 // Nothing is sent anywhere. Stored as { weeks: { week3: { total: 12, done: ['exercise-…', …] } } }, by the
 // stable anchors of the exercises (anchors.js), so a mark stays with its exercise when others are added.
+import { morphText } from './hero-text';
 import { pageSignal } from './page';
 
 const KEY = 'introai-progress-v1';
@@ -58,6 +59,29 @@ function icon(name) {
 
 // --- A week ------------------------------------------------------------------------------------------------
 
+// The week of a page's address ("/intro-to-ai/week3/" -> "week3"), or null.
+function weekOf(address) {
+  const match = address.match(/\/(week[1-7])\/(?:index\.html)?$/);
+
+  return match ? match[1] : null;
+}
+
+// For the router: the header of a week that it is about to show already says how many of its exercises the reader
+// has marked done, so that the number rolls straight to it (hero-text.js) instead of to 0 first. The page counts
+// them again when it is set up (render, below).
+export function prefillProgress(container, address) {
+  const summary = container.querySelector('.page-hero__progress');
+  const week = weekOf(address);
+  const total = summary && summary.textContent.match(/of (\d+) done/);
+
+  if (week && total) {
+    const done = Math.min(Number(total[1]), ((load().weeks[week] || {}).done || []).length);
+
+    summary.replaceChildren(icon('fa-check'), document.createTextNode(`${done} of ${total[1]} done`));
+    summary.classList.toggle('is-complete', done === Number(total[1]));
+  }
+}
+
 function mountWeek(week) {
   const exercises = [...document.querySelectorAll('#material .exercise[data-anchor]')];
 
@@ -80,7 +104,8 @@ function mountWeek(week) {
     meta.append(summary);
   }
 
-  function render() {
+  // The first time, the text is set at once (unless the header is still rolling in); a mark rolls the number.
+  function render(animate = true) {
     exercises.forEach(node => {
       const id = node.getAttribute('data-anchor');
       const on = done.has(id);
@@ -96,7 +121,14 @@ function mountWeek(week) {
     });
 
     if (summary) {
-      summary.replaceChildren(icon('fa-check'), document.createTextNode(`${done.size} of ${ids.length} done`));
+      const text = `${done.size} of ${ids.length} done`;
+
+      if (summary.querySelector('.fa-check') && summary.textContent.trim()) {
+        morphText(summary, text, { animate });
+      } else {
+        summary.replaceChildren(icon('fa-check'), document.createTextNode(text));
+      }
+
       summary.classList.toggle('is-complete', done.size === ids.length);
     }
   }
@@ -128,7 +160,7 @@ function mountWeek(week) {
     }
   });
 
-  render();
+  render(false);
 }
 
 // --- The front page ----------------------------------------------------------------------------------------
@@ -222,11 +254,11 @@ function mountOverview(container) {
 }
 
 export default function mountProgress() {
-  const week = window.location.pathname.match(/\/(week[1-7])\/(?:index\.html)?$/);
+  const week = weekOf(window.location.pathname);
   const overview = document.getElementById('progress-overview');
 
   if (week) {
-    mountWeek(week[1]);
+    mountWeek(week);
   }
 
   if (overview) {

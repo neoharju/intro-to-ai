@@ -4,10 +4,14 @@
 // The header stays from page to page (router.js): only its text changes, and the network goes on behind it.
 // So it has the same height on every page (the height of the tallest header, the front page's, at that
 // width; a header that needs more on a very narrow screen or with a larger text size grows), and its text
-// starts at the same place: a new title replaces the old one where it stands. The old and the new text are
-// in the same cell of a grid while they cross-fade.
+// starts at the same place: a new title replaces the old one where it stands, its letters rolling over into the
+// new ones (hero-text.js). The line under the title is a bar at the foot of the header, so a title of one line or
+// three does not move it. Where the text cannot roll, the old and the new text are in the same cell of a grid
+// while they cross-fade.
 .page-hero {
   --hero-height: 20.75rem;
+  // Room at the foot of the header for the bar of the line under the title.
+  --hero-meta-space: 4.75rem;
 
   position: relative;
   isolation: isolate;
@@ -99,26 +103,70 @@
     text-wrap: pretty;
   }
 
+  // The line under the title (the reading time, the exercises, the done ones): a bar of glass at the foot of the
+  // header, centred, over the network. Each item is wide enough for the text of every week, so that its icon
+  // stays where it is from week to week while the numbers roll (hero-text.js); the digits are all as wide.
   &__meta {
+    // The widths of the items: room for the longest text of any week ("1 h 18 min read", "7 exercises",
+    // "0 of 7 done"), padding included.
+    --meta-1: 11.5em;
+    --meta-2: 9.5em;
+    --meta-3: 9.5em;
+
+    position: absolute;
+    inset: auto 0 1.1rem;
+    z-index: 1;
     display: flex;
     flex-wrap: wrap;
-    gap: .4rem 1.1rem;
-    min-height: 1.5rem;
-    margin: 1.1rem 0 0;
-    padding: 0;
-    font-size: .875rem;
-    color: var(--muted);
+    justify-content: center;
+    width: fit-content;
+    max-width: calc(100% - 1.5rem);
+    margin: 0 auto;
+    padding: .25rem;
+    font-size: .8125rem;
+    font-variant-numeric: tabular-nums;
+    color: var(--text);
     list-style: none;
+    background-color: var(--overlay-bg);
+    border: 1px solid var(--line);
+    // A pill on one line; with a larger text size on a narrow screen, two lines in a rounded box.
+    border-radius: 1.5rem;
+    box-shadow: var(--shadow);
+    -webkit-backdrop-filter: blur(12px) saturate(1.4);
+    backdrop-filter: blur(12px) saturate(1.4);
 
     li {
       display: inline-flex;
       align-items: center;
-      gap: .4rem;
+      gap: .45rem;
+      padding: .3rem .85rem;
+      white-space: nowrap;
+
+      + li {
+        border-left: 1px solid var(--line);
+      }
+
+      &:nth-child(1) {
+        min-width: var(--meta-1);
+      }
+
+      &:nth-child(2) {
+        min-width: var(--meta-2);
+      }
+
+      &:nth-child(3) {
+        min-width: var(--meta-3);
+      }
     }
 
-    .fa {
-      color: var(--faint);
+    .fa,
+    .fa-regular {
+      color: var(--primary);
     }
+  }
+
+  &:has(> .container > .page-hero__meta) {
+    padding-bottom: var(--hero-meta-space);
   }
 
   &__actions {
@@ -145,8 +193,22 @@
 @include media-breakpoint-down(md) {
   .page-hero {
     --hero-height: 21.5rem;
+    --hero-meta-space: 4.25rem;
 
     padding: 2.25rem 0 1.75rem;
+
+    &__meta {
+      --meta-1: 10.8em;
+      --meta-2: 8.5em;
+      --meta-3: 8.5em;
+
+      font-size: .75rem;
+
+      li {
+        gap: .35rem;
+        padding: .3rem .6rem;
+      }
+    }
 
     &__title {
       font-size: 2rem;
@@ -155,6 +217,162 @@
     &__lead {
       font-size: 1rem;
     }
+  }
+}
+
+// Narrower phones: a smaller bar, so that it stays on one line.
+@media (max-width: 389.98px) {
+  .page-hero__meta {
+    --meta-1: 10.6em;
+    --meta-2: 8.4em;
+    --meta-3: 8.5em;
+
+    font-size: .6875rem;
+
+    li {
+      padding: .3rem .45rem;
+    }
+  }
+}
+
+@media (max-width: 339.98px) {
+  .page-hero__meta {
+    font-size: .625rem;
+
+    li {
+      gap: .3rem;
+      padding: .3rem .35rem;
+    }
+  }
+}
+
+// The letters of the header while they roll (hero-text.js): the text itself is transparent, and each letter is
+// drawn in a window of its own size where the browser has put it, through which a strip of letters moves (a
+// little wider, for letters that reach over their neighbours). The letters on the way are faint, in the accent
+// colour split a little into red and cyan; a streak of light runs under the letters as they land.
+.is-morphing {
+  position: relative;
+  color: transparent !important;
+}
+
+.hero-fx {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+
+  &__cell {
+    position: absolute;
+    clip-path: inset(0 -.08em);
+  }
+
+  &__strip {
+    display: block;
+
+    > span {
+      display: block;
+      height: var(--h);
+      line-height: var(--h);
+      white-space: pre;
+    }
+  }
+
+  &__flash {
+    position: absolute;
+    right: -.04em;
+    bottom: .16em;
+    left: -.04em;
+    height: 2px;
+    background: linear-gradient(90deg, rgba(82, 138, 252, .15), rgba(82, 138, 252, .75) 60%, rgba(167, 139, 250, .8));
+    box-shadow: 0 0 6px rgba(82, 138, 252, .5);
+    opacity: 0;
+    transform-origin: left;
+  }
+
+  .is-ghost {
+    font-weight: 500;
+    color: var(--fx-ghost, var(--primary));
+    text-shadow: -.05em 0 rgba(236, 72, 153, .45), .05em 0 rgba(34, 211, 238, .45);
+    opacity: .5;
+  }
+}
+
+.page-hero__eyebrow > b {
+  --fx-ghost: currentColor;
+}
+
+// The intro of the first page of a visit (hero.js, hero-text.js). Until its text comes in, the text of the header
+// is hidden; at the latest after 1.6 s it shows anyway (the scripts were late, or failed). When the network bursts
+// out, an aurora of the accent colours glows up behind it and fades, and a line of light scans the header from
+// top to bottom.
+@keyframes hero-late {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes hero-aurora {
+  0% {
+    opacity: 0;
+    transform: scale(.6) rotate(-10deg);
+  }
+
+  30% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1.2) rotate(8deg);
+  }
+}
+
+@keyframes hero-scan {
+  0% {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+
+  12%, 80% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: none;
+  }
+}
+
+.hero-intro:not(.hero-intro--run) .page-hero > .container > * {
+  animation: hero-late .5s 1.6s both;
+}
+
+.hero-intro--go .page-hero {
+  &::before,
+  &::after {
+    position: absolute;
+    pointer-events: none;
+    content: "";
+  }
+
+  &::before {
+    inset: -35% -10%;
+    z-index: -2;
+    background:
+      radial-gradient(closest-side, rgba(82, 138, 252, .55), transparent) 72% 42% / 50% 75% no-repeat,
+      radial-gradient(closest-side, rgba(124, 58, 237, .4), transparent) 38% 60% / 46% 70% no-repeat,
+      radial-gradient(closest-side, rgba(255, 171, 14, .3), transparent) 88% 88% / 36% 52% no-repeat;
+    filter: blur(32px);
+    animation: hero-aurora 1.9s cubic-bezier(.2, .8, .2, 1) both;
+  }
+
+  &::after {
+    inset: 0;
+    z-index: 2;
+    background: linear-gradient(180deg, transparent 55%, rgba(82, 138, 252, .07) 92%, rgba(124, 92, 255, .5) 99.6%, transparent);
+    animation: hero-scan 1.2s .15s cubic-bezier(.6, 0, .25, 1) both;
   }
 }
 

@@ -147,20 +147,43 @@ The site changes page without leaving the document (`src/javascripts/router.js`)
 header with its animated network, the footer and the table-of-contents drawer stay; only the page changes:
 
 1. **At once**, from `pages.json` (written by `npm run sync`, about 5 kB compressed, fetched when the browser
-   is idle after the first page): the title and the line under it cross-fade in the header (0.28 s) while
-   the network goes on drawing behind them, and the top of the material (the lecture and deadline boxes,
-   the list of exercises, the learning objectives) replaces the old material.
+   is idle after the first page): the text of the header rolls over into the new page's in place (see "The
+   header" below) while a wave of light runs through the network behind it, and the top of the material (the
+   lecture and deadline boxes, the list of exercises, the learning objectives) replaces the old material.
 2. **As soon as the page has arrived** (usually already in memory, see below): the rest of the material is put
    in below what the reader sees, in slices whose size adapts to the speed of the device, so that the
    network in the header keeps moving; the page's scripts that are not loaded yet are loaded (each only once
    per visit), and the page is set up a step a frame.
 
-The header has the same height on every page (`--hero-height` in `_hero.scss`, the height of the front
-page's header at that width), and its text starts at the same place, so a new title replaces the old one
-where it stands. Back and forward return to the remembered scroll position of each page, also after a
-reload. Every page stays an ordinary HTML document: an address opened directly, or anything unexpected (a
-failed request, a page that is not one of the site's), is an ordinary page load, and in browsers with
-cross-document view transitions such a load still morphs the header (`_hero.scss`, `hero.js`).
+Back and forward return to the remembered scroll position of each page, also after a reload. Every page stays
+an ordinary HTML document: an address opened directly, or anything unexpected (a failed request, a page that is
+not one of the site's), is an ordinary page load, and in browsers with cross-document view transitions such a
+load still morphs the header (`_hero.scss`, `hero.js`).
+
+## The header
+
+The header has the same height on every page (`--hero-height` in `_hero.scss`, the height of the front page's
+header at that width), and its text starts at the same place, so a new title replaces the old one where it
+stands. The line under the title of a week (the reading time, the exercises, the done ones) is a bar of glass at
+the foot of the header, centred over the network; its items are wide enough for every week's text, so a title of
+one line or three does not move it, and its icons stay where they are from week to week.
+
+When the router changes page (`src/javascripts/hero-text.js`), the text of the header changes in place: the
+letters of the title roll over into those of the new title from left to right, the numbers (the week, the
+reading time, the exercises, the done ones, already the reader's own count) roll like the digits of a counter,
+up or down, and the words that stay ("of 7", "exercises", "done") stay where they are. The new text is in the
+page at once, in its final place, but transparent while the animation draws each letter over it, where the
+browser has put that letter; only transforms and opacity are animated, so the animation runs smoothly while the
+rest of the page comes in, and nothing moves when it ends. Parts that one page has and the other has not (the
+front page's lead and button) fade out or in. A "Done" mark rolls the count under the title too.
+
+The first page of a visit opens with an intro (`hero.js`, `hero-text.js`, `_hero.scss`, about 1.5 s): the
+network bursts out of a point of light in a spiral, with a shockwave, and connects as it settles; an aurora of
+the accent colours glows up behind it and a line of light scans the header; then the text decodes and the
+numbers count up. It starts with the first frame, so on a slow connection it is what the reader watches while
+the page arrives; the text is shown anyway after 1.6 s if the scripts are late. A click, a key, the wheel or a
+touch ends it at once, and there is none when the reader prefers reduced motion, on a reload, when going back
+or forward, or at an address with a section (`#…`).
 
 Because pages are no longer unloaded, everything a page sets up for its own material (listeners on `window`
 or `document`, observers, animation loops) ends with it: `src/javascripts/page.js` gives each page view an

@@ -22,7 +22,8 @@ const KB = 1024;
 // gzip, level 9: what GitHub Pages sends is about this size.
 const BUDGETS = {
   'javascripts/theme.js': 1 * KB,
-  'javascripts/hero.js': 2.5 * KB,
+  // Raised from 2.5 kB: the intro of the first page of a visit and the wave of a change of page (1 kB more).
+  'javascripts/hero.js': 3 * KB,
   'javascripts/main.js': 22 * KB,
   // Raised from 1 kB: it keeps displayed formulas inside the column (math-fit.js, breakable text).
   'javascripts/math.js': 2 * KB,
@@ -37,8 +38,9 @@ const BUDGETS = {
 const WEEK = 13 * KB;
 const CHUNKS = 12 * KB;
 // Everything a week loads the first time (theme.js, hero.js, the stylesheets and the modules with their
-// chunks; not KaTeX and highlight.js, which the published site does without).
-const FIRST_VISIT = 75 * KB;
+// chunks; not KaTeX and highlight.js, which the published site does without). Raised from 75 kB: the header's
+// rolling text and the intro of the first page of a visit (hero-text.js, hero.js, _hero.scss: 4.6 kB).
+const FIRST_VISIT = 80 * KB;
 
 const problems = [];
 const sizes = new Map();
