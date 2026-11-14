@@ -74,6 +74,7 @@ const classic = {
     'javascripts/highlight': 'src/javascripts/highlight.js',
     'javascripts/theme': 'src/javascripts/theme.js',
     'javascripts/hero': 'src/javascripts/hero.js',
+    'javascripts/hero-render': 'src/javascripts/hero-render.js',
     'stylesheets/main': 'src/stylesheets/main.scss',
     'stylesheets/math': 'src/stylesheets/formulas.scss',
   },

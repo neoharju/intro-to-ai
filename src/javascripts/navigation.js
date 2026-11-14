@@ -113,10 +113,11 @@ class Navigation {
     this.indicator.style.transform = `translateX(${next.x}px)`;
     this.at = next;
 
+    // Only a transform moves (and stretches) it, so the compositor slides it, whatever the page is busy with.
     if (moving && !prefersReducedMotion() && typeof this.indicator.animate === 'function') {
       this.indicator.animate([
-        { transform: `translateX(${from.x}px)`, width: `${from.width}px` },
-        { transform: `translateX(${next.x}px)`, width: `${next.width}px` },
+        { transform: `translateX(${from.x}px) scaleX(${from.width / next.width})` },
+        { transform: `translateX(${next.x}px)` },
       ], { duration: 340, easing: 'cubic-bezier(.2, .8, .2, 1)' });
     }
   }

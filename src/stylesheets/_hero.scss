@@ -39,6 +39,13 @@
     width: 100%;
     height: max(100%, 384px);
     pointer-events: none;
+    // Shown when the network has been drawn once (hero-render.js draws it in a worker, a moment after the canvas is in).
+    opacity: 0;
+    transition: opacity .35s;
+
+    &.is-ready {
+      opacity: 1;
+    }
 
     // The network fades out towards the text on the left. hero.js draws the fade into the network itself; this
     // mask (a compositing pass every frame) is only for the intro, whose light and ring would cross the text.

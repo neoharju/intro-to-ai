@@ -206,19 +206,48 @@ function heroText(html) {
 // The header: the text of the next page (`html`, prepared by `prepare` first) rolls over the old in place
 // (hero-text.js); where it cannot, the old title, line and switches fade out while the new ones fade in over
 // them (the two are in the same cell of the header's grid, _hero.scss). The canvas behind them is not touched.
-function swapHero(className, html, prepare) {
+//
+// The text changes after the next frame has been drawn: that frame shows what the click did at once (the pill of
+// the navigation bar, the wave of the network, the top of the new page), and the letters start to roll in the
+// frame after it, a sixtieth of a second later (`now`: at once, when the page is set up at once, back or forward,
+// and its scripts need the new header). Resolves when the new text is in; a later change of page takes the place
+// of one that is still waiting.
+let heroSwaps = 0;
+
+function swapHero(className, html, prepare, now = false) {
   const hero = document.querySelector('.page-hero');
 
   if (!hero) {
-    return;
+    return Promise.resolve();
   }
 
-  const old = [...hero.querySelectorAll(':scope > .container:not(.is-leaving)')];
   const next = document.createElement('div');
+  const id = ++heroSwaps;
 
   next.className = 'container';
   next.innerHTML = html;
   prepare(next);
+
+  return new Promise(resolve => {
+    const swap = () => {
+      if (id === heroSwaps) {
+        replaceHero(hero, className, next);
+      }
+
+      resolve();
+    };
+
+    if (now || prefersReducedMotion() || document.hidden) {
+      swap();
+    } else {
+      window.requestAnimationFrame(() => window.setTimeout(swap, 0));
+    }
+  });
+}
+
+function replaceHero(hero, className, next) {
+  const old = [...hero.querySelectorAll(':scope > .container:not(.is-leaving)')];
+
   hero.className = className;
 
   if (old.length === 1 && morphHero(old[0], next)) {
@@ -441,7 +470,7 @@ export default function mountRouter({ pageSteps, onNavigate, onPageShown, prepar
 
     nextPageView(false);
     document.title = entry.title;
-    swapHero(entry.hero.className, entry.hero.html, container => prepareHero(container, page));
+    const swapped = swapHero(entry.hero.className, entry.hero.html, container => prepareHero(container, page));
     shellHero = heroText(entry.hero.html);
     setMaterial(material, entry.material);
     material.setAttribute('data-loading', '');
@@ -459,7 +488,7 @@ export default function mountRouter({ pageSteps, onNavigate, onPageShown, prepar
     material.replaceChildren(template.content);
     window.scrollTo(0, 0);
     fadeIn(material);
-    focusTitle();
+    swapped.then(focusTitle);
 
     return true;
   }
@@ -495,12 +524,14 @@ export default function mountRouter({ pageSteps, onNavigate, onPageShown, prepar
 
     const prepare = container => prepareHero(container, new URL(base).pathname);
 
+    let swapped = Promise.resolve();
+
     if (!shell) {
       nextPageView(restoreY !== null);
-      swapHero(hero.className, hero.querySelector(':scope > .container').innerHTML, prepare);
+      swapped = swapHero(hero.className, hero.querySelector(':scope > .container').innerHTML, prepare, true);
     } else if (textOf([hero.querySelector(':scope > .container')]) !== shellHero) {
       // pages.json and the page disagree (one of them is older): the page is right.
-      swapHero(hero.className, hero.querySelector(':scope > .container').innerHTML, prepare);
+      swapped = swapHero(hero.className, hero.querySelector(':scope > .container').innerHTML, prepare);
     }
 
     shellHero = null;
@@ -611,7 +642,7 @@ export default function mountRouter({ pageSteps, onNavigate, onPageShown, prepar
     }
 
     if (!shell) {
-      focusTitle();
+      swapped.then(focusTitle);
     }
 
     onPageShown();
@@ -677,6 +708,12 @@ export default function mountRouter({ pageSteps, onNavigate, onPageShown, prepar
     const shell = restoreY === null && showShell(page);
 
     try {
+      // The first frame of the change is drawn before the page is parsed (a long task on a long week): the header
+      // has started to roll by then, and goes on on the compositor while the page is parsed.
+      if (shell) {
+        await nextFrame();
+      }
+
       const text = await html;
 
       // The reader has gone on to another page meanwhile.

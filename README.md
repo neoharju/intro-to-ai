@@ -190,10 +190,12 @@ When the router changes page (`src/javascripts/hero-text.js`), the text of the h
 letters of the title roll over into those of the new title from left to right, the numbers (the week, the
 reading time, the exercises, the done ones, already the reader's own count) roll like the digits of a counter,
 up or down, and the words that stay ("of 7", "exercises", "done") stay where they are. The new text is in the
-page at once, in its final place, but transparent while the animation draws each letter over it, where the
-browser has put that letter; only transforms and opacity are animated, so the animation runs smoothly while the
-rest of the page comes in, and nothing moves when it ends. Parts that one page has and the other has not (the
-front page's lead and button) fade out or in. A "Done" mark rolls the count under the title too.
+page from the start, in its final place, but transparent while the animation draws each letter over it, where
+the browser has put that letter; only transforms and opacity are animated, which the compositor runs at the
+screen's own rate (60, 120 or more times a second) while the rest of the page comes in, and nothing moves when it
+ends. The header starts to change in the frame after the click, whose own frame shows the click at once
+(`router.js`). Parts that one page has and the other has not (the front page's lead and button) fade out or in.
+A "Done" mark rolls the count under the title too.
 
 The first page of a visit opens with an intro (`hero.js`, `hero-text.js`, `_hero.scss`, about 1.5 s): the
 network bursts out of a point of light in a spiral, with a shockwave, and connects as it settles; an aurora of
@@ -376,11 +378,20 @@ What a reader downloads and what the browser does, and how to keep it small:
   3.0 s to 0.35 s and its DOMContentLoaded from 4.2 to 2.6 s; a change of week by the router is set up in 1.0 s
   instead of 5.1 s.
 - **Figures and header.** The decision regions of the k-NN figure are computed without allocations into one
-  `ImageData` (12 times faster). The network in the header moves by time, not by frame (it ran twice as fast
-  on 120 Hz screens), and is drawn 30 times a second: its lines and nodes grouped by opacity (some twenty
-  strokes a frame instead of three hundred, nothing allocated per frame), with the fade towards the text drawn
-  into it rather than a CSS mask, which cost a compositing pass every frame (the mask is used only during the
-  intro).
+  `ImageData` (12 times faster). The network in the header is drawn in a worker
+  (`src/javascripts/hero-render.js`, on an OffscreenCanvas that `hero.js` hands over; on the page itself in a
+  browser whose workers cannot draw), with every frame of a screen of up to 100 Hz and every second (third,
+  fourth) frame of a faster one: 60 to 100 times a second, also while the page is busy (the wave of a change of
+  page, the intro of a first visit), which it does not slow down. It moves by time, not by frame (it ran twice as
+  fast on 120 Hz screens), and its lines and nodes are drawn grouped by opacity (some twenty strokes a frame
+  instead of three hundred, nothing allocated per frame), with the fade towards the text drawn into it rather
+  than a CSS mask, which cost a compositing pass every frame (the mask is used only during the intro).
+  `hero.js`, which the `<head>` waits for, is 1.6 kB.
+- **Changes of page start at once.** A click on a page shows its effect in the next frame (the pill of the bar,
+  the wave of the network, the top of the new page): the letters of the header start to roll in the frame after
+  it, and the page itself is parsed after that, so the click's own task is short (7 ms on a desktop, 30 ms at a 4
+  times slower CPU, instead of 35 and 150 ms) and nothing stands still while the page comes in. The rolling
+  letters, the pill and the fades are transforms and opacity, run by the compositor at the screen's own rate.
 - **Service worker** (`src/sw.js`, written to `sw.js` by `npm run sync`). GitHub Pages lets files be cached
   for 10 minutes only; the service worker keeps them, so that a returning reader loads nothing that has not
   changed, and the pages they have opened can be read offline. Its version is a hash of the site's content, so

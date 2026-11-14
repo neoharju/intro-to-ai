@@ -22,9 +22,10 @@ const KB = 1024;
 // gzip, level 9: what GitHub Pages sends is about this size.
 const BUDGETS = {
   'javascripts/theme.js': 1 * KB,
-  // Raised from 2.5 kB: the intro of the first page of a visit and the wave of a change of page (1 kB more); and
-  // from 3 kB: the network drawn grouped by opacity (cheaper frames) and the intro's text never kept waiting.
-  'javascripts/hero.js': 3.25 * KB,
+  // The network of the header: hero.js in the <head> (it puts the canvas in and hands it to a worker), and
+  // hero-render.js, which draws it in the worker (or on the page, where workers cannot draw).
+  'javascripts/hero.js': 2.25 * KB,
+  'javascripts/hero-render.js': 2.75 * KB,
   'javascripts/main.js': 22 * KB,
   // Raised from 1 kB: it keeps displayed formulas inside the column (math-fit.js, breakable text).
   'javascripts/math.js': 2 * KB,
@@ -78,7 +79,7 @@ for (const week of [1, 2, 3, 4, 5, 6, 7]) {
 }
 
 for (const [page, config] of Object.entries(site.pages).filter(([page]) => /^week\d/.test(page))) {
-  const files = ['javascripts/theme.js', 'javascripts/hero.js', 'stylesheets/main.css', 'stylesheets/math.css', ...chunks,
+  const files = ['javascripts/theme.js', 'javascripts/hero.js', 'javascripts/hero-render.js', 'stylesheets/main.css', 'stylesheets/math.css', ...chunks,
     ...config.scripts.filter(script => !['katex.js', 'highlight.js'].includes(script)).map(script => `javascripts/${script}`)];
   let total = 0;
 
