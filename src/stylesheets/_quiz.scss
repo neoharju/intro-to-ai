@@ -137,6 +137,15 @@
       color: var(--violet);
     }
   }
+
+  &--exam {
+    background: linear-gradient(135deg, var(--orange-soft), var(--surface) 70%);
+    border-color: var(--orange-line);
+
+    .quiz-deck__week {
+      color: var(--orange);
+    }
+  }
 }
 
 // --- One question at a time ------------------------------------------------------------------------

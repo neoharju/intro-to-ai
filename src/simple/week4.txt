@@ -476,6 +476,91 @@ Michael Nielsen, <a href="http://neuralnetworksanddeeplearning.com/" target="_bl
 == efaf35d5
 Extra · not part of the course
 
+# Extra: end-to-end learning, then and now.
+== 85214bd4
+The networks of this week learn their own features. Examples are the hidden units of the digit network, the filters of a <a href="#cnn">convolutional network</a> and the <a href="#embeddings">embeddings</a> of words. This is <b>representation learning</b>. People often name it together with a second idea, <b>end-to-end learning</b>, and they say that these are the two key ideas of deep learning. This section explains the second idea. It also shows how this idea changed speech recognition, vision and translation, and how people use it today.
+
+== f456864c
+A system learns <b>end to end</b> when one model changes the raw input into the output that the task needs. The raw input can be pixels, the samples of a sound wave or characters. We train all the parameters of the model together, to make one loss on that output as small as possible. <a href="#backprop">Backpropagation</a> sends the gradient of that loss back through each layer, to the first layer. Thus, the needs of the last layer also change the first features.
+
+== 75a3cab5
+The alternative is a <b>pipeline</b>: a chain of stages. People design each stage by hand, or train it separately, with a goal of its own. Usually, experts designed the features of the first stage. Examples are histograms of edge directions for images (HOG, SIFT), coefficients that copy human hearing for sound (MFCCs), and counts of selected words for text. Then a classifier learned from the data that these features kept. Each stage can be good at its own goal. But it can also remove information that a later stage needs.
+
+== 32f91142
+Speech recognition shows both. Until the early 2010s, a speech recognizer was a pipeline with these parts: MFCC features; an acoustic model, which tells how each speech sound looks in these features (hidden Markov models with Gaussian mixtures); a pronunciation dictionary that experts wrote; a language model that learned from text; and a decoder that found the most probable sentence. Each part had its own data, its own goal and its own experts. From 2014, end-to-end recognizers (<a href="https://proceedings.mlr.press/v32/graves14.html" target="_blank" rel="noopener">Graves and Jaitly</a>, and Deep Speech) use one network. This network changes the sound, as a spectrogram, into characters. Whisper (2022) changes 30 seconds of audio into text with one Transformer. It learned from 680,000 hours of audio with transcripts.
+
+== 5a56dce3
+In code, the difference is the point where the loss stops:
+
+== 6c8c3e7e
+Representation learning says that a model can learn its features, and that people do not have to design them. End-to-end learning says what the features are for: the final goal, together with all other parts. A network is a composition of differentiable functions. Thus, one loss can train all of them at the same time. An <a href="#autoencoders">autoencoder</a> also learns a representation, but for a different goal: it must make its input again. If a separate classifier then uses the code of the autoencoder, the system is again a pipeline with two stages. Then it is a matter of chance if the code keeps the information that the classifier needs.
+
+== d7611164
+The figure below shows the difference in the smallest possible example. Each interface between two stages is a bottleneck: a later stage sees only the data that an earlier stage sends. Here the bottleneck is one number. We replace each point <span class="math">x</span> of the plane with its position <span class="math">z = w \cdot x</span> along a line. Then a <a href="../week3/#logistic-regression">logistic regression</a> classifier decides from <span class="math">z</span> only. The pipeline selects the line without the labels. It uses the direction in which the points change the most. This direction is the <b>first principal component</b>. One number along this line keeps more of each point than one number along a different line. This is a good goal if you want to make the data smaller, but it is not the goal of the task. The end-to-end model starts at the end of the pipeline, with the same line and the same classifier. Then it trains the line and the classifier together, with the loss of the classifier.
+
+== c6e6a0ce
+We change each point into one number <span class="math">z</span>: its position along a line. A classifier <span class="math">p = \sigma(a z + b)</span> then decides from <span class="math">z</span> only. The pipeline (dashed line) uses the first principal component, and it trains only <span class="math">a</span> and <span class="math">b</span>. <b>Train end to end</b> uses gradient descent on the mean log-loss to train the direction of the line and the classifier together (solid line). The strips show <span class="math">z</span> for each point, with class 0 at the top and class 1 at the bottom, and the threshold of the classifier. A ring shows a point with an incorrect class. If the classes are different across the cloud, the classifier needs the direction that the pipeline removes. If the classes are different along the cloud, the goal of the pipeline agrees with the task, and the two methods are equally good.
+
+== 0ccb676a
+<b>Images.</b> In 2012, AlexNet won the ImageNet competition. AlexNet is a convolutional network that learned its features from the pixels. Its top-5 error was 15%. The best system with designed features had an error of 26%. By 2014, all the best entries were convolutional networks.
+
+== ed0f99a2
+<b>Translation.</b> Sequence-to-sequence networks (2014) translated with one network, which learned from pairs of sentences. Before, phrase-based systems used separate models for word alignment, phrase tables, word order and the target language.
+
+== 62435011
+<b>Speech.</b> End-to-end recognizers are now the standard, for example in voice assistants and for the subtitles of videos.
+
+== 6d0fe1f5
+<b>Driving.</b> In 2016, NVIDIA trained a convolutional network that changes the image from a front camera directly into a steering angle. The network learned from human drivers. Nobody wrote lane detection or path planning into it.
+
+== 2cb20135
+Each time, the reasons are the same. No interface that people made removes information. A stage cannot send an error to a later stage that did not learn to correct it. And we optimize the system for the real measure of success, not for a different goal that people selected. Rich Sutton calls the general lesson of 70 years of AI research <i>the bitter lesson</i>: again and again, general methods that use more computation were better than methods that contain human knowledge.
+
+== d60a9fc6
+<b>Data.</b> A model without built-in knowledge must learn everything from examples. Thus, end-to-end training needs many input–output pairs. If there are only a few pairs, a pipeline that contains the knowledge of experts can be better.
+
+== 3c7896db
+<b>Insight and control.</b> Nobody designed the intermediate representations to have a meaning. Thus, it is difficult to examine, test or certify them one at a time. Explainability (<a href="../week7/">Week 7</a>) is more difficult for one large model than for a chain of small parts that people understand.
+
+== 5a9caebb
+<b>Reuse.</b> You can use a stage of a pipeline again, for example a speech recognizer or a parser, and you can make it better on its own. We train an end-to-end model for one task. The alternative is to train it for many tasks at the same time. This is the idea of the foundation models below.
+
+== c1091694
+Now, end-to-end training is the usual method for large models:
+
+== 11e960c3
+<b>Language models</b> learn from the text to the next token with one loss (<a href="../week5/">Week 5</a>). The tokenizer divides the text into tokens. It is the main stage that people still make separately.
+
+== f7116310
+<b>Speech.</b> Whisper and the models after it change audio into text with one network. Some of them also change speech in one language into speech in a different language.
+
+== 5f5c97e3
+<b>Driving</b> moves from modular stacks to end-to-end learning. UniAD (best paper at CVPR 2023) trains tracking, mapping, motion forecasting, occupancy prediction and planning together, for the goal of planning. Tesla says that from version 12 (2024), its driving software is a network that learned from millions of video clips. This network replaces driving code that people wrote.
+
+== 02e96314
+<b>Robots.</b> Vision-language-action models change camera images and an instruction in words directly into motor commands. Examples are RT-2 (2023), OpenVLA (2024) and π<sub>0</sub> (2024). One model learns the full loop of sensing, perception, planning and control. <a href="../week6/#robots-agents-with-bodies">Week 6</a> divides this loop into stages, and most robots that people use today still do this.
+
+== 65cd3162
+But this is not the full story, for two reasons:
+
+== d9f20464
+<b>Pretrain, then fine-tune.</b> Large models need much data. The solution is to pretrain one large model end to end on broad data, with a goal that needs no labels, for example to predict the next token. Then we fine-tune the model for a task (<a href="../week5/#transfer-and-adaptation">transfer and adaptation</a> in Week 5). Frequently, we change only a small part of the weights (adapters, LoRA).
+
+== b2277dfe
+<b>End to end inside, modular outside.</b> The systems around a model are modular again. A retrieval-augmented assistant uses a search index, a retriever and a language model together. An agent (<a href="../week6/">Week 6</a>) uses tools. We train these parts separately and connect them with text. We do not train them together. Safety-critical systems keep outputs that people can check. UniAD does this with its intermediate results.
+
+== 4ed17b8c
+Thus, the question is not if we must learn end to end. The question is where the ends are. Which parts do we train together with one loss? And where do people keep an interface that they can read, test and replace?
+
+== b9185aa8
+LeCun, Bottou, Bengio and Haffner (1998), <a href="https://doi.org/10.1109/5.726791" target="_blank" rel="noopener"><i>Gradient-based learning applied to document recognition</i></a>, Proceedings of the IEEE 86(11). This is an early argument for the training of a full recognition system with one loss.
+
+== 16a51dd6
+Glasmachers (2017), <a href="https://arxiv.org/abs/1704.08305" target="_blank" rel="noopener"><i>Limits of end-to-end learning</i></a>, ACML. It shows when the training of all parts at the same time fails, and how modules help.
+
+== a4ecb89e
+Rich Sutton (2019), <a href="http://www.incompleteideas.net/IncIdeas/BitterLesson.html" target="_blank" rel="noopener"><i>The bitter lesson</i></a>: a short essay of one page.
+
 == a11b4a68
 This section is optional extra material for readers with an interest in algorithms and performance engineering. It is <b>not part of the course requirements</b>: you do not need it for the exercises or the exam.
 

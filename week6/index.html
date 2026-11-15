@@ -451,7 +451,7 @@
 
                 <p><b>Reading:</b> <a href="https://aima.cs.berkeley.edu/" target="_blank" rel="noopener">Russell and Norvig, 4th ed., Chapter 18</a>, introduces multi-agent decision making, cooperation, and competition.</p>
 
-                <h2 class="material-heading">Robots: agents with bodies</h2>
+                <h2 class="material-heading" id="robots-agents-with-bodies">Robots: agents with bodies</h2>
                 <p>Robotics brings the preceding ideas into the physical world. The robot needs a useful state estimate before it can plan or learn a policy, and an action selected by a policy must still be executed by a controller. This is why we now separate perception, planning, and control instead of treating the agent as one neural network.</p>
                 <p>A robot closes the agent loop in the physical world. Sensors translate light, force, sound, distance, or joint position into measurements. Actuators produce motion. Perception estimates relevant state; planning selects a route or sequence of actions; control turns that plan into motor commands. All stages are uncertain. A wheel slips, a camera is occluded, an object moves, or the environment differs from training.</p>
                 <svg class="dg" viewBox="0 0 960 316" role="img" aria-label="The robot loop: sensors, perception, planning, control and actuators in a row; the physical consequences come back to the sensors as new, noisy measurements; people supply goals, supervise and can intervene in planning.">

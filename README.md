@@ -42,11 +42,17 @@ Compared with the original material:
   algorithms described in the text, in the browser; their code is in `src/javascripts/viz/`. A figure is
   built when it comes near the screen or when the browser is idle (`mountAll` in `viz/lib.js`), so it does
   not hold up the loading of the page, and its animation runs only while it is on screen.
-- **Practice quiz:** `quiz/` has 20 multiple-choice questions for each week, each with an explanation.
+- **Practice quiz:** `quiz/` has 20 multiple-choice questions for each week and 11 from the 2025 sample
+  exam, each with an explanation.
 - **Extra sections on cost and performance:** Weeks 4 and 5 end with optional sections on time and memory
   complexity (from the perceptron and dense layers to attention and the KV cache) and on performance
   engineering (arithmetic intensity and the roofline model, number formats, FlashAttention, memory-bound
   decoding).
+- **Extra section on end-to-end learning:** Week 4 has an optional section on end-to-end learning, the partner
+  of representation learning: pipelines against one model trained with one loss, why it won in speech,
+  vision and translation, what it costs, and where it stands today (language models, driving, robots, and
+  the modular systems built around models). Its figure trains a one-number bottleneck both ways
+  (`src/javascripts/viz/endtoend.js`).
 - **Colour themes:** light and dark, following the device's setting by default.
 - **Text size:** normal, large or extra large reading text, from the "Aa" menu in the navigation bar.
 - **Search:** the search button at the right of the navigation bar, Ctrl+K (⌘K on a Mac) or the / key
@@ -246,6 +252,15 @@ The questions are in `src/javascripts/quiz/questions.json`, 20 for each week. Ea
 `explain`. All three may contain HTML and formulas in `<span class="math">…</span>`. Keep the options of a
 question similar in length and form, so that the longest one is not a giveaway. Results are kept in the
 reader's browser only (`localStorage`, key `introai-quiz-v1`). `quiz/#week-3` opens the questions of week 3.
+
+The questions of the sample exam (*Sample Multiple Choice Questions*, DATA15001, 2025) are in
+`src/javascripts/quiz/exam.json`, in the same form, each with the `week` whose material it tests (shown on its
+card). Their wording is the exam's own, so their options are not evened out; only the classes of the kNN
+question are called "Class A" and "Class B", not to be confused with the letters of the options. The exam's
+question on the two key ideas of deep learning (end-to-end learning and representation learning) is left out:
+the course covers end-to-end learning only in an extra section of week 4. They are a deck of their own
+(`quiz/#sample-exam`, results under the ids `exam-1` to `exam-11`) and are in the mixed bag too. `npm run sync` writes the decks into `quiz/index.html`; the number of questions in its header and first
+paragraph is written by hand.
 
 ## Glossary
 

@@ -1,9 +1,11 @@
-// The practice quiz (quiz/index.html): twenty questions for each week, with an explanation for every
-// answer. The questions are in quiz/questions.json, where the correct option is listed first; the
-// options are shuffled every time a question is shown. Results stay in this browser (localStorage),
-// when the browser allows it; the quiz works without them. Formulas are typeset with
-// window.IntroAI.math (javascripts/math.js, loaded before this script).
+// The practice quiz (quiz/index.html): twenty questions for each week, and the questions of the sample
+// exam, with an explanation for every answer. The questions are in quiz/questions.json and
+// quiz/exam.json, where the correct option is listed first; the options are shuffled every time a
+// question is shown. Results stay in this browser (localStorage), when the browser allows it; the quiz
+// works without them. Formulas are typeset with window.IntroAI.math (javascripts/math.js, loaded
+// before this script).
 import WEEKS from './quiz/questions.json';
+import EXAM from './quiz/exam.json';
 import { definePageScript, pageSignal } from './page';
 import { navOffset, prefersReducedMotion } from './utils';
 import { el } from './viz/lib';
@@ -12,12 +14,16 @@ const STORAGE_KEY = 'introai-quiz-v1';
 const MIX_LENGTH = 20;
 const KEYS = ['A', 'B', 'C', 'D'];
 
-// Every question with a stable id: "3-7" is question 7 of week 3.
+// Every question with a stable id: "3-7" is question 7 of week 3, "exam-2" question 2 of the sample exam
+// (whose questions name the week they test).
 const QUESTIONS = WEEKS.flatMap(week => week.questions.map((question, index) => ({
   ...question,
   id: `${week.week}-${index + 1}`,
   week: week.week,
-})));
+}))).concat(EXAM.questions.map((question, index) => ({ ...question, id: `exam-${index + 1}`, exam: true })));
+const EXAM_IDS = EXAM.questions.map((question, index) => `exam-${index + 1}`);
+// A run through the sample exam (run.week holds a week's number, null for a mixed bag, or this).
+const EXAM_RUN = 'exam';
 
 const MESSAGES = [
   [1, 'Flawless. Not even alpha-beta could prune this performance.'],
@@ -111,6 +117,19 @@ export default function mountQuiz(root) {
         el('span', { class: 'quiz-deck__tagline', text: `${MIX_LENGTH} random questions from the whole course.` }),
         el('span', { class: 'quiz-deck__score', text: `${QUESTIONS.length} questions in the pool` }))));
 
+    const examScore = correct(EXAM_IDS);
+    const examAnswered = EXAM_IDS.filter(id => id in results).length;
+
+    // The id makes quiz/#sample-exam an anchor of the page too (route() below opens the exam).
+    decks.push(el('li', { id: 'sample-exam' },
+      el('button', { type: 'button', class: 'quiz-deck quiz-deck--exam', onClick: startExam },
+        el('span', { class: 'quiz-deck__week' }, el('i', { class: 'fa fa-pencil', 'aria-hidden': 'true' }), ' Exam practice'),
+        el('span', { class: 'quiz-deck__title', text: EXAM.title }),
+        el('span', { class: 'quiz-deck__tagline', text: EXAM.tagline }),
+        el('span', { class: 'quiz-meter', 'aria-hidden': 'true' },
+          el('span', { style: `width:${(100 * examScore) / EXAM_IDS.length}%` })),
+        el('span', { class: 'quiz-deck__score', text: examAnswered ? `${examScore} of ${EXAM_IDS.length} correct` : `${EXAM_IDS.length} questions` }))));
+
     const reset = el('button', {
       type: 'button',
       class: 'quiz-link',
@@ -145,6 +164,21 @@ export default function mountQuiz(root) {
 
   function startMix() {
     start(shuffle(QUESTIONS.map(q => q.id)).slice(0, MIX_LENGTH), 'Mixed bag · all weeks', null);
+  }
+
+  function startExam() {
+    start(EXAM_IDS, EXAM.title, EXAM_RUN);
+  }
+
+  // The same kind of run again: the week, a new mixed bag, or the exam.
+  function restart(week) {
+    if (week === EXAM_RUN) {
+      startExam();
+    } else if (week) {
+      startWeek(week);
+    } else {
+      startMix();
+    }
   }
 
   function showQuestion() {
@@ -239,8 +273,10 @@ export default function mountQuiz(root) {
     updateMeta();
 
     const heading = html('h2', { class: 'quiz-card__question', id: headingId, tabindex: '-1' }, question.q);
+    // The week of the question, in a mixed bag and in the exam (whose questions come from every week).
+    const from = `${question.exam && run.week === null ? 'Sample exam · ' : ''}Week ${question.week} · ${weekOf(question.week).title}`;
     const card = el('div', { class: 'quiz-card' },
-      run.week === null ? el('p', { class: 'quiz-card__week', text: `Week ${question.week} · ${weekOf(question.week).title}` }) : null,
+      typeof run.week === 'number' ? null : el('p', { class: 'quiz-card__week', text: from }),
       heading,
       el('div', { class: 'quiz-options', role: 'group', 'aria-labelledby': headingId }, options),
       feedback,
@@ -276,7 +312,7 @@ export default function mountQuiz(root) {
     const ratio = run.score / total;
     const message = MESSAGES.find(([threshold]) => ratio >= threshold)[1];
     const missed = run.missed.slice();
-    const nextWeek = run.week && run.week < WEEKS.length ? run.week + 1 : null;
+    const nextWeek = typeof run.week === 'number' && run.week < WEEKS.length ? run.week + 1 : null;
     const actions = [];
 
     if (missed.length && missed.length < total) {
@@ -287,11 +323,14 @@ export default function mountQuiz(root) {
       }, el('i', { class: 'fa fa-repeat', 'aria-hidden': 'true' }), `Retry the ${missed.length} you missed`));
     }
 
+    const week = run.week;
+    const again = week === EXAM_RUN ? 'Start the exam again' : week ? 'Start this week again' : 'Another mixed bag';
+
     actions.push(el('button', {
       type: 'button',
       class: missed.length ? 'quiz-button' : 'quiz-next',
-      onClick: () => (run.week ? startWeek(run.week) : startMix()),
-    }, run.week ? 'Start this week again' : 'Another mixed bag'));
+      onClick: () => restart(week),
+    }, again));
 
     if (nextWeek) {
       actions.push(el('button', { type: 'button', class: 'quiz-button', onClick: () => startWeek(nextWeek) },
@@ -352,12 +391,14 @@ export default function mountQuiz(root) {
     }
   }, { signal });
 
-  // quiz/#week-3 opens week 3 directly, also from a link on this page.
+  // quiz/#week-3 opens week 3 directly, also from a link on this page, and quiz/#sample-exam the exam.
   function route() {
     const match = /^#week-([1-7])$/.exec(window.location.hash);
 
     if (match) {
       startWeek(Number(match[1]));
+    } else if (window.location.hash === '#sample-exam') {
+      startExam();
     } else if (!run) {
       showHome();
     }

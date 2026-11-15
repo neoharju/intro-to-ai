@@ -1,0 +1,139 @@
+{
+  "title": "Sample exam 2025",
+  "tagline": "Multiple-choice questions from the 2025 sample exam.",
+  "source": "Sample Multiple Choice Questions, DATA15001, 2025",
+  "questions": [
+    {
+      "week": 6,
+      "q": "In the course material, which best explains why real-world robotics is hard compared to \"static data / simulated\" AI problems?",
+      "options": [
+        "Sensors and actuators are imperfect, so state tracking and precise actions drift in the messy real world",
+        "Robots always have perfect sensors but weak actuators",
+        "Robotics is mostly hard because Python is too slow",
+        "Because robotics never uses machine learning"
+      ],
+      "answer": 0,
+      "explain": "Every stage of a robot is uncertain: a wheel slips, a camera is occluded, an object moves, or the world differs from the simulation. So a robot estimates its state, acts, measures the result and corrects, again and again. Its sensors are far from perfect, and robots do use machine learning."
+    },
+    {
+      "week": 7,
+      "q": "Which statement best distinguishes \"machine ethics\" from the \"ethics of AI\" focus of the course?",
+      "options": [
+        "Machine ethics encodes moral rules inside an agent; ethics of AI focuses on societal impacts of AI systems",
+        "Machine ethics studies fairness audits; ethics of AI studies rule-based robots",
+        "Machine ethics only applies to deep learning; ethics of AI only applies to GOFAI",
+        "They are the same term"
+      ],
+      "answer": 0,
+      "explain": "Machine ethics builds systems that follow a moral code of their own, like Asimov's Three Laws of Robotics. The course discusses the ethics of AI instead: the societal and ethical issues of using AI systems, in their whole socio-technical context and for the people they affect."
+    },
+    {
+      "week": 1,
+      "q": "In breadth-first search (BFS), which data structure is typically used to store the frontier?",
+      "options": [
+        "Queue",
+        "Stack",
+        "Hash set",
+        "Min-heap (priority queue)"
+      ],
+      "answer": 0,
+      "explain": "A queue is first in, first out: the nodes found first are expanded first, so BFS goes level by level. A stack (last in, first out) gives depth-first search, and a priority queue ordered by <span class=\"math\">f(n) = g(n) + h(n)</span> gives A*."
+    },
+    {
+      "week": 1,
+      "q": "Which statement about BFS vs DFS is correct (as used in basic search problems)?",
+      "options": [
+        "BFS guarantees the shortest path in unweighted graphs; DFS does not",
+        "BFS uses a stack; DFS uses a queue",
+        "DFS guarantees the shortest path in unweighted graphs",
+        "BFS and DFS always return identical paths"
+      ],
+      "answer": 0,
+      "explain": "BFS expands the nodes in order of their depth, so the first path it finds to the goal has the fewest edges. DFS follows one branch as deep as it goes and may find a long path first. And it is BFS that uses a queue, DFS a stack."
+    },
+    {
+      "week": 1,
+      "q": "In A* search, the evaluation function is:",
+      "options": [
+        "<span class=\"math\">f(n) = g(n) + h(n)</span>",
+        "<span class=\"math\">f(n) = h(n)</span>",
+        "<span class=\"math\">f(n) = g(n) \\times h(n)</span>",
+        "<span class=\"math\">f(n) = h(n) - g(n)</span>"
+      ],
+      "answer": 0,
+      "explain": "<span class=\"math\">g(n)</span> is the cost of the path from the start to <span class=\"math\">n</span>, and <span class=\"math\">h(n)</span> the heuristic estimate of the cost from <span class=\"math\">n</span> to the goal, so <span class=\"math\">f(n)</span> estimates the cost of the best path through <span class=\"math\">n</span>. With <span class=\"math\">f(n) = h(n)</span> alone, the search is greedy best-first search."
+    },
+    {
+      "week": 1,
+      "q": "Which heuristic property ensures A* finds an optimal solution (under the standard assumptions taught)?",
+      "options": [
+        "Admissibility",
+        "Greediness",
+        "Randomization",
+        "Overestimation"
+      ],
+      "answer": 0,
+      "explain": "An admissible heuristic never overestimates the cost that remains to the goal (the straight-line distance on a map is one), so A* cannot settle for a path more expensive than the best one. A heuristic that overestimates can make A* miss the best path."
+    },
+    {
+      "week": 1,
+      "q": "In a two-player, perfect-information game tree, what does the minimax algorithm compute?",
+      "options": [
+        "An optimal strategy assuming the opponent also plays optimally",
+        "A random move that avoids draws",
+        "The move that maximizes immediate score only",
+        "A strategy that guarantees a win in any game"
+      ],
+      "answer": 0,
+      "explain": "Minimax backs up values from the leaves: Max takes the largest value of its children, Min the smallest, so it assumes that the opponent always picks its best move. It does not guarantee a win: in tic-tac-toe, best play by both sides is a draw."
+    },
+    {
+      "week": 2,
+      "q": "In Bayes' rule terminology, which pairing is correct?",
+      "options": [
+        "Prior = <span class=\"math\">P(\\text{state})</span>, Likelihood = <span class=\"math\">{P(\\text{obs} \\mid \\text{state})}</span>, Posterior = <span class=\"math\">{P(\\text{state} \\mid \\text{obs})}</span>",
+        "Posterior = <span class=\"math\">P(\\text{obs})</span>, Prior = <span class=\"math\">{P(\\text{state} \\mid \\text{obs})}</span>",
+        "Likelihood = <span class=\"math\">P(\\text{state})</span>, Prior = <span class=\"math\">{P(\\text{obs} \\mid \\text{state})}</span>",
+        "Posterior = <span class=\"math\">P(\\text{state})</span>, Prior = <span class=\"math\">P(\\text{obs})</span>"
+      ],
+      "answer": 0,
+      "explain": "The prior is the belief before the observation, the likelihood says how probable the observation is in that state, and the posterior is the belief after it: <span class=\"math\">{P(\\text{state} \\mid \\text{obs})} \\propto P(\\text{state}) \\, {P(\\text{obs} \\mid \\text{state})}</span>."
+    },
+    {
+      "week": 2,
+      "q": "What is the key modeling assumption behind the naive Bayes classifier?",
+      "options": [
+        "Features are conditionally independent given the class",
+        "Features are independent of the class label",
+        "The class is conditionally independent given the features",
+        "All features must be continuous-valued"
+      ],
+      "answer": 0,
+      "explain": "Once the class is known, the features tell nothing more about each other: <span class=\"math\">{P(x_1, \\dots, x_n \\mid C)} = \\prod_i {P(x_i \\mid C)}</span>. Features independent of the class would be useless for classifying, and they can be discrete, such as the words of a message."
+    },
+    {
+      "week": 2,
+      "q": "Two classes, Spam and Ham, with priors <span class=\"math\">P(\\text{Spam}) = P(\\text{Ham}) = \\frac{1}{2}</span>. Assume conditional independence given the class, with <span class=\"math\">{P(w_1 \\mid \\text{Spam})} = \\frac{1}{10}</span>, <span class=\"math\">{P(w_1 \\mid \\text{Ham})} = \\frac{1}{20}</span>, <span class=\"math\">{P(w_2 \\mid \\text{Spam})} = \\frac{1}{5}</span> and <span class=\"math\">{P(w_2 \\mid \\text{Ham})} = \\frac{1}{10}</span>. What is <span class=\"math\">{P(\\text{Spam} \\mid w_1, w_2)}</span>?",
+      "options": [
+        "0.8",
+        "0.2",
+        "0.5",
+        "0.9"
+      ],
+      "answer": 0,
+      "explain": "Spam: <span class=\"math\">\\frac{1}{2} \\times \\frac{1}{10} \\times \\frac{1}{5} = \\frac{1}{100}</span>. Ham: <span class=\"math\">\\frac{1}{2} \\times \\frac{1}{20} \\times \\frac{1}{10} = \\frac{1}{400}</span>. So <span class=\"math\">{P(\\text{Spam} \\mid w_1, w_2)} = \\frac{1/100}{1/100 + 1/400} = \\frac{4}{5} = 0.8</span>."
+    },
+    {
+      "week": 3,
+      "q": "We use <span class=\"math\">k = 3</span> and Euclidean distance; to avoid square roots, compare squared distances <span class=\"math\">d^2</span>. The training points are <span class=\"math\">P_1 = (0, 0)</span>, class A; <span class=\"math\">P_2 = (0, 2)</span>, class A; <span class=\"math\">P_3 = (2, 0)</span>, class B; and <span class=\"math\">P_4 = (5, 5)</span>, class B. What class does kNN predict for the query point <span class=\"math\">Q = (1, 1)</span>?",
+      "options": [
+        "Class A",
+        "Class B",
+        "Tie (cannot decide)",
+        "Depends on feature scaling only"
+      ],
+      "answer": 0,
+      "explain": "The squared distances from <span class=\"math\">Q</span> are 2 to <span class=\"math\">P_1</span>, <span class=\"math\">P_2</span> and <span class=\"math\">P_3</span>, and 32 to <span class=\"math\">P_4</span>. The three nearest neighbors vote A, A and B, so kNN predicts class A, two votes to one."
+    }
+  ]
+}

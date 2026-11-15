@@ -9,8 +9,8 @@
 //   - the list <ul class="page-hero__meta"> in the header of a week: the reading time, the number of
 //     exercises, counted from the page, and how many of them are done (none here: progress.js fills in the
 //     reader's number), so that they are there when the page is first drawn;
-//   - the first view of the practice quiz (quiz/index.html: the decks of the weeks, as quiz.js shows them before
-//     any question is answered), so that the page does not grow when quiz.js shows them;
+//   - the first view of the practice quiz (quiz/index.html: the decks of the weeks and of the sample exam, as
+//     quiz.js shows them before any question is answered), so that the page does not grow when quiz.js shows them;
 //   - the list of exercises at the top of a week (<div id="exercise-list">), from the headings of its
 //     exercises, so that the box does not grow when exercises.js fills it in (it then replaces the links with
 //     ones to the anchors of the exercises, anchors.js);
@@ -37,6 +37,7 @@ const read = file => readFile(path.join(root, file), 'utf8');
 const site = JSON.parse(await read('src/site.json'));
 const schedule = JSON.parse(await read('src/schedule.json'));
 const quizWeeks = JSON.parse(await read('src/javascripts/quiz/questions.json'));
+const quizExam = JSON.parse(await read('src/javascripts/quiz/exam.json'));
 const partials = Object.fromEntries(await Promise.all(REGIONS.map(async name => [name, await read(`src/partials/${name}.html`)])));
 
 // The Content-Security-Policy that docker/nginx.conf sends, for a <meta> in the head of every page: GitHub
@@ -320,7 +321,7 @@ if (!MIX_LENGTH) {
 }
 
 function quizHome() {
-  const total = quizWeeks.reduce((sum, week) => sum + week.questions.length, 0);
+  const total = quizWeeks.reduce((sum, week) => sum + week.questions.length, quizExam.questions.length);
   const span = (className, text) => `<span class="${className}">${escapeHtml(text)}</span>`;
   const decks = quizWeeks.map(week => `<li id="week-${week.week}"><button type="button" class="quiz-deck">`
     + span('quiz-deck__week', `Week ${week.week}`) + span('quiz-deck__title', week.title) + span('quiz-deck__tagline', week.tagline)
@@ -331,6 +332,12 @@ function quizHome() {
     + '<span class="quiz-deck__week"><i class="fa fa-random" aria-hidden="true"></i> All weeks</span>'
     + span('quiz-deck__title', 'Mixed bag') + span('quiz-deck__tagline', `${MIX_LENGTH} random questions from the whole course.`)
     + span('quiz-deck__score', `${total} questions in the pool`) + '</button></li>');
+
+  decks.push('<li id="sample-exam"><button type="button" class="quiz-deck quiz-deck--exam">'
+    + '<span class="quiz-deck__week"><i class="fa fa-pencil" aria-hidden="true"></i> Exam practice</span>'
+    + span('quiz-deck__title', quizExam.title) + span('quiz-deck__tagline', quizExam.tagline)
+    + '<span class="quiz-meter" aria-hidden="true"><span style="width:0%"></span></span>'
+    + span('quiz-deck__score', `${quizExam.questions.length} questions`) + '</button></li>');
 
   return `<div class="quiz-home"><p class="quiz-home__total"><b>0 of ${total}</b> questions answered correctly so far</p>`
     + `<ul class="quiz-decks">${decks.join('')}</ul></div>`;

@@ -94,7 +94,7 @@
           <p class="page-hero__eyebrow"><b>Week 4</b><span>of 7</span></p>
           <h1 class="page-hero__title">Neural Networks</h1>
           <ul class="page-hero__meta" aria-label="About this page">
-            <li><i class="fa-regular fa-clock" aria-hidden="true"></i>53 min read</li>
+            <li><i class="fa-regular fa-clock" aria-hidden="true"></i>1 h 2 min read</li>
             <li><i class="fa fa-pencil" aria-hidden="true"></i>5 exercises</li>
             <li class="page-hero__progress"><i class="fa fa-check" aria-hidden="true"></i>0 of 5 done</li>
           </ul>
@@ -1778,6 +1778,291 @@ print(H.round(2))             # the learned hidden representation, one row per i
               Learning</i></a>: a free online book; chapter 2 derives backpropagation step by step.</li>
             <li>Cybenko (1989), <a href="https://doi.org/10.1007/BF02551274" target="_blank" rel="noopener"><i>Approximation by
               superpositions of a sigmoidal function</i></a>, Mathematics of Control, Signals and Systems 2, 303&ndash;314.</li>
+          </ul>
+        </section>
+
+        <section class="bonus" aria-label="Extra material">
+          <p class="bonus__badge">Extra &middot; outside the course</p>
+          <h1 class="material-heading" id="end-to-end">Extra: end-to-end learning, then and now</h1>
+          <p class="bonus__note">
+            This section is optional extra material for the curious. It is <b>not part of the course
+            requirements</b>: you do not need it for the exercises or the exam.
+          </p>
+
+          <p>
+            The networks of this week learn their own features: the hidden units of the digit network, the filters of a
+            <a href="#cnn">convolutional network</a> and the <a href="#embeddings">embeddings</a> of words. This is
+            <b>representation learning</b>. It is often named together with a second idea, <b>end-to-end learning</b>, as
+            the two key ideas of deep learning. This section explains the second idea, how it changed speech recognition,
+            vision and translation, and where it stands today.
+          </p>
+
+          <h2 class="material-heading" id="end-to-end-what">One model and one loss, from the raw input to the output</h2>
+
+          <p>
+            A system learns <b>end to end</b> when one model maps the raw input (pixels, the samples of a sound wave,
+            characters) all the way to the output that the task asks for, and all of its parameters are trained together
+            to minimize one loss on that output. <a href="#backprop">Backpropagation</a> takes the gradient of that loss
+            back through every layer, down to the first one, so even the earliest features are shaped by what the last
+            layer needs.
+          </p>
+
+          <p>
+            The alternative is a <b>pipeline</b>: a chain of stages, each designed by hand or trained separately with a
+            goal of its own. The first stage used to be features designed by experts, such as histograms of edge
+            directions for images (HOG, SIFT), coefficients modeled on human hearing for sound (MFCCs) or counts of chosen
+            words for text, and a classifier was trained on whatever those features kept. Each stage can be good at its
+            own goal and still throw away what a later stage would need.
+          </p>
+
+          <svg class="dg" viewBox="0 0 960 366" role="img" aria-label="Speech recognition as a pipeline and end to end. Top, a pipeline: the audio goes through features designed by hand (MFCCs), an acoustic model trained on its own goal, a pronunciation dictionary written by experts, a language model trained on its own goal and a decoder, which gives the text. Bottom, end to end: one network maps the audio to the text, one loss compares its output with the correct transcript, and the gradient of that loss goes back through every layer of the network, down to the first.">
+            <defs>
+              <marker id="dg-e2e-speech-head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrowhead" d="M0,0 L10,5 L0,10 z"/></marker>
+              <marker id="dg-e2e-speech-grad" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrowhead" style="fill:var(--dg-violet-line)" d="M0,0 L10,5 L0,10 z"/></marker>
+            </defs>
+            <text class="dg-heading dg-start" x="16" y="20">A pipeline: speech recognition until the early 2010s</text>
+            <rect class="dg-box dg-box--blue" x="14" y="40" width="80" height="92" rx="12"/><text class="dg-heading" x="54" y="78">Audio</text><text class="dg-small" x="54" y="100">sound wave</text>
+            <rect class="dg-box dg-box--grey" x="116" y="40" width="128" height="92" rx="12"/><text style="font-weight:650;fill:var(--ink)" x="180" y="64">Features</text><text class="dg-small" x="180" y="90">MFCCs, designed</text><text class="dg-small" x="180" y="108">by hand</text>
+            <rect class="dg-box dg-box--amber" x="266" y="40" width="128" height="92" rx="12"/><text style="font-weight:650;fill:var(--ink)" x="330" y="64">Acoustic model</text><text class="dg-small" x="330" y="90">HMMs + Gaussians,</text><text class="dg-small" x="330" y="108">own training goal</text>
+            <rect class="dg-box dg-box--grey" x="416" y="40" width="128" height="92" rx="12"/><text style="font-weight:650;fill:var(--ink)" x="480" y="64">Dictionary</text><text class="dg-small" x="480" y="90">pronunciations,</text><text class="dg-small" x="480" y="108">written by experts</text>
+            <rect class="dg-box dg-box--amber" x="566" y="40" width="128" height="92" rx="12"/><text style="font-weight:650;fill:var(--ink)" x="630" y="64">Language model</text><text class="dg-small" x="630" y="90">trained on text,</text><text class="dg-small" x="630" y="108">own training goal</text>
+            <rect class="dg-box dg-box--grey" x="716" y="40" width="128" height="92" rx="12"/><text style="font-weight:650;fill:var(--ink)" x="780" y="64">Decoder</text><text class="dg-small" x="780" y="90">searches for the</text><text class="dg-small" x="780" y="108">likeliest words</text>
+            <rect class="dg-box dg-box--green" x="866" y="40" width="80" height="92" rx="12"/><text class="dg-heading" x="906" y="78">Text</text><text class="dg-small" x="906" y="100">the words</text>
+            <path class="dg-arrow" d="M97 86 H112" marker-end="url(#dg-e2e-speech-head)"/>
+            <path class="dg-arrow" d="M247 86 H262" marker-end="url(#dg-e2e-speech-head)"/>
+            <path class="dg-arrow" d="M397 86 H412" marker-end="url(#dg-e2e-speech-head)"/>
+            <path class="dg-arrow" d="M547 86 H562" marker-end="url(#dg-e2e-speech-head)"/>
+            <path class="dg-arrow" d="M697 86 H712" marker-end="url(#dg-e2e-speech-head)"/>
+            <path class="dg-arrow" d="M847 86 H862" marker-end="url(#dg-e2e-speech-head)"/>
+            <text class="dg-caption" x="480" y="154">each stage has its own data, goal and experts, and passes on only what it was designed to pass on</text>
+            <text class="dg-heading dg-start" x="16" y="194">End to end: from 2014 (Deep Speech), today Whisper</text>
+            <rect class="dg-box dg-box--blue" x="14" y="212" width="80" height="92" rx="12"/><text class="dg-heading" x="54" y="250">Audio</text><text class="dg-small" x="54" y="272">sound wave</text>
+            <rect class="dg-box dg-box--violet" x="116" y="212" width="578" height="92" rx="12"/>
+            <path class="dg-edge" d="M150 244 H660"/>
+            <rect x="142" y="222" width="16" height="44" rx="3" style="fill:var(--dg-violet-line)"/>
+            <rect x="227" y="222" width="16" height="44" rx="3" style="fill:var(--dg-violet-line)"/>
+            <rect x="312" y="222" width="16" height="44" rx="3" style="fill:var(--dg-violet-line)"/>
+            <rect x="397" y="222" width="16" height="44" rx="3" style="fill:var(--dg-violet-line)"/>
+            <rect x="482" y="222" width="16" height="44" rx="3" style="fill:var(--dg-violet-line)"/>
+            <rect x="567" y="222" width="16" height="44" rx="3" style="fill:var(--dg-violet-line)"/>
+            <rect x="652" y="222" width="16" height="44" rx="3" style="fill:var(--dg-violet-line)"/>
+            <text x="405" y="286">one network: every layer learns its features for the task</text>
+            <rect class="dg-box dg-box--green" x="716" y="212" width="128" height="92" rx="12"/><text class="dg-heading" x="780" y="250">Text</text><text class="dg-small" x="780" y="272">the words</text>
+            <rect class="dg-box dg-box--pink" x="866" y="212" width="80" height="92" rx="12"/><text style="font-weight:650;fill:var(--ink)" x="906" y="242">One loss</text><text class="dg-small" x="906" y="264">against the</text><text class="dg-small" x="906" y="282">transcript</text>
+            <path class="dg-arrow" d="M97 258 H112" marker-end="url(#dg-e2e-speech-head)"/>
+            <path class="dg-arrow" d="M697 258 H712" marker-end="url(#dg-e2e-speech-head)"/>
+            <path class="dg-arrow" d="M847 258 H862" marker-end="url(#dg-e2e-speech-head)"/>
+            <path class="dg-arrow" style="stroke:var(--dg-violet-line);stroke-dasharray:8 6" d="M906 308 V332 H150 V310" marker-end="url(#dg-e2e-speech-grad)"/>
+            <text class="dg-caption dg-ink--violet" x="528" y="352">the gradient of the one loss goes back through every layer, down to the first</text>
+          </svg>
+
+          <p>
+            Speech recognition shows both. Until the early 2010s a recognizer was a pipeline: MFCC features, an acoustic
+            model of how each speech sound looks in those features (hidden Markov models with Gaussian mixtures), a
+            pronunciation dictionary written by experts, a language model trained on text, and a decoder that searched for
+            the most probable sentence. Each part had its own data, its own goal and its own experts. End-to-end
+            recognizers, from <a href="https://proceedings.mlr.press/v32/graves14.html" target="_blank" rel="noopener">Graves
+            and Jaitly</a> and Deep Speech in 2014, map the sound, as a spectrogram, to characters with one network.
+            Whisper (2022) maps 30 seconds of audio to text with one Transformer, trained on 680,000 hours of transcribed
+            audio.
+          </p>
+
+          <p>
+            In code, the difference is where the loss stops:
+          </p>
+
+          <pre class="sh_python code-highlight"><code># A pipeline: the features are fixed; only the last stage ever sees the labels.
+features = hog(images)                    # edge histograms designed by hand, never updated
+classifier = SVC().fit(features, labels)  # learns from whatever HOG happened to keep
+
+# End to end: one network from the pixels to the class scores, and one loss.
+model = nn.Sequential(
+    nn.Conv2d(3, 32, 3), nn.ReLU(),       # the first-layer filters are learned too
+    nn.Flatten(), nn.LazyLinear(10))
+loss = F.cross_entropy(model(images), labels)
+loss.backward()                           # the gradient of the task's loss reaches the first filters
+optimizer.step()</code></pre>
+
+          <h2 class="material-heading" id="end-to-end-representations">Two halves of one idea</h2>
+
+          <p>
+            Representation learning says that features can be learned rather than designed. End-to-end learning says what
+            to learn them for: the final goal, together with everything else. A network is a composition of differentiable
+            functions, so one loss can train all of them at once. An <a href="#autoencoders">autoencoder</a> also learns a
+            representation, but for a stand-in goal: to reconstruct its input. If its code is then given to a separate
+            classifier, the system is a two-stage pipeline again, and whether the code keeps what the classifier needs is
+            left to chance.
+          </p>
+
+          <p>
+            The figure below shows the difference in the smallest possible case. Every interface between two stages is a
+            bottleneck: a later stage sees only what an earlier one passes on. Here the bottleneck is one number. Each
+            point <span class="math">x</span> of the plane is replaced by its position <span class="math">z = w \cdot x</span>
+            along a line, and a <a href="../week3/#logistic-regression">logistic regression</a> classifier decides from
+            <span class="math">z</span> alone. The pipeline chooses the line without the labels: the direction in which the
+            points vary the most, called the <b>first principal component</b>. One number along that line keeps more of each
+            point than along any other, which is a good goal for compressing the data, but a stand-in goal for the task.
+            The end-to-end model starts where the pipeline ends, with the same line and the same classifier, and trains
+            the line and the classifier together, on the loss of the classifier.
+          </p>
+
+          <figure class="viz" data-viz="endtoend">
+            <figcaption class="viz__caption">
+              Each point is squeezed into one number <span class="math">z</span>, its position along a line, and a
+              classifier <span class="math">p = \sigma(a z + b)</span> decides from <span class="math">z</span> alone. The
+              pipeline (dashed line) uses the first principal component and fits only <span class="math">a</span> and
+              <span class="math">b</span>. <b>Train end to end</b> runs gradient descent on the mean log-loss for the
+              direction of the line and the classifier together (solid line). The strips show <span class="math">z</span> for
+              every point, class 0 above and class 1 below, with the threshold of the classifier; ringed points are
+              misclassified. When the classes differ across the cloud, what the classifier needs is in the direction that
+              the pipeline throws away. When they differ along the cloud, the stand-in goal agrees with the task, and the
+              two do equally well.
+            </figcaption>
+          </figure>
+
+          <h2 class="material-heading" id="end-to-end-history">Why it won</h2>
+
+          <ul>
+            <li><b>Images.</b> In 2012 AlexNet, a convolutional network that learned its features from the pixels, cut the
+              top-5 error in the ImageNet competition from 26% to 15%, against systems built on designed features. By 2014
+              the leading entries were all convolutional networks.</li>
+            <li><b>Translation.</b> Sequence-to-sequence networks (2014) translated with one network trained on pairs of
+              sentences, instead of phrase-based systems with separate models for word alignment, phrase tables, word order
+              and the target language.</li>
+            <li><b>Speech.</b> End-to-end recognizers have become the standard, from voice assistants to the subtitles of
+              videos.</li>
+            <li><b>Driving.</b> In 2016 NVIDIA trained a convolutional network to map the image of a front camera directly
+              to a steering angle, learned from human drivers, with no lane detection or path planning written into
+              it.</li>
+          </ul>
+
+          <p>
+            The reasons are the same each time. No interface made by hand throws information away. The stages cannot pass
+            each other errors that no later stage was trained to correct. And the system is optimized for the measure of
+            success itself, not for stand-ins chosen by people. Rich Sutton calls the general lesson of 70 years of AI
+            research <i>the bitter lesson</i>: general methods that make use of more computation have beaten methods that
+            build in human knowledge, again and again.
+          </p>
+
+          <h2 class="material-heading" id="end-to-end-cost">What it costs</h2>
+
+          <ul>
+            <li><b>Data.</b> A model that builds in no knowledge has to learn everything from examples, so end-to-end
+              training needs many input&ndash;output pairs. With few of them, a pipeline that builds in what experts know can
+              do better.</li>
+            <li><b>Insight and control.</b> The intermediate representations are not designed to mean anything, so they are
+              hard to inspect, test or certify one at a time. Explainability (<a href="../week7/">Week 7</a>) is harder for
+              one large model than for a chain of small parts that people understand.</li>
+            <li><b>Reuse.</b> A stage of a pipeline, such as a speech recognizer or a parser, can be reused and improved on
+              its own. An end-to-end model is trained for one task, unless it is trained for many at once, which is the idea
+              of the foundation models below.</li>
+          </ul>
+
+          <h2 class="material-heading" id="end-to-end-today">End-to-end learning today</h2>
+
+          <p>
+            End-to-end training is now the default for large models:
+          </p>
+
+          <ul>
+            <li><b>Language models</b> learn from text to the next token with one loss (<a href="../week5/">Week 5</a>).
+              The tokenizer, which splits the text into tokens, is the main stage that is still made separately.</li>
+            <li><b>Speech.</b> Whisper and its successors map audio to text, or speech in one language to speech in another,
+              with one network.</li>
+            <li><b>Driving</b> is moving from modular stacks towards it. UniAD (best paper at CVPR 2023) trains tracking,
+              mapping, motion forecasting, occupancy prediction and planning together for the planning goal. Tesla says that
+              from version 12 (2024) its driving software is a network trained on millions of video clips, in place of
+              hand-written driving code.</li>
+            <li><b>Robots.</b> Vision-language-action models such as RT-2 (2023), OpenVLA (2024) and
+              &pi;<sub>0</sub> (2024) map camera images and an instruction in words directly to motor commands. They learn,
+              as one model, the loop of sensing, perception, planning and control that
+              <a href="../week6/#robots-agents-with-bodies">Week 6</a> separates into stages, as most robots in use still
+              do.</li>
+          </ul>
+
+          <svg class="dg" viewBox="0 0 960 476" role="img" aria-label="Three ways to connect the stages of a self-driving car or a robot. Top, modular: cameras and lidar, perception, prediction, planning and control, each stage made or trained on its own, with people deciding what passes between them. Middle, end to end with checkpoints (UniAD, 2023): one network computes tracks, a map, motion forecasts, occupancy and the plan, trained together for the plan while each intermediate output is still checked. Bottom, fully end to end (NVIDIA 2016, Tesla FSD v12 in 2024, and robot models such as RT-2 and pi zero): cameras, and for a robot an instruction, go into one network that outputs the actions, trained with one loss to imitate examples.">
+            <defs><marker id="dg-e2e-drive-head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrowhead" d="M0,0 L10,5 L0,10 z"/></marker></defs>
+            <text class="dg-heading dg-start" x="16" y="20">Modular: separate stages, as in most cars and robots in use</text>
+            <rect class="dg-box dg-box--blue" x="20" y="40" width="164" height="84" rx="12"/><text class="dg-heading" x="102" y="70">Sensors</text><text class="dg-small" x="102" y="96">cameras, lidar, radar</text>
+            <rect class="dg-box dg-box--violet" x="209" y="40" width="164" height="84" rx="12"/><text class="dg-heading" x="291" y="70">Perception</text><text class="dg-small" x="291" y="96">objects, lanes, signs</text>
+            <rect class="dg-box dg-box--pink" x="398" y="40" width="164" height="84" rx="12"/><text class="dg-heading" x="480" y="70">Prediction</text><text class="dg-small" x="480" y="96">where others will go</text>
+            <rect class="dg-box dg-box--amber" x="587" y="40" width="164" height="84" rx="12"/><text class="dg-heading" x="669" y="70">Planning</text><text class="dg-small" x="669" y="96">rules, optimization</text>
+            <rect class="dg-box dg-box--green" x="776" y="40" width="164" height="84" rx="12"/><text class="dg-heading" x="858" y="70">Control</text><text class="dg-small" x="858" y="96">steering, speed</text>
+            <path class="dg-arrow" d="M188 82 H205" marker-end="url(#dg-e2e-drive-head)"/>
+            <path class="dg-arrow" d="M377 82 H394" marker-end="url(#dg-e2e-drive-head)"/>
+            <path class="dg-arrow" d="M566 82 H583" marker-end="url(#dg-e2e-drive-head)"/>
+            <path class="dg-arrow" d="M755 82 H772" marker-end="url(#dg-e2e-drive-head)"/>
+            <text class="dg-caption" x="480" y="146">each stage made or trained on its own; people decide what passes between them</text>
+            <text class="dg-heading dg-start" x="16" y="186">End to end with checkpoints: UniAD (2023)</text>
+            <rect class="dg-box dg-box--blue" x="20" y="204" width="164" height="100" rx="12"/><text class="dg-heading" x="102" y="244">Sensors</text><text class="dg-small" x="102" y="270">cameras all around</text>
+            <rect class="dg-box dg-box--violet" x="209" y="204" width="542" height="100" rx="12"/>
+            <rect x="225" y="216" width="86" height="36" rx="8" style="fill:var(--surface);stroke:var(--dg-violet-line);stroke-width:1.5"/><text x="268" y="234">tracks</text>
+            <rect x="331" y="216" width="86" height="36" rx="8" style="fill:var(--surface);stroke:var(--dg-violet-line);stroke-width:1.5"/><text x="374" y="234">map</text>
+            <rect x="437" y="216" width="86" height="36" rx="8" style="fill:var(--surface);stroke:var(--dg-violet-line);stroke-width:1.5"/><text x="480" y="234">motion</text>
+            <rect x="543" y="216" width="86" height="36" rx="8" style="fill:var(--surface);stroke:var(--dg-violet-line);stroke-width:1.5"/><text x="586" y="234">occupancy</text>
+            <rect x="649" y="216" width="86" height="36" rx="8" style="fill:var(--surface);stroke:var(--dg-violet-line);stroke-width:2.5"/><text style="font-weight:650;fill:var(--ink)" x="692" y="234">plan</text>
+            <path class="dg-arrow" d="M313 234 H327" marker-end="url(#dg-e2e-drive-head)"/>
+            <path class="dg-arrow" d="M419 234 H433" marker-end="url(#dg-e2e-drive-head)"/>
+            <path class="dg-arrow" d="M525 234 H539" marker-end="url(#dg-e2e-drive-head)"/>
+            <path class="dg-arrow" d="M631 234 H645" marker-end="url(#dg-e2e-drive-head)"/>
+            <text class="dg-small" x="480" y="282">one network, trained together for the plan; every output on the way is still checked</text>
+            <rect class="dg-box dg-box--green" x="776" y="204" width="164" height="100" rx="12"/><text class="dg-heading" x="858" y="244">Control</text><text class="dg-small" x="858" y="270">steering, speed</text>
+            <path class="dg-arrow" d="M188 254 H205" marker-end="url(#dg-e2e-drive-head)"/>
+            <path class="dg-arrow" d="M755 254 H772" marker-end="url(#dg-e2e-drive-head)"/>
+            <text class="dg-heading dg-start" x="16" y="342">Fully end to end: NVIDIA (2016), Tesla FSD v12 (2024), robots: RT-2, π₀</text>
+            <rect class="dg-box dg-box--blue" x="20" y="360" width="164" height="84" rx="12"/><text class="dg-heading" x="102" y="390">Sensors</text><text class="dg-small" x="102" y="416">cameras (+ instruction)</text>
+            <rect class="dg-box dg-box--violet" x="209" y="360" width="542" height="84" rx="12"/><text class="dg-heading" x="480" y="390">One network</text><text class="dg-small" x="480" y="416">learned from examples of driving, or of the task</text>
+            <rect class="dg-box dg-box--green" x="776" y="360" width="164" height="84" rx="12"/><text class="dg-heading" x="858" y="390">Actions</text><text class="dg-small" x="858" y="416">steering, or arm motions</text>
+            <path class="dg-arrow" d="M188 402 H205" marker-end="url(#dg-e2e-drive-head)"/>
+            <path class="dg-arrow" d="M755 402 H772" marker-end="url(#dg-e2e-drive-head)"/>
+            <text class="dg-caption" x="480" y="466">one loss on the actions: imitate the examples</text>
+          </svg>
+
+          <p>
+            Two qualifications keep this from being the whole story:
+          </p>
+
+          <ul>
+            <li><b>Pretrain, then fine-tune.</b> The need for data is met by pretraining one large model end to end on broad
+              data, with a goal that needs no labels, such as predicting the next token, and then fine-tuning it for a task
+              (<a href="../week5/#transfer-and-adaptation">transfer and adaptation</a> in Week 5). Often only a small part of
+              the weights is changed (adapters, LoRA).</li>
+            <li><b>End to end inside, modular outside.</b> The systems built around a model are modular again. A
+              retrieval-augmented assistant combines a search index, a retriever and a language model, and an agent
+              (<a href="../week6/">Week 6</a>) calls tools. These parts are trained separately and connected by text, not
+              trained together. Safety-critical systems keep outputs that people can check, as UniAD does with its
+              intermediate results.</li>
+          </ul>
+
+          <p>
+            So the question is no longer whether to learn end to end, but where the ends are: which parts are trained
+            together on one loss, and where people keep an interface that they can read, test and replace.
+          </p>
+
+          <h2 class="material-heading" id="end-to-end-reading">Further reading</h2>
+
+          <ul>
+            <li>LeCun, Bottou, Bengio and Haffner (1998), <a href="https://doi.org/10.1109/5.726791" target="_blank" rel="noopener"><i>Gradient-based
+              learning applied to document recognition</i></a>, Proceedings of the IEEE 86(11): an early case for training
+              a whole recognition system with one loss.</li>
+            <li>Krizhevsky, Sutskever and Hinton (2012), <a href="https://papers.nips.cc/paper/2012/hash/c399862d3b9d6b76c8436e924a68c45b-Abstract.html" target="_blank" rel="noopener"><i>ImageNet
+              classification with deep convolutional neural networks</i></a>, NeurIPS (AlexNet).</li>
+            <li>Graves and Jaitly (2014), <a href="https://proceedings.mlr.press/v32/graves14.html" target="_blank" rel="noopener"><i>Towards
+              end-to-end speech recognition with recurrent neural networks</i></a>, ICML.</li>
+            <li>Sutskever, Vinyals and Le (2014), <a href="https://arxiv.org/abs/1409.3215" target="_blank" rel="noopener"><i>Sequence
+              to sequence learning with neural networks</i></a>, NeurIPS.</li>
+            <li>Bojarski et al. (2016), <a href="https://arxiv.org/abs/1604.07316" target="_blank" rel="noopener"><i>End to end
+              learning for self-driving cars</i></a>.</li>
+            <li>Glasmachers (2017), <a href="https://arxiv.org/abs/1704.08305" target="_blank" rel="noopener"><i>Limits of
+              end-to-end learning</i></a>, ACML: when training everything at once fails, and how modules help.</li>
+            <li>Radford et al. (2022), <a href="https://arxiv.org/abs/2212.04356" target="_blank" rel="noopener"><i>Robust
+              speech recognition via large-scale weak supervision</i></a> (Whisper).</li>
+            <li>Hu et al. (2023), <a href="https://arxiv.org/abs/2212.10156" target="_blank" rel="noopener"><i>Planning-oriented
+              autonomous driving</i></a>, CVPR (UniAD).</li>
+            <li>Brohan et al. (2023), <a href="https://arxiv.org/abs/2307.15818" target="_blank" rel="noopener"><i>RT-2:
+              vision-language-action models transfer web knowledge to robotic control</i></a>.</li>
+            <li>Rich Sutton (2019), <a href="http://www.incompleteideas.net/IncIdeas/BitterLesson.html" target="_blank" rel="noopener"><i>The
+              bitter lesson</i></a>: a one-page essay.</li>
           </ul>
         </section>
 

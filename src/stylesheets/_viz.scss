@@ -352,6 +352,25 @@
   }
 }
 
+// The one-number strips of the end-to-end figure (Week 4): a label above each strip.
+.vz-strips {
+  display: grid;
+  gap: .6rem;
+  margin-top: .85rem;
+}
+
+.vz-strip__label {
+  margin: 0 0 .3rem;
+  font-size: .8125rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.vz-strip__score {
+  font-weight: 500;
+  color: var(--muted);
+}
+
 .vz-math {
   font-family: var(--font-mono);
   font-size: .8125rem;
