@@ -878,6 +878,9 @@ Remember: the Max nodes (for example the root node) update only the <code>alpha<
 == ec6ca86f
 The steps follow the <code>max_value</code> and <code>min_value</code> pseudocode above. They start with <code>alpha = -∞</code> and <code>beta = +∞</code> at the root. A value with the mark ≥ or ≤ is only a bound: the node stopped early, or its value comes from a child that stopped early. The algorithm did not look at the grey leaf values yet. With <b>Best child first</b>, each node examines its best child first, and the algorithm prunes more of the tree.
 
+== 155218b4
+There is another good example in the lecture notes of Bruce Rosen for <i>Fundamentals of Artificial Intelligence - CS161</i> at UCLA: <a href="https://web.archive.org/web/20210621074753/https://web.cs.ucla.edu/~rosen/161/notes/alphabeta.html">here</a>. Only its colors are not good. Rosen shows clearly that the algorithm adds the nodes to the tree one at a time while it runs. The algorithm does not run on a tree that is already full. Many diagrams, also the diagrams in this material, show a full tree, and thus they can give the wrong idea (we are sorry!). In the example of Rosen, the value of the game can also be different from –1, 0 or +1. The algorithm starts at the root with <code>alpha = –∞</code> and <code>beta = ∞</code>.
+
 == 5fa78877
 Maxine wants to play again: the best of three games! Minnie agrees. After some time, they get to this position:
 

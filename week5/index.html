@@ -94,7 +94,7 @@
           <p class="page-hero__eyebrow"><b>Week 5</b><span>of 7</span></p>
           <h1 class="page-hero__title">Modern Architectures and Foundation-Model Applications</h1>
           <ul class="page-hero__meta" aria-label="About this page">
-            <li><i class="fa-regular fa-clock" aria-hidden="true"></i>51 min read</li>
+            <li><i class="fa-regular fa-clock" aria-hidden="true"></i>53 min read</li>
             <li><i class="fa fa-pencil" aria-hidden="true"></i>6 exercises</li>
             <li class="page-hero__progress"><i class="fa fa-check" aria-hidden="true"></i>0 of 6 done</li>
           </ul>
@@ -2401,18 +2401,19 @@ git checkout 3adf61e1</code></pre>
 	
 	<ul>
 	  <li>
-	    <strong>Stable Diffusion</strong> – Openly available model weights, released under the CreativeML
-	    Open RAIL-M licence, which forbids some uses (so not open source in the OSI sense).
-	    <a href="https://github.com/CompVis/stable-diffusion" target="_blank" rel="noopener">GitHub</a>
+	    <strong>Stable Diffusion</strong> – Openly available models from Stability AI. The first version (2022)
+	    brought text-to-image generation to people's own computers. The latest, Stable Diffusion 3.5 (2024), is
+	    free for research and for organisations with less than $1 million in annual revenue (Stability AI Community
+	    License), so it is not open source in the OSI sense.
+	    <a href="https://github.com/Stability-AI/sd3.5" target="_blank" rel="noopener">GitHub</a>
 	  </li>
 	  <li>
-	    <strong>DALLE 2</strong> – Was available via OpenAI's paid API until OpenAI retired its DALL·E
-	    models in May 2026; OpenAI's GPT Image models replaced them.
-	    <a href="https://openai.com/index/dall-e-2/" target="_blank" rel="noopener">More Info</a>
+	    <strong>GPT Image</strong> – OpenAI's image models, used in ChatGPT and available through its paid API.
+	    They replaced OpenAI's DALL·E models, which were removed from the API in May 2026.
+	    <a href="https://en.wikipedia.org/wiki/GPT_Image" target="_blank" rel="noopener">More Info</a>
 	  </li>
 	  <li>
 	    <strong>Midjourney</strong> – Available via its website and Discord.
-	    <a href="https://www.midjourney.com/home" target="_blank" rel="noopener">Official Site</a>
 	  </li>
 	  <li>
 	    <strong>Imagen</strong> – A text-to-image model by Google AI. 
@@ -2421,6 +2422,26 @@ git checkout 3adf61e1</code></pre>
 	</ul>
 	
 	<img src="../img/material/part5/text-to-image-generation-1200.webp" srcset="../img/material/part5/text-to-image-generation-1200.webp 1200w, ../img/material/part5/text-to-image-generation.webp 2560w" sizes="(min-width: 992px) 583px, 70vw" alt="Example of text-to-image generation" width="70%" loading="lazy" decoding="async" style="aspect-ratio: 2560 / 512">
+
+	<div class="note">
+	  <p>
+	    <b>Note:</b> Text-to-image generation has changed a lot since this section was written. As of November 2026,
+	    the best-known image generators are built into multimodal chat assistants: OpenAI's GPT Image in ChatGPT and
+	    Google's Gemini image models, known as "Nano Banana". Because the model that follows the conversation also
+	    makes the picture, you can refine an image over several turns, and text in images now usually comes out
+	    spelled right. OpenAI describes its image generation as autoregressive, like the first DALL-E above, rather
+	    than as a diffusion model.
+	  </p>
+	  <p>
+	    Leading openly available models, such as
+	    <a href="https://github.com/black-forest-labs/flux2" target="_blank" rel="noopener">FLUX.2</a> from Black
+	    Forest Labs (founded by researchers behind Stable Diffusion) and
+	    <a href="https://github.com/QwenLM/Qwen-Image" target="_blank" rel="noopener">Qwen-Image</a> from Alibaba,
+	    still turn noise into an image step by step, as diffusion models do, but they replace the convolutional
+	    U-Net of the original Stable Diffusion with a Transformer, the architecture from the first part of this
+	    week. Similar models now generate video with sound, for example Google's Veo and OpenAI's Sora.
+	  </p>
+	</div>
 
 	<p>
 	  There are now dedicated databases for AI-generated images:
@@ -2434,15 +2455,9 @@ git checkout 3adf61e1</code></pre>
 	
 	<ul>
 	  <li>
-	    <strong>Illustrations for books</strong> – 
-	    <a href="https://www.reddit.com/r/midjourney/comments/x4kk0r/i_created_a_graphic_novel_using_mj_and_now_its_on/" target="_blank" rel="noopener">
-	      Example on Reddit
-	    </a>
-	  </li>
-	  <li>
 	    <strong>Logo creation</strong> – 
-	    <a href="https://kubamartin.com/posts/how-i-used-dalle2-to-generate-the-logo-for-octosql/" target="_blank" rel="noopener">
-	      Case study using DALL·E 2
+	    <a href="https://www.recraft.ai/" target="_blank" rel="noopener">
+	      Recraft: logos and icons as vector graphics
 	    </a>
 	  </li>
 	  <li>
@@ -2480,10 +2495,20 @@ git checkout 3adf61e1</code></pre>
 	    <a href="https://www.photoroom.com/" target="_blank" rel="noopener">Background remover and AI editor</a>
 	  </li>
 	  <li>
-	    <strong>ZMO</strong> – 
-	    <a href="https://www.zmo.ai/" target="_blank" rel="noopener">AI image generation and enhancement</a>
+	    <strong>Krita AI Diffusion</strong> –
+	    <a href="https://github.com/Acly/krita-ai-diffusion" target="_blank" rel="noopener">Open-source inpainting and outpainting in the Krita painting program</a>
 	  </li>
 	</ul>
+
+	<div class="note">
+	  <p>
+	    <b>Note:</b> As of November 2026, removing objects with inpainting is a standard feature of the photo apps on
+	    phones, for example Magic Eraser in Google Photos, Generative Edit on Samsung Galaxy phones and Clean Up in
+	    Apple Photos. The chat assistants in the note above go further: they edit an image from an instruction
+	    alone, such as "remove the people in the background and make it evening", without the user marking the area
+	    to change. Openly available models such as FLUX.1 Kontext and Qwen-Image-Edit can do this too.
+	  </p>
+	</div>
 	
 	<p>
 	  Modern generative models have achieved remarkable quality and are now being actively used
@@ -2656,70 +2681,6 @@ git checkout 3adf61e1</code></pre>
 	  in areas such as image translation and controllable synthesis. Their unstable training and limited mode coverage
 	  also help explain why other generative approaches are often preferred for general-purpose generation today.
 	</p>
-
-
-<!-- <h2> Exercise on Stable diffusion</h2> -->
-<!-- 
-        <div class="exercise">
-          <div class="exercise__header">
-            <a data-bs-toggle="collapse" class="exercise__toggle">
-              <i class="fa fa-pencil exercise__icon"></i>
-              <h1 class="exercise__heading">Image Generation Using Stable Diffusion (0.5p)</h1>
-              <i class="fa fa-caret-down exercise__arrow"></i>
-            </a>
-          </div>
-
-          <div class="collapse">
-            <div class="exercise__body">
-
-              <p>As most diffusion models are quite big and difficult to run on local hardware, we will use open-source
-                free diffusion models for image generation. As it turns out there are quite a lot of websites that host
-                diffusion models that can generate any image given a texual prompt. <a
-                  href="https://medium.com/rendernet/top-5-free-stable-diffusion-generation-websites-in-2023-d76f54e38831">Here
-                  is medium article about this.</a> Though most of these websites have limited number of tries for
-                generating images, we will use one that has unlimited use for learning purposes.</p>
-
-              <p><b>Open the Stable Diffusion 2.1 Demo from hugging face:</b><br>
-                Go to <a href="https://huggingface.co/spaces/stabilityai/stable-diffusion" target="_blank" rel="noopener">Stable
-                  Diffusion 2.1 Demo</a> in your web
-                browser.</p>
-
-              <p><b>Task 1: Test out Image generation ability of the model.</b></p>
-              <ul>
-                <li>Start with the default example exercises at the bottom of the website.</li>
-                <li>Change the <code>prompt</code> and <code>negative prompt</code> next to the "Generate image" box.
-                </li>
-                <li>Observe how it generates images.</li>
-              </ul>
-
-              <p><b>Task 2: Use advanced settings.</b></p>
-              <ul>
-                <li>Change the "Guidance Scale" slider under "Advanced settings". (It goes up from 0 to 50)</li>
-                <li>Observe how changing the "Guidance Scale" changes the results. </li>
-                <li>Why does this happen? Find out the idea behind <code>prompt</code> and <code>negative prompt</code>
-                  in diffusion models.</li>
-              </ul>
-
-              <p><b>Task 3: Generate realistic images of people holding things.</b></p>
-
-              <ul>
-                <li>Write this sentence to the <code>prompt</code> section. "A person holding an apple in their hand."
-                  (Without the quotes).</li>
-                <li>Change the <code>negative prompt</code> and "Guidance Scale" however you see fit to create the most
-                  realistic looking picture possible. Try out at least 5 combinations.</li>
-                <li> Notice that for some reason, diffusion models are really bad at generating hands and fingers (For
-                  now, at least!). Try to find out why that is the case. </li>
-              </ul>
-
-              <p><b>Results:</b><br>
-                Keep a screenshot of each configuration of <code>prompt</code> and <code>negative prompts</code> with
-                the corresponding generated pictures (at least 5!). Write short answers to the questions provided above.
-                Add these to a file.</p>
-
-
-            </div>
-          </div>
-        </div> -->
 
         <!-- Exercise 5.6 -->
         <div class="exercise">

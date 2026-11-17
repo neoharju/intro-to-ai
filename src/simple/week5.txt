@@ -518,17 +518,23 @@ Generative models can <strong>fill missing parts of images</strong>. This is use
 == bfda281c
 In the last years, models that make images from text descriptions became much better. Some of the best known models are:
 
-== 39192e56
-<strong>Stable Diffusion</strong>: the model weights are openly available. They are released under the CreativeML Open RAIL-M licence, which does not allow some uses. Thus, it is not open source in the OSI meaning. <a href="https://github.com/CompVis/stable-diffusion" target="_blank" rel="noopener">GitHub</a>
+== 4b65d72d
+<strong>Stable Diffusion</strong>: openly available models from Stability AI. With the first version (2022), people could make images from text on their own computers. The latest version, Stable Diffusion 3.5 (2024), is free for research and for organisations with less than $1 million of revenue in one year (Stability AI Community License). Thus, it is not open source in the OSI meaning. <a href="https://github.com/Stability-AI/sd3.5" target="_blank" rel="noopener">GitHub</a>
 
-== b1f2ea86
-<strong>DALLE 2</strong>: it was available through the paid API of OpenAI until May 2026. Then OpenAI stopped its DALL·E models, and its GPT Image models replaced them. <a href="https://openai.com/index/dall-e-2/" target="_blank" rel="noopener">More Info</a>
+== cca9cb8e
+<strong>GPT Image</strong>: the image models of OpenAI. You can use them in ChatGPT and through the paid API of OpenAI. They replaced the DALL·E models of OpenAI, which OpenAI removed from its API in May 2026. <a href="https://en.wikipedia.org/wiki/GPT_Image" target="_blank" rel="noopener">More Info</a>
 
-== ef724f77
-<strong>Midjourney</strong>: available through its website and Discord. <a href="https://www.midjourney.com/home" target="_blank" rel="noopener">Official Site</a>
+== 845dcc93
+<strong>Midjourney</strong>: available through its website and Discord.
 
 == f858bd37
 <strong>Imagen</strong>: a text-to-image model from Google AI. <a href="https://imagen.research.google/" target="_blank" rel="noopener">More Info</a>
+
+== 7197078a
+<b>Note:</b> Text-to-image generation changed very much after we wrote this section. In November 2026, the best-known image generators are part of multimodal chat assistants: GPT Image from OpenAI in ChatGPT, and the Gemini image models from Google, with the name "Nano Banana". The model that follows the conversation also makes the image. Thus, you can make an image better in some steps, and the text in images is now usually correct. OpenAI says that its image generation is autoregressive, as the first DALL-E above, and not a diffusion model.
+
+== a730da53
+Some of the best openly available models are <a href="https://github.com/black-forest-labs/flux2" target="_blank" rel="noopener">FLUX.2</a> from Black Forest Labs (researchers who worked on Stable Diffusion started this company) and <a href="https://github.com/QwenLM/Qwen-Image" target="_blank" rel="noopener">Qwen-Image</a> from Alibaba. Like diffusion models, they change noise into an image step by step. But they use a Transformer (the architecture from the first part of this week) in place of the convolutional U-Net of the first Stable Diffusion. Similar models now make video with sound, for example Veo from Google and Sora from OpenAI.
 
 == 8c6864e9
 There are now special databases for images that AI made: <a href="https://lexica.art/" target="_blank" rel="noopener">Lexica</a> and <a href="https://openart.ai/" target="_blank" rel="noopener">Openart</a>.
@@ -541,6 +547,9 @@ Also, some models can combine more than one task, for example inpainting from te
 
 == c48286d7
 There are now some image editors with built-in generative models that use this technology:
+
+== 872f2902
+<b>Note:</b> In November 2026, the photo apps of phones usually remove objects with inpainting, for example Magic Eraser in Google Photos, Generative Edit on Samsung Galaxy phones and Clean Up in Apple Photos. The chat assistants in the note above can do more: they can change an image from only an instruction, for example "remove the people in the background and make it evening". The user does not have to mark the area to change. Openly available models, for example FLUX.1 Kontext and Qwen-Image-Edit, can also do this.
 
 == d0dd6586
 Modern generative models have very good quality. As this section shows, people now use them actively in real-world applications.

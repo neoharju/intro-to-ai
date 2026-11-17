@@ -24,7 +24,7 @@ copy is for non-commercial use only.
 
 ## What I changed
 
-The course staff's own updates are included up to commit `14853c2` of the original `gh-pages` branch
+The course staff's own updates are included up to commit `8764704` of the original `gh-pages` branch
 (November 2026).
 
 Compared with the original material:
