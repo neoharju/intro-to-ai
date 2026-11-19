@@ -94,7 +94,7 @@
           <p class="page-hero__eyebrow"><b>Week 4</b><span>of 7</span></p>
           <h1 class="page-hero__title">Neural Networks</h1>
           <ul class="page-hero__meta" aria-label="About this page">
-            <li><i class="fa-regular fa-clock" aria-hidden="true"></i>1 h 2 min read</li>
+            <li><i class="fa-regular fa-clock" aria-hidden="true"></i>1 h 15 min read</li>
             <li><i class="fa fa-pencil" aria-hidden="true"></i>5 exercises</li>
             <li class="page-hero__progress"><i class="fa fa-check" aria-hidden="true"></i>0 of 5 done</li>
           </ul>
@@ -208,7 +208,7 @@
           not explain intelligence, understanding or reliable behaviour.
         </p>
 
-        <h1 class="material-heading" id="episode7">From perceptrons to learning</h1>
+        <h1 class="material-heading" id="episode7">Neural Networks I: from perceptrons to learning</h1>
 
         <h2 class="material-heading" id="neural-history">Historical context: an old idea, several different research traditions</h2>
 
@@ -255,6 +255,32 @@
           <a href="https://doi.org/10.1038/323533a0" target="_blank" rel="noopener">Rumelhart, Hinton &amp; Williams (1986)</a>;
           <a href="https://www.nobelprize.org/prizes/physics/2024/press-release/" target="_blank" rel="noopener">the 2024 Nobel announcement</a>.
           The broader narrative is developed in Goodfellow, Bengio and Courville (2016), Chapter 1.
+        </p>
+
+        <h2 class="material-heading" id="neural-computation">Neural computation</h2>
+
+        <p>
+          A Turing machine describes computation as a sequence of rule-governed steps. Natural nervous systems organize
+          computation differently: many neurons are active <b>in parallel</b>, signalling can be <b>stochastic</b>, and
+          connections can <b>adapt</b> with experience. This is a contrast in how computation is organized. Conventional
+          computers can still simulate neural networks, and parallel, adaptive computation does not establish that
+          neural networks compute functions outside the Turing-computable class. Most networks in this course run as
+          numerical programs on conventional digital hardware.
+        </p>
+
+        <p>
+          In <a href="../week1/#gofai-modern-ai">Week 1</a> we contrasted symbolic AI (GOFAI), which often uses explicit
+          symbols and rules, with learning-based approaches. Neural networks usually learn <b>subsymbolic</b>
+          representations: numerical patterns spread across many units, none of which needs to stand for a nameable
+          concept. The two approaches can coexist, and both run on digital computers, so <i>digital</i> is not the
+          distinction.
+        </p>
+
+        <p>
+          Some neural networks model probabilities; others, such as the perceptron below, return a deterministic
+          prediction for fixed inputs and weights. Neural networks are sometimes called <b>black boxes</b>: we can
+          inspect every weight and activation, yet it can be hard to explain why a large network made a particular
+          prediction. Brain inspiration also supplies no automatic evidence of consciousness or human-like understanding.
         </p>
 
         <h2 class="material-heading" id="brain-analogy">The brain analogy: copy an organizing idea, not a whole brain</h2>
@@ -322,14 +348,6 @@
         </p>
 
         <p>
-          <b>Connection to computation:</b> parallel, adaptive neural computation contrasts with the simple picture of a
-          sequential instruction-following program, but it does not establish that neural networks compute functions
-          outside the Turing-computable class. Most networks in this course run as numerical programs on conventional
-          digital hardware. Brain inspiration also supplies no automatic evidence of consciousness or human-like
-          understanding.
-        </p>
-
-        <p>
           <b>Biology reference:</b> the US National Institute of Neurological Disorders and Stroke,
           <a href="https://www.ninds.nih.gov/publications/know-your-brain-brain-basics" target="_blank" rel="noopener">Know Your Brain</a>.
           The comparison diagram here is a conceptual teaching schematic, not an anatomical or mechanistic model.
@@ -348,13 +366,25 @@
           </p>
         </details>
 
-        <h2 class="material-heading" id="inputs">What does the network actually receive?</h2>
+        <h2 class="material-heading" id="inputs">MNIST: from handwritten digits to network inputs</h2>
 
         <p>
-          A handwritten digit image might contain 28 by 28 grayscale pixels. A fully connected network can receive it as
-          a vector of 784 numbers. A pixel value is a measurement, not an instruction such as “this is the upper loop of an
-          eight.” The model must learn which combinations of measurements are useful. A training example pairs an input
-          <span class="math">x</span> with a target <span class="math">y</span>, such as the digit label 8.
+          The <b>MNIST</b> dataset, which you saw in
+          <a href="../week3/#example-handwritten-digit-recognition-mnist">Week 3</a>, contains handwritten digits labelled
+          0 through 9. Each image has <span class="math">28 \times 28</span> grayscale pixels. The standard dataset has
+          60,000 training images and 10,000 test images; some exercises use smaller subsets. A fully connected network
+          can receive an image as a vector of 784 numbers. A pixel value is a measurement, not an instruction such as
+          “this is the upper loop of an eight.” The model must learn which combinations of measurements are useful. A
+          training example pairs an input <span class="math">x</span> with a target <span class="math">y</span>, such as
+          the digit label 8.
+        </p>
+
+        <p>
+          <b>Same data, two tasks.</b> For a single perceptron, choose one digit and ask “Is this a 3?”: map 3 to the
+          positive class and every other digit to the negative class. The full task asks “Which digit is this?” and has
+          ten classes: a multilayer classifier can output ten scores, one per digit. A
+          <a href="#cnn">convolutional network</a> can instead keep the two-dimensional grid as its input, so that
+          neighbouring pixels stay neighbours.
         </p>
 
         <p>
@@ -558,36 +588,41 @@
           </tbody>
         </table>
 
-        <svg class="dg" viewBox="0 0 520 360" role="img" aria-label="The XOR pattern: blue points at (0, 0) and (1, 1), orange points at (0, 1) and (1, 0). No single straight line separates them; two dashed lines do.">
-          <path class="dg-axis" d="M90 290 H460 M90 290 V40"/>
-          <line class="dg-boundary dg-boundary--faint" x1="100" y1="125" x2="275" y2="300"/>
-          <line class="dg-boundary dg-boundary--faint" x1="250" y1="40" x2="440" y2="230"/>
-          <circle class="dg-dot--a" cx="160" cy="230" r="17"/><text class="dg-small" x="160" y="263">(0, 0)</text>
-          <circle class="dg-dot--a" cx="380" cy="90" r="17"/><text class="dg-small" x="380" y="123">(1, 1)</text>
-          <circle class="dg-dot--b" cx="160" cy="90" r="17"/><text class="dg-small" x="160" y="123">(0, 1)</text>
-          <circle class="dg-dot--b" cx="380" cy="230" r="17"/><text class="dg-small" x="380" y="263">(1, 0)</text>
-          <text class="dg-math dg-small" x="465" y="305">x₁</text><text class="dg-math dg-small" x="76" y="40">x₂</text>
-          <text class="dg-large" x="270" y="338">XOR needs two boundaries; one straight line is not enough</text>
+        <svg class="dg" viewBox="0 0 900 380" role="img" aria-label="Two plots of the four XOR inputs: class 0 (circles) at (0, 0) and (1, 1), class 1 (squares) at (0, 1) and (1, 0). Left: the line joining the two circles and the line joining the two squares cross at (½, ½), so no single straight line can put the two classes on different sides. Right: the parallel lines x₁ + x₂ = 0.5 and x₁ + x₂ = 1.5 enclose a shaded strip that contains exactly the two squares.">
+          <text class="dg-heading" x="215" y="22">One line cannot separate the classes</text>
+          <path class="dg-axis" d="M80 300 H345 M80 300 V45"/>
+          <text class="dg-small" x="110" y="318">0</text><text class="dg-small" x="280" y="318">1</text>
+          <text class="dg-small" x="66" y="270">0</text><text class="dg-small" x="66" y="100">1</text>
+          <text class="dg-math dg-small dg-start" x="352" y="300">x₁</text><text class="dg-math dg-small" x="80" y="34">x₂</text>
+          <line class="dg-boundary dg-boundary--faint" x1="84.5" y1="295.5" x2="305.5" y2="74.5"/>
+          <line class="dg-boundary dg-boundary--faint" x1="84.5" y1="74.5" x2="305.5" y2="295.5"/>
+          <circle class="dg-ring" cx="195" cy="185" r="10"/>
+          <text class="dg-small dg-start" x="213" y="185">(½, ½)</text>
+          <circle class="dg-dot--a" cx="110" cy="270" r="14"/><circle class="dg-dot--a" cx="280" cy="100" r="14"/>
+          <rect class="dg-dot--b" x="97" y="87" width="26" height="26" rx="3"/><rect class="dg-dot--b" x="267" y="257" width="26" height="26" rx="3"/>
+          <text class="dg-small" x="215" y="344">the diagonals of the two classes cross at (½, ½)</text>
+          <text class="dg-heading" x="665" y="22">Two parallel lines can</text>
+          <polygon class="dg-box dg-box--green" style="stroke:none" points="534.5,159.5 670.5,295.5 781,295.5 781,236 594,49 534.5,49"/>
+          <path class="dg-axis" d="M530 300 H795 M530 300 V45"/>
+          <text class="dg-small" x="560" y="318">0</text><text class="dg-small" x="730" y="318">1</text>
+          <text class="dg-small" x="516" y="270">0</text><text class="dg-small" x="516" y="100">1</text>
+          <text class="dg-math dg-small dg-start" x="802" y="300">x₁</text><text class="dg-math dg-small" x="530" y="34">x₂</text>
+          <line class="dg-boundary" x1="534.5" y1="159.5" x2="670.5" y2="295.5"/>
+          <line class="dg-boundary" x1="594" y1="49" x2="781" y2="236"/>
+          <circle class="dg-dot--a" cx="560" cy="270" r="14"/><circle class="dg-dot--a" cx="730" cy="100" r="14"/>
+          <rect class="dg-dot--b" x="547" y="87" width="26" height="26" rx="3"/><rect class="dg-dot--b" x="717" y="257" width="26" height="26" rx="3"/>
+          <text class="dg-small" x="665" y="344">output 1 only in the strip between the lines</text>
+          <circle class="dg-dot--a" cx="305" cy="368" r="7"/><text class="dg-small dg-start" x="319" y="368">class 0: XOR is 0</text>
+          <rect class="dg-dot--b" x="465" y="361" width="14" height="14" rx="2"/><text class="dg-small dg-start" x="487" y="368">class 1: XOR is 1</text>
         </svg>
 
         <p>
-          <b>Activity:</b> try drawing one line that separates the diagonal pairs. Then consider two hidden units:
-          <span class="math">h_1 = \operatorname{step}(x_1 + x_2 - 0.5)</span> and
-          <span class="math">h_2 = \operatorname{step}(x_1 + x_2 - 1.5)</span>. The first detects whether at least one input
-          is 1. The second detects whether both are 1. An output
-          <span class="math">\operatorname{step}(h_1 - 2h_2 - 0.5)</span> produces XOR.
+          <b>Why no line works:</b> a line splits the plane into two half-planes, and a half-plane is convex: with any two
+          of its points, it also contains their midpoint. Put both class-1 points on one side of a line; their midpoint
+          <span class="math">(\tfrac12, \tfrac12)</span> must be on that side too. Put both class-0 points on the other
+          side, and the same midpoint must be there instead. No point is on both sides, so no single line works in the
+          original input space, however long we train.
         </p>
-
-        <details>
-          <summary>Show the hidden representation</summary>
-          <p>
-            The four inputs become <span class="math">(0, 0)</span>, <span class="math">(1, 0)</span>,
-            <span class="math">(1, 0)</span> and <span class="math">(1, 1)</span>, respectively. The two positive examples
-            now share the hidden representation <span class="math">(1, 0)</span>, which the output can separate from the
-            negative examples. We hand-set these weights to demonstrate representational capacity. Training a network to
-            discover useful hidden features is a separate problem.
-          </p>
-        </details>
 
         <figure class="viz" data-viz="perceptron">
           <figcaption class="viz__caption">
@@ -600,7 +635,73 @@
           </figcaption>
         </figure>
 
+        <h3 class="material-heading" id="xor-middle">One threshold cannot pick out the middle</h3>
+
+        <p>
+          A single perceptron sees both inputs at the same time. With both weights equal to 1, its score before adding a
+          bias is <span class="math">s = x_1 + x_2</span>. The sum is 0 when both inputs are off, 1 when they differ and 2 when both
+          are on, so the score already contains the information we need. The problem is that a single threshold cannot
+          accept just the middle value: accepting scores above 0.5 includes both 1 and 2, and accepting scores below 1.5
+          includes both 0 and 1. Changing the weights does not fix this for a single perceptron, as the crossing diagonals
+          show.
+        </p>
+
+        <p>
+          Two hidden units can test the two thresholds separately: one turns on when <span class="math">s \ge 0.5</span>,
+          the other when <span class="math">s \ge 1.5</span>. The output accepts only when the first is on and the second
+          is off. On the original input plane, that selects the strip between the two parallel lines in the right-hand
+          plot. The hidden units see the same inputs as the single perceptron; the difference is that their nonlinear
+          activations let the network combine two separate checks.
+        </p>
+
+        <h3 class="material-heading" id="xor-hidden-layer">Two hidden units change the inputs to the classifier</h3>
+
+        <p>
+          One unit asks <b>“Is at least one input on?”</b> The other asks <b>“Are both inputs on?”</b> XOR says yes to the
+          first and no to the second. In the table, the two class-1 cases now map to the same hidden point,
+          <span class="math">(1, 0)</span>. The output unit can separate this point from <span class="math">(0, 0)</span>
+          and <span class="math">(1, 1)</span> with a straight line in the <em>hidden-feature space</em>.
+        </p>
+
+        <table class="table">
+          <caption>XOR after the hidden layer</caption>
+          <thead><tr><th scope="col">Inputs <span class="math">(x_1, x_2)</span></th><th scope="col">At least one on, <span class="math">h_1</span></th><th scope="col">Both on, <span class="math">h_2</span></th><th scope="col">Output</th></tr></thead>
+          <tbody>
+            <tr><td><span class="math">(0, 0)</span></td><td>0</td><td>0</td><td>0</td></tr>
+            <tr><td><span class="math">(0, 1)</span></td><td>1</td><td>0</td><td>1</td></tr>
+            <tr><td><span class="math">(1, 0)</span></td><td>1</td><td>0</td><td>1</td></tr>
+            <tr><td><span class="math">(1, 1)</span></td><td>1</td><td>1</td><td>0</td></tr>
+          </tbody>
+        </table>
+
+        <details>
+          <summary>Show the weights and thresholds</summary>
+          <p>
+            Let <span class="math">\operatorname{step}(z)</span> return 1 for <span class="math">z \ge 0</span> and 0
+            otherwise. Set <span class="math">h_1 = \operatorname{step}(x_1 + x_2 - 0.5)</span> and
+            <span class="math">h_2 = \operatorname{step}(x_1 + x_2 - 1.5)</span>. The output is
+            <span class="math">\operatorname{step}(h_1 - 2h_2 - 0.5)</span>. Try the input
+            <span class="math">(1, 1)</span>: both units turn on, so the output score is
+            <span class="math">1 - 2 - 0.5 = -1.5</span> and the output is 0.
+          </p>
+        </details>
+
+        <p>
+          This is the handoff to multilayer networks: a hidden layer transforms the input, and the output layer classifies
+          that new representation. The nonlinear step functions make this possible; without a nonlinearity, stacked
+          layers collapse into one weighted sum plus a bias, as the section on
+          <a href="#activations">nonlinear activations</a> shows. We chose the XOR features by hand. In a trainable
+          multilayer network, the goal is to <em>learn</em> useful hidden features from examples.
+        </p>
+
         <h2 class="material-heading" id="mlp">Multilayer networks and forward propagation</h2>
+
+        <p>
+          <b>Forward propagation</b> means evaluating the network with its current weights, one layer after the other. In
+          the small example below, the input first becomes a vector of hidden activations; the output layer receives
+          those activations, not the raw input. We use a forward pass both during training and when predicting on a new
+          input.
+        </p>
 
         <p>
           A multilayer perceptron (MLP) alternates affine transformations and nonlinear activation functions. In layer
@@ -758,6 +859,14 @@
         <h2 class="material-heading" id="loss">What is the network trying to minimize?</h2>
 
         <p>
+          <b>A loss answers a new question:</b> given the prediction and the known target, how bad was this prediction? If
+          a small network predicts 2 and the target is 1, the residual is 1 and the half-squared loss is 0.5. The loss is a
+          single number, not a list of weight corrections: we still need to find how changing each weight would change
+          it, which is the job of <a href="#backprop">backpropagation</a>. We use squared loss there to keep the
+          arithmetic easy; digit classifiers commonly use cross-entropy with class scores.
+        </p>
+
+        <p>
           A <b>loss function</b> measures how the output differs from the target. For a scalar regression example with
           prediction <span class="math">\hat{y}</span> we can use <span class="math">L = (\hat{y} - y)^2 / 2</span>.
           For binary classification, cross-entropy penalizes low probability <span class="math">p</span> assigned to the
@@ -823,6 +932,31 @@
           operations, even though both occur during training.
         </p>
 
+        <h3 class="material-heading" id="why-backward">Why work backward?</h3>
+
+        <p>
+          Return to XOR. We designed its hidden units by hand, so we already knew which features would solve the problem.
+          In a real digit classifier, the labels say which digit is present, but they do not say what any hidden unit
+          ought to detect. The training problem is to find out how each hidden weight influences the final prediction,
+          and therefore the loss.
+        </p>
+
+        <p>
+          Imagine a weight feeding a hidden unit. Changing the weight first changes the unit's input score; that may
+          change its activation, which may change the prediction, which may change the loss. The chain rule multiplies
+          the sensitivities along this route. If several routes connect the weight to the loss, their contributions add.
+          Working backward lets us compute a downstream sensitivity once and reuse it for all the upstream weights that
+          depend on it.
+        </p>
+
+        <p>
+          This is also where the perceptron rule stops working. A hard threshold gives the same output for a small change
+          on either side of its boundary, so its derivative is zero wherever it exists (see the
+          <a href="#activations">activation functions</a>), and gradient descent gets no signal through it. ReLU has slope
+          1 on its positive side. In the example below, the hidden unit is on that side, so the gradient passes through
+          it.
+        </p>
+
         <h3 class="material-heading" id="backprop-example">A complete numerical backward pass</h3>
 
         <p>
@@ -873,11 +1007,32 @@
         </table>
 
         <p>
-          With learning rate 0.1, update all four parameters using these gradients: <span class="math">w = 0.1</span>,
+          <b>Read the table as a diagnosis.</b> With prediction 2 and target 1, the model predicts too high. Why is the
+          derivative with respect to the hidden weight <span class="math">w</span> equal to 4? The loss changes at rate 1
+          with the prediction, the prediction changes at rate 2 with the hidden activation (the weight
+          <span class="math">v</span>), the active ReLU passes the change through at rate 1, and
+          <span class="math">x = 2</span> multiplies the effect of <span class="math">w</span> on the hidden score:
+          <span class="math">1 \times 2 \times 1 \times 2 = 4</span>. The positive sign says that a small decrease in
+          <span class="math">w</span> alone would reduce the current loss. The optimizer decides how large a decrease to
+          take.
+        </p>
+
+        <p>
+          <b>One weight, one step.</b> Hold the other parameters fixed for a moment and take one gradient descent step on
+          <span class="math">w</span> alone, with learning rate 0.1: <span class="math">w</span> changes from 0.5 to
+          <span class="math">0.5 - 0.1 \times 4 = 0.1</span>. A fresh forward pass then predicts 0.4, and the loss drops
+          from 0.5 to 0.18. Backpropagation supplied the gradient; the optimizer took the step.
+        </p>
+
+        <p>
+          In ordinary training, we compute all the gradients first and then update all the parameters together. With
+          learning rate 0.1, update all four parameters using these gradients: <span class="math">w = 0.1</span>,
           <span class="math">b = -0.2</span>, <span class="math">v = 1.9</span> and <span class="math">c = -0.1</span>. A new
           forward pass gives <span class="math">z = 0</span>, <span class="math">h = 0</span>, prediction −0.1 and loss
-          0.605. <b>The loss increased:</b> the first-order approximation did not justify so large a step, and the hidden
-          unit reached the ReLU boundary.
+          0.605. <b>The loss increased</b>, although the step on <span class="math">w</span> alone lowered it. Each
+          gradient assumes that the other parameters stay fixed, so the four changes add up: the prediction falls from 2
+          to −0.1, past the target 1. The first-order approximation did not justify so large a step, and the hidden unit
+          reached the ReLU boundary.
         </p>
 
         <p>
@@ -901,8 +1056,9 @@
         <p>
           <b>Further explanation:</b>
           <a href="https://d2l.ai/chapter_multilayer-perceptrons/backprop.html" target="_blank" rel="noopener">Dive into
-          Deep Learning: forward propagation and backpropagation</a>. Larger networks apply the same chain rule using
-          matrix operations and automatic differentiation.
+          Deep Learning: forward propagation and backpropagation</a>. Start with its computational graph and trace one
+          variable backward. Larger networks apply the same chain rule using matrix operations and automatic
+          differentiation.
         </p>
 
         <h2 class="material-heading" id="training-loop">Putting the training loop together</h2>
@@ -920,10 +1076,22 @@ select a checkpoint using validation results
 evaluate the selected model on the test set</code></pre>
 
         <p>
-          Random initialization breaks symmetry. If all units in a hidden layer start identically and receive identical
-          updates, they may keep learning the same feature. Initialization schemes such as Xavier/Glorot and He
-          initialization choose scales to help signals and gradients remain useful across layers. A random seed improves
-          reproducibility, although some hardware and software operations can still vary.
+          <b>One trip around the loop:</b> take a mini-batch of 100 MNIST images. The forward pass gives ten scores for
+          each image; the labels turn them into 100 losses, which we average. Backpropagation computes the gradient of
+          that average at the <em>current</em> weights, all of it before any weight changes, and the optimizer takes one
+          step. The next batch is predicted with the updated weights. That was one update, not one epoch (see
+          <a href="#optimization">epochs, batches and optimizers</a>). The last three lines of the pseudocode use the
+          validation and test data without updating the weights; the section on
+          <a href="#generalization">generalization</a> explains why they are kept apart.
+        </p>
+
+        <p>
+          <b>Reading:</b>
+          <a href="https://docs.pytorch.org/tutorials/beginner/basics/optimization_tutorial.html" target="_blank" rel="noopener">PyTorch:
+          Optimizing Model Parameters</a>. Compare its training loop, which updates the weights, with its test loop,
+          which does not. PyTorch adds each new gradient to the stored one, so the training loop resets the gradients
+          with <code>optimizer.zero_grad()</code> at every step, unless accumulating them over several batches is
+          intentional.
         </p>
 
         <figure class="viz" data-viz="mlp">
@@ -935,13 +1103,104 @@ evaluate the selected model on the test set</code></pre>
           </figcaption>
         </figure>
 
+        <h3 class="material-heading" id="initialization">Why the starting weights matter</h3>
+
         <p>
-          <b>Episode 7 checkpoint:</b> explain the role of each arrow in the training diagram. Which operation uses
+          The first line of the pseudocode looks like a detail, but gradient descent can only improve the weights that it
+          starts from. The figure above starts from random weights, and its <i>New initial weights</i> button draws
+          another set. Two simpler starts fail, for different reasons.
+        </p>
+
+        <p>
+          <b>All zeros: the hidden layer never learns.</b> Start the tiny network of the
+          <a href="#backprop-example">numerical backward pass</a> with <span class="math">w = b = v = c = 0</span>. The
+          forward pass gives <span class="math">z = 0</span>, <span class="math">h = \operatorname{ReLU}(0) = 0</span> and
+          <span class="math">\hat{y} = 0</span>. In the gradient table, <span class="math">\partial L / \partial c = -1</span>,
+          but <span class="math">\partial L / \partial v = (\hat{y} - y)\, h = 0</span> because
+          <span class="math">h = 0</span>, and <span class="math">\partial L / \partial w = \partial L / \partial b = 0</span>
+          because the error reaches the hidden unit through <span class="math">v = 0</span>. Only
+          <span class="math">c</span> changes. After the step, <span class="math">h</span> and <span class="math">v</span>
+          are still 0, so the same happens again: the network stays a constant, <span class="math">\hat{y} = c</span>, for
+          every input and for as long as it trains. With tanh units the result is the same, because
+          <span class="math">\tanh 0 = 0</span>.
+        </p>
+
+        <p>
+          <b>Equal weights: the units stay copies.</b> Zero is the extreme case of a wider problem. If all units of a
+          hidden layer start with the same incoming and outgoing weights, they compute the same activation for every
+          input. Backpropagation then gives each of them the same gradient, and the optimizer moves each of them by the
+          same amount. After any number of steps they are still identical, and a layer of 100 such units can represent no
+          more than one unit can. Random starting weights break this <b>symmetry</b>: each unit starts somewhere else,
+          receives a different gradient and can learn a different feature. The biases can start at 0, because the random
+          weights already make the units differ.
+        </p>
+
+        <details>
+          <summary>Check your understanding: zero weights with sigmoid units</summary>
+          <p>
+            Replace ReLU by the sigmoid in the all-zero start above. Now <span class="math">h = \sigma(0) = 0.5</span>, so
+            <span class="math">\partial L / \partial v = (\hat{y} - y) \times 0.5</span> is not zero, and
+            <span class="math">v</span> moves at the first step. From the second step on, the error also reaches
+            <span class="math">w</span> and <span class="math">b</span>. The weights do change, but with several hidden
+            units, every unit changes in exactly the same way, so the units stay copies. Here the symmetry, not a zero
+            gradient, is what stops the network.
+          </p>
+        </details>
+
+        <p>
+          <b>The scale matters too.</b> A unit adds up <span class="math">n_{\text{in}}</span> terms
+          <span class="math">w_i h_i</span>. If the weights are independent of each other and of the inputs, with mean 0
+          and variance <span class="math">\sigma^2</span>, its pre-activation has variance
+        </p>
+
+        <div class="math">
+          \operatorname{Var}(z) = n_{\text{in}}\, \sigma^2\, \mathbb{E}\bigl[h^2\bigr].
+        </div>
+
+        <p>
+          For units that are close to linear around 0, such as tanh, each layer therefore multiplies the variance of the
+          signal by about <span class="math">n_{\text{in}} \sigma^2</span>, and the backward pass multiplies the gradients
+          by the same weights, transposed. Through many layers, a factor a little above 1 makes activations and gradients
+          explode, and a factor a little below 1 makes them vanish. Weights that are too large also push tanh and sigmoid
+          units into their flat regions, where the derivative is almost 0. <b>Xavier/Glorot initialization</b> (Glorot
+          and Bengio, 2010) uses <span class="math">\sigma^2 = 2 / (n_{\text{in}} + n_{\text{out}})</span>, a compromise
+          between keeping the forward signal (<span class="math">1 / n_{\text{in}}</span>) and the backward gradients
+          (<span class="math">1 / n_{\text{out}}</span>) at a steady scale. <b>He initialization</b> (He et al., 2015)
+          uses <span class="math">\sigma^2 = 2 / n_{\text{in}}</span> for ReLU, which sets about half of the
+          pre-activations to 0 and so halves <span class="math">\mathbb{E}[h^2]</span>. For the first layer of the digit
+          network, with 784 inputs and 40 units, both give a standard deviation of about 0.05.
+        </p>
+
+        <p>
+          You rarely set these scales by hand, because libraries apply them by default: Keras's dense layers and
+          scikit-learn's <code>MLPClassifier</code>, both used in this week's exercises, start from weights at Glorot's
+          scale. Deep modern architectures add two further safeguards, normalization layers and residual connections,
+          which help to keep signals and gradients at a usable scale during training too. A random seed makes a run
+          reproducible, although some hardware and software operations can still vary.
+        </p>
+
+        <figure class="viz" data-viz="init">
+          <figcaption class="viz__caption">
+            The network of the numerical backward pass with three hidden units,
+            <span class="math">\hat{y} = \sum_{j=1}^{3} v_j \operatorname{ReLU}(w_j x + b_j) + c</span>, trained by gradient
+            descent (learning rate 0.1) on five points of <span class="math">y = |x|</span>. The table shows each
+            parameter with its gradient ∇ under it, and the chart follows the parameters during training. One unit can bend
+            the line only once, so the V shape needs at least two units that differ. From all zeros, every gradient except
+            that of the output bias <span class="math">c</span> is exactly 0: only <span class="math">c</span> learns, so
+            the network stays a horizontal line that rises to the mean of the targets. From all 0.5, the three units stay
+            copies, and the line bends only once. From random weights at He's scale, the units become different and fit
+            the V. Some random starts fail too, for example when a unit is 0 at every training point, so that ReLU passes
+            it no gradient.
+          </figcaption>
+        </figure>
+
+        <p>
+          <b>Neural Networks I checkpoint:</b> explain the role of each arrow in the training diagram. Which operation uses
           labels? Which computes derivatives? Which changes weights? At ordinary inference time, a trained classifier
           performs a forward pass without its training labels or a parameter update.
         </p>
 
-        <h1 class="material-heading" id="episode8">Training, generalization and representation learning</h1>
+        <h1 class="material-heading" id="episode8">Neural Networks II: training, generalization and representation learning</h1>
 
         <h2 class="material-heading" id="optimization">Epochs, batches and optimizers</h2>
 
@@ -949,14 +1208,16 @@ evaluate the selected model on the test set</code></pre>
           An <b>epoch</b> is one pass over the training examples. A <b>mini-batch</b> is a group used to estimate a
           gradient for one parameter update. With 6,000 training examples and batch size 100, one epoch normally contains
           60 updates. Eight epochs contain about 480 updates, not eight. Training loss is often noisy because different
-          batches contain different examples.
+          batches contain different examples: a batch with many sevens can call for a different update from one with many
+          threes, so the loss can rise on single batches while the overall trend improves.
         </p>
 
         <p>
           Full-batch gradient descent uses the entire training set for one update. Single-example stochastic gradient
           descent updates after every example. Mini-batches provide a practical compromise: efficient computation with a
-          noisy approximation to the full gradient. A larger batch changes the optimization dynamics and resource use; it
-          does not automatically give better generalization.
+          noisy approximation to the full gradient. The batch size controls how many examples inform the direction of a
+          step; the learning rate controls how far the step goes. A larger batch changes the optimization dynamics and
+          resource use; it does not automatically give better generalization.
         </p>
 
         <p>
@@ -972,7 +1233,19 @@ evaluate the selected model on the test set</code></pre>
           learning-rate schedules and large-scale training.
         </p>
 
+        <p>
+          <b>Reading:</b> Goodfellow, Bengio and Courville,
+          <a href="https://www.deeplearningbook.org/contents/optimization.html" target="_blank" rel="noopener">Chapter 8,
+          §8.1</a>: why optimization for learning differs from just minimizing a fixed function.
+        </p>
+
         <h2 class="material-heading" id="generalization">Learning the training set is not the same as learning the task</h2>
+
+        <p>
+          Suppose training accuracy rises but validation accuracy stalls. The optimizer may still be doing its job: it is
+          getting better at the examples it sees. The improvement is just not transferring to new handwriting, and this
+          section is about telling the two apart.
+        </p>
 
         <p>
           The <b>training set</b> supplies examples used to update parameters. The <b>validation set</b> supports choices
@@ -1030,7 +1303,7 @@ evaluate the selected model on the test set</code></pre>
           Bengio and Courville, Chapter 7</a> for a more detailed treatment.
         </p>
 
-        <h3 class="material-heading" id="playground-activity">A 10-minute visual investigation</h3>
+        <h3 class="material-heading" id="playground-activity">A visual investigation</h3>
 
         <p>
           Open <a href="https://playground.tensorflow.org/" target="_blank" rel="noopener">TensorFlow Playground</a>. Use
@@ -1046,6 +1319,12 @@ evaluate the selected model on the test set</code></pre>
           regularization. Explain what changed in terms of representation, optimization or generalization. Do not claim a
           universal “minimum network” for spirals from one run: initialization, learning rate, features and the accuracy
           criterion affect the answer.
+        </p>
+
+        <p>
+          <b>Reading:</b> Goodfellow, Bengio and Courville,
+          <a href="https://www.deeplearningbook.org/contents/ml.html" target="_blank" rel="noopener">Chapter 5, §5.2</a>:
+          capacity, overfitting and underfitting.
         </p>
 
         <h2 class="material-heading" id="cnn">Why images motivate convolutional networks</h2>
@@ -1095,6 +1374,15 @@ evaluate the selected model on the test set</code></pre>
         </svg>
 
         <p>
+          <b>Shared weights follow the pattern.</b> Imagine a filter that responds to a short diagonal stroke. If the
+          stroke shifts right, the same filter still responds, but its response shifts right on the feature map: the
+          network does not need a separate detector for every pixel location. With stride 1 and away from the borders,
+          convolution is <b>equivariant</b> to translation: shifting the input shifts the feature map by the same amount.
+          A single convolution therefore does not make a prediction <em>invariant</em> to shifts; it preserves information
+          about where the stroke appeared.
+        </p>
+
+        <p>
           <b>Parameter comparison:</b> an RGB filter with height 3 and width 3 has
           <span class="math">3 \times 3 \times 3 + 1 = 28</span> parameters including its bias. Sixteen such filters have
           448 parameters, regardless of the number of locations at which they are applied. The feature maps can still be
@@ -1121,7 +1409,9 @@ evaluate the selected model on the test set</code></pre>
           <a href="https://d2l.ai/chapter_convolutional-neural-networks/conv-layer.html" target="_blank" rel="noopener">Dive
           into Deep Learning: convolutions for images</a> and
           <a href="https://d2l.ai/chapter_convolutional-neural-networks/padding-and-strides.html" target="_blank" rel="noopener">padding
-          and stride</a>.
+          and stride</a>; Goodfellow, Bengio and Courville,
+          <a href="https://www.deeplearningbook.org/contents/convnets.html" target="_blank" rel="noopener">Chapter 9,
+          §9.2</a>, on sparse connections, parameter sharing and equivariance.
         </p>
 
         <h2 class="material-heading" id="embeddings">From discrete identifiers to learned embeddings</h2>
@@ -1135,7 +1425,9 @@ evaluate the selected model on the test set</code></pre>
 
         <p>
           A vocabulary of 10,000 tokens with 50-dimensional embeddings contains 500,000 embedding parameters. The training
-          task supplies the signal that moves those vectors. Context prediction, classification and recommendation can
+          task supplies the signal that moves those vectors: a model starts from random vectors, uses the row of a token
+          to make a prediction, and the prediction error moves that row. In a word-context prediction task, words used in
+          similar contexts can end up with similar vectors. Context prediction, classification and recommendation can
           therefore learn different notions of similarity. Vectors do not receive their meaning from their coordinate
           names, and rotating the whole space can preserve its pairwise geometry.
         </p>
@@ -1176,6 +1468,13 @@ evaluate the selected model on the test set</code></pre>
           clusters. Embeddings can also reflect biases or gaps in their training data.
         </p>
 
+        <p>
+          <b>Reading:</b> Mikolov et al. (2013),
+          <a href="https://arxiv.org/abs/1301.3781" target="_blank" rel="noopener">Efficient Estimation of Word
+          Representations in Vector Space</a>. Start with its two prediction tasks to see what shapes the vectors. In the
+          word-vector <a href="#exercises">exercise</a>, you load vectors that someone else has already trained.
+        </p>
+
         <h2 class="material-heading" id="sequences">Why sequence order changes the problem</h2>
 
         <p>
@@ -1189,7 +1488,9 @@ evaluate the selected model on the test set</code></pre>
         </div>
 
         <p>
-          It shares parameters across positions, while the hidden state depends on the preceding inputs.
+          It shares parameters across positions, while the hidden state depends on the preceding inputs: the state after
+          “the dog chased” can differ from the state after “the child chased”, although the last word is the same. To use
+          evidence from much earlier, the model must carry it through many successive updates.
         </p>
 
         <p>
@@ -1208,11 +1509,19 @@ evaluate the selected model on the test set</code></pre>
           same model.
         </p>
 
+        <p>
+          <b>Reading:</b> Goodfellow, Bengio and Courville,
+          <a href="https://www.deeplearningbook.org/contents/rnn.html" target="_blank" rel="noopener">Chapter 10,
+          §10.1–10.2</a>: unfolding the recurrent computation into a graph, and recurrent networks.
+        </p>
+
         <h2 class="material-heading" id="autoencoders">Autoencoders: learning without class labels</h2>
 
         <p>
-          Representation learning need not predict a class. An <b>autoencoder</b> maps an input to a code with an
-          encoder, <span class="math">z = \operatorname{encoder}(x)</span>, then reconstructs it with a decoder,
+          Representation learning need not predict a class. Give a classifier and an autoencoder the same handwritten
+          eight: the classifier tries to predict the label 8, while the autoencoder tries to reconstruct the strokes of the
+          image. An <b>autoencoder</b> maps an input to a code with an encoder,
+          <span class="math">z = \operatorname{encoder}(x)</span>, then reconstructs it with a decoder,
           <span class="math">\hat{x} = \operatorname{decoder}(z)</span>. The training target is derived from the input
           rather than supplied as a digit category. A reconstruction loss measures the difference between the original
           and reconstructed data.
@@ -1256,7 +1565,7 @@ evaluate the selected model on the test set</code></pre>
         <p>
           <b>Reading:</b>
           <a href="https://www.deeplearningbook.org/contents/autoencoders.html" target="_blank" rel="noopener">Goodfellow,
-          Bengio and Courville, Chapter 14: Autoencoders</a>.
+          Bengio and Courville, Chapter 14: Autoencoders</a>. Start with §14.1, on why an undercomplete code matters.
         </p>
 
         <h2 class="material-heading" id="week4-checkpoint">What you should be able to explain</h2>
@@ -1729,8 +2038,8 @@ print(H.round(2))             # the learned hidden representation, one row per i
           <h2 class="material-heading">What the hidden layer learned</h2>
 
           <p>
-            The <a href="#xor">XOR activity</a> set two hidden units by hand: "at least one input is 1" and "both inputs
-            are 1". Gradient descent found a different representation. With seed 1, the printed matrix
+            The <a href="#xor-hidden-layer">XOR section</a> set two hidden units by hand: "at least one input is 1" and
+            "both inputs are 1". Gradient descent found a different representation. With seed 1, the printed matrix
             <code>H</code> shows it: the second hidden unit is close to +1 only for the input (1, 0), the fourth only
             for (0, 1), and both are negative for the other inputs. The output weights, <code>params[2]</code>, are
             largest for these two units (about 7 each), so the network computes XOR as "<span class="math">x_1</span>
@@ -1752,8 +2061,7 @@ print(H.round(2))             # the learned hidden representation, one row per i
             function, but they make it much easier to find. Second, start every weight at 0.5 instead of a random
             number. Now all hidden units compute the same thing and receive the same gradient, so they stay identical
             forever: the network behaves as if it had one hidden unit, and it cannot solve XOR. This is the symmetry
-            that random initialization breaks, as described in <a href="#training-loop">Putting the training loop
-            together</a>.
+            that random initialization breaks; see <a href="#initialization">Why the starting weights matter</a>.
           </p>
 
           <h2 class="material-heading">What the universal approximation theorem says, and what it does not</h2>
