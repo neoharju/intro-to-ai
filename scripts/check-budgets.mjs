@@ -41,8 +41,9 @@ const WEEK = 13 * KB;
 const CHUNKS = 12 * KB;
 // Everything a week loads the first time (theme.js, hero.js, the stylesheets and the modules with their
 // chunks; not KaTeX and highlight.js, which the published site does without). Raised from 75 kB: the header's
-// rolling text and the intro of the first page of a visit (hero-text.js, hero.js, _hero.scss: 4.6 kB).
-const FIRST_VISIT = 80 * KB;
+// rolling text and the intro of the first page of a visit (hero-text.js, hero.js, _hero.scss: 4.6 kB). Raised
+// from 80 kB: the figure of Week 4 on weight initialization (viz/init.js, 2.6 kB).
+const FIRST_VISIT = 82 * KB;
 
 const problems = [];
 const sizes = new Map();

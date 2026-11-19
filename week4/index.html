@@ -94,7 +94,7 @@
           <p class="page-hero__eyebrow"><b>Week 4</b><span>of 7</span></p>
           <h1 class="page-hero__title">Neural Networks</h1>
           <ul class="page-hero__meta" aria-label="About this page">
-            <li><i class="fa-regular fa-clock" aria-hidden="true"></i>1 h 11 min read</li>
+            <li><i class="fa-regular fa-clock" aria-hidden="true"></i>1 h 15 min read</li>
             <li><i class="fa fa-pencil" aria-hidden="true"></i>5 exercises</li>
             <li class="page-hero__progress"><i class="fa fa-check" aria-hidden="true"></i>0 of 5 done</li>
           </ul>
@@ -1076,13 +1076,6 @@ select a checkpoint using validation results
 evaluate the selected model on the test set</code></pre>
 
         <p>
-          Random initialization breaks symmetry. If all units in a hidden layer start identically and receive identical
-          updates, they may keep learning the same feature. Initialization schemes such as Xavier/Glorot and He
-          initialization choose scales to help signals and gradients remain useful across layers. A random seed improves
-          reproducibility, although some hardware and software operations can still vary.
-        </p>
-
-        <p>
           <b>One trip around the loop:</b> take a mini-batch of 100 MNIST images. The forward pass gives ten scores for
           each image; the labels turn them into 100 losses, which we average. Backpropagation computes the gradient of
           that average at the <em>current</em> weights, all of it before any weight changes, and the optimizer takes one
@@ -1107,6 +1100,97 @@ evaluate the selected model on the test set</code></pre>
             boundary, so it cannot fit XOR; with two or more it can. Try the other data sets and activation functions,
             and turn on the lines where each hidden unit changes sign to see how the hidden layer builds the
             boundary. The shading is the predicted probability of class 1.
+          </figcaption>
+        </figure>
+
+        <h3 class="material-heading" id="initialization">Why the starting weights matter</h3>
+
+        <p>
+          The first line of the pseudocode looks like a detail, but gradient descent can only improve the weights that it
+          starts from. The figure above starts from random weights, and its <i>New initial weights</i> button draws
+          another set. Two simpler starts fail, for different reasons.
+        </p>
+
+        <p>
+          <b>All zeros: the hidden layer never learns.</b> Start the tiny network of the
+          <a href="#backprop-example">numerical backward pass</a> with <span class="math">w = b = v = c = 0</span>. The
+          forward pass gives <span class="math">z = 0</span>, <span class="math">h = \operatorname{ReLU}(0) = 0</span> and
+          <span class="math">\hat{y} = 0</span>. In the gradient table, <span class="math">\partial L / \partial c = -1</span>,
+          but <span class="math">\partial L / \partial v = (\hat{y} - y)\, h = 0</span> because
+          <span class="math">h = 0</span>, and <span class="math">\partial L / \partial w = \partial L / \partial b = 0</span>
+          because the error reaches the hidden unit through <span class="math">v = 0</span>. Only
+          <span class="math">c</span> changes. After the step, <span class="math">h</span> and <span class="math">v</span>
+          are still 0, so the same happens again: the network stays a constant, <span class="math">\hat{y} = c</span>, for
+          every input and for as long as it trains. With tanh units the result is the same, because
+          <span class="math">\tanh 0 = 0</span>.
+        </p>
+
+        <p>
+          <b>Equal weights: the units stay copies.</b> Zero is the extreme case of a wider problem. If all units of a
+          hidden layer start with the same incoming and outgoing weights, they compute the same activation for every
+          input. Backpropagation then gives each of them the same gradient, and the optimizer moves each of them by the
+          same amount. After any number of steps they are still identical, and a layer of 100 such units can represent no
+          more than one unit can. Random starting weights break this <b>symmetry</b>: each unit starts somewhere else,
+          receives a different gradient and can learn a different feature. The biases can start at 0, because the random
+          weights already make the units differ.
+        </p>
+
+        <details>
+          <summary>Check your understanding: zero weights with sigmoid units</summary>
+          <p>
+            Replace ReLU by the sigmoid in the all-zero start above. Now <span class="math">h = \sigma(0) = 0.5</span>, so
+            <span class="math">\partial L / \partial v = (\hat{y} - y) \times 0.5</span> is not zero, and
+            <span class="math">v</span> moves at the first step. From the second step on, the error also reaches
+            <span class="math">w</span> and <span class="math">b</span>. The weights do change, but with several hidden
+            units, every unit changes in exactly the same way, so the units stay copies. Here the symmetry, not a zero
+            gradient, is what stops the network.
+          </p>
+        </details>
+
+        <p>
+          <b>The scale matters too.</b> A unit adds up <span class="math">n_{\text{in}}</span> terms
+          <span class="math">w_i h_i</span>. If the weights are independent of each other and of the inputs, with mean 0
+          and variance <span class="math">\sigma^2</span>, its pre-activation has variance
+        </p>
+
+        <div class="math">
+          \operatorname{Var}(z) = n_{\text{in}}\, \sigma^2\, \mathbb{E}\bigl[h^2\bigr].
+        </div>
+
+        <p>
+          For units that are close to linear around 0, such as tanh, each layer therefore multiplies the variance of the
+          signal by about <span class="math">n_{\text{in}} \sigma^2</span>, and the backward pass multiplies the gradients
+          by the same weights, transposed. Through many layers, a factor a little above 1 makes activations and gradients
+          explode, and a factor a little below 1 makes them vanish. Weights that are too large also push tanh and sigmoid
+          units into their flat regions, where the derivative is almost 0. <b>Xavier/Glorot initialization</b> (Glorot
+          and Bengio, 2010) uses <span class="math">\sigma^2 = 2 / (n_{\text{in}} + n_{\text{out}})</span>, a compromise
+          between keeping the forward signal (<span class="math">1 / n_{\text{in}}</span>) and the backward gradients
+          (<span class="math">1 / n_{\text{out}}</span>) at a steady scale. <b>He initialization</b> (He et al., 2015)
+          uses <span class="math">\sigma^2 = 2 / n_{\text{in}}</span> for ReLU, which sets about half of the
+          pre-activations to 0 and so halves <span class="math">\mathbb{E}[h^2]</span>. For the first layer of the digit
+          network, with 784 inputs and 40 units, both give a standard deviation of about 0.05.
+        </p>
+
+        <p>
+          You rarely set these scales by hand, because libraries apply them by default: Keras's dense layers and
+          scikit-learn's <code>MLPClassifier</code>, both used in this week's exercises, start from weights at Glorot's
+          scale. Deep modern architectures add two further safeguards, normalization layers and residual connections,
+          which help to keep signals and gradients at a usable scale during training too. A random seed makes a run
+          reproducible, although some hardware and software operations can still vary.
+        </p>
+
+        <figure class="viz" data-viz="init">
+          <figcaption class="viz__caption">
+            The network of the numerical backward pass with three hidden units,
+            <span class="math">\hat{y} = \sum_{j=1}^{3} v_j \operatorname{ReLU}(w_j x + b_j) + c</span>, trained by gradient
+            descent (learning rate 0.1) on five points of <span class="math">y = |x|</span>. The table shows each
+            parameter with its gradient ∇ under it, and the chart follows the parameters during training. One unit can bend
+            the line only once, so the V shape needs at least two units that differ. From all zeros, every gradient except
+            that of the output bias <span class="math">c</span> is exactly 0: only <span class="math">c</span> learns, so
+            the network stays a horizontal line that rises to the mean of the targets. From all 0.5, the three units stay
+            copies, and the line bends only once. From random weights at He's scale, the units become different and fit
+            the V. Some random starts fail too, for example when a unit is 0 at every training point, so that ReLU passes
+            it no gradient.
           </figcaption>
         </figure>
 
@@ -1977,8 +2061,7 @@ print(H.round(2))             # the learned hidden representation, one row per i
             function, but they make it much easier to find. Second, start every weight at 0.5 instead of a random
             number. Now all hidden units compute the same thing and receive the same gradient, so they stay identical
             forever: the network behaves as if it had one hidden unit, and it cannot solve XOR. This is the symmetry
-            that random initialization breaks, as described in <a href="#training-loop">Putting the training loop
-            together</a>.
+            that random initialization breaks; see <a href="#initialization">Why the starting weights matter</a>.
           </p>
 
           <h2 class="material-heading">What the universal approximation theorem says, and what it does not</h2>

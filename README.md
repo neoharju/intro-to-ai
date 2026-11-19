@@ -53,6 +53,10 @@ Compared with the original material:
   vision and translation, what it costs, and where it stands today (language models, driving, robots, and
   the modular systems built around models). Its figure trains a one-number bottleneck both ways
   (`src/javascripts/viz/endtoend.js`).
+- **Weight initialization:** Week 4 explains why training starts from random weights at a chosen scale: an
+  all-zero start gives the hidden layer no gradient, equal weights keep the units copies of each other, and
+  Glorot and He initialization keep signals and gradients at a steady size. Its figure trains a network with
+  three hidden units from three starts (`src/javascripts/viz/init.js`).
 - **Colour themes:** light and dark, following the device's setting by default.
 - **Text size:** normal, large or extra large reading text, from the "Aa" menu in the navigation bar.
 - **Search:** the search button at the right of the navigation bar, Ctrl+K (⌘K on a Mac) or the / key
