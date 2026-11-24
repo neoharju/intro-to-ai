@@ -94,7 +94,7 @@
           <p class="page-hero__eyebrow"><b>Week 4</b><span>of 7</span></p>
           <h1 class="page-hero__title">Neural Networks</h1>
           <ul class="page-hero__meta" aria-label="About this page">
-            <li><i class="fa-regular fa-clock" aria-hidden="true"></i>1 h 15 min read</li>
+            <li><i class="fa-regular fa-clock" aria-hidden="true"></i>1 h 19 min read</li>
             <li><i class="fa fa-pencil" aria-hidden="true"></i>5 exercises</li>
             <li class="page-hero__progress"><i class="fa fa-check" aria-hidden="true"></i>0 of 5 done</li>
           </ul>
@@ -353,18 +353,10 @@
           The comparison diagram here is a conceptual teaching schematic, not an anatomical or mechanistic model.
         </p>
 
-        <details>
-          <summary>Historical extension: associative memory and self-organizing maps</summary>
-          <p>
-            A Hopfield network provides an example of recurrent dynamics: its evolving state can retrieve a stored
-            pattern from a partial or corrupted cue. Under suitable conditions, an energy function helps analyze
-            convergence; this does not mean every cue retrieves the intended memory. A Boltzmann machine uses stochastic
-            units in an energy-based probabilistic model. A self-organizing map uses a different idea: a winning
-            prototype and neighbouring prototypes move toward an input, organizing a grid by similarity. These examples
-            show why neural computation encompasses more than supervised feedforward classification. They provide
-            context, not additional implementation requirements this week.
-          </p>
-        </details>
+        <p>
+          For the mechanisms and a worked example, see <a href="#neural-traditions">other neural traditions</a> in
+          Neural Networks II: Hopfield networks, Boltzmann machines and self-organizing maps.
+        </p>
 
         <h2 class="material-heading" id="inputs">MNIST: from handwritten digits to network inputs</h2>
 
@@ -1568,6 +1560,141 @@ evaluate the selected model on the test set</code></pre>
           Bengio and Courville, Chapter 14: Autoencoders</a>. Start with §14.1, on why an undercomplete code matters.
         </p>
 
+        <h2 class="material-heading" id="neural-traditions">Other neural traditions: memory, probability and self-organization</h2>
+
+        <p>
+          A feedforward classifier maps an input to a prediction. Other neural networks use their connections for
+          different purposes: retrieving a memory, modelling a probability distribution or organizing similar
+          observations. The following historical examples broaden the picture. Their mechanisms are conceptual
+          background, not additional programming requirements.
+        </p>
+
+        <h3 class="material-heading" id="hopfield">Hopfield networks: retrieving a pattern</h3>
+
+        <p>
+          Imagine seeing a familiar handwritten symbol with part of a stroke missing. Associative memory asks whether a
+          network can recover a stored pattern from that imperfect cue. In a classical Hopfield network, the current
+          pattern is the state of recurrently connected units. After storage has set the weights, recall repeatedly
+          updates unit states while keeping those weights fixed. This distinction matters: recall changes the
+          activity, whereas learning changes the connections.
+        </p>
+
+        <p>
+          For a small bipolar example, let four units have states <span class="math">+1</span> or
+          <span class="math">-1</span>, zero self-connections and weight <span class="math">+1</span> between every
+          different pair. Start at <span class="math">(+1, +1, +1, -1)</span>. Updating the fourth unit gives a weighted
+          input of <span class="math">1 + 1 + 1 = 3</span>, so it changes to <span class="math">+1</span>. The state
+          <span class="math">(+1, +1, +1, +1)</span> is stable because every unit receives positive support from the
+          others. The all-negative pattern is also stable: the weights do not encode a unique desired answer.
+        </p>
+
+        <p>
+          With symmetric weights, zero self-connections and appropriate asynchronous threshold updates, an energy
+          function does not increase. It helps explain why activity settles into a stable pattern, but stability does
+          not guarantee the intended memory. Capacity is limited and unwanted attractors can occur.
+        </p>
+
+        <p>
+          <b>Reading:</b>
+          <a href="https://doi.org/10.1073/pnas.79.8.2554" target="_blank" rel="noopener">Hopfield (1982), Neural
+          networks and physical systems with emergent collective computational abilities</a>.
+        </p>
+
+        <h3 class="material-heading" id="boltzmann">Boltzmann machines: probabilities over configurations</h3>
+
+        <p>
+          A Boltzmann machine also uses an energy description, but its units update stochastically. At a fixed positive
+          temperature, configurations with lower energy receive higher probability rather than being the only possible
+          outcomes. Random transitions can explore different configurations instead of simply following a
+          deterministic descent to one attractor. Here, energy is a mathematical score, not a measurement of
+          electricity consumed by the computer.
+        </p>
+
+        <p>
+          Learning adjusts weights so that the distribution over visible units better reflects the training data.
+          Hidden units can capture statistical dependencies. The classical learning rule compares correlations when the
+          data constrain visible units with correlations generated by the model itself. Estimating these quantities
+          can require expensive sampling. A restricted Boltzmann machine removes connections within the visible and
+          hidden groups, simplifying some calculations. These are historical foundations for energy-based and
+          generative modelling, not the same model as a GAN.
+        </p>
+
+        <p>
+          <b>Reading:</b>
+          <a href="https://www.cs.toronto.edu/~hinton/absps/cogscibm.pdf" target="_blank" rel="noopener">Ackley, Hinton
+          and Sejnowski (1985), A Learning Algorithm for Boltzmann Machines</a>.
+        </p>
+
+        <h3 class="material-heading" id="som">Self-organizing maps: a neighbourhood of prototypes</h3>
+
+        <p>
+          A self-organizing map (SOM) assigns an input-space prototype vector to each position in a usually
+          two-dimensional grid. Given an input, it finds the closest prototype, the best-matching unit. Training moves
+          that prototype and nearby grid neighbours toward the input. Repeated exposure can organize similar inputs
+          into neighbouring regions, without supplying class labels.
+        </p>
+
+        <p>
+          For example, if inputs describe colours using RGB values, nearby grid units may come to represent similar
+          colours. The prototype vectors live in RGB space, while their neighbourhood relationships belong to the
+          two-dimensional map. These are different spaces. A SOM is useful for exploring similarity, but its layout can
+          distort distances and does not automatically discover the correct semantic categories.
+        </p>
+
+        <p>
+          <b>Reading:</b>
+          <a href="https://doi.org/10.1007/BF00337288" target="_blank" rel="noopener">Kohonen (1982), Self-organized
+          formation of topologically correct feature maps</a>.
+        </p>
+
+        <h2 class="material-heading" id="model-categories">Representations, learning objectives and architectures</h2>
+
+        <p>
+          Names such as word2vec, autoencoder and Transformer do not all describe the same level of a system. Separate
+          the representation a network computes, the task or objective used to train it, and the architecture that
+          performs the computation. Several of these descriptions can apply to one model.
+        </p>
+
+        <table class="table">
+          <caption>What each name describes</caption>
+          <thead><tr><th scope="col">Term</th><th scope="col">Kind of description</th><th scope="col">What it tells us</th></tr></thead>
+          <tbody>
+            <tr><td>Embedding</td><td>A representation</td><td>A vector represents an item or an occurrence in context.</td></tr>
+            <tr><td>Word2vec</td><td>A family of embedding-learning methods</td><td>Word-context prediction learns a static vector for each word.</td></tr>
+            <tr><td>Sequence-to-sequence</td><td>A task/model framework</td><td>An input sequence maps to an output sequence, for example in translation.</td></tr>
+            <tr><td>Autoencoder</td><td>A model framework with a reconstruction objective</td><td>An encoder computes a code and a decoder reconstructs the input.</td></tr>
+            <tr><td>Transformer</td><td>A neural-network architecture family</td><td>Attention-based blocks combine representations across positions.</td></tr>
+            <tr><td>GAN</td><td>An adversarial learning framework</td><td>A generator and discriminator learn through competing objectives.</td></tr>
+          </tbody>
+        </table>
+
+        <p>
+          A Transformer can implement a sequence-to-sequence translation model or supply components of an autoencoder.
+          The original Transformer has an encoder and a decoder, but those names do not make it an autoencoder:
+          translation predicts a different sequence rather than reconstructing its input. A Transformer encoder
+          normally produces a contextual vector at each input position, rather than forcing the entire input into one
+          small vector. Encoder-only and decoder-only Transformer variants also exist, as
+          <a href="../week5/">Week 5</a> explains.
+        </p>
+
+        <p>
+          The shared idea is <b>learned representation</b>, not an identical architecture or training task. GANs remain
+          in <a href="../week5/#generative-adversarial-networks">Week 5</a>; they use an adversarial objective rather than an input-reconstruction
+          objective.
+        </p>
+
+        <p>
+          <b>Sources and further reading:</b>
+          <a href="https://arxiv.org/abs/1301.3781" target="_blank" rel="noopener">Mikolov et al. (2013), word
+          representations</a>;
+          <a href="https://www.deeplearningbook.org/contents/autoencoders.html" target="_blank" rel="noopener">Goodfellow
+          et al., Chapter 14, autoencoders</a>;
+          <a href="https://arxiv.org/abs/1706.03762" target="_blank" rel="noopener">Vaswani et al. (2017), the
+          Transformer architecture</a>;
+          <a href="https://arxiv.org/abs/1406.2661" target="_blank" rel="noopener">Goodfellow et al. (2014), the GAN
+          framework</a>.
+        </p>
+
         <h2 class="material-heading" id="week4-checkpoint">What you should be able to explain</h2>
 
         <ol>
@@ -1760,8 +1887,9 @@ evaluate the selected model on the test set</code></pre>
 
               <p><b>Task 2: Adjusting Activation Functions and Learning Rate</b></p>
               <ul>
-                <li>Switch the activation function between "Tanh" (the Playground's default) and "ReLU" and observe how it affects the network's
-                  ability to learn.</li>
+                <li>The Playground uses "Tanh" by default. Train your spiral network with it, then switch the
+                  activation to "ReLU" and train again. Compare the shape of the decision boundary and how quickly
+                  the test loss drops.</li>
                 <li>Now, adjust the learning rate slider and observe how different learning rates (e.g., 0.01, 0.1, 3)
                   impact the training speed and model accuracy.</li>
             </ul>
@@ -1817,7 +1945,8 @@ from sklearn.model_selection import train_test_split
 from sklearn.neural_network import MLPClassifier
 
 # MNIST download is required on the first run. Use a fixed subset for speed.
-X, y = fetch_openml("mnist_784", version=1, return_X_y=True, as_frame=False)
+# liac-arff: scikit-learn 1.9's default parser fails on MNIST's labels with pandas 3.
+X, y = fetch_openml("mnist_784", version=1, return_X_y=True, as_frame=False, parser="liac-arff")
 X = X.astype("float32") / 255.0
 X_small, _, y_small, _ = train_test_split(
     X, y, train_size=10000, stratify=y, random_state=1
@@ -1952,7 +2081,7 @@ print("Validation accuracy:", clf.score(X_val, y_val))
               <pre class="sh_python code-highlight"><code>import gensim.downloader as api
 
 model = api.load("glove-wiki-gigaword-50")   # ~66MB, downloads once
-model.most_similar("glass")</code></pre>
+print(model.most_similar("glass"))</code></pre>
 
               <ol>
                 <li> Run the code above. You'll get a ranked list of the words whose vectors are

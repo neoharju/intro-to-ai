@@ -94,7 +94,7 @@
 					<p class="page-hero__eyebrow"><b>Week 6</b><span>of 7</span></p>
 					<h1 class="page-hero__title">Agents</h1>
 					<ul class="page-hero__meta" aria-label="About this page">
-					  <li><i class="fa-regular fa-clock" aria-hidden="true"></i>52 min read</li>
+					  <li><i class="fa-regular fa-clock" aria-hidden="true"></i>53 min read</li>
 					  <li><i class="fa fa-pencil" aria-hidden="true"></i>7 exercises</li>
 					  <li class="page-hero__progress"><i class="fa fa-check" aria-hidden="true"></i>0 of 7 done</li>
 					</ul>
@@ -638,14 +638,19 @@
         obs = next_obs
     agent.decay_epsilon()</code></pre>
 							<p>
-								The agent's hyperparameters are exposed right at the top of the script:
+								The agent's hyperparameters are set in the tutorial's training setup block:
 								<code>learning_rate</code>, <code>n_episodes</code>, <code>start_epsilon</code>,
 								<code>epsilon_decay</code>, <code>final_epsilon</code>.
 							</p>
 
 							<ol>
-								<li> Run the tutorial's full script as-is (it includes built-in plotting of the
-									learning curve — episode reward and episode length over time).
+								<li> Copy the tutorial's code blocks into one file, in the order they appear: the
+									agent class, the training setup with the hyperparameters, the training loop, the
+									plotting code and the test code. Skip the two short snippets that only illustrate
+									an idea, under "Executing an action" and "Understanding the Q-Learning Update".
+									Add the packages to your course folder with <code>uv add gymnasium tqdm</code>
+									(Matplotlib is already in it) and run the file as-is with <code>uv run python</code>.
+									It plots three curves over time: episode reward, episode length and training error.
 								<li> Change <code>learning_rate</code> to a much smaller value (e.g.
 									<code>0.001</code>) and a much larger one (e.g. <code>0.5</code>). Rerun with
 									each and compare the learning curves.
@@ -697,17 +702,23 @@
 								We've talked about agentic frameworks conceptually — now let's build one you can
 								actually run. <code>smolagents</code> is a lightweight agent library from
 								Hugging Face (it describes itself as "a barebones library for agents").
-								Getting a first agent running takes three lines:
+								Getting a first agent running takes four lines:
 							</p>
-							<pre class="sh_python code-highlight"><code>from smolagents import CodeAgent, InferenceClientModel
+							<pre class="sh_python code-highlight"><code>from smolagents import CodeAgent, TransformersModel
 
-agent = CodeAgent(tools=[], model=InferenceClientModel())
+model = TransformersModel(model_id="Qwen/Qwen3.5-2B", max_new_tokens=400)
+agent = CodeAgent(tools=[], model=model, max_steps=5)
 agent.run("Could you give me the 118th number in the Fibonacci sequence?")</code></pre>
 
 							<p>
-								<i>Setup note: this needs a free Hugging Face account and an access token
-								(hf.co/settings/tokens) — no payment required, a free account includes enough
-								inference credit for this exercise.</i>
+								<i>Setup note: the model runs locally on your own computer, so no account or
+								payment is needed. The first run downloads the model (about 4.5&nbsp;GB, and it needs
+								about as much free memory), and each agent step can take a few minutes on a laptop
+								CPU. The warnings about <code>HF_TOKEN</code> and about kernels that are not installed
+								are harmless: those kernels need a GPU. Small local models sometimes repeat a step
+								instead of finishing;
+								<code>max_steps=5</code> limits how long that can go on. Notice in the trace whether
+								your agent stops on its own.</i>
 							</p>
 
 							<p>
@@ -717,13 +728,14 @@ agent.run("Could you give me the 118th number in the Fibonacci sequence?")</code
 								with <code>add_base_tools=True</code>, which adds web search and webpage
 								visiting) unless it runs in a container or with
 								<code>executor_type="docker"</code>: text on a web page can instruct the model
-								to write harmful code. Keep your token in the <code>HF_TOKEN</code> environment
-								variable rather than in your code.</i>
+								to write harmful code.</i>
 							</p>
 
 							<ol>
-								<li> Add it to your course folder with <code>uv add smolagents</code>, get a free HF
-									token, and run the code above with <code>uv run python</code>. Read the printed trace — the agent will show its
+								<li> Add it to your course folder with
+									<code>uv add smolagents torch torchvision transformers accelerate</code> and run the code
+									above with <code>uv run python</code>. (Qwen3.5 can also read images, so transformers needs
+									torchvision even for text.) Read the printed trace — the agent will show its
 									reasoning (its "Thoughts") and the code it decides to run.
 								<li> Add your own tool — a Python function decorated with <code>@tool</code>
 									that does something simple, e.g. converts a temperature between Celsius and
@@ -738,7 +750,7 @@ def celsius_to_fahrenheit(celsius: float) -&gt; float:
     """
     return celsius * 9 / 5 + 32
 
-agent = CodeAgent(tools=[celsius_to_fahrenheit], model=InferenceClientModel())
+agent = CodeAgent(tools=[celsius_to_fahrenheit], model=model, max_steps=5)
 agent.run("What is 24 degrees Celsius in Fahrenheit?")</code></pre>
 								<li> Ask the agent a question that requires it to use your tool, and one that
 									doesn't. Confirm from the printed trace that it only calls your tool when it's
@@ -1172,9 +1184,14 @@ agent.run("What is 24 degrees Celsius in Fahrenheit?")</code></pre>
 						agents, choose a model trained for tool calling (Ollama's model library marks them with the tag
 						<i>tools</i>), for example <code>ollama pull qwen3:8b</code> (about 5&nbsp;GB). Small models of 1 to
 						4 billion parameters can call simple tools but make more mistakes in multi-step tasks. A tip for
-						the exercise above: Hugging Face's free tier includes only a small monthly inference credit
-						(US$&nbsp;0.10 at the time of writing), but smolagents can also use a local model through an
-						OpenAI-compatible server.
+						the tool-using agent exercise above: smolagents can also use a model that Ollama serves, through
+						this endpoint. After <code>uv add "smolagents[openai]"</code> and
+						<code>ollama pull qwen3.5:2b</code>, pass
+						<code>OpenAIModel(model_id="qwen3.5:2b", api_base="http://localhost:11434/v1", api_key="ollama", reasoning_effort="none")</code>
+						as the agent's model. This is the exercise's model with 8-bit weights (2.7&nbsp;GB instead of
+						4.5&nbsp;GB), so it needs less memory and usually answers faster on a laptop. Ollama lets Qwen3.5
+						think before it answers; <code>reasoning_effort="none"</code> turns that off, as in the exercise,
+						because the 2B model can get stuck in its thinking.
 					</p>
 
 					<h2 class="material-heading">An agent loop you can read</h2>

@@ -199,6 +199,7 @@
           </tbody></table>
         <p><b>Core route:</b> understand attention intuitively; distinguish encoder-style and autoregressive decoder-style training; explain pretraining versus adaptation; and interpret generation as learned statistical structure rather than guaranteed knowledge. Detailed architecture variants and implementation studies offer further depth. The practical activities retain their existing instructions and assessment requirements.</p>
         <p><b>Bridge to <a href="../week6/">Week 6</a>:</b> a model can predict or generate without deciding how to act in an environment. Agents add observations, memory, tools, objectives, and an action loop. Reinforcement learning then asks how consequences can improve action over time. This distinction keeps model architecture, learning method, and deployed system separate.</p>
+        <p><b>Terminology from Week 4:</b> <a href="../week4/#model-categories">representations, objectives and architectures describe different aspects of a model</a>. Word2vec learns word vectors; sequence-to-sequence specifies an input/output framework; an autoencoder learns reconstruction; and a Transformer supplies attention-based architecture. A Transformer can perform sequence-to-sequence translation without being an autoencoder. Its encoder usually retains one contextual vector per input position. <a href="#generative-adversarial-networks">GANs</a> later in this week introduce a different, adversarial training framework.</p>
 
         <h1 class="material-heading">Attention and self-attention</h1>
         <p>
@@ -2515,12 +2516,19 @@ git checkout 3adf61e1</code></pre>
 	  in real-world applications, as we have described throughout this section.
 	</p>
 
-        <h2 class="material-heading">Generative adversarial networks</h2>
+        <h2 class="material-heading" id="generative-adversarial-networks">Generative adversarial networks</h2>
 	
 	<p>
 	  Generative Adversarial Networks (GANs) are a broad class of generative models 
 	  that are trained alongside another network that attempts to distinguish 
 	  generated objects from real ones. 
+	</p>
+
+	<p>
+	  <b>Original source:</b>
+	  <a href="https://arxiv.org/abs/1406.2661" target="_blank" rel="noopener">Goodfellow et al. (2014), Generative
+	  Adversarial Networks</a>. A GAN specifies competing generator and discriminator objectives. It does not
+	  prescribe one particular neural architecture.
 	</p>
 	
 	<p>

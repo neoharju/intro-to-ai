@@ -899,6 +899,9 @@ The order of the children of each node from left to right is the order in which 
 == 1007e9da
 In the <code>AlphaBeta</code> folder, run the local tests with:
 
+== 96057675
+To run the program:
+
 == 4e17bcfc
 As a bonus question, think about how to put the child nodes in order, so that the algorithm prunes as much as possible.
 

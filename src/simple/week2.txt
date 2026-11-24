@@ -245,6 +245,9 @@ Test your classifier on the two example messages in the package: <code>spamesim.
 == a6138349
 In the <code>SpamHam</code> folder, run the local tests with:
 
+== 96057675
+To run the program:
+
 == 14833b83
 Here is more material about naive Bayes spam filtering. You can read it if you are interested:
 

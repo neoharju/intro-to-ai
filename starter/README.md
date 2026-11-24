@@ -18,5 +18,6 @@ uv run check_setup.py    # prints the versions and checks that they work
   `pip install <package>`, use `uv add <package>`.
 - uv takes only releases that are at least 14 days old (`exclude-newer` in `pyproject.toml`): most
   malicious releases are found and removed from PyPI within days.
-- On Linux, PyTorch comes as the CPU-only build (about 200 MB instead of about 3 GB with the CUDA
-  libraries). With an NVIDIA GPU, remove the `torch` line under `[tool.uv.sources]` before `uv add torch`.
+- On Linux, PyTorch and torchvision come as CPU-only builds (about 200 MB instead of about 3 GB with the
+  CUDA libraries). With an NVIDIA GPU, remove the `torch` and `torchvision` lines under `[tool.uv.sources]`
+  before `uv add torch`.
