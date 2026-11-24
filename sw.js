@@ -19,7 +19,7 @@
 //     the page asks for with cache: 'no-cache' (it comes from the network, and from the store only offline).
 //
 // To take the service worker away, publish a sw.js that empties the caches and unregisters itself.
-const VERSION = 'e48417a62f038896';
+const VERSION = 'ca7b4001f202923d';
 const SHELL = ["stylesheets/main.css","stylesheets/math.css","javascripts/theme.js","javascripts/hero.js","javascripts/main.js","javascripts/math.js","javascripts/chunks/chunk-D2MAT64R.js","javascripts/chunks/chunk-EAZ5G22H.js","javascripts/chunks/chunk-ODPPR777.js","javascripts/chunks/chunk-YLFSTVPD.js","fonts/vendor/inter-latin-wght-normal-NRMW37G5.woff2","img/favicon.svg","pages.json"];
 const CACHE = `introai-${VERSION}`;
 const SCOPE = new URL('./', self.location.href);

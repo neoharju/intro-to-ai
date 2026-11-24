@@ -1182,8 +1182,9 @@ agent.run("What is 24 degrees Celsius in Fahrenheit?")</code></pre>
 						llama.cpp's <code>llama-server</code> and LM Studio offer the same kind of endpoint. Code written
 						against this interface does not care whether the model runs on your laptop or in the cloud. For
 						agents, choose a model trained for tool calling (Ollama's model library marks them with the tag
-						<i>tools</i>), for example <code>ollama pull qwen3:8b</code> (about 5&nbsp;GB). Small models of 1 to
-						4 billion parameters can call simple tools but make more mistakes in multi-step tasks. A tip for
+						<i>tools</i>), for example <code>ollama pull qwen3.5:9b</code> (about 6.6&nbsp;GB, including
+						0.9&nbsp;GB for reading images). Small models of 1 to 4 billion parameters can call simple tools
+						but make more mistakes in multi-step tasks. A tip for
 						the tool-using agent exercise above: smolagents can also use a model that Ollama serves, through
 						this endpoint. After <code>uv add "smolagents[openai]"</code> and
 						<code>ollama pull qwen3.5:2b</code>, pass
@@ -1210,7 +1211,7 @@ from openai import OpenAI
 
 # Ollama's OpenAI-compatible endpoint; the API key is required but ignored.
 client = OpenAI(base_url='http://localhost:11434/v1', api_key='ollama')
-MODEL = 'qwen3:8b'                          # any model with tool support
+MODEL = 'qwen3.5:9b'                        # any model with tool support
 NOTES = Path('notes').resolve()             # the only folder the agent can read
 
 def list_notes():
