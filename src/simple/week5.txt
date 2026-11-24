@@ -38,6 +38,9 @@ Week 4 explained how networks calculate, learn and build representations. Week 5
 == b5375eca
 <b>Bridge to <a href="../week6/">Week 6</a>:</b> a model can predict or generate, but it does not decide how to act in an environment. Agents add observations, memory, tools, objectives and an action loop. Then reinforcement learning asks how the results of actions can make the actions better over time. With this distinction, we keep three things separate: the model architecture, the learning method and the deployed system.
 
+== 0b7d5560
+<b>Terms from Week 4:</b> <a href="../week4/#model-categories">representations, objectives and architectures describe different parts of a model</a>. Word2vec learns word vectors. Sequence-to-sequence gives a framework for inputs and outputs. An autoencoder learns to reconstruct (make again) its input. A Transformer gives an architecture that uses attention. A Transformer can do sequence-to-sequence translation, but this does not make it an autoencoder. Its encoder usually keeps one contextual vector for each input position. <a href="#generative-adversarial-networks">GANs</a>, later this week, give a different training framework, which is adversarial (two networks compete).
+
 == b188cf20
 Week 4 showed embeddings: vector representations that a model learns. A static embedding cannot change its meaning when the sequence around it changes. Attention solves this problem: each position can select and combine information from other positions. This section explains this mechanism. It also shows why it became the base of the Transformer.
 
@@ -556,6 +559,9 @@ Modern generative models have very good quality. As this section shows, people n
 
 == 9b77645a
 Generative Adversarial Networks (GANs) are a large class of generative models. They train together with a second network, which tries to find the difference between generated objects and real objects.
+
+== 2647f1c1
+<b>Original source:</b> <a href="https://arxiv.org/abs/1406.2661" target="_blank" rel="noopener">Goodfellow et al. (2014), Generative Adversarial Networks</a>. A GAN gives two objectives that compete: one for the generator and one for the discriminator. It does not set one specific neural architecture.
 
 == 889a44b5
 In this section, we show the basics of GANs and give an intuitive explanation of how they work. We also look at many techniques and changes that make the first method better in the most successful models.

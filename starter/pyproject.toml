@@ -22,9 +22,11 @@ exclude-newer = "14 days"
 
 # PyTorch (Week 5): on Linux, the default build brings the CUDA libraries, about 3 GB to download. This
 # folder takes the CPU-only build instead (about 200 MB), which is all the exercises need. macOS and Windows
-# get theirs from PyPI.
+# get theirs from PyPI. torchvision (Week 6) must come from the same place as torch: the Linux build on PyPI
+# does not load with the CPU-only torch.
 [tool.uv.sources]
 torch = [{ index = "pytorch-cpu", marker = "sys_platform == 'linux'" }]
+torchvision = [{ index = "pytorch-cpu", marker = "sys_platform == 'linux'" }]
 
 [[tool.uv.index]]
 name = "pytorch-cpu"
